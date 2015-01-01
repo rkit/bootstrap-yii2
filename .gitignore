@@ -1,0 +1,21 @@
+# project files
+.idea
+nbproject
+.buildpath
+.project
+.settings
+*.esproj
+
+# system files
+Thumbs.db
+.DS_Store
+
+# folders
+/vendor
+/node_modules
+
+# files
+composer.phar
+phpunit.phar
+/phpunit.xml
+composer.phar

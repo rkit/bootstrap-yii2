@@ -1,0 +1,198 @@
+<?php
+
+namespace app\behaviors;
+
+use yii;
+use yii\base\Behavior;
+use yii\base\InvalidParamException;
+use yii\db\ActiveRecord;
+use app\models\File;
+
+/** 
+ * Bind files to the owner.
+ * The rules are checked in UploadAction.
+ * 
+ * Usage:
+ * ~~~
+ * 'class' => 'app\components\behaviors\FileBehavior',
+ * 'attributes' => [
+ *     'preview' => [
+ *         'ownerType' => File::OWNER_TYPE_NEWS_PREVIEW,
+ *         'savePath' => true, // save 'path' in current model
+ *         'rules' => [
+ *             'imageSize'  => ['minWidth' => 300, 'minHeight' => 300],
+ *             'mimeTypes'  => ['image/png', 'image/jpg', 'image/jpeg'],
+ *             'extensions' => ['jpg', 'jpeg', 'png'],
+ *             'maxSize'    => 1024 * 1024 * 2, // 2 MB
+ *         ]
+ *     ],
+ * ] 
+ * ~~~
+ */ 
+class FileBehavior extends Behavior
+{
+    /**
+     * @var array
+     */
+    public $attributes = [];
+    
+    /**
+     * @inheritdoc
+     */
+    public function events()
+    {
+        return [
+            ActiveRecord::EVENT_AFTER_INSERT  => 'afterSave',
+            ActiveRecord::EVENT_AFTER_UPDATE  => 'afterSave',
+            ActiveRecord::EVENT_BEFORE_INSERT => 'beforeSave',
+            ActiveRecord::EVENT_BEFORE_UPDATE => 'beforeSave',
+            ActiveRecord::EVENT_BEFORE_DELETE => 'beforeDelete',
+        ];
+    }
+    
+    public function beforeSave($insert)
+    {
+        foreach ($this->attributes as $attribute => $data) {
+            $oldValue = $this->owner->isNewRecord ? null : $this->owner->getOldAttribute($attribute);
+            $isAttributeChanged = $oldValue === null ? true : $this->owner->isAttributeChanged($attribute);
+            
+            $this->attributes[$attribute]['isAttributeChanged'] = $isAttributeChanged;
+            $this->attributes[$attribute]['oldValue'] = $oldValue;
+        }
+    }
+        
+    public function afterSave()
+    {
+        foreach ($this->attributes as $attribute => $data) {
+            $files = $this->owner->{$attribute};
+            // check if attribute changed
+            if ($data['isAttributeChanged'] === false || $files === null) {
+                continue;
+            }
+            // bind file
+            $file = File::bind($this->owner->primaryKey, $data['ownerType'], $files);
+            // if savePath, then path saved in current model
+            if (isset($data['savePath']) && $data['savePath'] === true) {    
+                if ($files === [] || $files === '') {
+                    $path = '';
+                } else {
+                    $path = $file ? $file->path() : $data['oldValue'];
+                }
+                // save path in current model
+                $this->owner->updateAttributes([$attribute => $path]);
+            }
+        }
+    }
+
+    public function beforeDelete()
+    {
+        foreach ($this->attributes as $attribute => $data) {
+            File::deleteByOwner($this->owner->primaryKey, $data['ownerType']);
+        }
+    }
+    
+    /**
+     * Get ownerType.
+     *
+     * @param string $attribute
+     * @return int
+     */
+    public function getFileOwnerType($attribute) 
+    {
+        return $this->attributes[$attribute]['ownerType'];
+    }
+    
+    /**
+     * Get files.
+     *
+     * @param string $attribute
+     * @return array
+     */
+    public function getFiles($attribute)
+    {
+        return File::getByOwner($this->owner->primaryKey, $this->getFileOwnerType($attribute));
+    }
+    
+    /**
+     * Get rules.
+     *
+     * @param string $attribute
+     * @return array
+     */
+    public function getFileRules($attribute)
+    {
+        return $this->attributes[$attribute]['rules'];
+    }
+    
+    /**
+     * Get rules description.
+     *
+     * @param string $attribute
+     * @return string
+     */
+    public function getFileRulesDescription($attribute)
+    {
+        $text = '';
+        
+        $rules = $this->attributes[$attribute]['rules'];
+        
+        if (isset($rules['imageSize'])) {
+            extract($rules['imageSize']);
+            
+            $maxWidth  = isset($maxWidth)  ? $maxWidth  : null;
+            $minWidth  = isset($minWidth)  ? $minWidth  : null;
+            $maxHeight = isset($maxHeight) ? $maxHeight : null;
+            $minHeight = isset($minHeight) ? $minHeight : null;
+            
+            $allSizes     = $maxWidth && $minWidth  && $maxHeight && $minHeight;
+            $isMinSize    = $minWidth && $minHeight && !$maxWidth && !$maxHeight;
+            $isMaxSize    = $maxWidth && $maxHeight && !$minWidth && !$minHeight;
+            $isStrongSize = $allSizes && ($maxWidth == $minWidth && $maxHeight == $minHeight);
+            
+            if ($isStrongSize) {
+                $text .= Yii::t('app', 'Image size') . ': ' . $maxWidth . 'x' . $maxHeight . 'px ';
+            } elseif ($isMinSize) {
+                $text .= Yii::t('app', 'Min. size of image') . ': ' . $minWidth . 'x' . $minHeight . 'px ';
+            } elseif ($isMaxSize) {
+                $text .= Yii::t('app', 'Max. size if image') . ': ' . $maxWidth . 'x' . $maxHeight . 'px ';
+            } else {
+                foreach ($rules['imageSize'] as $rule => $value) {
+                    switch ($rule) {
+                        case 'minWidth':
+                            $text .= Yii::t('app', 'Min. width') . ' ' . $value . 'px ';
+                            break;
+                        case 'minHeight':
+                            $text .= Yii::t('app', 'Min. height') . ' ' . $value . 'px ';
+                            break;
+                        case 'maxWidth':
+                            $text .= Yii::t('app', 'Max. width') . ' ' . $value . 'px ';
+                            break;
+                        case 'maxHeight':
+                            $text .= Yii::t('app', 'Max. height') . ' ' . $value . 'px ';
+                            break;
+                    }
+                }
+            }
+        }
+    
+        $text = !empty($text) ? $text . '<br>' : $text;
+        
+        if (isset($rules['extensions'])) {
+            $text .= 
+                Yii::t('app', 'File types') . 
+                ': ' . 
+                strtoupper(implode(', ', $rules['extensions'])) . 
+                ' ';
+            $text = isset($rules['maxSize']) ? $text . '<br>' : $text;
+        }
+        
+        if (isset($rules['maxSize'])) {
+            $text .= 
+                Yii::t('app', 'Max. file size') . 
+                ': ' . 
+                Yii::$app->formatter->asShortSize($rules['maxSize']) . ' ';
+        }
+        
+        return $text;
+    }
+}

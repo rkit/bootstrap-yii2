@@ -1,0 +1,31 @@
+/* Reset
+-------------------------------------------------- */
+
+html,
+body {
+  height: 100%;
+}
+
+/* Layouts
+-------------------------------------------------- */
+
+#wrap {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  /* Negative indent footer by its height */
+  margin: 0 auto -60px;
+  /* Pad bottom by footer height */
+  padding: 0 0 60px;
+}
+
+#wrap > .container {
+  padding: 100px 15px 0;
+}
+
+/* Elements
+-------------------------------------------------- */
+
+.auth-client .auth-link .auth-icon {
+    display: none
+}
