@@ -45,7 +45,8 @@ $this->title = Yii::t('app', 'Users');
             'attribute' => 'email',
             'format' => 'raw',
             'value' => function ($model) {
-                return Html::a($model['email'], ['edit', 'id' => $model['id']]);
+                $email = $model['email'] ? $model['email'] : '(' . Yii::t('app', 'not set') . ')';
+                return Html::a($email, ['edit', 'id' => $model['id']]);
             }
         ],
             // dateCreate
