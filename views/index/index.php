@@ -16,13 +16,11 @@ use yii\helpers\Html;
 
 <p class="lead">The template contains the basic features including users, roles and more</p>
 <ul>
-    <li>Users <span class="text-muted">(basic and social authorization)</span></li>
-    <li>Roles</li>
+    <li>Users <span class="text-muted">(roles, registration, basic and social authorization)</span></li>
     <li>Files <span class="text-muted">(upload, crop, gallery)</span></li>
     <li>Geo <span class="text-muted">(country, regions, cities)</span></li>
     <li>Tags</li>
     <li>Settings</li>
-    <li>Prepared GridView</li>
 </ul>
 
 <hr>
