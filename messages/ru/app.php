@@ -17,6 +17,7 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
+    'Select role' => '@@Выберите роль@@',
     'SuperUser' => '@@Суперпользователь@@',
     'Unpublish' => '@@Снять публикацию@@',
     'Warning! Has all privileges' => '@@Внимание! Имеет все привилегии@@',
@@ -119,6 +120,7 @@ return [
     'New password' => 'Новый пароль',
     'New password was saved' => 'Новый пароль сохранен',
     'News' => 'Новости',
+    'No role' => 'Нет роли',
     'Not published' => 'Не опубликовано',
     'Only latin letters' => 'Только латинские буквы',
     'Only letters, numbers, symbols _ and -' => 'Только латинские буквы, цифры, символ _ и -',
@@ -151,7 +153,6 @@ return [
     'Roles' => 'Роли',
     'Save' => 'Сохранить',
     'Saved successfully' => 'Сохранено успешно',
-    'Select role' => 'Выберите роль',
     'Select status' => 'Выберите статус',
     'Select the type' => 'Выберите тип',
     'Send' => 'Отправить',

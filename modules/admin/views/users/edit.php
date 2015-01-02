@@ -26,7 +26,7 @@ $this->title = Yii::t('app', 'Users');
             <?= $form->field($model, 'role')
                 ->dropDownList(ArrayHelper::map($roles, 'name', 'description'), [
                     'class' => 'form-control',  
-                    'prompt' => Yii::t('app', 'Select role')
+                    'prompt' => Yii::t('app', 'No role')
                 ])
                 ->label(Html::a(Yii::t('app', 'Role'), Url::toRoute('/admin/roles'))); ?>
             
