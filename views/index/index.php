@@ -18,7 +18,7 @@ use yii\helpers\Html;
 <ul>
     <li>Users <span class="text-muted">(roles, registration, basic and social authorization)</span></li>
     <li>Files <span class="text-muted">(upload, crop, gallery)</span></li>
-    <li>Geo <span class="text-muted">(country, regions, cities)</span></li>
+    <li>Geo <span class="text-muted">(countries, regions, cities)</span></li>
     <li>Tags</li>
     <li>Settings</li>
 </ul>
