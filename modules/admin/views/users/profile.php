@@ -5,7 +5,7 @@ use kartik\widgets\DatePicker;
 
 $this->title = Yii::t('app', 'Users');
 ?>
-<?= $this->render('/shared/forms/header', ['title' => $model->user->username, 'model' => $model]) ?>
+<?= $this->render('/shared/forms/header', ['title' => $model->user->username ?: $model->user->email, 'model' => $model]) ?>
 
 <ul class="nav nav-tabs">
     <li><?= Html::a(Yii::t('app', 'Main information'), ['edit', 'id' => $model->userId]) ?></li>

@@ -8,7 +8,7 @@ use app\widgets\FileApi\Widget as FileApi;
 
 $this->title = Yii::t('app', 'Users');
 ?>
-<?= $this->render('/shared/forms/header', ['title' => $model->username, 'model' => $model]) ?>
+<?= $this->render('/shared/forms/header', ['title' => $model->username ?: $model->email, 'model' => $model]) ?>
 
 <?php if (!$model->isNewRecord): ?>
 <ul class="nav nav-tabs">
