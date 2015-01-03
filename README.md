@@ -9,12 +9,13 @@ Bootstrap for Yii2
 - Tags
 - Settings
 
-![Screenshot](https://cloud.githubusercontent.com/assets/4242765/5595177/090519a6-9296-11e4-9412-9821a98612e8.png)
+![Screenshot](https://cloud.githubusercontent.com/assets/4242765/5601747/68365426-9340-11e4-9bf8-53b348bbdb78.png)
+![Screenshot](https://cloud.githubusercontent.com/assets/4242765/5601746/661b674e-9340-11e4-8096-1562a8591bcb.png)
 
 ## Installation
 
 1. Run `composer create-project --prefer-dist --stability=dev rkit/bootstrap2`
-2. Create a new database and adjust the *$config['components']['db']* configuration [config/local/config.php](https://gist.github.com/rkit/8fa95259aace1bf4120b) accordingly.
+2. Create a new database and configuration file in [config/local/config.php](https://gist.github.com/rkit/8fa95259aace1bf4120b)
 3. Run:
 
 * `npm install`
