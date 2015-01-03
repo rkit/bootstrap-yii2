@@ -67,6 +67,7 @@ class User extends BaseActive implements IdentityInterface
             ['email', 'email'],
             ['email', 'string', 'max' => 255],
             ['email', 'unique'],
+            ['email', 'default', 'value' => null],
             
             ['status', 'integer'],
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
