@@ -14,17 +14,15 @@ Bootstrap for Yii2
 ## Installation
 
 1. Run `composer create-project --prefer-dist --stability=dev rkit/bootstrap2`
-2. Create a configuration file — [config/local/config.php](https://gist.github.com/rkit/8fa95259aace1bf4120b)
+2. Create a new database and adjust the *$config['components']['db']* configuration [config/local/config.php](https://gist.github.com/rkit/8fa95259aace1bf4120b) accordingly.
 3. Run:
 
-~~~~
-npm install
-gulp
-php yii migrate --migrationPath=@yii/log/migrations/
-php yii migrate --migrationPath=@yii/rbac/migrations/
-php yii migrate/up
-php yii rbac/init
-~~~~
+* `npm install`
+* `gulp`
+* `php yii migrate --migrationPath=@yii/log/migrations/`
+* `php yii migrate --migrationPath=@yii/rbac/migrations/`
+* `php yii migrate/up`
+* `php yii rbac/init`
 
 ## Debug Mode
 
