@@ -48,6 +48,4 @@ gulp --debug
 gulp --sync
 ~~~~
 
-## Standards
-
-### [PHP Coding Style: PSR-2](http://www.php-fig.org/psr/psr-2)
+## [Coding Style Guide (PSR-2)](http://www.php-fig.org/psr/psr-2)
