@@ -48,4 +48,5 @@ gulp --debug
 gulp --sync
 ~~~~
 
+## [Tests](https://github.com/rkit/bootstrap2/tree/master/tests)
 ## [Coding Style Guide (PSR-2)](http://www.php-fig.org/psr/psr-2)
