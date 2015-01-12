@@ -15,16 +15,23 @@ Screenshots:
 
 ## Installation
 
-1. Run `composer create-project --prefer-dist --stability=dev rkit/bootstrap2`
-2. Create a new database and configuration file in [config/local/config.php](https://gist.github.com/rkit/8fa95259aace1bf4120b)
-3. Run:
+1. Create project 
 
-* `npm install`
-* `gulp`
-* `php yii migrate --migrationPath=@yii/log/migrations/`
-* `php yii migrate --migrationPath=@yii/rbac/migrations/`
-* `php yii migrate/up`
-* `php yii rbac/init`
+   ```
+   composer create-project --prefer-dist --stability=dev rkit/bootstrap2
+   ```
+
+2. Create a new database and configuration file in [config/local/config.php](https://gist.github.com/rkit/8fa95259aace1bf4120b)
+
+3. Run
+   ```
+   npm install
+   gulp
+   php yii migrate --migrationPath=@yii/log/migrations/
+   php yii migrate --migrationPath=@yii/rbac/migrations/
+   php yii migrate/up
+   php yii rbac/init
+   ```
 
 ## Debug Mode
 
