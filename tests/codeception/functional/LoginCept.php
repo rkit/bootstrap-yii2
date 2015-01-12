@@ -5,22 +5,22 @@ use tests\codeception\_pages\LoginPage;
 $I = new FunctionalTester($scenario);
 $I->wantTo('ensure that login works');
 
-$loginPage = LoginPage::openBy($I);
+$page = LoginPage::openBy($I);
 
-$I->see('Login', 'h1');
+$I->see('login-button');
 
 $I->amGoingTo('try to login with empty credentials');
-$loginPage->login('', '');
+$page->login('', '');
 $I->expectTo('see validations errors');
-$I->see('Username cannot be blank.');
-$I->see('Password cannot be blank.');
+$I->see('.help-block-error');
 
 $I->amGoingTo('try to login with wrong credentials');
-$loginPage->login('admin', 'wrong');
+$page->login('admin@example.com', 'qrerop2j34');
 $I->expectTo('see validations errors');
-$I->see('Incorrect username or password.');
+$I->see('.help-block-error');
 
 $I->amGoingTo('try to login with correct credentials');
-$loginPage->login('admin', 'admin');
+$page->login('admin@example.com', 'fghfgh');
 $I->expectTo('see user info');
-$I->see('Logout (admin)');
+$I->see('logout');
+$I->dontSee('login');

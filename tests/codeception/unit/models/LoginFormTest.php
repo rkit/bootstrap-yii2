@@ -3,11 +3,12 @@
 namespace tests\codeception\unit\models;
 
 use Yii;
-use yii\codeception\TestCase;
-use app\models\LoginForm;
+use yii\codeception\DbTestCase;
+use app\models\forms\LoginForm;
+use tests\codeception\fixtures\UserFixture;
 use Codeception\Specify;
 
-class LoginFormTest extends TestCase
+class LoginFormTest extends DbTestCase
 {
     use Specify;
 
@@ -17,11 +18,11 @@ class LoginFormTest extends TestCase
         parent::tearDown();
     }
 
-    public function testLoginNoUser()
+    public function testLoginNotCorrect()
     {
         $model = new LoginForm([
-            'username' => 'not_existing_username',
-            'password' => 'not_existing_password',
+            'email' => 'example@example.com',
+            'password' => 'gw35hhbp',
         ]);
 
         $this->specify('user should not be able to login, when there is no identity', function () use ($model) {
@@ -30,11 +31,11 @@ class LoginFormTest extends TestCase
         });
     }
 
-    public function testLoginWrongPassword()
+    public function testLoginEmptyPassword()
     {
         $model = new LoginForm([
-            'username' => 'demo',
-            'password' => 'wrong_password',
+            'email' => 'example@example.com',
+            'password' => '',
         ]);
 
         $this->specify('user should not be able to login with wrong password', function () use ($model) {
@@ -43,12 +44,26 @@ class LoginFormTest extends TestCase
             expect('user should not be logged in', Yii::$app->user->isGuest)->true();
         });
     }
+    
+    public function testLoginEmptyEmail()
+    {
+        $model = new LoginForm([
+            'email' => '',
+            'password' => 'gw35hhbp',
+        ]);
+
+        $this->specify('user should not be able to login with wrong email', function () use ($model) {
+            expect('model should not login user', $model->login())->false();
+            expect('error message should be set', $model->errors)->hasKey('email');
+            expect('user should not be logged in', Yii::$app->user->isGuest)->true();
+        });
+    }
 
     public function testLoginCorrect()
     {
         $model = new LoginForm([
-            'username' => 'demo',
-            'password' => 'demo',
+            'email' => 'example@example.com',
+            'password' => '123123',
         ]);
 
         $this->specify('user should be able to login with correct credentials', function () use ($model) {
@@ -58,4 +73,13 @@ class LoginFormTest extends TestCase
         });
     }
 
+    public function fixtures()
+    {
+        return [
+            'user' => [
+                'class' => UserFixture::className(),
+                'dataFile' => '@tests/codeception/fixtures/data/user.php',
+            ],
+        ];
+    }
 }
