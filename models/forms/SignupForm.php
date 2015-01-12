@@ -58,7 +58,9 @@ class SignupForm extends \yii\base\Model
             $this->user->populateRelation('profile', $profile);
             
             if ($this->user->save()) {
-                return $this->user->authorize(true);
+                if ($this->user->authorize(true)) {
+                    return $this->user;
+                }
             }
         }
         
@@ -78,7 +80,7 @@ class SignupForm extends \yii\base\Model
             }
             
             if ($this->user->save(false)) {
-                return Yii::$app->controller->sendMessage(
+                return Yii::$app->notify->sendMessage(
                     $this->email, 
                     Yii::t('app', 'Activate Your Account'), 
                     'emailConfirmToken', 

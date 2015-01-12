@@ -92,6 +92,9 @@ $config = [
         'settings' => [
             'class' => 'app\components\Settings',
         ],
+        'notify' => [
+            'class' => 'app\components\Notify',
+        ],
         'authClientCollection' => [
             'class' => 'yii\authclient\Collection',
             'clients' => [

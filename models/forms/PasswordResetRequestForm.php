@@ -53,7 +53,7 @@ class PasswordResetRequestForm extends \yii\base\Model
             }
             
             if ($user->save(false)) {
-                return Yii::$app->controller->sendMessage(
+                return Yii::$app->notify->sendMessage(
                     $this->email, 
                     Yii::t('app', 'Password Reset'), 
                     'passwordResetToken', 
