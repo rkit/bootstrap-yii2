@@ -14,6 +14,16 @@ $page->login('', '');
 $I->expectTo('see validations errors');
 $I->see('.help-block-error');
 
+$I->amGoingTo('try to login with empty email');
+$page->login('', 'fghfgh');
+$I->expectTo('see validations errors');
+$I->see('.help-block-error');
+
+$I->amGoingTo('try to login with empty password');
+$page->login('admin@example.com', '');
+$I->expectTo('see validations errors');
+$I->see('.help-block-error');
+
 $I->amGoingTo('try to login with wrong credentials');
 $page->login('admin@example.com', 'qrerop2j34');
 $I->expectTo('see validations errors');

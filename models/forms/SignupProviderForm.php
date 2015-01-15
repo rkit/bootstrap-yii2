@@ -170,16 +170,13 @@ class SignupProviderForm extends \yii\base\Model
             case 'facebook': 
                 $profile['profileId']  = $data['id'];
                 $profile['profileUrl'] = $data['link'];
-                $profile['firstName']  = $data['first_name'];
-                $profile['lastName']   = $data['last_name'];
-                $profile['birthDay']   = date_format(date_create_from_format('m/d/Y', $data['birthday']), 'Y-m-d');
+                $profile['fullName']   = trim($data['first_name'] . ' ' . $data['last_name']);
                 break;
                 
             case 'vkontakte': 
                 $profile['profileId']  = $data['id'];
                 $profile['profileUrl'] = 'https://vk.com/id' . $data['id'];
-                $profile['firstName']  = $data['first_name'];
-                $profile['lastName']   = $data['last_name'];
+                $profile['fullName']   = trim($data['first_name'] . ' ' . $data['last_name']);
                 $profile['birthDay']   = date_format(date_create_from_format('d.m.Y', $data['bdate']), 'Y-m-d');
                 $profile['photo']      = str_replace('_50', '_400', $data['photo']);
                 break;
@@ -187,7 +184,7 @@ class SignupProviderForm extends \yii\base\Model
             case 'twitter': 
                 $profile['profileId']  = $data['id'];
                 $profile['profileUrl'] = 'https://twitter.com/' . $data['screen_name'];
-                $profile['firstName']  = $data['name'];
+                $profile['fullName']  = $data['name'];
                 $profile['photo']      = str_replace('_normal', '_400x400', $data['profile_image_url']);
                 break;
         }

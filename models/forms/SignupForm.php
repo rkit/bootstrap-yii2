@@ -10,6 +10,7 @@ class SignupForm extends \yii\base\Model
 {
     public $email;
     public $password;
+    public $fullName;
     
     private $user;
     
@@ -19,6 +20,9 @@ class SignupForm extends \yii\base\Model
     public function rules()
     {
         return [
+            ['fullName', 'required'],
+            ['fullName', 'string', 'max' => 40],
+            
             ['password', 'required'],
             ['password', 'string', 'min' => 6],
 
@@ -38,7 +42,7 @@ class SignupForm extends \yii\base\Model
      */
     public function attributeLabels()
     {
-        return (new User())->attributeLabels();
+        return array_merge((new User())->attributeLabels(), ['fullName' => Yii::t('app', 'Full Name')]);
     }
     
     /**
@@ -55,6 +59,7 @@ class SignupForm extends \yii\base\Model
             $this->user->generateEmailConfirmToken();
             
             $profile = new UserProfile();
+            $profile->fullName = $this->fullName;
             $this->user->populateRelation('profile', $profile);
             
             if ($this->user->save()) {

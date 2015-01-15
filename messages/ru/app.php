@@ -17,6 +17,8 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
+    'First Name' => '@@Имя@@',
+    'Last Name' => '@@Фамилия@@',
     'Select role' => '@@Выберите роль@@',
     'SuperUser' => '@@Суперпользователь@@',
     'Unpublish' => '@@Снять публикацию@@',
@@ -77,10 +79,10 @@ return [
     'Error sending emails' => 'Ошибка при отправке сообщения',
     'Exit' => 'Выход',
     'File types' => 'Типы файлов',
-    'First Name' => 'Имя',
     'Follow the link below to activate your account' => 'Перейдите по ссылке ниже, для активации вашего аккаунта',
     'Follow the link below to reset your password' => 'Перейдите по ссылке ниже, для восстановления пароля',
     'Forgot your password?' => 'Забыли свой пароль?',
+    'Full Name' => 'Полное имя',
     'Gallery' => 'Галерея',
     'Geo' => 'Гео',
     'Go to site' => 'Перейти на сайт',
@@ -97,7 +99,6 @@ return [
     'Inherit role' => 'Наследование роли',
     'Invalid link' => 'Неверная ссылка',
     'Joined' => 'Присоединился',
-    'Last Name' => 'Фамилия',
     'Last login' => 'Последний вход',
     'Link to profile' => 'Ссылка на профиль',
     'List' => 'Список',

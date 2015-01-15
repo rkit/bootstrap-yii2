@@ -9,8 +9,7 @@ use app\components\BaseActive;
  * This is the model class for table "userProfile".
  *
  * @property integer $userId
- * @property string $firstName
- * @property string $lastName
+ * @property string $fullName
  * @property string $photo
  * @property string $birthDay
  *
@@ -32,9 +31,9 @@ class UserProfile extends BaseActive
     public function rules()
     {
         return [
-            [['birthDay'], 'safe'],
-            [['firstName', 'lastName'], 'string', 'max' => 40],
-            [['photo'], 'string', 'max' => 255]
+            ['birthDay', 'safe'],
+            ['fullName', 'string', 'max' => 40],
+            ['photo', 'string', 'max' => 255]
         ];
     }
 
@@ -45,8 +44,7 @@ class UserProfile extends BaseActive
     {
         return [
             'userId' => Yii::t('app', 'User'),
-            'firstName' => Yii::t('app', 'First Name'),
-            'lastName' => Yii::t('app', 'Last Name'),
+            'fullName' => Yii::t('app', 'Full Name'),
             'photo' => Yii::t('app', 'Photo'),
             'birthDay' => Yii::t('app', 'Birth Day'),
         ];
@@ -82,13 +80,5 @@ class UserProfile extends BaseActive
     public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'userId']);
-    }
-    
-    /**
-     * @return string
-     */
-    public function fullName()
-    {
-        return $this->firstName . ' '. $this->lastName;
     }
 }

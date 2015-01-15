@@ -32,17 +32,32 @@ class SignupCest
         $I->see('signup-button');
         
         $I->amGoingTo('try to signup with empty credentials');
-        $page->signup('', '');
+        $page->signup('', '', '');
+        $I->expectTo('see validations errors');
+        $I->see('.help-block-error');
+        
+        $I->amGoingTo('try to signup with empty password');
+        $page->signup('Mike', 'newuser@example.com', '');
+        $I->expectTo('see validations errors');
+        $I->see('.help-block-error');
+        
+        $I->amGoingTo('try to signup with empty email');
+        $page->signup('Mike', '', 'fghfgh');
+        $I->expectTo('see validations errors');
+        $I->see('.help-block-error');
+        
+        $I->amGoingTo('try to signup with empty name');
+        $page->signup('', 'newuser@example.com', 'fghfgh');
         $I->expectTo('see validations errors');
         $I->see('.help-block-error');
         
         $I->amGoingTo('try to signup with wrong credentials');
-        $page->signup('newuser@example.com', 'wrong');
+        $page->signup('Mike', 'newuser@example.com', 'wrong');
         $I->expectTo('see validations errors');
         $I->see('.help-block-error');
         
         $I->amGoingTo('try to signup with correct credentials');
-        $page->signup('newuser@example.com', 'fghfgh');
+        $page->signup('Mike', 'newuser@example.com', 'fghfgh');
         $I->expectTo('see user info');
         $I->see('logout');
         $I->dontSee('signup');

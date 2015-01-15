@@ -5,6 +5,7 @@ namespace tests\codeception\unit\models;
 use Yii;
 use yii\codeception\DbTestCase;
 use app\models\forms\SignupForm;
+use app\models\User;
 use tests\codeception\fixtures\UserFixture;
 use Codeception\Specify;
 
@@ -15,6 +16,7 @@ class SignupFormTest extends DbTestCase
     public function testSignupNotCorrect()
     {
         $model = new SignupForm([
+            'fullName' => 'Mike',
             'email' => 'example@example.com',
             'password' => 'two',
         ]);
@@ -23,9 +25,22 @@ class SignupFormTest extends DbTestCase
         expect('error message should be set', $model->errors)->hasKey('password');
     }
     
+    public function testSignupEmptyFullName()
+    {
+        $model = new SignupForm([
+            'fullName' => '',
+            'email' => 'example@example.com',
+            'password' => 'gw35hhbp',
+        ]);
+
+        expect('model should not signup user', $model->signup())->null();
+        expect('error message should be set', $model->errors)->hasKey('email');
+    }
+    
     public function testSignupEmptyPassword()
     {
         $model = new SignupForm([
+            'fullName' => 'Mike',
             'email' => 'example@example.com',
             'password' => '',
         ]);
@@ -37,6 +52,7 @@ class SignupFormTest extends DbTestCase
     public function testSignupEmptyEmail()
     {
         $model = new SignupForm([
+            'fullName' => 'Mike',
             'email' => '',
             'password' => 'gw35hhbp',
         ]);
@@ -48,6 +64,7 @@ class SignupFormTest extends DbTestCase
     public function testSignupExist()
     {
         $model = new SignupForm([
+            'fullName' => 'Mike',
             'email' => 'example@example.com',
             'password' => 'gw35hhbp',
         ]);
@@ -59,6 +76,7 @@ class SignupFormTest extends DbTestCase
     public function testSignupCorrect()
     {
         $model = new SignupForm([
+            'fullName' => 'Mike',
             'email' => 'demo@example.com',
             'password' => 'demodemo',
         ]);
@@ -69,6 +87,10 @@ class SignupFormTest extends DbTestCase
         
         expect('email should be correct', $user->email)->equals('demo@example.com');
         expect('password should be correct', $user->validatePassword('demodemo'))->true();
+        
+        $user = User::findByEmail('demo@example.com');
+        
+        expect('passwordResetToken should be empty', $user->profile->fullName)->contains('Mike');
         
         if ($user) {
             $user->delete();

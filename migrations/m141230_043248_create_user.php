@@ -42,8 +42,7 @@ class m141230_043248_create_user extends Migration
         //
         $this->createTable('{{%userProfile}}', [
             'userId' => Schema::TYPE_PK,
-            'firstName' => Schema::TYPE_STRING . "(40) NOT NULL",
-            'lastName' => Schema::TYPE_STRING . "(40) NOT NULL",
+            'fullName' => Schema::TYPE_STRING . "(40) NOT NULL",
             'photo' => Schema::TYPE_STRING . " NOT NULL",
             'birthDay' => Schema::TYPE_DATE . " NOT NULL",
         ], $tableOptions);

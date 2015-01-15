@@ -16,11 +16,8 @@ $this->title = Yii::t('app', 'Users');
 
     <div class="row">
         <div class="col-md-8">
-            <!-- firstName -->
-            <?= $form->field($model, 'firstName')->textInput() ?>
-            
-            <!-- lastName -->
-            <?= $form->field($model, 'lastName')->textInput() ?>
+            <!-- fullName -->
+            <?= $form->field($model, 'fullName')->textInput() ?>
             
             <!-- birthDay -->
             <?php $model->birthDay = $model->birthDay > 0 ? $model->birthDay : '' ?>
