@@ -381,7 +381,7 @@ class File extends BaseActive
                     
                     if (file_exists($file->pathTmp(true)) && FileHelper::createDirectory($file->dir(true))) {
                         if (!rename($file->pathTmp(true), $file->path(true))) {
-                           return false;
+                            return false;
                         }
                     } else {
                         return false;
