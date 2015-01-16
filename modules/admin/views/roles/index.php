@@ -29,7 +29,7 @@ $this->title = Yii::t('app', 'Roles');
             'attribute' => 'name',
             'format' => 'raw',
             'value' => function ($model) {
-                return Html::a($model['name'], ['edit', 'name' => $model['name']]);
+                return Html::a(e($model['name']), ['edit', 'name' => $model['name']]);
             }
         ],
             // description

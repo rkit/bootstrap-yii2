@@ -38,6 +38,7 @@ class City extends BaseActive
             ['countryId', 'integer'],
 
             ['regionId', 'integer'],
+            ['regionId', 'default', 'value' => null],
 
             ['area', 'string', 'max' => 150],
             
@@ -59,7 +60,7 @@ class City extends BaseActive
             'important' => Yii::t('app', 'Big city'),
             'regionId' => Yii::t('app', 'Region'),
             'title' => Yii::t('app', 'Title'),
-            'area' => Yii::t('app', 'Area'),
+            'area' => Yii::t('app', 'District'),
         ];
     }
 

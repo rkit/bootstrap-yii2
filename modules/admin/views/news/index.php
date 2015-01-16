@@ -32,7 +32,7 @@ $this->title = Yii::t('app', 'News');
             'format' => 'raw',
             'contentOptions' => ['style' => 'width: 400px'],
             'value' => function ($model) {
-                return Html::a($model['title'], ['edit', 'id' => $model['id']]);
+                return Html::a(e($model['title']), ['edit', 'id' => $model['id']]);
             }
         ],
             // type

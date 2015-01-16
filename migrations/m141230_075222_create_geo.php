@@ -42,7 +42,7 @@ class m141230_075222_create_geo extends Migration
             'cityId' => Schema::TYPE_PK,
             'countryId' => Schema::TYPE_INTEGER . " NOT NULL DEFAULT 0",
             'important' => "tinyint(1) NOT NULL DEFAULT 0",
-            'regionId' => Schema::TYPE_INTEGER . " NOT NULL DEFAULT 0",
+            'regionId' => Schema::TYPE_INTEGER . " DEFAULT NULL",
             'title' => Schema::TYPE_STRING . "(150) NOT NULL",
             'area' => Schema::TYPE_STRING . "(150) NOT NULL",
         ], $tableOptions);

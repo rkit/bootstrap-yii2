@@ -29,7 +29,7 @@ $this->title = Yii::t('app', 'Countries');
             'attribute' => 'title',
             'format' => 'raw',
             'value' => function ($model) {
-                return Html::a($model['title'], ['edit', 'id' => $model['countryId']]);
+                return Html::a(e($model['title']), ['edit', 'id' => $model['countryId']]);
             }
         ],
             // action buttons

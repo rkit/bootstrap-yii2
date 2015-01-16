@@ -17,6 +17,7 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
+    'Area' => '@@Область@@',
     'First Name' => '@@Имя@@',
     'Last Name' => '@@Фамилия@@',
     'Select role' => '@@Выберите роль@@',
@@ -40,7 +41,6 @@ return [
     'An error occured, try again later…' => 'Произошла ошибка, попробуйте позже…',
     'Are you sure you want to delete this record?' => 'Вы уверены, что хотите удалить эту запись?',
     'Are you sure you want to delete this records?' => 'Вы уверены, что хотите удалить эти записи?',
-    'Area' => 'Область',
     'Bad request' => 'Неверный запрос',
     'Big city' => 'Крупный город',
     'Birth Day' => 'День Рождения',
@@ -68,6 +68,7 @@ return [
     'Deleted' => 'Удален',
     'Description' => 'Описание',
     'Disable' => 'Отключить',
+    'District' => 'Район',
     'Edit' => 'Редактировать',
     'Email' => 'Email',
     'Enable' => 'Включить',

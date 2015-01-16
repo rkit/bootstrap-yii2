@@ -32,7 +32,7 @@ $this->title = Yii::t('app', 'Users');
             'format' => 'raw',
             'value' => function ($model) {
                 $username = $model['username'] ? $model['username'] : '(' . Yii::t('app', 'not set') . ')';
-                return Html::a($username, ['edit', 'id' => $model['id']]) . 
+                return Html::a(e($username), ['edit', 'id' => $model['id']]) . 
                 (
                     $model['id'] === user()->id 
                     ? ' <span class="label label-info">' . Yii::t('app', 'it`s me') . '</span>' 
@@ -46,7 +46,7 @@ $this->title = Yii::t('app', 'Users');
             'format' => 'raw',
             'value' => function ($model) {
                 $email = $model['email'] ? $model['email'] : '(' . Yii::t('app', 'not set') . ')';
-                return Html::a($email, ['edit', 'id' => $model['id']]);
+                return Html::a(e($email), ['edit', 'id' => $model['id']]);
             }
         ],
             // dateCreate

@@ -28,7 +28,7 @@ $this->title = Yii::t('app', 'Regions');
                  'results'  => new JsExpression('function (data) { return {results: data}; }')
              ],
              'initSelection' => new JsExpression('function (element, callback) {
-                 var data = {id: element.val(), text: "'.@$model->country->title.'"};
+                 var data = {id: element.val(), text: "'.@e($model->country->title).'"};
                  callback(data);
              }')
          ]

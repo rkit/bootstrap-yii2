@@ -31,7 +31,7 @@ $this->title = Yii::t('app', 'Cities');
             'attribute' => 'title',
             'format' => 'raw',
             'value' => function ($model) {
-                return Html::a($model['title'], ['edit', 'id' => $model['cityId']]);
+                return Html::a(e($model['title']), ['edit', 'id' => $model['cityId']]);
             }
         ],
             // countryId
@@ -56,7 +56,7 @@ $this->title = Yii::t('app', 'Cities');
                         'results'  => new JsExpression('function (data) { return {results: data}; }')
                     ],
                     'initSelection' => new JsExpression('function (element, callback) {
-                        var data = {id: element.val(), text: "'.@$citySearch->country->title.'"};
+                        var data = {id: element.val(), text: "'.@e($citySearch->country->title).'"};
                         callback(data);
                     }')
                 ]
@@ -84,7 +84,7 @@ $this->title = Yii::t('app', 'Cities');
                         'results'  => new JsExpression('function (data) { return {results: data}; }')
                     ],
                     'initSelection' => new JsExpression('function (element, callback) {
-                        var data = {id: element.val(), text: "'.@$citySearch->region->title.'"};
+                        var data = {id: element.val(), text: "'.@e($citySearch->region->title).'"};
                         callback(data);
                     }')
                 ]

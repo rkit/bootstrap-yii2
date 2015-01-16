@@ -29,7 +29,7 @@ $this->title = Yii::t('app', 'Tags');
             'attribute' => 'title',
             'format' => 'raw',
             'value' => function ($model) {
-                return Html::a($model['title'], ['edit', 'id' => $model['id']]);
+                return Html::a(e($model['title']), ['edit', 'id' => $model['id']]);
             }
         ],
             // count
