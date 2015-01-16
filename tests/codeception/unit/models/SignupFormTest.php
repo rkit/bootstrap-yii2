@@ -16,7 +16,7 @@ class SignupFormTest extends DbTestCase
     public function testSignupNotCorrect()
     {
         $model = new SignupForm([
-            'fullName' => 'Mike',
+            'fullName' => 'Demo',
             'email' => 'example@example.com',
             'password' => 'two',
         ]);
@@ -40,7 +40,7 @@ class SignupFormTest extends DbTestCase
     public function testSignupEmptyPassword()
     {
         $model = new SignupForm([
-            'fullName' => 'Mike',
+            'fullName' => 'Demo',
             'email' => 'example@example.com',
             'password' => '',
         ]);
@@ -52,7 +52,7 @@ class SignupFormTest extends DbTestCase
     public function testSignupEmptyEmail()
     {
         $model = new SignupForm([
-            'fullName' => 'Mike',
+            'fullName' => 'Demo',
             'email' => '',
             'password' => 'gw35hhbp',
         ]);
@@ -64,7 +64,7 @@ class SignupFormTest extends DbTestCase
     public function testSignupExist()
     {
         $model = new SignupForm([
-            'fullName' => 'Mike',
+            'fullName' => 'Demo',
             'email' => 'example@example.com',
             'password' => 'gw35hhbp',
         ]);
@@ -76,9 +76,9 @@ class SignupFormTest extends DbTestCase
     public function testSignupCorrect()
     {
         $model = new SignupForm([
-            'fullName' => 'Mike',
+            'fullName' => 'Demo',
             'email' => 'demo@example.com',
-            'password' => 'demodemo',
+            'password' => 'gw35hhbp',
         ]);
         
         $user = $model->signup();
@@ -86,11 +86,11 @@ class SignupFormTest extends DbTestCase
         $this->assertInstanceOf('app\models\User', $user, 'user should be valid');
         
         expect('email should be correct', $user->email)->equals('demo@example.com');
-        expect('password should be correct', $user->validatePassword('demodemo'))->true();
+        expect('password should be correct', $user->validatePassword('gw35hhbp'))->true();
         
         $user = User::findByEmail('demo@example.com');
         
-        expect('passwordResetToken should be empty', $user->profile->fullName)->contains('Mike');
+        expect('passwordResetToken should be empty', $user->profile->fullName)->contains('Demo');
         
         if ($user) {
             $user->delete();

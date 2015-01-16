@@ -14,7 +14,7 @@ class SignupCest
     public function _after($event)
     {
         User::deleteAll([
-            'email' => 'newuser@example.com'
+            'email' => 'demo@example.com'
         ]);
     }
     
@@ -37,27 +37,27 @@ class SignupCest
         $I->see('.help-block-error');
         
         $I->amGoingTo('try to signup with empty password');
-        $page->signup('Mike', 'newuser@example.com', '');
+        $page->signup('demo', 'demo@example.com', '');
         $I->expectTo('see validations errors');
         $I->see('.help-block-error');
         
         $I->amGoingTo('try to signup with empty email');
-        $page->signup('Mike', '', 'fghfgh');
+        $page->signup('demo', '', 'fghfgh');
         $I->expectTo('see validations errors');
         $I->see('.help-block-error');
         
         $I->amGoingTo('try to signup with empty name');
-        $page->signup('', 'newuser@example.com', 'fghfgh');
+        $page->signup('', 'demo@example.com', 'fghfgh');
         $I->expectTo('see validations errors');
         $I->see('.help-block-error');
         
         $I->amGoingTo('try to signup with wrong credentials');
-        $page->signup('Mike', 'newuser@example.com', 'wrong');
+        $page->signup('demo', 'demo@example.com', 'wrong');
         $I->expectTo('see validations errors');
         $I->see('.help-block-error');
         
         $I->amGoingTo('try to signup with correct credentials');
-        $page->signup('Mike', 'newuser@example.com', 'fghfgh');
+        $page->signup('demo', 'demo@example.com', 'fghfgh');
         $I->expectTo('see user info');
         $I->see('logout');
         $I->dontSee('signup');
