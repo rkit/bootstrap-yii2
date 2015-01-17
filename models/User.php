@@ -78,7 +78,7 @@ class User extends BaseActive implements IdentityInterface
             //
             ['role', 'string', 'on' => 'admin-edit'],
             
-            ['username', 'required', 'when' => function($model) {
+            ['username', 'required', 'when' => function ($model) {
                 return empty($model->email);
             }, 'whenClient' => "function (attribute, value) {
                 return !$('#user-email').val().length

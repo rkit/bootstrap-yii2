@@ -77,7 +77,7 @@ class Module extends \yii\base\Module
     public function defaultGridButtons($buttons = ['status', 'delete'])
     {
         $defaultButtons = [  
-            'status' => function($url, $model) {
+            'status' => function ($url, $model) {
                 if ($model->status == $model::STATUS_BLOCKED) {
                     return Html::a(
                         '<span class="glyphicon glyphicon-play"></span>',
@@ -101,7 +101,7 @@ class Module extends \yii\base\Module
                 }
             },
             
-            'delete' => function($url, $model) {
+            'delete' => function ($url, $model) {
                 return Html::a(
                     '<span class="glyphicon glyphicon-remove"></span>',
                     ['delete', 'id' => $model->primaryKey],
