@@ -6,6 +6,7 @@ use yii;
 use yii\base\Behavior;
 use yii\base\InvalidParamException;
 use yii\db\ActiveRecord;
+use yii\helpers\ArrayHelper;
 use app\models\File;
 
 /** 
@@ -137,62 +138,68 @@ class FileBehavior extends Behavior
         $rules = $this->attributes[$attribute]['rules'];
         
         if (isset($rules['imageSize'])) {
-            extract($rules['imageSize']);
-            
-            $maxWidth  = isset($maxWidth)  ? $maxWidth  : null;
-            $minWidth  = isset($minWidth)  ? $minWidth  : null;
-            $maxHeight = isset($maxHeight) ? $maxHeight : null;
-            $minHeight = isset($minHeight) ? $minHeight : null;
-            
-            $allSizes     = $maxWidth && $minWidth  && $maxHeight && $minHeight;
-            $isMinSize    = $minWidth && $minHeight && !$maxWidth && !$maxHeight;
-            $isMaxSize    = $maxWidth && $maxHeight && !$minWidth && !$minHeight;
-            $isStrongSize = $allSizes && ($maxWidth == $minWidth && $maxHeight == $minHeight);
-            
-            if ($isStrongSize) {
+            $maxWidth = ArrayHelper::getValue($rules['imageSize'], 'maxWidth');
+            $minWidth = ArrayHelper::getValue($rules['imageSize'], 'minWidth');
+            $maxHeight = ArrayHelper::getValue($rules['imageSize'], 'maxHeight');
+            $minHeight = ArrayHelper::getValue($rules['imageSize'], 'minHeight');
+
+            if (count($rules['imageSize']) == 4 && ($maxWidth == $minWidth && $maxHeight == $minHeight)) {
                 $text .= Yii::t('app', 'Image size') . ': ' . $maxWidth . 'x' . $maxHeight . 'px ';
-            } elseif ($isMinSize) {
+            } elseif (count($rules['imageSize']) == 2 && $minWidth && $minHeight) {
                 $text .= Yii::t('app', 'Min. size of image') . ': ' . $minWidth . 'x' . $minHeight . 'px ';
-            } elseif ($isMaxSize) {
+            } elseif (count($rules['imageSize']) == 2 && $maxWidth && $maxHeight) {
                 $text .= Yii::t('app', 'Max. size if image') . ': ' . $maxWidth . 'x' . $maxHeight . 'px ';
             } else {
-                foreach ($rules['imageSize'] as $rule => $value) {
-                    switch ($rule) {
-                        case 'minWidth':
-                            $text .= Yii::t('app', 'Min. width') . ' ' . $value . 'px ';
-                            break;
-                        case 'minHeight':
-                            $text .= Yii::t('app', 'Min. height') . ' ' . $value . 'px ';
-                            break;
-                        case 'maxWidth':
-                            $text .= Yii::t('app', 'Max. width') . ' ' . $value . 'px ';
-                            break;
-                        case 'maxHeight':
-                            $text .= Yii::t('app', 'Max. height') . ' ' . $value . 'px ';
-                            break;
-                    }
-                }
+                $text .= $this->prepareImageSizeDescription($rules['imageSize']);
             }
         }
     
         $text = !empty($text) ? $text . '<br>' : $text;
         
         if (isset($rules['extensions'])) {
-            $text .= 
-                Yii::t('app', 'File types') . 
-                ': ' . 
-                strtoupper(implode(', ', $rules['extensions'])) . 
-                ' ';
+            $text .= $this->prepareExtensionDescription($rules['extensions']);
             $text = isset($rules['maxSize']) ? $text . '<br>' : $text;
         }
         
         if (isset($rules['maxSize'])) {
-            $text .= 
-                Yii::t('app', 'Max. file size') . 
-                ': ' . 
-                Yii::$app->formatter->asShortSize($rules['maxSize']) . ' ';
+            $text .= $this->prepareMaxSizeDescription($rules['maxSize']);
         }
         
         return $text;
+    }
+    
+    private function prepareMaxSizeDescription($rules)
+    {
+        $maxSize = Yii::$app->formatter->asShortSize($rules);
+        return Yii::t('app', 'Max. file size') . ': ' . $maxSize . ' ';
+    }
+    
+    private function prepareExtensionDescription($rules)
+    {
+        $extensions = strtoupper(implode(', ', $rules));
+        return Yii::t('app', 'File types') . ': ' . $extensions . ' ';
+    }
+    
+    private function prepareImageSizeDescription($rules)
+    {
+        $text = '';
+        foreach ($rules as $rule => $value) {
+            switch ($rule) {
+                case 'minWidth':
+                    $text .= Yii::t('app', 'Min. width') . ' ' . $value . 'px ';
+                    break;
+                case 'minHeight':
+                    $text .= Yii::t('app', 'Min. height') . ' ' . $value . 'px ';
+                    break;
+                case 'maxWidth':
+                    $text .= Yii::t('app', 'Max. width') . ' ' . $value . 'px ';
+                    break;
+                case 'maxHeight':
+                    $text .= Yii::t('app', 'Max. height') . ' ' . $value . 'px ';
+                    break;
+            }
+        }
+        
+        return $text;   
     }
 }
