@@ -1,0 +1,37 @@
+<?php
+
+$profiling  = true;
+$allowedIPs = ['127.0.0.1'];
+
+/* Db
+-------------------------------------------------- */
+
+$config['components']['db'] = [
+    'class'                 => 'yii\db\Connection',
+    'dsn'                   => 'mysql:host=localhost;dbname=bootstrap2',
+    'username'              => 'root',
+    'password'              => '',
+    'emulatePrepare'        => true,
+    'charset'               => 'utf8',
+    'enableSchemaCache'     => YII_ENV_DEV ? false : true
+];
+
+/* Gii & Profiling
+-------------------------------------------------- */
+
+if (YII_ENV_DEV) {
+    $config['bootstrap'][] = 'gii';
+    $config['modules']['gii'] = [
+        'class' => 'yii\gii\Module',
+    ];
+    
+    if ($profiling) {
+        $config['bootstrap'][] = 'debug';
+        $config['modules']['debug'] = [
+            'class' => 'yii\debug\Module',
+            'allowedIPs' => $allowedIPs
+        ];
+    }
+}
+
+return $config;

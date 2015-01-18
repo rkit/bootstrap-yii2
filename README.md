@@ -23,7 +23,12 @@ Screenshots:
    composer create-project --prefer-dist --stability=dev rkit/bootstrap2
    ```
 
-2. Create a new database and configuration file in [config/local/config.php](https://gist.github.com/rkit/8fa95259aace1bf4120b)
+2. Create a new local config
+
+   ```
+   php yii create-local-config/init
+   ```
+   > See in **config/local/config.php**
 
 3. Run
    ```

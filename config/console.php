@@ -23,6 +23,9 @@ $config = [
             'itemChildTable'  => 'authItemChild', 
             'assignmentTable' => 'authAssignment',
         ],
+        'db' => [
+            'class' => 'yii\db\Connection',        
+        ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [
@@ -36,6 +39,8 @@ $config = [
     'params' => $params,
 ];
 
-require_once __DIR__ . '/local/config.php';
+if (file_exists(__DIR__ . '/local/config.php')) {
+    require_once __DIR__ . '/local/config.php';
+}
 
 return $config;
