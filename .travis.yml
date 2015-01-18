@@ -14,7 +14,7 @@ install:
   - composer global require "codeception/codeception=2.0.*" "codeception/specify=*" "codeception/verify=*"
   - export PATH="$HOME/.composer/vendor/bin:$PATH"
 before_script:
-  - chmod a+w runtime
+  - chmod -R a+w runtime
   - mysql -e 'create database bootstrap2_tests;'
   - php yii create-local-config/init
   - cd tests
