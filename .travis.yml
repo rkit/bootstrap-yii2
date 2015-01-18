@@ -1,0 +1,19 @@
+language: php
+
+php:
+  - 5.5
+
+install:
+  - composer self-update && composer --version
+  - composer global require "fxp/composer-asset-plugin:1.0.0-beta4"
+  - composer install --prefer-dist --dev
+  - composer global require "codeception/codeception=2.0.*" "codeception/specify=*" "codeception/verify=*"
+before_script:
+  - mysql -e 'create database bootstrap2_tests;'
+  - php yii create-local-config/init
+  - cd tests
+  - php codeception/bin/yii migrate --migrationPath=@yii/rbac/migrations/ --interactive=0
+  - php codeception/bin/yii migrate --interactive=0
+  - ../vendor/bin/codecept build
+script:
+  - ../vendor/bin/codecept run
