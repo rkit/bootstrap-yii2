@@ -3,17 +3,21 @@ language: php
 php:
   - 5.5
 
+cache:
+  directories:
+    - vendor
+    - $HOME/.composer/cache
 install:
-  - composer self-update && composer --version
+  - composer self-update
   - composer global require "fxp/composer-asset-plugin:1.0.0-beta4"
   - composer install --prefer-dist --dev
-  - composer global require "codeception/codeception=2.0.*" "codeception/specify=*" "codeception/verify=*"
+  - composer require --dev "codeception/codeception=2.0.*" "codeception/specify=*" "codeception/verify=*"
 before_script:
   - mysql -e 'create database bootstrap2_tests;'
   - php yii create-local-config/init
   - cd tests
   - php codeception/bin/yii migrate --migrationPath=@yii/rbac/migrations/ --interactive=0
   - php codeception/bin/yii migrate --interactive=0
-  - codecept build
+  - ../vendor/bin/codecept build
 script:
-  - codecept run
+  - ../vendor/bin/codecept run
