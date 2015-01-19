@@ -1,6 +1,7 @@
 Bootstrap for Yii2
 ========
 
+[![Build Status](https://img.shields.io/travis/rkit/bootstrap2/master.svg?style=flat-square)](https://travis-ci.org/rkit/bootstrap2)
 [![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/rkit/bootstrap2/master.svg?style=flat-square)](https://scrutinizer-ci.com/g/rkit/bootstrap2/?branch=master)
 
 #### The template contains the basic features including users, roles and more
