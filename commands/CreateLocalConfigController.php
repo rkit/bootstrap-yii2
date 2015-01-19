@@ -10,7 +10,7 @@ use yii\helpers\Console;
  * Command for create local config
  */
 class CreateLocalConfigController extends Controller
-{    
+{
     public function actionInit()
     {   
         if (copy(
