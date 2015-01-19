@@ -2,6 +2,8 @@ language: php
 
 php:
   - 5.5
+  
+sudo: false
 
 cache:
   directories:
@@ -22,4 +24,4 @@ before_script:
   - php codeception/bin/yii migrate --interactive=0
   - codecept build
 script:
-  - sudo codecept run
+  - codecept run
