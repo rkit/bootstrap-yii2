@@ -16,7 +16,7 @@ AdminAsset::register($this);
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><?= e(strip_tags($this->title)) ?> / <?= Yii::t('app', 'Control Panel') ?></title>
+    <title><?= app\helpers\Util::clearText($this->title) ?> / <?= Yii::t('app', 'Control Panel') ?></title>
     <?= Html::csrfMetaTags() ?>
     <meta name="description" content="<?= e(Yii::$app->controller->description) ?>">
     <meta name="keywords" content="<?= e(Yii::$app->controller->keywords) ?>">
