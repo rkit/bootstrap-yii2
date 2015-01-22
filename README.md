@@ -49,6 +49,10 @@ php requirements.php
    php yii rbac/init
    ```
 
+**Authentication in control panel:**  
+username: editor  
+password: fghfgh
+
 ## Debug Mode
 
 ~~~~
