@@ -1,17 +1,12 @@
 <?php
 
 use yii\db\Schema;
-use yii\db\Migration;
+use app\migrations\Migration;
 
 class m141230_081319_create_news extends Migration
 {
     public function safeUp()
-    {
-        $tableOptions = null;
-        if ($this->db->driverName === 'mysql') {
-            $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB';
-        }
-        
+    { 
         //
         // News
         //
@@ -26,7 +21,7 @@ class m141230_081319_create_news extends Migration
             'datePub' => Schema::TYPE_TIMESTAMP . " NOT NULL DEFAULT '0000-00-00 00:00:00'",
             'reference' => Schema::TYPE_STRING . " NOT NULL",
             'status' => "tinyint(1) NOT NULL DEFAULT 0",
-        ], $tableOptions);
+        ], $this->tableOptions);
         
         $this->createIndex('title', '{{%news}}', 'title');
         $this->createIndex('typeId', '{{%news}}', 'typeId');
@@ -38,7 +33,7 @@ class m141230_081319_create_news extends Migration
         $this->createTable('{{%newsToTag}}', [
             'newsId' => Schema::TYPE_INTEGER . " NOT NULL DEFAULT 0",
             'tagId' => Schema::TYPE_INTEGER . " NOT NULL DEFAULT 0",
-        ], $tableOptions);
+        ], $this->tableOptions);
         
         $this->addPrimaryKey('key', '{{%newsToTag}}', 'newsId,tagId');
         
@@ -52,7 +47,7 @@ class m141230_081319_create_news extends Migration
         $this->createTable('{{%newsType}}', [
             'id' => Schema::TYPE_PK,
             'title' => Schema::TYPE_STRING . " NOT NULL",
-        ], $tableOptions);
+        ], $this->tableOptions);
     }
 
     public function safeDown()

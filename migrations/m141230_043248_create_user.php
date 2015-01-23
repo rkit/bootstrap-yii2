@@ -1,17 +1,12 @@
 <?php
 
 use yii\db\Schema;
-use yii\db\Migration;
+use app\migrations\Migration;
 
 class m141230_043248_create_user extends Migration
-{
+{ 
     public function up()
     {
-        $tableOptions = null;
-        if ($this->db->driverName === 'mysql') {
-            $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB';
-        }
-                
         //
         // User
         // 
@@ -30,7 +25,7 @@ class m141230_043248_create_user extends Migration
             'ip' => Schema::TYPE_BIGINT . "(20) NOT NULL DEFAULT 0",
             'role' => Schema::TYPE_STRING . "(64) NOT NULL",
             'status' => "tinyint(1) NOT NULL DEFAULT 0",
-        ], $tableOptions);
+        ], $this->tableOptions);
 
         $this->createIndex('email', '{{%user}}', 'email', true);
         $this->createIndex('username', '{{%user}}', 'username', true);
@@ -45,7 +40,7 @@ class m141230_043248_create_user extends Migration
             'fullName' => Schema::TYPE_STRING . "(40) NOT NULL",
             'photo' => Schema::TYPE_STRING . " NOT NULL",
             'birthDay' => Schema::TYPE_DATE . " NOT NULL",
-        ], $tableOptions);
+        ], $this->tableOptions);
         
         $this->addForeignKey(
             'fk_userProfile_user', '{{%userProfile}}', 'userId', '{{%user}}', 'id', 'CASCADE', 'CASCADE'
@@ -62,7 +57,7 @@ class m141230_043248_create_user extends Migration
             'profileUrl' => Schema::TYPE_STRING . " NOT NULL",
             'accessToken' => Schema::TYPE_STRING . " NOT NULL",
             'accessTokenSecret' => Schema::TYPE_STRING . " NOT NULL",
-        ], $tableOptions);
+        ], $this->tableOptions);
         
         $this->createIndex('userId', '{{%userToProvider}}', 'userId');
         $this->createIndex('provider_profileId', '{{%userToProvider}}', 'provider,profileId');

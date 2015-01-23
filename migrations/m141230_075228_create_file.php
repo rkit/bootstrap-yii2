@@ -1,17 +1,12 @@
 <?php
 
 use yii\db\Schema;
-use yii\db\Migration;
+use app\migrations\Migration;
 
 class m141230_075228_create_file extends Migration
 {
     public function safeUp()
     {
-        $tableOptions = null;
-        if ($this->db->driverName === 'mysql') {
-            $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB';
-        }
-        
         $this->createTable('{{%file}}', [
             'id' => Schema::TYPE_PK,
             'userId' => Schema::TYPE_INTEGER . " NOT NULL DEFAULT 0",
@@ -26,7 +21,7 @@ class m141230_075228_create_file extends Migration
             'ip' => Schema::TYPE_BIGINT . "(20) NOT NULL DEFAULT 0",
             'tmp' => "tinyint(1) NOT NULL DEFAULT 0",
             'position' => Schema::TYPE_INTEGER . " NOT NULL DEFAULT 0",
-        ], $tableOptions);
+        ], $this->tableOptions);
         
         $this->createIndex('owner', '{{%file}}', 'ownerId,ownerType');
     }

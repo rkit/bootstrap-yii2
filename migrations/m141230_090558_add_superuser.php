@@ -1,8 +1,8 @@
 <?php
 
 use yii\db\Schema;
-use yii\db\Migration;
 use app\models\User;
+use app\migrations\Migration;
 
 class m141230_090558_add_superuser extends Migration
 {

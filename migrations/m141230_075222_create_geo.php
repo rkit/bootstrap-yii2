@@ -1,24 +1,19 @@
 <?php
 
 use yii\db\Schema;
-use yii\db\Migration;
+use app\migrations\Migration;
 
 class m141230_075222_create_geo extends Migration
 {
     public function safeUp()
     {
-        $tableOptions = null;
-        if ($this->db->driverName === 'mysql') {
-            $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB';
-        }
-        
         //
         // Country
         //
         $this->createTable('{{%country}}', [
             'countryId' => Schema::TYPE_PK,
             'title' => Schema::TYPE_STRING . "(60) NOT NULL",
-        ], $tableOptions);
+        ], $this->tableOptions);
         
         //
         // Region
@@ -27,7 +22,7 @@ class m141230_075222_create_geo extends Migration
             'regionId' => Schema::TYPE_PK,
             'countryId' => Schema::TYPE_INTEGER . " NOT NULL DEFAULT 0",
             'title' => Schema::TYPE_STRING . "(150) NOT NULL",
-        ], $tableOptions);
+        ], $this->tableOptions);
         
         $this->createIndex('countryId', '{{%region}}', 'countryId');
         
@@ -45,7 +40,7 @@ class m141230_075222_create_geo extends Migration
             'regionId' => Schema::TYPE_INTEGER . " DEFAULT NULL",
             'title' => Schema::TYPE_STRING . "(150) NOT NULL",
             'area' => Schema::TYPE_STRING . "(150) NOT NULL",
-        ], $tableOptions);
+        ], $this->tableOptions);
         
         $this->createIndex('countryId', '{{%city}}', 'countryId');
         $this->createIndex('title', '{{%city}}', 'title');
