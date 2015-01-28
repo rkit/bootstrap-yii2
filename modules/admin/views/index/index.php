@@ -2,7 +2,7 @@
 <p class="lead">
     <span class="label label-info">
         <?= Yii::t('app', 'You') ?>
-        «<?= @Yii::$app->authManager->getRole(user()->identity->role)->description ?>»
+        «<?= @Yii::$app->authManager->getRole(Yii::$app->user->identity->role)->description ?>»
     </span>
 </p>
 

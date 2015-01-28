@@ -19,7 +19,7 @@ class RegionSearch extends Region
     /**
      * @var int
      */
-    public $countryId;
+    public $country_id;
         
     /**
      * @inheritdoc
@@ -29,7 +29,7 @@ class RegionSearch extends Region
         return [
             ['title', 'string'],
 
-            ['countryId', 'integer'],
+            ['country_id', 'integer'],
         ];
     }
     
@@ -62,7 +62,7 @@ class RegionSearch extends Region
         }
 
         $query->andFilterWhere([
-            'countryId' => $this->countryId,
+            'country_id' => $this->country_id,
         ]);
         
         $query->andFilterWhere(['like', 'title', $this->title]);

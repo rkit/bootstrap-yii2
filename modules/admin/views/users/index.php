@@ -32,9 +32,9 @@ $this->title = Yii::t('app', 'Users');
             'format' => 'raw',
             'value' => function ($model) {
                 $username = $model['username'] ? $model['username'] : '(' . Yii::t('app', 'not set') . ')';
-                return Html::a(e($username), ['edit', 'id' => $model['id']]) . 
+                return Html::a(Html::encode($username), ['edit', 'id' => $model['id']]) . 
                 (
-                    $model['id'] === user()->id 
+                    $model['id'] === Yii::$app->user->id 
                     ? ' <span class="label label-info">' . Yii::t('app', 'it`s me') . '</span>' 
                     : ''
                 );
@@ -46,18 +46,18 @@ $this->title = Yii::t('app', 'Users');
             'format' => 'raw',
             'value' => function ($model) {
                 $email = $model['email'] ? $model['email'] : '(' . Yii::t('app', 'not set') . ')';
-                return Html::a(e($email), ['edit', 'id' => $model['id']]);
+                return Html::a(Html::encode($email), ['edit', 'id' => $model['id']]);
             }
         ],
-            // dateCreate
+            // date_create
         [
-            'attribute' => 'dateCreate',
+            'attribute' => 'date_create',
             'format' => 'raw',
             'contentOptions' => ['style' => 'width: 180px'],
             'filter' => DatePicker::widget(
                 [
                     'model' => $userSearch,
-                    'attribute' => 'dateCreate',
+                    'attribute' => 'date_create',
                     'pluginOptions' => [
                     	'autoclose' => true,
                     	'format' => 'yyyy-mm-dd',
@@ -69,10 +69,10 @@ $this->title = Yii::t('app', 'Users');
             ),
             'value' => function ($model) {
                 return 
-                    Yii::$app->formatter->asDateTime($model->dateCreate) . '<br>' .
+                    Yii::$app->formatter->asDateTime($model->date_create) . '<br>' .
                     '<span class="text-muted small">
                         ' . Yii::t('app', 'Login') . ': ' . 
-                        ($model->dateLogin > 0 ? Yii::$app->formatter->asDateTime($model->dateLogin) : '—') .
+                        ($model->date_login > 0 ? Yii::$app->formatter->asDateTime($model->date_login) : '—') .
                     '</span>';
             }
         ],
@@ -94,7 +94,10 @@ $this->title = Yii::t('app', 'Users');
                 'role',
                 ArrayHelper::map($roles, 'name', 'description'),
                 ['class' => 'form-control', 'prompt' => Yii::t('app', 'All roles')]
-            )
+            ),
+            'value' => function ($model) {
+                return $model->roles ? $model->roles->description : '—';
+            },
         ],
             // status
         [

@@ -6,7 +6,7 @@ use app\models\User;
 $I = new FunctionalTester($scenario);
 $I->wantTo('ensure that reset password works');
 
-$page = ResetPasswordPage::openBy($I, ['token' => User::findByEmail('admin@example.com')->passwordResetToken]);
+$page = ResetPasswordPage::openBy($I, ['token' => User::findByEmail('admin@example.com')->password_reset_token]);
 
 $I->amGoingTo('try to with empty credentials');
 $page->submit('');

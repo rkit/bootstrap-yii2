@@ -19,11 +19,11 @@ class NewsSearch extends News
     /**
      * @var int
      */
-    public $typeId;
+    public $type_id;
     /**
      * @var timestamp
      */
-    public $datePub;
+    public $date_pub;
     /**
      * @var string
      */
@@ -37,9 +37,9 @@ class NewsSearch extends News
         return [
             ['title', 'string'],
             
-            ['typeId', 'integer'],
+            ['type_id', 'integer'],
             
-            ['datePub', 'date', 'format' => 'yyyy-mm-dd'],
+            ['date_pub', 'date', 'format' => 'yyyy-mm-dd'],
             
             ['status', 'integer'],
             ['status', 'in', 'range' => array_keys(News::getStatuses())],
@@ -60,7 +60,7 @@ class NewsSearch extends News
             'query' => $query,
             'sort' => [
                 'defaultOrder' => [
-                    'datePub' => SORT_DESC,
+                    'date_pub' => SORT_DESC,
                 ]
             ],
             'pagination' => [
@@ -70,9 +70,9 @@ class NewsSearch extends News
         
         $dataProvider->getPagination()->setPageSize(Yii::$app->request->get('pageSize'), true);
        
-        $dataProvider->sort->attributes['typeId'] = [
-            'asc'  => ['newsType.title' => SORT_ASC],
-            'desc' => ['newsType.title' => SORT_DESC],
+        $dataProvider->sort->attributes['type_id'] = [
+            'asc'  => ['news_type.title' => SORT_ASC],
+            'desc' => ['news_type.title' => SORT_DESC],
         ];
             
         if (!($this->load($params) && $this->validate())) {
@@ -80,9 +80,9 @@ class NewsSearch extends News
         }
         
         $query->andFilterWhere([
-            'typeId' => $this->typeId,
+            'type_id' => $this->type_id,
             'status' => $this->status,
-            'DATE(datePub)' => $this->datePub
+            'DATE(date_pub)' => $this->date_pub
         ]);
         
         $query->andFilterWhere(['like', 'news.title', $this->title]);

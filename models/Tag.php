@@ -57,7 +57,7 @@ class Tag extends BaseActive
     {
         if (parent::beforeSave($insert)) {
             if ($insert) {
-                $this->userId = user()->id;
+                $this->user_id = Yii::$app->user->id;
             }
             
             return true;

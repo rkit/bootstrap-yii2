@@ -6,7 +6,7 @@ $this->title = Yii::t('app', 'Signup');
 ?>
 <div class="site-signup">
     <p class="lead">
-        <?= e($this->title) . ' '. Yii::t('app', 'through') . ' '. ucfirst($model->provider) ?>
+        <?= Html::encode($this->title) . ' '. Yii::t('app', 'through') . ' '. ucfirst($model->provider) ?>
     </p>
     <hr>
 

@@ -5,7 +5,7 @@ use yii\bootstrap\ActiveForm;
 $this->title = Yii::t('app', 'Login');
 ?>
 <div class="site-login">
-    <p class="lead"><?= e($this->title) ?></p>
+    <p class="lead"><?= Html::encode($this->title) ?></p>
     <hr>
     
     <div class="row">

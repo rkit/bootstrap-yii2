@@ -13,7 +13,7 @@ $email = Html::mailto(Yii::t('app', 'contact us'), Yii::$app->settings->emailMai
     <h3><?= Yii::t('app', 'Page not found') ?></h3>
     <?php else:?>
     <div class="alert alert-danger">
-        <?= nl2br(e($message)) ?>
+        <?= nl2br(Html::encode($message)) ?>
     </div>
     <?php endif?>
 

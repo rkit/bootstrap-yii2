@@ -42,7 +42,7 @@ class SuggestionsController extends BaseController
                 ->asArray()
                 ->limit(10)
                 ->all();
-            return $this->response($this->prepare($data, 'title', 'countryId'));
+            return $this->response($this->prepare($data, 'title', 'country_id'));
         }
         
         return $this->response([]);
@@ -62,7 +62,7 @@ class SuggestionsController extends BaseController
                 $item['title'] = $item['country']['title'] . ', ' . $item['title'];
             }
             
-            return $this->response($this->prepare($data, 'title', 'regionId'));
+            return $this->response($this->prepare($data, 'title', 'region_id'));
         }
         
         return $this->response([]);

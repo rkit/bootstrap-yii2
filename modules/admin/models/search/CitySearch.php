@@ -19,11 +19,11 @@ class CitySearch extends City
     /**
      * @var int
      */
-    public $countryId;
+    public $country_id;
     /**
      * @var int
      */
-    public $regionId;
+    public $region_id;
         
     /**
      * @inheritdoc
@@ -33,9 +33,9 @@ class CitySearch extends City
         return [
             ['title', 'string'],
             
-            ['countryId', 'integer'],
+            ['country_id', 'integer'],
 
-            ['regionId', 'integer'],
+            ['region_id', 'integer'],
         ];
     }
     
@@ -68,8 +68,8 @@ class CitySearch extends City
         }
 
         $query->andFilterWhere([
-            'countryId' => $this->countryId,
-            'regionId' => $this->regionId
+            'country_id' => $this->country_id,
+            'region_id' => $this->region_id
         ]);
         
         $query->andFilterWhere(['like', 'title', $this->title]);

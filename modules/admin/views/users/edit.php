@@ -57,11 +57,11 @@ $this->title = Yii::t('app', 'Users');
                 <li class="list-group-item text-muted"><?= Yii::t('app', 'Info') ?></li>
                 <li class="list-group-item text-right">
                     <span class="pull-left"><strong><?= Yii::t('app', 'Joined') ?></strong></span>
-                    <?= Yii::$app->formatter->asDateTime($model->dateCreate) ?>
+                    <?= Yii::$app->formatter->asDateTime($model->date_create) ?>
                 </li>
                 <li class="list-group-item text-right">
                     <span class="pull-left"><strong><?= Yii::t('app', 'Last login') ?></strong></span>
-                    <?= $model->dateLogin > 0 ? Yii::$app->formatter->asDateTime($model->dateLogin) : '—' ?>
+                    <?= $model->date_login > 0 ? Yii::$app->formatter->asDateTime($model->date_login) : '—' ?>
                 </li>
                 <li class="list-group-item text-right">
                     <span class="pull-left"><strong><?= Yii::t('app', 'IP') ?></strong></span>
@@ -78,7 +78,7 @@ $this->title = Yii::t('app', 'Users');
                     <span class="pull-left">
                         <strong><?= ucfirst(User::getProviders()[$provider['provider']]) ?></strong>
                     </span>
-                    <?= Html::a(Yii::t('app', 'Link to profile'), $provider['profileUrl'], ['target' => '_blank']) ?>
+                    <?= Html::a(Yii::t('app', 'Link to profile'), $provider['profile_url'], ['target' => '_blank']) ?>
                 </li>  
                 <?php endforeach?> 
             </ul> 

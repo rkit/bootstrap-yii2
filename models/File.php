@@ -16,15 +16,15 @@ use Yii;
  * This is the model class for table "file".
  *
  * @property integer $id
- * @property integer $userId
- * @property integer $ownerId
- * @property integer $ownerType
+ * @property integer $user_id
+ * @property integer $owner_id
+ * @property integer $owner_type
  * @property string $title
  * @property string $name
  * @property integer $size
  * @property string $mime
- * @property string $dateCreate
- * @property string $dateUpdate
+ * @property string $date_create
+ * @property string $date_update
  * @property integer $ip
  * @property integer $position
  */
@@ -66,15 +66,15 @@ class File extends BaseActive
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'userId' => Yii::t('app', 'User'),
-            'ownerId' => Yii::t('app', 'Owner'),
-            'ownerType' => Yii::t('app', 'Owner type'),
+            'user_id' => Yii::t('app', 'User'),
+            'owner_id' => Yii::t('app', 'Owner'),
+            'owner_type' => Yii::t('app', 'Owner type'),
             'title' => Yii::t('app', 'Title'),
             'name' => Yii::t('app', 'Name'),
             'size' => Yii::t('app', 'Size'),
             'mime' => Yii::t('app', 'Mime'),
-            'dateCreate' => Yii::t('app', 'Date create'),
-            'dateUpdate' => Yii::t('app', 'Date update'),
+            'date_create' => Yii::t('app', 'Date create'),
+            'date_update' => Yii::t('app', 'Date update'),
             'ip' => Yii::t('app', 'IP'),
             'position' => Yii::t('app', 'Position'),
         ];
@@ -88,8 +88,8 @@ class File extends BaseActive
         return [
             [
                 'class' => TimestampBehavior::className(),
-                'createdAtAttribute' => 'dateCreate',
-                'updatedAtAttribute' => 'dateUpdate',
+                'createdAtAttribute' => 'date_create',
+                'updatedAtAttribute' => 'date_update',
                 'value' => new \yii\db\Expression('NOW()'),
             ],
         ];
@@ -109,7 +109,7 @@ class File extends BaseActive
     {
         if (parent::beforeSave($insert)) {        
             if ($insert) {
-                $this->userId = user()->isGuest ? 0 : user()->id;
+                $this->user_id = Yii::$app->user->isGuest ? 0 : Yii::$app->user->id;
                 $this->ip = ip2long(Yii::$app->request->getUserIP());
             }
             
@@ -142,7 +142,7 @@ class File extends BaseActive
         return
             ($full ? Yii::getAlias('@webroot') : '') . 
             '/' . self::UPLOAD_DIR_TMP . 
-            '/' . $this->ownerType;
+            '/' . $this->owner_type;
     }
     
     /**
@@ -159,8 +159,8 @@ class File extends BaseActive
             return 
                 ($full ? Yii::getAlias('@webroot') : '') . 
                 '/' . self::UPLOAD_DIR . 
-                '/' . $this->ownerType .
-                '/' . $this->ownerId;
+                '/' . $this->owner_type .
+                '/' . $this->owner_id;
         }
     }
     
@@ -199,7 +199,7 @@ class File extends BaseActive
         $fileInfo = pathinfo($data->name);
         
         $file = new self();
-        $file->ownerType = $ownerType;
+        $file->owner_type = $ownerType;
         $file->tmp = $tmp;
         $file->size = $data->size;
         $file->mime = $data->type;
@@ -234,7 +234,7 @@ class File extends BaseActive
                 $fileInfo = pathinfo($url);
                 
                 $file = new self();
-                $file->ownerType = $ownerType;
+                $file->owner_type = $ownerType;
                 $file->tmp = $tmp;
                 $file->size = filesize($tmpFile);
                 $file->mime = FileHelper::getMimeType($tmpFile);
@@ -264,9 +264,9 @@ class File extends BaseActive
      */
     public static function checkOwner($file, $ownerId, $ownerType)
     {
-        $ownerType = $file->ownerType === $ownerType;
-        $ownerId = $file->ownerId === $ownerId;
-        $user = $file->userId === user()->id || $file->userId === 0;
+        $ownerType = $file->owner_type === $ownerType;
+        $ownerId = $file->owner_id === $ownerId;
+        $user = $file->user_id === Yii::$app->user->id || $file->user_id === 0;
         
         return 
             (!$file->tmp && $ownerType && $ownerId) || 
@@ -312,11 +312,11 @@ class File extends BaseActive
         // check and save tmp file
         if ($file->tmp) {
             $file->tmp = false;
-            $file->ownerId = $ownerId;
+            $file->owner_id = $ownerId;
             
             if (file_exists($file->pathTmp(true)) && FileHelper::createDirectory($file->dir(true))) {
                 if (rename($file->pathTmp(true), $file->path(true))) {
-                    $file->updateAttributes(['tmp' => $file->tmp, 'ownerId' => $file->ownerId]);
+                    $file->updateAttributes(['tmp' => $file->tmp, 'owner_id' => $file->owner_id]);
                 } else {
                     return false;
                 }
@@ -377,7 +377,7 @@ class File extends BaseActive
                 // save tmp file
                 if ($file->tmp) {
                     $file->tmp = false;
-                    $file->ownerId = $ownerId;
+                    $file->owner_id = $ownerId;
                     
                     if (file_exists($file->pathTmp(true)) && FileHelper::createDirectory($file->dir(true))) {
                         if (!rename($file->pathTmp(true), $file->path(true))) {
@@ -390,7 +390,7 @@ class File extends BaseActive
                 
                 $file->updateAttributes([
                     'tmp'      => $file->tmp, 
-                    'ownerId'  => $file->ownerId,
+                    'owner_id'  => $file->owner_id,
                     'title'    => @$files[$file->id],
                     'position' => @array_search($file->id, array_keys($files)) + 1
                 ]);
@@ -481,7 +481,7 @@ class File extends BaseActive
     public static function getByOwner($ownerId, $ownerType)
     {
         return static::find()
-            ->where(['ownerId' => $ownerId, 'ownerType' => $ownerType])
+            ->where(['owner_id' => $ownerId, 'owner_type' => $ownerType])
             ->orderBy('position ASC')
             ->all();
     }

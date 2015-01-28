@@ -7,7 +7,7 @@ use yii\behaviors\TimestampBehavior;
 use Yii;
 
 /**
- * This is the model class for table "newsType".
+ * This is the model class for table "news_type".
  *
  * @property integer $id
  * @property string $title
@@ -19,7 +19,7 @@ class NewsType extends BaseActive
      */
     public static function tableName()
     {
-        return 'newsType';
+        return 'news_type';
     }
 
     /**

@@ -5,13 +5,13 @@ use yii\bootstrap\ActiveForm;
 $this->title = Yii::t('app', 'Signup');
 ?>
 <div class="site-signup">
-    <p class="lead"><?= e($this->title) ?></p>
+    <p class="lead"><?= Html::encode($this->title) ?></p>
     <hr>
 
     <div class="row">
         <div class="col-lg-5">
             <?php $form = ActiveForm::begin(['id' => 'form-signup']); ?>
-                <?= $form->field($model, 'fullName') ?>
+                <?= $form->field($model, 'full_name') ?>
                 <?= $form->field($model, 'email') ?>
                 <?= $form->field($model, 'password')->passwordInput() ?>
                 <hr>

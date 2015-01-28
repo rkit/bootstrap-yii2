@@ -16,8 +16,8 @@ class BaseActive extends \yii\db\ActiveRecord
      */
     public function isOwner()
     {
-        $isSuperUser = !user()->isGuest && user()->identity->isSuperUser();
-        return $isSuperUser || user()->id === $this->userId;
+        $isSuperUser = !Yii::$app->getUser()->getIsGuest() && Yii::$app->getUser()->getIdentity()->isSuperUser();
+        return $isSuperUser || Yii::$app->getUser()->id === $this->user_id;
     }
     
     /**

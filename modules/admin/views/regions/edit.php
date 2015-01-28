@@ -11,8 +11,8 @@ $this->title = Yii::t('app', 'Regions');
 
 <?php $form = ActiveForm::begin(['options' => ['class' => 'form']]); ?>
 
-    <!-- countryId -->
-    <?= $form->field($model, 'countryId')->widget(Select2::classname(), [
+    <!-- country_id -->
+    <?= $form->field($model, 'country_id')->widget(Select2::classname(), [
          'options' => ['placeholder' => ' '],
          'pluginOptions' => [
              'width' => '100%',
@@ -28,11 +28,11 @@ $this->title = Yii::t('app', 'Regions');
                  'results'  => new JsExpression('function (data) { return {results: data}; }')
              ],
              'initSelection' => new JsExpression('function (element, callback) {
-                 var data = {id: element.val(), text: "'.@e($model->country->title).'"};
+                 var data = {id: element.val(), text: "'.@Html::encode($model->country->title).'"};
                  callback(data);
              }')
          ]
-    ])->label(Html::a($model->getAttributeLabel('countryId'), Url::toRoute('/admin/countries'))) ?>
+    ])->label(Html::a($model->getAttributeLabel('country_id'), Url::toRoute('/admin/countries'))) ?>
     
     <!-- title -->
     <?= $form->field($model, 'title')->textInput() ?>

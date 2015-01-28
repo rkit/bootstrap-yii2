@@ -48,10 +48,10 @@ class PasswordResetRequestFormTest extends DbTestCase
         $model = new PasswordResetRequestForm();
         $model->email = $this->user[0]['email'];
         
-        $user = User::findOne(['passwordResetToken' => $this->user[0]['passwordResetToken']]);
+        $user = User::findOne(['password_reset_token' => $this->user[0]['password_reset_token']]);
         
         expect('email sent', $model->sendEmail())->true();
-        expect('user has valid token', $user->passwordResetToken)->notNull();
+        expect('user has valid token', $user->password_reset_token)->notNull();
         
         $this->specify('message has correct format', function () use ($model) {
             expect('message file exists', file_exists($this->getMessageFile()))->true();

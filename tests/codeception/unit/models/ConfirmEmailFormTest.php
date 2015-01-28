@@ -31,7 +31,7 @@ class ConfirmEmailFormTest extends DbTestCase
     
     public function testConfirmEmailCorrect()
     {
-        $form = new ConfirmEmailForm($this->user[0]['emailConfirmToken']);
+        $form = new ConfirmEmailForm($this->user[0]['email_confirm_token']);
         
         expect('confirmed token should be ok', $form->confirmEmail())->true();
         

@@ -10,9 +10,8 @@ class SignupForm extends \yii\base\Model
 {
     public $email;
     public $password;
-    public $fullName;
-    
-    private $user;
+    public $full_name;
+    public $user;
     
     /**
      * @inheritdoc
@@ -20,8 +19,8 @@ class SignupForm extends \yii\base\Model
     public function rules()
     {
         return [
-            ['fullName', 'required'],
-            ['fullName', 'string', 'max' => 40],
+            ['full_name', 'required'],
+            ['full_name', 'string', 'max' => 40],
             
             ['password', 'required'],
             ['password', 'string', 'min' => 6],
@@ -42,7 +41,7 @@ class SignupForm extends \yii\base\Model
      */
     public function attributeLabels()
     {
-        return array_merge((new User())->attributeLabels(), ['fullName' => Yii::t('app', 'Full Name')]);
+        return array_merge((new User())->attributeLabels(), ['full_name' => Yii::t('app', 'Full Name')]);
     }
     
     /**
@@ -59,7 +58,7 @@ class SignupForm extends \yii\base\Model
             $this->user->generateEmailConfirmToken();
             
             $profile = new UserProfile();
-            $profile->fullName = $this->fullName;
+            $profile->full_name = $this->full_name;
             $this->user->populateRelation('profile', $profile);
             
             if ($this->user->save()) {
@@ -80,7 +79,7 @@ class SignupForm extends \yii\base\Model
     public function sendEmail()
     {
         if ($this->user) {
-            if (!User::isTokenValid($this->user->emailConfirmToken)) {
+            if (!User::isTokenValid($this->user->email_confirm_token)) {
                 $this->user->generateEmailConfirmToken();
             }
             

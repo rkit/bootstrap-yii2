@@ -48,7 +48,7 @@ class PasswordResetRequestForm extends \yii\base\Model
         ]);
         
         if ($user) {
-            if (!User::isTokenValid($user->passwordResetToken)) {
+            if (!User::isTokenValid($user->password_reset_token)) {
                 $user->generatePasswordResetToken();
             }
             

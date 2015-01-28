@@ -18,8 +18,8 @@ AdminAsset::register($this);
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?= app\helpers\Util::clearText($this->title) ?> / <?= Yii::t('app', 'Control Panel') ?></title>
     <?= Html::csrfMetaTags() ?>
-    <meta name="description" content="<?= e(Yii::$app->controller->description) ?>">
-    <meta name="keywords" content="<?= e(Yii::$app->controller->keywords) ?>">
+    <meta name="description" content="<?= Html::encode(Yii::$app->controller->description) ?>">
+    <meta name="keywords" content="<?= Html::encode(Yii::$app->controller->keywords) ?>">
     <?php $this->head() ?>
     
     <link href="<?= Yii::$app->controller->getCssBundle() ?>" rel="stylesheet">
@@ -60,7 +60,7 @@ AdminAsset::register($this);
             </div>
         
             <div class="content col-sm-offset-3 col-md-offset-2">
-                <p class="lead"><?= e(strip_tags($this->title)) ?></p><hr>
+                <p class="lead"><?= Html::encode(strip_tags($this->title)) ?></p><hr>
                 <?= $content?>
             </div>
           

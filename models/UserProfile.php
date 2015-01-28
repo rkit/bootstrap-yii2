@@ -6,12 +6,12 @@ use Yii;
 use app\components\BaseActive;
 
 /**
- * This is the model class for table "userProfile".
+ * This is the model class for table "user_profile".
  *
- * @property integer $userId
- * @property string $fullName
+ * @property integer $user_id
+ * @property string $full_name
  * @property string $photo
- * @property string $birthDay
+ * @property string $birth_day
  *
  * @property User $user
  */
@@ -22,7 +22,7 @@ class UserProfile extends BaseActive
      */
     public static function tableName()
     {
-        return 'userProfile';
+        return 'user_profile';
     }
 
     /**
@@ -31,8 +31,8 @@ class UserProfile extends BaseActive
     public function rules()
     {
         return [
-            ['birthDay', 'safe'],
-            ['fullName', 'string', 'max' => 40],
+            ['birth_day', 'safe'],
+            ['full_name', 'string', 'max' => 40],
             ['photo', 'string', 'max' => 255]
         ];
     }
@@ -43,10 +43,10 @@ class UserProfile extends BaseActive
     public function attributeLabels()
     {
         return [
-            'userId' => Yii::t('app', 'User'),
-            'fullName' => Yii::t('app', 'Full Name'),
+            'user_id' => Yii::t('app', 'User'),
+            'full_name' => Yii::t('app', 'Full Name'),
             'photo' => Yii::t('app', 'Photo'),
-            'birthDay' => Yii::t('app', 'Birth Day'),
+            'birth_day' => Yii::t('app', 'Birth Day'),
         ];
     }
     
@@ -79,6 +79,6 @@ class UserProfile extends BaseActive
      */
     public function getUser()
     {
-        return $this->hasOne(User::className(), ['id' => 'userId']);
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 }

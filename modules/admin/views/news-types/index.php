@@ -29,7 +29,7 @@ $this->title = Yii::t('app', 'Type of news');
             'attribute' => 'title',
             'format' => 'raw',
             'value' => function ($model) {
-                return Html::a(e($model['title']), ['edit', 'id' => $model['id']]);
+                return Html::a(Html::encode($model['title']), ['edit', 'id' => $model['id']]);
             }
         ],
             // action buttons

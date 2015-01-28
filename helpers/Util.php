@@ -2,6 +2,8 @@
 
 namespace app\helpers;
 
+use yii\helpers\Html;
+
 class Util
 {
     /**
@@ -31,6 +33,6 @@ class Util
     public static function clearText($text)
     {
         $text = str_replace('"', '“', $text);
-        return e(html_entity_decode(strip_tags($text)));
+        return Html::encode(html_entity_decode(strip_tags($text)));
     }
 }

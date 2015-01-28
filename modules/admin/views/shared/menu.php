@@ -8,9 +8,9 @@ if (!$permissions) {
     Yii::$app->cache->set('rbac-permissions', $permissions);
 }
 
-$permissions = user()->identity->isSuperUser() 
+$permissions = Yii::$app->user->identity->isSuperUser() 
     ? $permissions
-    : Yii::$app->authManager->getPermissionsByRole(user()->identity->role);
+    : Yii::$app->authManager->getPermissionsByRole(Yii::$app->user->identity->role);
 
 $items = [
     [

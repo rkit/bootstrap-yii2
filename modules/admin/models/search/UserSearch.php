@@ -23,7 +23,7 @@ class UserSearch extends User
     /**
      * @var timestamp
      */
-    public $dateCreate;
+    public $date_create;
     /**
      * @var string
      */
@@ -47,7 +47,7 @@ class UserSearch extends User
             
             ['email', 'string'],
             
-            ['dateCreate', 'date', 'format' => 'yyyy-mm-dd'],
+            ['date_create', 'date', 'format' => 'yyyy-mm-dd'],
             
             ['ip', 'string'],
             
@@ -66,13 +66,13 @@ class UserSearch extends User
      */
     public function search($params)
     {
-        $query = User::find();
+        $query = User::find()->with('roles');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'sort' => [
                 'defaultOrder' => [
-                    'dateCreate' => SORT_DESC,
+                    'date_create' => SORT_DESC,
                 ]
             ],
             'pagination' => [
@@ -90,7 +90,7 @@ class UserSearch extends User
             'ip' => !empty($this->ip) ? ip2long($this->ip) : null,
             'status' => $this->status,
             'role' => $this->role,
-            'DATE(dateCreate)' => $this->dateCreate
+            'DATE(date_create)' => $this->date_create
         ]);
         
         $query->andFilterWhere(['like', 'user.username', $this->username]);

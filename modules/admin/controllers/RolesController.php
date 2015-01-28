@@ -72,21 +72,23 @@ class RolesController extends BaseController
         
         if (Yii::$app->request->isPost) {
             $model->type = \yii\rbac\Item::TYPE_ROLE;
-            if ($model->load(Yii::$app->request->post()) && !$model->isSuperUser() && $model->save()) {
-                $role = $auth->getRole($model->name);
-                $auth->removeChildren($role); 
-                
-                if (is_array($model->roles)) {              
-                    foreach ($model->roles as $r) {
-                        $auth->addChild($role, $roles[$r]);
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                if (!$model->isSuperUser()) {
+                    $role = $auth->getRole($model->name);
+                    $auth->removeChildren($role); 
+                    
+                    if (is_array($model->roles)) {              
+                        foreach ($model->roles as $r) {
+                            $auth->addChild($role, $roles[$r]);
+                        }
                     }
-                }
-                
-                if (is_array($model->permissions)) {   
-                    $currPermissions = ArrayHelper::index($auth->getPermissionsByRole($model->name), 'name', []);    
-                    foreach ($model->permissions as $permission) {
-                        if (!array_key_exists($permission, $currPermissions)) {
-                            $auth->addChild($role, $permissions[$permission]);
+                    
+                    if (is_array($model->permissions)) {   
+                        $currPermissions = ArrayHelper::index($auth->getPermissionsByRole($model->name), 'name', []);    
+                        foreach ($model->permissions as $permission) {
+                            if (!array_key_exists($permission, $currPermissions)) {
+                                $auth->addChild($role, $permissions[$permission]);
+                            }
                         }
                     }
                 }

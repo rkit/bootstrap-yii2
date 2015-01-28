@@ -18,10 +18,6 @@ $config = [
         ],
         'authManager' => [
             'class' => 'yii\rbac\DbManager',
-            'ruleTable'       => 'authRule',
-            'itemTable'       => 'authItem', 
-            'itemChildTable'  => 'authItemChild', 
-            'assignmentTable' => 'authAssignment',
         ],
         'db' => [
             'class' => 'yii\db\Connection',        

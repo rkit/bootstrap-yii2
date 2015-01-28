@@ -60,7 +60,7 @@ class CitiesController extends BaseController
         if (Yii::$app->request->isPost) {
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 Yii::$app->session->setFlash('success', Yii::t('app', 'Saved successfully'));
-                return $this->response(['redirect' => Url::toRoute(['edit', 'id' => $model->cityId])]);   
+                return $this->response(['redirect' => Url::toRoute(['edit', 'id' => $model->city_id])]);   
             } else {
                 return $this->response(['errors' => $model->getErrors(), 'prefix' => 'city-']);            
             }

@@ -14,8 +14,8 @@ $this->title = Yii::t('app', 'News');
     <!-- title -->
     <?= $form->field($model, 'title')->textInput() ?>
     
-    <!-- typeId -->
-    <?= $form->field($model, 'typeId')
+    <!-- type_id -->
+    <?= $form->field($model, 'type_id')
         ->dropDownList(ArrayHelper::map($types, 'id', 'title'), [
             'class' => 'form-control',  
             'prompt' => Yii::t('app', 'Select the type')
@@ -57,9 +57,9 @@ $this->title = Yii::t('app', 'News');
     </div>
     <hr>
     
-    <!-- datePub -->
-    <?php $model->datePub = Yii::$app->formatter->asDatetime($model->datePub ?: 'now', 'php:Y-m-d H:i:s'); ?>
-    <?= $form->field($model, 'datePub')->widget(DateTimePicker::className(), [
+    <!-- date_pub -->
+    <?php $model->date_pub = Yii::$app->formatter->asDatetime($model->date_pub ?: 'now', 'php:Y-m-d H:i:s'); ?>
+    <?= $form->field($model, 'date_pub')->widget(DateTimePicker::className(), [
     	'pluginOptions' => [
     		'autoclose' => true,
     		'format' => 'yyyy-mm-dd hh:ii:ss'

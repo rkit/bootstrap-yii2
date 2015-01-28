@@ -82,7 +82,11 @@ class UsersController extends BaseController
         
         $model->scenario = 'admin-edit';
         
-        if (Yii::$app->request->isPost) { 
+        if (Yii::$app->request->isPost) {
+            if ($model->isNewRecord) {
+                $model->setConfirmed();
+            }
+            
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 $auth = Yii::$app->authManager;
                 $auth->revokeAll($model->id);
@@ -114,7 +118,7 @@ class UsersController extends BaseController
         if (Yii::$app->request->isPost) { 
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 Yii::$app->session->setFlash('success', Yii::t('app', 'Saved successfully'));
-                return $this->response(['redirect' => Url::toRoute(['profile', 'id' => $model->userId])]);   
+                return $this->response(['redirect' => Url::toRoute(['profile', 'id' => $model->user_id])]);   
             } else {
                 return $this->response(['errors' => $model->getErrors(), 'prefix' => 'user-profile-']);            
             }

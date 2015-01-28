@@ -20,7 +20,7 @@ class Notify extends \yii\base\Component
      */
     public function sendMessage($to, $subject, $view, $params = [])
     {
-        $message = \Yii::$app->mailer->compose($view, $params);
+        $message = \Yii::$app->getMailer()->compose($view, $params);
         
         if (!empty(Yii::$app->settings->get('emailMain')) && 
             !empty(Yii::$app->settings->get('emailName'))) {

@@ -31,16 +31,16 @@ $this->title = Yii::t('app', 'Cities');
             'attribute' => 'title',
             'format' => 'raw',
             'value' => function ($model) {
-                return Html::a(e($model['title']), ['edit', 'id' => $model['cityId']]);
+                return Html::a(Html::encode($model['title']), ['edit', 'id' => $model['city_id']]);
             }
         ],
-            // countryId
+            // country_id
         [
-            'attribute' => 'countryId',
+            'attribute' => 'country_id',
             'value' => 'country.title',
             'filter' => Select2::widget([
                 'model' => $citySearch, 
-                'attribute' => 'countryId',
+                'attribute' => 'country_id',
                 'options' => ['placeholder' => ' '],
                 'pluginOptions' => [
                     'width' => '100%',
@@ -56,19 +56,19 @@ $this->title = Yii::t('app', 'Cities');
                         'results'  => new JsExpression('function (data) { return {results: data}; }')
                     ],
                     'initSelection' => new JsExpression('function (element, callback) {
-                        var data = {id: element.val(), text: "'.@e($citySearch->country->title).'"};
+                        var data = {id: element.val(), text: "'.@Html::encode($citySearch->country->title).'"};
                         callback(data);
                     }')
                 ]
             ])
         ],
-            // regionId
+            // region_id
         [
-            'attribute' => 'regionId',
+            'attribute' => 'region_id',
             'value' => 'region.title',
             'filter' => Select2::widget([
                 'model' => $citySearch, 
-                'attribute' => 'regionId',
+                'attribute' => 'region_id',
                 'options' => ['placeholder' => ' '],
                 'pluginOptions' => [
                     'width' => '100%',
@@ -84,7 +84,7 @@ $this->title = Yii::t('app', 'Cities');
                         'results'  => new JsExpression('function (data) { return {results: data}; }')
                     ],
                     'initSelection' => new JsExpression('function (element, callback) {
-                        var data = {id: element.val(), text: "'.@e($citySearch->region->title).'"};
+                        var data = {id: element.val(), text: "'.@Html::encode($citySearch->region->title).'"};
                         callback(data);
                     }')
                 ]

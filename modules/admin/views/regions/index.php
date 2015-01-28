@@ -31,16 +31,16 @@ $this->title = Yii::t('app', 'Regions');
             'attribute' => 'title',
             'format' => 'raw',
             'value' => function ($model) {
-                return Html::a(e($model['title']), ['edit', 'id' => $model['regionId']]);
+                return Html::a(Html::encode($model['title']), ['edit', 'id' => $model['region_id']]);
             }
         ],
-            // countryId
+            // country_id
         [
-            'attribute' => 'countryId',
+            'attribute' => 'country_id',
             'value' => 'country.title',
             'filter' => Select2::widget([
                 'model' => $regionSearch, 
-                'attribute' => 'countryId',
+                'attribute' => 'country_id',
                 'options' => ['placeholder' => ' '],
                 'pluginOptions' => [
                     'width' => '100%',
@@ -56,7 +56,7 @@ $this->title = Yii::t('app', 'Regions');
                         'results'  => new JsExpression('function (data) { return {results: data}; }')
                     ],
                     'initSelection' => new JsExpression('function (element, callback) {
-                        var data = {id: element.val(), text: "'.@e($regionSearch->country->title).'"};
+                        var data = {id: element.val(), text: "'.@Html::encode($regionSearch->country->title).'"};
                         callback(data);
                     }')
                 ]

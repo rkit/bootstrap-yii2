@@ -15,8 +15,7 @@ class Module extends \yii\base\Module
     {
         parent::init();
 
-        user()->loginUrl = ['admin/index/login'];
-        
+        Yii::$app->user->loginUrl = ['admin/index/login'];
         Yii::$app->timeZone = Yii::$app->params['mainTimeZone'];
         
         \Yii::$container->set('yii\widgets\LinkPager', [

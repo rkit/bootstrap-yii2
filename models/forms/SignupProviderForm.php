@@ -113,13 +113,13 @@ class SignupProviderForm extends \yii\base\Model
             }
        
             if ($this->user->save()) {
-                if ($this->user->saveProvider(User::getProviders($this->provider), [
-                    'profileId' => $this->profile['profileId'],
-                    'profileUrl' => $this->profile['profileUrl'],
-                    'accessToken' => $this->token['accessToken'], 
-                    'accessTokenSecret' => $this->token['accessTokenSecret']
-                ])
-                ) {
+                if ($this->user->saveProvider(
+                    User::getProviders($this->provider), 
+                    $this->profile['profile_id'], 
+                    $this->profile['profile_url'], 
+                    $this->token['access_token'], 
+                    $this->token['access_token_secret']
+                )) {
                     if ($this->user->authorize(true)) {
                         return $this->user;
                     }
@@ -140,18 +140,18 @@ class SignupProviderForm extends \yii\base\Model
         $token = [];
         switch ($this->provider) {
             case 'facebook': 
-                $token['accessToken'] = $data['access_token'];
-                $token['accessTokenSecret'] = '';
+                $token['access_token'] = $data['access_token'];
+                $token['access_token_secret'] = '';
                 break;
                 
             case 'vkontakte': 
-                $token['accessToken'] = $data['access_token'];
-                $token['accessTokenSecret'] = '';
+                $token['access_token'] = $data['access_token'];
+                $token['access_token_secret'] = '';
                 break;
                 
             case 'twitter': 
-                $token['accessToken'] = $data['oauth_token'];
-                $token['accessTokenSecret'] = $data['oauth_token_secret'];
+                $token['access_token'] = $data['oauth_token'];
+                $token['access_token_secret'] = $data['oauth_token_secret'];
                 break;
         }
         
@@ -168,24 +168,24 @@ class SignupProviderForm extends \yii\base\Model
         $profile = [];
         switch ($this->provider) {
             case 'facebook': 
-                $profile['profileId']  = $data['id'];
-                $profile['profileUrl'] = $data['link'];
-                $profile['fullName']   = trim($data['first_name'] . ' ' . $data['last_name']);
+                $profile['profile_id']  = $data['id'];
+                $profile['profile_url'] = $data['link'];
+                $profile['full_name']   = trim($data['first_name'] . ' ' . $data['last_name']);
                 break;
                 
             case 'vkontakte': 
-                $profile['profileId']  = $data['id'];
-                $profile['profileUrl'] = 'https://vk.com/id' . $data['id'];
-                $profile['fullName']   = trim($data['first_name'] . ' ' . $data['last_name']);
-                $profile['birthDay']   = date_format(date_create_from_format('d.m.Y', $data['bdate']), 'Y-m-d');
-                $profile['photo']      = str_replace('_50', '_400', $data['photo']);
+                $profile['profile_id']  = $data['id'];
+                $profile['profile_url'] = 'https://vk.com/id' . $data['id'];
+                $profile['full_name']   = trim($data['first_name'] . ' ' . $data['last_name']);
+                $profile['birth_day']   = date_format(date_create_from_format('d.m.Y', $data['bdate']), 'Y-m-d');
+                $profile['photo']       = str_replace('_50', '_400', $data['photo']);
                 break;
                 
             case 'twitter': 
-                $profile['profileId']  = $data['id'];
-                $profile['profileUrl'] = 'https://twitter.com/' . $data['screen_name'];
-                $profile['fullName']  = $data['name'];
-                $profile['photo']      = str_replace('_normal', '_400x400', $data['profile_image_url']);
+                $profile['profile_id']  = $data['id'];
+                $profile['profile_url'] = 'https://twitter.com/' . $data['screen_name'];
+                $profile['full_name']   = $data['name'];
+                $profile['photo']       = str_replace('_normal', '_400x400', $data['profile_image_url']);
                 break;
         }
 
@@ -200,7 +200,7 @@ class SignupProviderForm extends \yii\base\Model
     public function sendEmail()
     {
         if ($this->user) {
-            if (!User::isTokenValid($this->user->emailConfirmToken)) {
+            if (!User::isTokenValid($this->user->email_confirm_token)) {
                 $this->user->generateEmailConfirmToken();
             }
             

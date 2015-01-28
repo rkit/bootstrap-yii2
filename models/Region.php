@@ -8,8 +8,8 @@ use Yii;
 /**
  * This is the model class for table "region".
  *
- * @property integer $regionId
- * @property integer $countryId
+ * @property integer $region_id
+ * @property integer $country_id
  * @property string $title
  *
  * @property City[] $city
@@ -31,8 +31,8 @@ class Region extends BaseActive
     public function rules()
     {
         return [
-            ['countryId', 'required'],
-            ['countryId', 'integer'],
+            ['country_id', 'required'],
+            ['country_id', 'integer'],
             
             ['title', 'string', 'max' => 150],
             ['title', 'required']
@@ -45,8 +45,8 @@ class Region extends BaseActive
     public function attributeLabels()
     {
         return [
-            'regionId' => Yii::t('app', 'Region'),
-            'countryId' => Yii::t('app', 'Country'),
+            'region_id' => Yii::t('app', 'Region'),
+            'country_id' => Yii::t('app', 'Country'),
             'title' => Yii::t('app', 'Title'),
         ];
     }
@@ -56,7 +56,7 @@ class Region extends BaseActive
      */
     public function getCity()
     {
-        return $this->hasMany(City::className(), ['regionId' => 'regionId']);
+        return $this->hasMany(City::className(), ['region_id' => 'region_id']);
     }
 
     /**
@@ -64,6 +64,6 @@ class Region extends BaseActive
      */
     public function getCountry()
     {
-        return $this->hasOne(Country::className(), ['countryId' => 'countryId']);
+        return $this->hasOne(Country::className(), ['country_id' => 'country_id']);
     }
 }

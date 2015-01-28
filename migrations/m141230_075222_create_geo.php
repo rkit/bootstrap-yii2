@@ -11,7 +11,7 @@ class m141230_075222_create_geo extends Migration
         // Country
         //
         $this->createTable('{{%country}}', [
-            'countryId' => Schema::TYPE_PK,
+            'country_id' => Schema::TYPE_PK,
             'title' => Schema::TYPE_STRING . "(60) NOT NULL",
         ], $this->tableOptions);
         
@@ -19,39 +19,39 @@ class m141230_075222_create_geo extends Migration
         // Region
         //
         $this->createTable('{{%region}}', [
-            'regionId' => Schema::TYPE_PK,
-            'countryId' => Schema::TYPE_INTEGER . " NOT NULL DEFAULT 0",
+            'region_id' => Schema::TYPE_PK,
+            'country_id' => Schema::TYPE_INTEGER . " NOT NULL DEFAULT 0",
             'title' => Schema::TYPE_STRING . "(150) NOT NULL",
         ], $this->tableOptions);
         
-        $this->createIndex('countryId', '{{%region}}', 'countryId');
+        $this->createIndex('country_id', '{{%region}}', 'country_id');
         
         $this->addForeignKey(
-            'fk_region_country', '{{%region}}', 'countryId', '{{%country}}', 'countryId', 'CASCADE', 'CASCADE'
+            'fk_region_country', '{{%region}}', 'country_id', '{{%country}}', 'country_id', 'CASCADE', 'CASCADE'
         );
         
         //
         // City
         //
         $this->createTable('{{%city}}', [
-            'cityId' => Schema::TYPE_PK,
-            'countryId' => Schema::TYPE_INTEGER . " NOT NULL DEFAULT 0",
+            'city_id' => Schema::TYPE_PK,
+            'country_id' => Schema::TYPE_INTEGER . " NOT NULL DEFAULT 0",
             'important' => "tinyint(1) NOT NULL DEFAULT 0",
-            'regionId' => Schema::TYPE_INTEGER . " DEFAULT NULL",
+            'region_id' => Schema::TYPE_INTEGER . " DEFAULT NULL",
             'title' => Schema::TYPE_STRING . "(150) NOT NULL",
             'area' => Schema::TYPE_STRING . "(150) NOT NULL",
         ], $this->tableOptions);
         
-        $this->createIndex('countryId', '{{%city}}', 'countryId');
+        $this->createIndex('country_id', '{{%city}}', 'country_id');
         $this->createIndex('title', '{{%city}}', 'title');
-        $this->createIndex('country_important', '{{%city}}', 'countryId,important');
+        $this->createIndex('country_important', '{{%city}}', 'country_id, important');
         
         $this->addForeignKey(
-            'fk_city_country', '{{%city}}', 'countryId', '{{%country}}', 'countryId', 'CASCADE', 'CASCADE'
+            'fk_city_country', '{{%city}}', 'country_id', '{{%country}}', 'country_id', 'CASCADE', 'CASCADE'
         );
         
         $this->addForeignKey(
-            'fk_city_region', '{{%city}}', 'regionId', '{{%region}}', 'regionId', 'CASCADE', 'CASCADE'
+            'fk_city_region', '{{%city}}', 'region_id', '{{%region}}', 'region_id', 'CASCADE', 'CASCADE'
         );
     }
 

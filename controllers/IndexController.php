@@ -96,7 +96,7 @@ class IndexController extends BaseController
     
     public function actionLogin()
     {
-        if (!user()->isGuest) {
+        if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
         
@@ -131,7 +131,7 @@ class IndexController extends BaseController
     
     public function actionSignupProvider()
     {        
-        if (!user()->isGuest) {
+        if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
         
@@ -182,13 +182,18 @@ class IndexController extends BaseController
     
     public function actionConfirmAgain()
     { 
+        if (Yii::$app->user->identity->isConfirmed()) {
+            return $this->accessDenied(); 
+        }
+        
         $model = new SignupForm();
-        $model->email = user()->identity->email;
+        $model->user = Yii::$app->user->identity;
+        $model->email = Yii::$app->user->identity->email;
         
         if ($model->sendEmail()) { 
             return $this->alert(
                 'success', 
-                Yii::t('app', 'A letter for activation was sent to {email}', ['email' => user()->identity->email])
+                Yii::t('app', 'A letter for activation was sent to {email}', ['email' => Yii::$app->user->identity->email])
             );
         } else {
             return $this->badRequest(Yii::t('app', 'Error sending emails'));        
@@ -237,7 +242,7 @@ class IndexController extends BaseController
     
     public function actionLogout()
     {
-        user()->logout();  
+        Yii::$app->user->logout();  
         return $this->goHome();
     }
     

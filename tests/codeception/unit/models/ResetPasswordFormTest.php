@@ -31,13 +31,13 @@ class ResetPasswordFormTest extends DbTestCase
     
     public function testResetCorrect()
     {
-        $form = new ResetPasswordForm($this->user[0]['passwordResetToken']);
+        $form = new ResetPasswordForm($this->user[0]['password_reset_token']);
         
         expect('password should be resetted', $form->resetPassword())->true();
         
         $user = User::findByEmail($this->user[0]['email']);
         
-        expect('passwordResetToken should be empty', $user->passwordResetToken)->isEmpty();
+        expect('password_reset_token should be empty', $user->password_reset_token)->isEmpty();
     }
      
     public function fixtures()

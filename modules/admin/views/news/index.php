@@ -32,29 +32,29 @@ $this->title = Yii::t('app', 'News');
             'format' => 'raw',
             'contentOptions' => ['style' => 'width: 400px'],
             'value' => function ($model) {
-                return Html::a(e($model['title']), ['edit', 'id' => $model['id']]);
+                return Html::a(Html::encode($model['title']), ['edit', 'id' => $model['id']]);
             }
         ],
-            // type
+            // typeId
         [
-            'attribute' => 'typeId',
+            'attribute' => 'type_id',
             'value' => 'type.title',
             'filter' => Html::activeDropDownList(
                 $newsSearch, 
-                'typeId', 
+                'type_id', 
                 ArrayHelper::map($types, 'id', 'title'),
                 ['class' => 'form-control', 'prompt' => Yii::t('app', 'All types')]
             )
             
         ],
-            // datePub
+            // date_pub
         [
-            'attribute' => 'datePub',
+            'attribute' => 'date_pub',
             'format' => 'datetime',
             'filter' => DatePicker::widget(
                 [
                     'model' => $newsSearch,
-                    'attribute' => 'datePub',
+                    'attribute' => 'date_pub',
                     'pluginOptions' => [
                     	'autoclose' => true,
                     	'format' => 'yyyy-mm-dd',

@@ -8,7 +8,7 @@ use Yii;
 /**
  * This is the model class for table "country".
  *
- * @property integer $countryId
+ * @property integer $country_id
  * @property string $title
  *
  * @property City[] $city
@@ -42,7 +42,7 @@ class Country extends BaseActive
     public function attributeLabels()
     {
         return [
-            'countryId' => Yii::t('app', 'Country'),
+            'country_id' => Yii::t('app', 'Country'),
             'title' => Yii::t('app', 'Title'),
         ];
     }
@@ -52,7 +52,7 @@ class Country extends BaseActive
      */
     public function getCity()
     {
-        return $this->hasMany(City::className(), ['countryId' => 'countryId']);
+        return $this->hasMany(City::className(), ['country_id' => 'country_id']);
     }
 
     /**
@@ -60,6 +60,6 @@ class Country extends BaseActive
      */
     public function getRegion()
     {
-        return $this->hasMany(Region::className(), ['countryId' => 'countryId']);
+        return $this->hasMany(Region::className(), ['country_id' => 'country_id']);
     }
 }

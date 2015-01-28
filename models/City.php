@@ -6,12 +6,12 @@ use app\components\BaseActive;
 use Yii;
 
 /**
- * This is the model class for table "City".
+ * This is the model class for table "city".
  *
- * @property integer $cityId
- * @property integer $countryId
+ * @property integer $city_id
+ * @property integer $country_id
  * @property integer $important
- * @property integer $regionId
+ * @property integer $region_id
  * @property string $title
  * @property string $area
  *
@@ -34,11 +34,11 @@ class City extends BaseActive
     public function rules()
     {
         return [
-            ['countryId', 'required'],
-            ['countryId', 'integer'],
+            ['country_id', 'required'],
+            ['country_id', 'integer'],
 
-            ['regionId', 'integer'],
-            ['regionId', 'default', 'value' => null],
+            ['region_id', 'integer'],
+            ['region_id', 'default', 'value' => null],
 
             ['area', 'string', 'max' => 150],
             
@@ -55,10 +55,10 @@ class City extends BaseActive
     public function attributeLabels()
     {
         return [
-            'cityId' => Yii::t('app', 'City'),
-            'countryId' => Yii::t('app', 'Country'),
+            'city_id' => Yii::t('app', 'City'),
+            'country_id' => Yii::t('app', 'Country'),
             'important' => Yii::t('app', 'Big city'),
-            'regionId' => Yii::t('app', 'Region'),
+            'region_id' => Yii::t('app', 'Region'),
             'title' => Yii::t('app', 'Title'),
             'area' => Yii::t('app', 'District'),
         ];
@@ -69,7 +69,7 @@ class City extends BaseActive
      */
     public function getCountry()
     {
-        return $this->hasOne(Country::className(), ['countryId' => 'countryId']);
+        return $this->hasOne(Country::className(), ['country_id' => 'country_id']);
     }
 
     /**
@@ -77,7 +77,7 @@ class City extends BaseActive
      */
     public function getRegion()
     {
-        return $this->hasOne(Region::className(), ['regionId' => 'regionId']);
+        return $this->hasOne(Region::className(), ['region_id' => 'region_id']);
     }
     
     /**

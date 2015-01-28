@@ -11,13 +11,13 @@ use Yii;
  * This is the model class for table "news".
  *
  * @property integer $id
- * @property integer $typeId
+ * @property integer $type_id
  * @property string $title
  * @property string $text
  * @property string $preview
- * @property string $dateCreate
- * @property string $dateUpdate
- * @property string $datePub
+ * @property string $date_create
+ * @property string $date_update
+ * @property string $date_pub
  * @property string $reference
  * @property integer $status
  */
@@ -44,11 +44,11 @@ class News extends BaseActive
     {
         return [
             [['title'], 'trim'],
-            [['title', 'typeId', 'text', 'datePub'], 'required'],
-            [['title', 'typeId', 'text', 'datePub', 'preview', 'gallery', 'reference', 'status', 'tagsList'], 'safe'],
+            [['title', 'type_id', 'text', 'date_pub'], 'required'],
+            [['title', 'type_id', 'text', 'date_pub', 'preview', 'gallery', 'reference', 'status', 'tagsList'], 'safe'],
         
-            ['typeId', 'integer'],
-            ['typeId', 'exist', 'targetClass' => NewsType::className(), 'targetAttribute' => ['typeId' => 'id']],
+            ['type_id', 'integer'],
+            ['type_id', 'exist', 'targetClass' => NewsType::className(), 'targetAttribute' => ['type_id' => 'id']],
             
             ['title', 'string', 'max' => 255],
 
@@ -56,7 +56,7 @@ class News extends BaseActive
             
             ['preview', 'string', 'max' => 255],
 
-            ['datePub', 'date', 'format' => 'php:Y-m-d H:i:s'],
+            ['date_pub', 'date', 'format' => 'php:Y-m-d H:i:s'],
             
             ['reference', 'url'],
             ['reference', 'string', 'max' => 255],
@@ -73,17 +73,18 @@ class News extends BaseActive
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'typeId' => Yii::t('app', 'Type'),
+            'type_id' => Yii::t('app', 'Type'),
             'title' => Yii::t('app', 'Title'),
             'text' => Yii::t('app', 'Text'),
             'preview' => Yii::t('app', 'Preview'),
             'gallery' => Yii::t('app', 'Gallery'),
-            'dateCreate' => Yii::t('app', 'Date create'),
-            'dateUpdate' => Yii::t('app', 'Date update'),
-            'datePub' => Yii::t('app', 'Date publication'),
+            'date_create' => Yii::t('app', 'Date create'),
+            'date_update' => Yii::t('app', 'Date update'),
+            'date_pub' => Yii::t('app', 'Date publication'),
             'reference' => Yii::t('app', 'Reference'),
-            'tagsList' => Yii::t('app', 'Tags'),
             'status' => Yii::t('app', 'Status'),
+            
+            'tagsList' => Yii::t('app', 'Tags'),
         ];
     }
     
@@ -95,16 +96,16 @@ class News extends BaseActive
         return [
             [
                 'class' => TimestampBehavior::className(),
-                'createdAtAttribute' => 'dateCreate',
-                'updatedAtAttribute' => 'dateUpdate',
+                'createdAtAttribute' => 'date_create',
+                'updatedAtAttribute' => 'date_update',
                 'value' => new \yii\db\Expression('NOW()'),
             ],
 
             [
                 'class' => 'app\behaviors\TagBehavior',
                 'attribute' => 'tagsList',
-                'tableRelation' => 'newsToTag',
-                'tableRelationField' => 'newsId'
+                'tableRelation' => 'news_tag_assn',
+                'tableRelationField' => 'news_id'
             ],
             
             [
@@ -157,7 +158,7 @@ class News extends BaseActive
     public function beforeSave($insert)
     {
         if (parent::beforeSave($insert)) {
-            $this->datePub = Util::convertTz($this->datePub, Yii::$app->params['mainTimeZone'], 'UTC');
+            $this->date_pub = Util::convertTz($this->date_pub, Yii::$app->params['mainTimeZone'], 'UTC');
             return true;
         }
         
@@ -193,6 +194,6 @@ class News extends BaseActive
      */
     public function getType()
     {
-        return $this->hasOne(NewsType::className(), array('id' => 'typeId'));
+        return $this->hasOne(NewsType::className(), array('id' => 'type_id'));
     }
 }

@@ -20,13 +20,13 @@ use Yii;
  * @property string $username
  * @property string $email
  * @property string $password
- * @property string $passwordResetToken
- * @property string $emailConfirmToken
- * @property string $authKey
- * @property string $dateConfirm
- * @property string $dateCreate
- * @property string $dateUpdate
- * @property string $dateLogin
+ * @property string $password_reset_token
+ * @property string $email_confirm_token
+ * @property string $auth_key
+ * @property string $date_confirm
+ * @property string $date_create
+ * @property string $date_update
+ * @property string $date_login
  * @property integer $ip
  * @property string $role
  * @property integer $status
@@ -94,16 +94,16 @@ class User extends BaseActive implements IdentityInterface
     public function attributeLabels()
     {
         return [
-            'id'         => Yii::t('app', 'ID'),
-            'username'   => Yii::t('app', 'Username'),
-            'email'      => Yii::t('app', 'Email'),
-            'password'   => Yii::t('app', 'Password'),
-            'dateCreate' => Yii::t('app', 'Date create'),
-            'dateUpdate' => Yii::t('app', 'Date update'),
-            'dateLogin'  => Yii::t('app', 'Last login'),
-            'ip'         => Yii::t('app', 'IP'),
-            'role'       => Yii::t('app', 'Role'),
-            'status'     => Yii::t('app', 'Status'),
+            'id' => Yii::t('app', 'ID'),
+            'username' => Yii::t('app', 'Username'),
+            'email' => Yii::t('app', 'Email'),
+            'password' => Yii::t('app', 'Password'),
+            'date_create' => Yii::t('app', 'Date create'),
+            'date_update' => Yii::t('app', 'Date update'),
+            'date_login' => Yii::t('app', 'Last login'),
+            'ip' => Yii::t('app', 'IP'),
+            'role' => Yii::t('app', 'Role'),
+            'status' => Yii::t('app', 'Status'),
             
             'passwordNew' => Yii::t('app', 'New password'),
         ];
@@ -117,8 +117,8 @@ class User extends BaseActive implements IdentityInterface
         return [
             [
                 'class' => TimestampBehavior::className(),
-                'createdAtAttribute' => 'dateCreate',
-                'updatedAtAttribute' => 'dateUpdate',
+                'createdAtAttribute' => 'date_create',
+                'updatedAtAttribute' => 'date_update',
                 'value' => new \yii\db\Expression('NOW()'),
             ],
         ];
@@ -139,7 +139,15 @@ class User extends BaseActive implements IdentityInterface
      */
     public function getProfile()
     {
-        return $this->hasOne(UserProfile::className(), ['userId' => 'id']);
+        return $this->hasOne(UserProfile::className(), ['user_id' => 'id']);
+    }
+    
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getRoles()
+    {
+        return $this->hasOne(AuthItem::className(), ['name' => 'role']);
     }
     
     /**
@@ -262,7 +270,7 @@ class User extends BaseActive implements IdentityInterface
      */
     public function isConfirmed()
     {
-        return $this->dateConfirm > 0;
+        return $this->date_confirm > 0;
     }
     
     /**
@@ -270,8 +278,8 @@ class User extends BaseActive implements IdentityInterface
      */
     public function setConfirmed()
     {
-        $this->emailConfirmToken = '';
-        $this->dateConfirm = new \yii\db\Expression('NOW()');
+        $this->email_confirm_token = '';
+        $this->date_confirm = new \yii\db\Expression('NOW()');
     }
     
     /**
@@ -308,7 +316,7 @@ class User extends BaseActive implements IdentityInterface
      */
     public function getAuthKey()
     {
-        return $this->authKey;
+        return $this->auth_key;
     }
 
     /**
@@ -324,7 +332,7 @@ class User extends BaseActive implements IdentityInterface
      */
     public function generateAuthKey()
     {
-        $this->authKey = Yii::$app->security->generateRandomString();
+        $this->auth_key = Yii::$app->security->generateRandomString();
     }
 
     /**
@@ -367,11 +375,11 @@ class User extends BaseActive implements IdentityInterface
     public function authorize($rememberMe = false)
     {
         $this->updateAttributes([
-            'dateLogin' => new \yii\db\Expression('NOW()'),
+            'date_login' => new \yii\db\Expression('NOW()'),
             'ip' => ip2long(Yii::$app->request->getUserIP())
         ]);
 
-        return user()->login($this, $rememberMe ? 3600 * 24 * 30 : 0);
+        return Yii::$app->user->login($this, $rememberMe ? 3600 * 24 * 30 : 0);
     }     
     
     /**
@@ -398,7 +406,7 @@ class User extends BaseActive implements IdentityInterface
      */
     public function generatePasswordResetToken()
     {
-        $this->passwordResetToken = self::generateToken();
+        $this->password_reset_token = self::generateToken();
     }
     
     /**
@@ -406,7 +414,7 @@ class User extends BaseActive implements IdentityInterface
      */
     public function removePasswordResetToken()
     {
-        $this->passwordResetToken = null;
+        $this->password_reset_token = null;
     }
     
     /**
@@ -422,7 +430,7 @@ class User extends BaseActive implements IdentityInterface
         }
         
         return static::findOne([
-            'passwordResetToken' => $token,
+            'password_reset_token' => $token,
             'status' => self::STATUS_ACTIVE,
         ]);
     }
@@ -432,8 +440,8 @@ class User extends BaseActive implements IdentityInterface
      */
     public function generateEmailConfirmToken()
     {
-        $this->emailConfirmToken = self::generateToken();
-        $this->dateConfirm = 0;
+        $this->email_confirm_token = self::generateToken();
+        $this->date_confirm = 0;
     }
     
     /**
@@ -449,7 +457,7 @@ class User extends BaseActive implements IdentityInterface
         }
         
         return static::findOne([
-            'emailConfirmToken' => $token,
+            'email_confirm_token' => $token,
             'status' => self::STATUS_ACTIVE,
         ]);
     }
@@ -503,14 +511,14 @@ class User extends BaseActive implements IdentityInterface
     {
         $exist = (new Query())
             ->select('*')
-            ->from('userToProvider')
+            ->from('user_provider')
             ->where([
                 'provider'  => $provider,
-                'profileId' => $profileId
+                'profile_id' => $profileId
             ])
             ->one();
  
-        return $exist ? static::findOne($exist['userId']) : null;
+        return $exist ? static::findOne($exist['user_id']) : null;
     }
     
     /**
@@ -522,8 +530,8 @@ class User extends BaseActive implements IdentityInterface
     {
         return (new Query())
             ->select('*')
-            ->from('userToProvider')
-            ->where(['userId' => $this->id])
+            ->from('user_provider')
+            ->where(['user_id' => $this->id])
             ->all();
     }
     
@@ -531,30 +539,39 @@ class User extends BaseActive implements IdentityInterface
      * Save provider.
      *
      * @param int $provider
-     * @param array $params
+     * @param string $profileId
+     * @param string $profileUrl
+     * @param string $accessToken
+     * @param string $accessTokenSecret
      * @return int Number of rows affected.
      */
-    public function saveProvider($provider, $params)
+    public function saveProvider($provider, $profileId, $profileUrl, $accessToken, $accessTokenSecret)
     {
-        $params['userId'] = $this->id;
-        $params['provider'] = $provider;
+        $params = [
+            'user_id' => $this->id,
+            'provider' => $provider,
+            'profile_id' => $profileId,
+            'profile_url' => $profileUrl,
+            'access_token' => $accessToken, 
+            'access_token_secret' => $accessTokenSecret
+        ];
         
         $exist = (new Query())
             ->select('*')
-            ->from('userToProvider')
-            ->where(['userId' => $this->id, 'provider' => $provider])
+            ->from('user_provider')
+            ->where(['user_id' => $this->id, 'provider' => $provider])
             ->one();
         
         if ($exist) {
             return Yii::$app->db
                 ->createCommand()
-                ->update('userToProvider', $params, 'id = :id', ['id' => $exist['id']])
+                ->update('user_provider', $params, 'id = :id', ['id' => $exist['id']])
                 ->execute();
             
         } else {
             return Yii::$app->db
                 ->createCommand()
-                ->insert('userToProvider', $params)
+                ->insert('user_provider', $params)
                 ->execute();
         }
     }

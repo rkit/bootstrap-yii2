@@ -9,7 +9,7 @@ class m141230_075208_create_tag extends Migration
     {
         $this->createTable('{{%tag}}', [
             'id' => Schema::TYPE_PK,
-            'userId' => Schema::TYPE_INTEGER . " NOT NULL",
+            'user_id' => Schema::TYPE_INTEGER . " NOT NULL",
             'title' => Schema::TYPE_STRING . " NOT NULL",
             'count' => Schema::TYPE_INTEGER . " NOT NULL DEFAULT 0",
         ], $this->tableOptions);

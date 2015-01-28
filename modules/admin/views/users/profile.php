@@ -8,20 +8,20 @@ $this->title = Yii::t('app', 'Users');
 <?= $this->render('/shared/forms/header', ['title' => $model->user->username ?: $model->user->email, 'model' => $model]) ?>
 
 <ul class="nav nav-tabs">
-    <li><?= Html::a(Yii::t('app', 'Main information'), ['edit', 'id' => $model->userId]) ?></li>
-    <li class="active"><?= Html::a(Yii::t('app', 'Profile'), ['profile', 'id' => $model->userId]) ?></li>
+    <li><?= Html::a(Yii::t('app', 'Main information'), ['edit', 'id' => $model->user_id]) ?></li>
+    <li class="active"><?= Html::a(Yii::t('app', 'Profile'), ['profile', 'id' => $model->user_id]) ?></li>
 </ul><br>
 
 <?php $form = ActiveForm::begin(['options' => ['class' => 'form']]); ?>
 
     <div class="row">
         <div class="col-md-8">
-            <!-- fullName -->
-            <?= $form->field($model, 'fullName')->textInput() ?>
+            <!-- full_name -->
+            <?= $form->field($model, 'full_name')->textInput() ?>
             
-            <!-- birthDay -->
-            <?php $model->birthDay = $model->birthDay > 0 ? $model->birthDay : '' ?>
-            <?= $form->field($model, 'birthDay')->widget(DatePicker::classname(), [
+            <!-- birth_day -->
+            <?php $model->birth_day = $model->birth_day > 0 ? $model->birth_day : '' ?>
+            <?= $form->field($model, 'birth_day')->widget(DatePicker::classname(), [
                 'pluginOptions' => [
                     'autoclose' => true,
                     'format' => 'yyyy-mm-dd'

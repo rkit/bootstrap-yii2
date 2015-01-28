@@ -50,7 +50,7 @@ class IndexController extends BaseController
     
     public function actionIndex()
     {
-        if (!user()->can('AdminModule')) {
+        if (!Yii::$app->user->can('AdminModule')) {
             return $this->accessDenied();
         }
 
@@ -72,7 +72,7 @@ class IndexController extends BaseController
     
     public function actionLogout()
     {
-        user()->logout();
+        Yii::$app->user->logout();
         return $this->goHome();
     }
 }

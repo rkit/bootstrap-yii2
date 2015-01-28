@@ -17,8 +17,8 @@ use app\models\Tag;
  * [
  *     'class' => 'app\components\behaviors\TagBehavior',
  *     'attribute' => 'tagsList',
- *     'tableRelation' => 'newsToTag',
- *     'tableRelationField' => 'newsId'
+ *     'tableRelation' => 'news_tag_assn',
+ *     'tableRelationField' => 'news_id'
  * ]
  * ~~~
  */ 
@@ -86,6 +86,7 @@ class TagBehavior extends Behavior
         $this->beforeDelete();
         
         $tags = Tag::prepare(explode(',', $this->owner->{$this->attribute}));
+        
         foreach ($tags as $tag) {
             $this->owner->link('tags', $tag);
         }       
@@ -101,7 +102,7 @@ class TagBehavior extends Behavior
     public function getTags()
     {
         return $this->owner
-            ->hasMany(Tag::className(), ['id' => 'tagId'])
+            ->hasMany(Tag::className(), ['id' => 'tag_id'])
             ->viaTable($this->tableRelation, [$this->tableRelationField => 'id']);
     }
     
@@ -114,7 +115,7 @@ class TagBehavior extends Behavior
     public function updateTagsCount($increment = true)
     {
         $condition = sprintf(
-            'id IN (SELECT tagId FROM %s WHERE %s = :%s) %s', 
+            'id IN (SELECT tag_id FROM %s WHERE %s = :%s) %s', 
             $this->tableRelation, 
             $this->tableRelationField, 
             $this->tableRelationField,
@@ -135,6 +136,10 @@ class TagBehavior extends Behavior
      */
     public function tagsToString()
     {
+        if (!$this->owner->tags) {
+            return '';
+        }
+        
         return implode(',', ArrayHelper::getColumn($this->owner->tags, 'title', false));
     } 
 }

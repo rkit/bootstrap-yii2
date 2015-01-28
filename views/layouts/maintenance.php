@@ -11,8 +11,8 @@ use yii\helpers\Html;
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?= app\helpers\Util::clearText($this->title) . ' / ' . Yii::$app->name ?></title>
     <?= Html::csrfMetaTags()?>
-    <meta name="description" content="<?= e(Yii::$app->controller->description) ?>" />
-    <meta name="keywords" content="<?= e(Yii::$app->controller->keywords) ?>" />
+    <meta name="description" content="<?= Html::encode(Yii::$app->controller->description) ?>" />
+    <meta name="keywords" content="<?= Html::encode(Yii::$app->controller->keywords) ?>" />
     <?php $this->head() ?>
     
 </head>
