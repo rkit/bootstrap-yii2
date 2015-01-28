@@ -37,7 +37,7 @@ php requirements.php
    ```
    php yii create-local-config/init
    ```
-   > See in **config/local/config.php**
+   > config will be created in **config/local/config.php**
 
 3. Run
    ```
