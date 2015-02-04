@@ -98,22 +98,16 @@ $config = [
                     'class' => 'yii\authclient\clients\VKontakte',
                     'clientId' => '',
                     'clientSecret' => '',
-                    'clientId' => '4582521',
-                    'clientSecret' => 'Blei92ca0aPhtAmcTPR8',
                 ],
                 'twitter' => [
                     'class' => 'yii\authclient\clients\Twitter',
                     'consumerKey' => '',
                     'consumerSecret' => '',
-                    'consumerKey' => 'aZjOCU4NDI1cQfDFu5l0v3ZyC',
-                    'consumerSecret' => 'TzxdtooBkzYrIYADB7EpA0b3hNY1kAsVKBtO0TdTFOESlEY38H',
                 ],
                 'facebook' => [
                     'class' => 'yii\authclient\clients\Facebook',
                     'clientId' => '',
                     'clientSecret' => '',
-                    'clientId' => '1477952709141175',
-                    'clientSecret' => 'e3dfcd550198196ea7e50cf7c5b31d59',
                 ],
             ],
         ]
