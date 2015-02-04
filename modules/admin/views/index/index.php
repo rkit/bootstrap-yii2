@@ -26,8 +26,6 @@
     <ul>
         <li><?= php_uname('n') ?></li>
         <li><?= php_uname('v') ?></li>
-        <li><?= apache_get_version() ?></li>
         <li>PHP <?= phpversion() ?></li>
-        <li>MySQL <?= Yii::$app->db->createCommand('SELECT VERSION()')->queryScalar() ?></li>
     </ul>
 </div>
