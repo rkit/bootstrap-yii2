@@ -1,7 +1,7 @@
 actor: Tester
-#coverage:
+coverage:
 #    #c3_url: http://localhost:8080/index-test.php/
-#    enabled: true
+    enabled: true
 #    #remote: true
 #    #remote_config: '../tests/codeception.yml'
 #    white_list:
@@ -10,15 +10,17 @@ actor: Tester
 #            - ../controllers/*
 #            - ../commands/*
 #            - ../mail/*
-#    blacklist:
-#        include:
-#            - ../assets/*
-#            - ../config/*
-#            - ../runtime/*
-#            - ../vendor/*
-#            - ../views/*
-#            - ../web/*
-#            - ../tests/*
+    blacklist:
+        include:
+            - ../components/*
+            - ../behaviors/*
+            - ../assets/*
+            - ../config/*
+            - ../runtime/*
+            - ../vendor/*
+            - ../views/*
+            - ../web/*
+            - ../tests/*
 paths:
     tests: codeception
     log: codeception/_output
