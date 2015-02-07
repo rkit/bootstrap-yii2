@@ -39,7 +39,7 @@ class m141230_075222_create_geo extends Migration
             'important' => "tinyint(1) NOT NULL DEFAULT 0",
             'region_id' => Schema::TYPE_INTEGER . " DEFAULT NULL",
             'title' => Schema::TYPE_STRING . "(150) NOT NULL",
-            'area' => Schema::TYPE_STRING . "(150) NOT NULL",
+            'area' => Schema::TYPE_STRING . "(150) NOT NULL DEFAULT ''",
         ], $this->tableOptions);
         
         $this->createIndex('country_id', '{{%city}}', 'country_id');

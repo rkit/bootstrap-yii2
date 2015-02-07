@@ -9,7 +9,7 @@ class m141230_043535_create_settings extends Migration
     {
         $this->createTable('{{%settings}}', [
             'key'   => Schema::TYPE_STRING . ' NOT NULL',
-            'value' => Schema::TYPE_TEXT . ' NOT NULL',
+            'value' => Schema::TYPE_TEXT,
         ], $this->tableOptions);
         
         $this->addPrimaryKey('key', '{{%settings}}', 'key');

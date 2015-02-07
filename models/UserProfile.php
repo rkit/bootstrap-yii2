@@ -32,7 +32,10 @@ class UserProfile extends BaseActive
     {
         return [
             ['birth_day', 'safe'],
+            ['birth_day', 'default', 'value' => '0000-00-00'],
+            
             ['full_name', 'string', 'max' => 40],
+            
             ['photo', 'string', 'max' => 255]
         ];
     }

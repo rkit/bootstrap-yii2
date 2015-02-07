@@ -76,6 +76,7 @@ class User extends BaseActive implements IdentityInterface
             //
             // scenario: admin-edit
             //
+
             ['role', 'string', 'on' => 'admin-edit'],
             
             ['username', 'required', 'when' => function ($model) {
@@ -278,7 +279,7 @@ class User extends BaseActive implements IdentityInterface
      */
     public function setConfirmed()
     {
-        $this->email_confirm_token = '';
+        $this->email_confirm_token = null;
         $this->date_confirm = new \yii\db\Expression('NOW()');
     }
     
@@ -441,7 +442,7 @@ class User extends BaseActive implements IdentityInterface
     public function generateEmailConfirmToken()
     {
         $this->email_confirm_token = self::generateToken();
-        $this->date_confirm = 0;
+        $this->date_confirm = null;
     }
     
     /**
