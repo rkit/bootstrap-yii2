@@ -84,7 +84,11 @@ class RolesController extends BaseController
                     }
                     
                     if (is_array($model->permissions)) {   
-                        $currPermissions = ArrayHelper::index($auth->getPermissionsByRole($model->name), 'name', []);    
+                        $currPermissions = ArrayHelper::index(
+                            $auth->getPermissionsByRole($model->name), 
+                            'name', 
+                            []
+                        );    
                         foreach ($model->permissions as $permission) {
                             if (!array_key_exists($permission, $currPermissions)) {
                                 $auth->addChild($role, $permissions[$permission]);

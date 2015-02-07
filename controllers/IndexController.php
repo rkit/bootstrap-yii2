@@ -193,7 +193,9 @@ class IndexController extends BaseController
         if ($model->sendEmail()) { 
             return $this->alert(
                 'success', 
-                Yii::t('app', 'A letter for activation was sent to {email}', ['email' => Yii::$app->user->identity->email])
+                Yii::t('app', 'A letter for activation was sent to {email}', [
+                    'email' => Yii::$app->user->identity->email
+                ])
             );
         } else {
             return $this->badRequest(Yii::t('app', 'Error sending emails'));        
