@@ -93,9 +93,7 @@ class SignupFormTest extends DbTestCase
         
         expect('password_reset_token should be empty', $user->profile->full_name)->contains('Demo');
         
-        if ($user) {
-            $user->delete();
-        }
+        $user->delete();
     }
      
     public function fixtures()

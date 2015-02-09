@@ -6,18 +6,7 @@ use tests\codeception\_pages\SignupPage;
 use app\models\User;
 
 class SignupCest
-{
-    /**
-     * This method is called after each cest class test method, even if test failed.
-     * @param \Codeception\Event\TestEvent $event
-     */
-    public function _after($event)
-    {
-        User::deleteAll([
-            'email' => 'demo@example.com'
-        ]);
-    }
-    
+{    
     /**
      *
      * @param \codeception\FunctionalTester $I

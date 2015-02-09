@@ -32,6 +32,7 @@ After creating the basic application, follow these steps to prepare for the test
    ```
    php codeception/bin/yii migrate --migrationPath=@yii/rbac/migrations/
    php codeception/bin/yii migrate
+   php codeception/bin/yii rbac/init
    ```
 
 4. Build the test suites:
@@ -49,17 +50,7 @@ After creating the basic application, follow these steps to prepare for the test
 Code coverage support
 ---------------------
 
-By default, code coverage is disabled in `codeception.yml` configuration file, you should uncomment needed rows to be able
-to collect code coverage. You can run your tests and collect coverage with the following command:
-
 ```
-#collect coverage for all tests
-codecept run --coverage-html --coverage-xml
-
-#collect coverage only for unit tests
-codecept run unit --coverage-html --coverage-xml
-
-#collect coverage for unit and functional tests
 codecept run functional,unit --coverage-html --coverage-xml
 ```
 
