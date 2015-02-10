@@ -13,14 +13,6 @@ use yii\filters\VerbFilter;
 class BaseController extends Controller
 {
     /**
-     * @var string Meta tag.
-     */
-    public $description = '';
-    /**
-     * @var string Meta tag.
-     */
-    public $keywords = '';
-    /**
      * @var string Path to js bundle.
      */
     public $jsBundle = 'front.js';

@@ -18,8 +18,6 @@ AdminAsset::register($this);
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?= app\helpers\Util::clearText($this->title) ?> / <?= Yii::t('app', 'Control Panel') ?></title>
     <?= Html::csrfMetaTags() ?>
-    <meta name="description" content="<?= Html::encode(Yii::$app->controller->description) ?>">
-    <meta name="keywords" content="<?= Html::encode(Yii::$app->controller->keywords) ?>">
     <?php $this->head() ?>
     
     <link href="<?= Yii::$app->controller->getCssBundle() ?>" rel="stylesheet">
