@@ -12,11 +12,11 @@ class SignupCest
      * @param \codeception\FunctionalTester $I
      * @param \Codeception\Scenario $scenario
      */
-    public function testUserSignup($I, $scenario)
-    {
-        $I->wantTo('ensure that signup works');
-        
+    public function testSignup($I, $scenario)
+    {   
         $page = SignupPage::openBy($I);
+        
+        $I->wantTo('signup');
         
         $I->see('signup-button');
         

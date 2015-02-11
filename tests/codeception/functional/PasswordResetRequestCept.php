@@ -3,7 +3,7 @@
 use tests\codeception\_pages\PasswordResetRequestPage;
 
 $I = new FunctionalTester($scenario);
-$I->wantTo('ensure that password reset request works');
+$I->wantTo('password reset request');
 
 $page = PasswordResetRequestPage::openBy($I);
 

@@ -1,9 +1,9 @@
 <?php
 
-use tests\codeception\_pages\LoginPage;
+use tests\codeception\_pages\admin\LoginPage;
 
 $I = new FunctionalTester($scenario);
-$I->wantTo('login');
+$I->wantTo('admin, login');
 
 $page = LoginPage::openBy($I);
 
@@ -14,23 +14,22 @@ $page->login('', '');
 $I->expectTo('see validations errors');
 $I->see('.help-block-error');
 
-$I->amGoingTo('try to login with empty email');
+$I->amGoingTo('try to login with empty username');
 $page->login('', 'fghfgh');
 $I->expectTo('see validations errors');
 $I->see('.help-block-error');
 
 $I->amGoingTo('try to login with empty password');
-$page->login('admin@example.com', '');
+$page->login('editor', '');
 $I->expectTo('see validations errors');
 $I->see('.help-block-error');
 
 $I->amGoingTo('try to login with wrong credentials');
-$page->login('admin@example.com', 'qrerop2j34');
+$page->login('editor', 'qrerop2j34');
 $I->expectTo('see validations errors');
 $I->see('.help-block-error');
 
 $I->amGoingTo('try to login with correct credentials');
-$page->login('admin@example.com', 'fghfgh');
-$I->expectTo('see user info');
-$I->see('logout');
-$I->dontSee('login');
+$page->login('admin', 'fghfgh');
+$I->expectTo('see welcome');
+$I->see('Добро пожаловать');

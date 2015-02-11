@@ -4,7 +4,7 @@ use tests\codeception\_pages\ResetPasswordPage;
 use app\models\User;
 
 $I = new FunctionalTester($scenario);
-$I->wantTo('ensure that reset password works');
+$I->wantTo('reset password');
 
 $page = ResetPasswordPage::openBy($I, ['token' => User::findByEmail('admin@example.com')->password_reset_token]);
 

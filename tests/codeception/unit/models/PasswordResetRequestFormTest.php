@@ -28,7 +28,7 @@ class PasswordResetRequestFormTest extends DbTestCase
         parent::tearDown();
     }
     
-    public function testSendEmailWrongUser()
+    public function testPasswordResetRequestWrongUser()
     {
         $this->specify('no user with such email, message should not be send', function () {
             $model = new PasswordResetRequestForm();
@@ -43,7 +43,7 @@ class PasswordResetRequestFormTest extends DbTestCase
         });
     }
     
-    public function testSendEmailCorrect()
+    public function testPasswordResetRequestCorrect()
     {
         $model = new PasswordResetRequestForm();
         $model->email = $this->user[0]['email'];

@@ -583,7 +583,10 @@ class User extends BaseActive implements IdentityInterface
     public function beforeDelete()
     {
         Yii::$app->authManager->revokeAll($this->id);
-        $this->profile->delete();
+        
+        if ($this->profile !== null) {
+            $this->profile->delete();
+        }
         
         return true;
     }

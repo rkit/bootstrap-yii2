@@ -40,8 +40,8 @@ class UserTest extends DbTestCase
     public function testUserUnconfirmed()
     {
         $user = new User();
-        $user->username = 'demo2';
-        $user->email = 'demo2@example.com';
+        $user->username = 'demo';
+        $user->email = 'demo@example.com';
         $user->setPassword('fghfgh');
         $user->save();
 
@@ -68,8 +68,8 @@ class UserTest extends DbTestCase
     public function testUserSaving()
     {
         $user = new User();
-        $user->username = 'demo3';
-        $user->email = 'demo3@example.com';
+        $user->username = 'demo';
+        $user->email = 'demo@example.com';
         $user->setPassword('fghfgh');
         $user->setConfirmed();
         $user->save();
@@ -88,8 +88,8 @@ class UserTest extends DbTestCase
     public function testUserProfile()
     {
         $user = new User();
-        $user->username = 'demo4';
-        $user->email = 'demo4@example.com';
+        $user->username = 'demo';
+        $user->email = 'demo@example.com';
         $user->setPassword('fghfgh');
         
         $profile = new UserProfile();
@@ -117,8 +117,8 @@ class UserTest extends DbTestCase
         $role->save();
     
         $user = new User();
-        $user->username = 'demo5';
-        $user->email = 'demo5@example.com';
+        $user->username = 'demo';
+        $user->email = 'demo@example.com';
         $user->setPassword('fghfgh');
         $user->role = $role->name;
         $user->save();

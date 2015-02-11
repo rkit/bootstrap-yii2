@@ -16,7 +16,7 @@ class ResetPasswordFormTest extends DbTestCase
     /**
      * @expectedException \yii\base\InvalidParamException
      */
-    public function testResetWrongToken()
+    public function testResetPasswordWrongToken()
     {
         new ResetPasswordForm('notexistingtoken_1391882543');
     }
@@ -24,12 +24,12 @@ class ResetPasswordFormTest extends DbTestCase
     /**
      * @expectedException \yii\base\InvalidParamException
      */
-    public function testResetEmptyToken()
+    public function testResetPasswordEmptyToken()
     {
         new ResetPasswordForm('');
     }
     
-    public function testResetCorrect()
+    public function testResetPasswordCorrect()
     {
         $form = new ResetPasswordForm($this->user[0]['password_reset_token']);
         
