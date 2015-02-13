@@ -308,21 +308,10 @@ class File extends BaseActive
         if (!$file || !self::checkOwner($file, $ownerId, $ownerType)) {
             return false;
         }
- 
-        // check and save tmp file
-        if ($file->tmp) {
-            $file->tmp = false;
-            $file->owner_id = $ownerId;
-            
-            if (file_exists($file->pathTmp(true)) && FileHelper::createDirectory($file->dir(true))) {
-                if (rename($file->pathTmp(true), $file->path(true))) {
-                    $file->updateAttributes(['tmp' => $file->tmp, 'owner_id' => $file->owner_id]);
-                } else {
-                    return false;
-                }
-            } else {
-                return false;
-            }
+        
+        // save tmp file
+        if ($file->tmp && $file = self::saveTmpFile($file, $ownerId)) {
+            $file->updateAttributes(['tmp' => $file->tmp, 'owner_id' => $file->owner_id]);
         } else {
             return false;
         }
@@ -376,21 +365,15 @@ class File extends BaseActive
                 }
                 // save tmp file
                 if ($file->tmp) {
-                    $file->tmp = false;
-                    $file->owner_id = $ownerId;
-                    
-                    if (file_exists($file->pathTmp(true)) && FileHelper::createDirectory($file->dir(true))) {
-                        if (!rename($file->pathTmp(true), $file->path(true))) {
-                            return false;
-                        }
-                    } else {
+                    $file = self::saveTmpFile($file, $ownerId);
+                    if (!$file) {
                         return false;
-                    }  
+                    }
                 }
                 
                 $file->updateAttributes([
                     'tmp'      => $file->tmp, 
-                    'owner_id'  => $file->owner_id,
+                    'owner_id' => $file->owner_id,
                     'title'    => @$files[$file->id],
                     'position' => @array_search($file->id, array_keys($files)) + 1
                 ]);
@@ -411,6 +394,26 @@ class File extends BaseActive
         }
 
         return $newFiles;
+    }
+    
+    /**
+     * Save tmp file.
+     *
+     * @param File $file
+     * @return File|bool
+     */
+    public static function saveTmpFile($file, $ownerId)
+    {
+        $file->tmp = false;
+        $file->owner_id = $ownerId;
+        
+        if (file_exists($file->pathTmp(true)) && FileHelper::createDirectory($file->dir(true))) {
+            if (rename($file->pathTmp(true), $file->path(true))) {
+                return $file;
+            }
+        }
+        
+        return false;
     }
 
     /**
@@ -439,25 +442,7 @@ class File extends BaseActive
         
         try {
             $image = $imagine->open(Yii::getAlias('@webroot') . $file);
-            
-            if ($width < 1 || $height < 1) {
-                if ($height < 1) {
-                    $image = $image->resize($image->getSize()->widen($width));
-                } else {
-                    $image = $image->resize($image->getSize()->heighten($height));
-                }
-                
-            } else {
-                $size = new Box($width, $height);
-                
-                if ($ratio) {
-                    $mode = ImageInterface::THUMBNAIL_INSET;
-                } else {
-                    $mode = ImageInterface::THUMBNAIL_OUTBOUND;
-                }
-                
-                $image = $image->thumbnail($size, $mode);
-            }
+            $image = self::resizeMagic($image, $width, $height, $ratio);
             
             $image->save(Yii::getAlias('@webroot') . $thumb, [
                 'jpeg_quality' => 100,
@@ -469,6 +454,39 @@ class File extends BaseActive
         }
         
         return $thumb;
+    }
+    
+    /**
+     * Magick resizing method.
+     *
+     * @param imagine\Image $image
+     * @param int $width
+     * @param int $height
+     * @param bool $ratio
+     * @return imagine\Image
+     */
+    private static function resizeMagic($image, $width, $height, $ratio)
+    {
+        if ($width < 1 || $height < 1) {
+            if ($height < 1) {
+                $image = $image->resize($image->getSize()->widen($width));
+            } else {
+                $image = $image->resize($image->getSize()->heighten($height));
+            }
+            
+        } else {
+            $size = new Box($width, $height);
+            
+            if ($ratio) {
+                $mode = ImageInterface::THUMBNAIL_INSET;
+            } else {
+                $mode = ImageInterface::THUMBNAIL_OUTBOUND;
+            }
+            
+            $image = $image->thumbnail($size, $mode);
+        }
+        
+        return $image;
     }
     
     /**
