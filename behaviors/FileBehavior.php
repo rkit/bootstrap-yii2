@@ -10,7 +10,7 @@ use yii\helpers\ArrayHelper;
 use app\models\File;
 
 /** 
- * Bind files to the owner.
+ * Binding files to the owner.
  * The rules are checked in UploadAction.
  * 
  * Usage:
@@ -65,21 +65,20 @@ class FileBehavior extends Behavior
     public function afterSave()
     {
         foreach ($this->attributes as $attribute => $data) {
-            $files = $this->owner->{$attribute};
-            // check if attribute changed
-            if ($data['isAttributeChanged'] === false || $files === null) {
+            $file = $this->owner->{$attribute};
+            
+            if ($data['isAttributeChanged'] === false || $file === null) {
                 continue;
             }
-            // bind file
-            $file = File::bind($this->owner->primaryKey, $data['ownerType'], $files);
+            // binding file/files
+            $file = File::bind($this->owner->primaryKey, $data['ownerType'], $file);
             // if savePath, then path saved in current model
             if (isset($data['savePath']) && $data['savePath'] === true) {    
-                if ($files === [] || $files === '') {
+                if ($file === [] || $file === '') {
                     $path = '';
                 } else {
                     $path = $file ? $file->path() : $data['oldValue'];
                 }
-                // save path in current model
                 $this->owner->updateAttributes([$attribute => $path]);
             }
         }
@@ -168,8 +167,8 @@ class FileBehavior extends Behavior
     
     private function prepareImageSizeDescription($rules)
     {
-        $maxWidth = ArrayHelper::getValue($rules, 'maxWidth');
-        $minWidth = ArrayHelper::getValue($rules, 'minWidth');
+        $maxWidth  = ArrayHelper::getValue($rules, 'maxWidth');
+        $minWidth  = ArrayHelper::getValue($rules, 'minWidth');
         $maxHeight = ArrayHelper::getValue($rules, 'maxHeight');
         $minHeight = ArrayHelper::getValue($rules, 'minHeight');
 
