@@ -22,6 +22,7 @@ namespace :deploy do
           execute :npm, "install"
           execute :gulp
           execute :php, "yii migrate/up --interactive"
+          execute :php, "yii rbac/init"
         end
     end
   end
