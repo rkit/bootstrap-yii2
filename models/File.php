@@ -284,7 +284,8 @@ class File extends BaseActive
     public static function bind($ownerId, $ownerType, $files)
     {
         if ($files === [] || $files === '') {
-            return self::deleteByOwner($ownerId, $ownerType);
+            self::deleteByOwner($ownerId, $ownerType);
+            return true;
         }
         
         return is_array($files)
@@ -338,7 +339,7 @@ class File extends BaseActive
     public static function bindMultiple($ownerId, $ownerType, $files)
     {
         if (!is_array($files)) {
-            return;
+            return false;
         }
         
         // prepare files

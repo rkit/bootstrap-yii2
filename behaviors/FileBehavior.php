@@ -74,10 +74,12 @@ class FileBehavior extends Behavior
             $file = File::bind($this->owner->primaryKey, $data['ownerType'], $file);
             // if savePath, then path saved in current model
             if (isset($data['savePath']) && $data['savePath'] === true) {    
-                if ($file === [] || $file === '') {
-                    $path = '';
+                if (is_object($file)) {
+                    $path = $file->path();
+                } elseif ($file === false && $data['oldValue'] !== null) {
+                    $path = $data['oldValue'];   
                 } else {
-                    $path = $file ? $file->path() : $data['oldValue'];
+                    $path = '';
                 }
                 $this->owner->updateAttributes([$attribute => $path]);
             }
