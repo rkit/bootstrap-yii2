@@ -12,7 +12,7 @@ $this->title = Yii::t('app', 'News');
 <?php $form = ActiveForm::begin(['options' => ['class' => 'form']]); ?>
 
     <!-- title -->
-    <?= $form->field($model, 'title')->textInput() ?>
+    <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
     
     <!-- type_id -->
     <?= $form->field($model, 'type_id')
@@ -70,7 +70,7 @@ $this->title = Yii::t('app', 'News');
     <?= $this->render('/shared/tags', ['form' => $form, 'model' => $model, 'attribute' => 'tagsList']) ?>
     
     <!-- reference -->
-    <?= $form->field($model, 'reference')->textInput() ?>
+    <?= $form->field($model, 'reference')->textInput(['maxlength' => true]) ?>
     
     <!-- status -->
     <?= $form->field($model, 'status')->checkbox(['label' => Yii::t('app', 'Publish')]) ?>

@@ -32,15 +32,15 @@ $this->title = Yii::t('app', 'Users');
             
             <!-- username -->
             <?= $form->field($model, 'username')
-                ->textInput()
+                ->textInput(['maxlength' => true])
                 ->hint(Yii::t('app', 'Only letters, numbers, symbols _ and -')) ?>
             
             <!-- email -->
-            <?= $form->field($model, 'email')->textInput() ?>
+            <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
             
             <!-- passwordNew -->
             <input type="password" name="password" id="password_" style="display: none">
-            <?= $form->field($model, 'passwordNew')->passwordInput()->hint(Yii::t('app', 'Set a new password')) ?>
+            <?= $form->field($model, 'passwordNew')->passwordInput(['maxlength' => true])->hint(Yii::t('app', 'Set a new password')) ?>
             
             <!-- status -->
             <?= $form->field($model, 'status')

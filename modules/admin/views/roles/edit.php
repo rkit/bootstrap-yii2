@@ -10,10 +10,10 @@ $this->title = Yii::t('app', 'Roles');
 <?php $form = ActiveForm::begin(['options' => ['class' => 'form']]); ?>
 
     <!-- name -->
-    <?= $form->field($model, 'name')->textInput()->hint(Yii::t('app', 'Only latin letters')) ?>
+    <?= $form->field($model, 'name')->textInput(['maxlength' => true])->hint(Yii::t('app', 'Only latin letters')) ?>
     
     <!-- description -->
-    <?= $form->field($model, 'description')->textInput() ?>
+    <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
     
     <?php if ($model->isSuperUser()):?>
     <div class="alert alert-warning" role="alert">
