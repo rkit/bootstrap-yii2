@@ -75,7 +75,7 @@ var forms = {
     showError: function($form, fieldId, text) {
         var $field = $form.find('#' + fieldId.toLowerCase()).closest('.form-group');
         $field.find('.help-block').text(text);
-        $field.addClass('has-error')
+        $field.addClass('has-error');
     },
 
     clearErrors: function(form) {
