@@ -118,7 +118,7 @@ class IndexController extends BaseController
                 $model->sendEmail();
                 return $this->alert(
                     'success', 
-                    Yii::t('app', 'Please activate your account') . '.' . 
+                    Yii::t('app', 'Please activate your account') . '. ' . 
                     Yii::t('app', 'A letter for activation was sent to {email}', ['email' => $model->email])
                 );
             }
@@ -154,7 +154,7 @@ class IndexController extends BaseController
                 Yii::$app->session['provider'] = null;
                 return $this->alert(
                     'success',  
-                    Yii::t('app', 'Please activate your account') . '.' . 
+                    Yii::t('app', 'Please activate your account') . '. ' . 
                     Yii::t('app', 'A letter for activation was sent to {email}', ['email' => $model->email])
                 );
             }
