@@ -24,7 +24,7 @@ $this->title = Yii::t('app', 'Cities');
             // checkbox
         [
             'class' => CheckboxColumn::classname(),
-            'contentOptions' => ['style' => 'width: 30px']
+            'headerOptions' => ['style' => 'width: 30px']
         ],
             // title
         [
@@ -38,6 +38,7 @@ $this->title = Yii::t('app', 'Cities');
         [
             'attribute' => 'country_id',
             'value' => 'country.title',
+            'headerOptions' => ['style' => 'width: 200px'],
             'filter' => Select2::widget([
                 'model' => $citySearch, 
                 'attribute' => 'country_id',
@@ -66,6 +67,7 @@ $this->title = Yii::t('app', 'Cities');
         [
             'attribute' => 'region_id',
             'value' => 'region.title',
+            'headerOptions' => ['style' => 'width: 200px'],
             'filter' => Select2::widget([
                 'model' => $citySearch, 
                 'attribute' => 'region_id',
@@ -94,6 +96,7 @@ $this->title = Yii::t('app', 'Cities');
         [
             'attribute' => 'important',
             'format' => 'raw',
+            'headerOptions' => ['style' => 'width: 150px'],
             'value' => function ($model) {
                 if ($model->important) {
                     return '<span class="label label-info">' . Yii::t('app', 'Big city') .'</span>';
@@ -103,8 +106,8 @@ $this->title = Yii::t('app', 'Cities');
             // action buttons
         [
             'class' => 'yii\grid\ActionColumn',
-            'contentOptions' => ['class' => 'text-right'],
-            'template'=>'{delete}',
+            'headerOptions' => ['class' => 'text-right', 'style' => 'width: 40px'],
+            'template' => '{delete}',
             'buttons' => Yii::$app->getModule('admin')->defaultGridButtons(['delete'])
         ],
     ],

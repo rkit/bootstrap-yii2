@@ -24,13 +24,13 @@ $this->title = Yii::t('app', 'News');
             // checkbox
         [
             'class' => CheckboxColumn::classname(),
-            'contentOptions' => ['style' => 'width: 30px']
+            'headerOptions' => ['style' => 'width: 30px']
         ],
             // title
         [
             'attribute' => 'title',
             'format' => 'raw',
-            'contentOptions' => ['style' => 'width: 400px'],
+            'headerOptions' => ['style' => 'width: 400px'],
             'value' => function ($model) {
                 return Html::a(Html::encode($model['title']), ['edit', 'id' => $model['id']]);
             }
@@ -51,6 +51,7 @@ $this->title = Yii::t('app', 'News');
         [
             'attribute' => 'date_pub',
             'format' => 'datetime',
+            'headerOptions' => ['style' => 'width: 200px'],
             'filter' => DatePicker::widget(
                 [
                     'model' => $newsSearch,
@@ -83,9 +84,8 @@ $this->title = Yii::t('app', 'News');
             // action buttons
         [
             'class' => 'yii\grid\ActionColumn',
-            'contentOptions' => ['class' => 'text-right'],
-            'template'=>'{status} {delete}',
-            'contentOptions' => ['style' => 'width: 70px'],
+            'headerOptions' => ['class' => 'text-right', 'style' => 'width: 70px'],
+            'template' => '{status} {delete}',
             'buttons' => Yii::$app->getModule('admin')->defaultGridButtons()
         ],
     ],

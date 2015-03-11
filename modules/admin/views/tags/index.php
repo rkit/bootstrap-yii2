@@ -22,7 +22,7 @@ $this->title = Yii::t('app', 'Tags');
             // checkbox
         [
             'class' => CheckboxColumn::classname(),
-            'contentOptions' => ['style' => 'width: 30px']
+            'headerOptions' => ['style' => 'width: 30px']
         ],
             // title
         [
@@ -35,12 +35,13 @@ $this->title = Yii::t('app', 'Tags');
             // count
         [
             'attribute' => 'count',
+            'headerOptions' => ['style' => 'width: 120px'],
         ],
             // action buttons
         [
             'class' => 'yii\grid\ActionColumn',
-            'contentOptions' => ['class' => 'text-right'],
-            'template'=>'{delete}',
+            'headerOptions' => ['class' => 'text-right', 'style' => 'width: 40px'],
+            'template' => '{delete}',
             'buttons' => Yii::$app->getModule('admin')->defaultGridButtons(['delete'])
         ],
     ],

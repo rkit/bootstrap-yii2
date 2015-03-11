@@ -22,7 +22,7 @@ $this->title = Yii::t('app', 'Roles');
             // checkbox
         [
             'class' => CheckboxColumn::classname(),
-            'contentOptions' => ['style' => 'width: 30px']
+            'headerOptions' => ['style' => 'width: 30px']
         ],
             // name
         [
@@ -39,8 +39,8 @@ $this->title = Yii::t('app', 'Roles');
             // action buttons
         [
             'class' => 'yii\grid\ActionColumn',
-            'contentOptions' => ['class' => 'text-right'],
-            'template'=>'{delete}',
+            'headerOptions' => ['class' => 'text-right', 'style' => 'width: 40px'],
+            'template' => '{delete}',
             'buttons' => Yii::$app->getModule('admin')->defaultGridButtons(['delete'])
         ],
     ],

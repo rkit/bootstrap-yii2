@@ -24,7 +24,7 @@ $this->title = Yii::t('app', 'Users');
             // checkbox
         [
             'class' => CheckboxColumn::classname(),
-            'contentOptions' => ['style' => 'width: 30px']
+            'headerOptions' => ['style' => 'width: 30px']
         ],
             // username
         [
@@ -53,7 +53,7 @@ $this->title = Yii::t('app', 'Users');
         [
             'attribute' => 'date_create',
             'format' => 'raw',
-            'contentOptions' => ['style' => 'width: 180px'],
+            'headerOptions' => ['style' => 'width: 180px'],
             'filter' => DatePicker::widget(
                 [
                     'model' => $userSearch,
@@ -80,7 +80,7 @@ $this->title = Yii::t('app', 'Users');
         [
             'attribute' => 'ip',
             'format' => 'text',
-            'contentOptions' => ['style' => 'width: 150px'],
+            'headerOptions' => ['style' => 'width: 150px'],
             'value' => function ($model) {
                 return long2ip($model->ip);
             },
@@ -117,9 +117,8 @@ $this->title = Yii::t('app', 'Users');
             // action buttons
         [
             'class' => 'yii\grid\ActionColumn',
-            'contentOptions' => ['class' => 'text-right'],
-            'template'=>'{status} {delete}',
-            'contentOptions' => ['style' => 'width: 70px'],
+            'headerOptions' => ['class' => 'text-right', 'style' => 'width: 70px'],
+            'template' => '{status} {delete}',
             'buttons' => Yii::$app->getModule('admin')->defaultGridButtons()
         ],
     ],
