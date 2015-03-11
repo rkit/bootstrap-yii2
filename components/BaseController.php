@@ -26,8 +26,7 @@ class BaseController extends Controller
      */
     public function getCssBundle()
     {
-        $hash = @filemtime(Yii::getAlias('@webroot') . '/compiled/' . $this->cssBundle);
-        return '/compiled/' . ($hash ?: 1) . '/' . $this->cssBundle;
+        return '/assets/' . Yii::$app->params['assets.hash'] . '/' . $this->cssBundle;
     }
     
     /**
@@ -35,8 +34,7 @@ class BaseController extends Controller
      */
     public function getJsBundle()
     {
-        $hash = @filemtime(Yii::getAlias('@webroot') . '/compiled/' . $this->jsBundle);
-        return '/compiled/' . ($hash ?: 1) . '/' . $this->jsBundle;
+        return '/assets/' . Yii::$app->params['assets.hash'] . '/' . $this->jsBundle;
     }
     
     /**

@@ -42,7 +42,8 @@ php requirements.php
 3. Run
    ```
    npm install
-   gulp
+   bower install
+   webpack --config assets/webpack.config.js
    php yii migrate --migrationPath=@yii/log/migrations/
    php yii migrate --migrationPath=@yii/rbac/migrations/
    php yii migrate/up
@@ -60,12 +61,7 @@ SetEnv APPLICATION_ENV "development"
 ~~~~
 
 ~~~~
-gulp --debug
-~~~~
-
-## BrowserSync
-~~~~
-gulp --sync
+webpack --config assets/webpack.config.js --watch
 ~~~~
 
 ## [Tests](https://github.com/rkit/bootstrap2/tree/master/tests)

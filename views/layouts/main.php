@@ -2,9 +2,7 @@
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
-use app\assets\FrontAsset;
 
-FrontAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>

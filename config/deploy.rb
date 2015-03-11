@@ -7,7 +7,7 @@ set :scm,            :git
 set :deploy_via,     :remote_cache
 set :keep_releases,  5
 
-set :linked_dirs,  %w{web/uploads web/assets web/compiled runtime vendor node_modules config/local}
+set :linked_dirs,  %w{web/uploads web/assets runtime vendor node_modules config/local}
 
 # Tasks
 # --------------------------------------------------
@@ -20,7 +20,8 @@ namespace :deploy do
         within release_path do
           execute :composer, "install"
           execute :npm, "install"
-          execute :gulp
+          execute :bower, "install"
+          execute :webpack, "--config assets/webpack.config.js -p"
           execute :php, "yii migrate/up --interactive"
           execute :php, "yii rbac/init"
         end

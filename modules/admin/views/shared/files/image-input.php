@@ -8,7 +8,7 @@ use app\widgets\FileApi\Widget as FileApi;
         'template' => '@app/modules/admin/views/shared/files/image',
         'crop' => $crop,
         'callbacks' => [
-            'filecomplete' => new JsExpression('function (evt, uiEvt) { 
+            'filecomplete' => new JsExpression('function (evt, uiEvt) {
                 if (uiEvt.result.error) {
                     forms.showError(
                         $(this).closest(".form"), 

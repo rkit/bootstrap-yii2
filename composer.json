@@ -20,7 +20,8 @@
 
         "kartik-v/yii2-widgets": "*",
         "vova07/yii2-imperavi-widget": "*",
-        "rubaxa/fileapi": "*"
+        "rubaxa/fileapi": "*",
+        "demogorgorn/yii2-sortable": "*"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",

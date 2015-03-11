@@ -1,12 +1,9 @@
 <?php
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
-use app\assets\AdminAsset;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
-
-AdminAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>

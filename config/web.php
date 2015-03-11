@@ -74,12 +74,16 @@ $config = [
         'assetManager' => [
             'linkAssets' => true,
             'bundles' => [
+                'yii\web\YiiAsset' => false,
                 'yii\web\JqueryAsset' => false,
-                'yii\jui\JuiAsset' => [
-                    'sourcePath' => null, 
-                    'js'  => ['plugins/jquery-ui/jquery.ui-1.11.2.min.js'],
-                    'css' => []
-                ]
+                'yii\widgets\PjaxAsset' => false,
+                'yii\widgets\ActiveFormAsset' => false,
+                'yii\grid\GridViewAsset' => false,
+                'yii\validators\ValidationAsset' => false,
+                'yii\bootstrap\BootstrapAsset' => false,
+                'yii\bootstrap\BootstrapThemeAsset' => false,
+                'yii\bootstrap\BootstrapPluginAsset' => false,
+                'yii\jui\JuiAsset' => false
             ],
         ],
         'authManager' => [
