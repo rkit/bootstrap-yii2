@@ -6,9 +6,9 @@ Bootstrap for Yii2
 
 ## Advanced Application Template
 
-- Users (roles, registration, basic and social authorization)
-- Files (upload, crop, gallery)
-- Geo (countries, regions, cities)
+- Users: Roles / Registration / Basic and social authorization
+- Files: Upload / Crop / Gallery
+- Geo: Countries / Regions / Cities
 - Tags
 - Settings
 - [Webpack](http://webpack.github.io/) for assets
