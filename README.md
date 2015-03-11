@@ -4,13 +4,14 @@ Bootstrap for Yii2
 [![Build Status](https://img.shields.io/travis/rkit/bootstrap2/master.svg?style=flat-square)](https://travis-ci.org/rkit/bootstrap2)
 [![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/rkit/bootstrap2/master.svg?style=flat-square)](https://scrutinizer-ci.com/g/rkit/bootstrap2/?branch=master)
 
-#### The template contains the basic features including users, roles and more
+## Advanced Application Template
 
 - Users (roles, registration, basic and social authorization)
 - Files (upload, crop, gallery)
 - Geo (countries, regions, cities)
 - Tags
 - Settings
+- [Webpack](http://webpack.github.io/) for assets
 
 Screenshots:
 [User List](https://cloud.githubusercontent.com/assets/4242765/5601755/2d9aad0c-9341-11e4-8ee2-ab5e02f90314.png),

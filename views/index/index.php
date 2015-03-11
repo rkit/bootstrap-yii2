@@ -14,13 +14,14 @@ use yii\helpers\Html;
     <h1>Bootstrap for Yii2</h1>
 </div>
 
-<p class="lead">The template contains the basic features including users, roles and more</p>
+<p class="lead">Advanced Application Template</p>
 <ul>
-    <li>Users <span class="text-muted">(roles, registration, basic and social authorization)</span></li>
-    <li>Files <span class="text-muted">(upload, crop, gallery)</span></li>
-    <li>Geo <span class="text-muted">(countries, regions, cities)</span></li>
+    <li>Users: <span class="text-muted">Roles / Registration / Basic and social authorization</span></li>
+    <li>Files: <span class="text-muted">Upload / Crop / Gallery</span></li>
+    <li>Geo: <span class="text-muted">Countries / Regions / Cities</span></li>
     <li>Tags</li>
     <li>Settings</li>
+    <li><a href="http://webpack.github.io/">Webpack</a> for assets</li>
 </ul>
 
 <hr>
