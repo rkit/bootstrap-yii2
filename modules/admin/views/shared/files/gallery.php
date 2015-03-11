@@ -1,9 +1,9 @@
 <?php
 use yii\helpers\Html;
 ?>
-<div id="<?= $selector; ?>" class="uploader">
-    <div class="btn btn-default btn-small uploader-fileapi-wrapper">
-       <div class="uploader-browse" data-fileapi="active.hide">
+<div id="<?= $selector; ?>" class="fileapi">
+    <div class="btn btn-default btn-small fileapi-fileapi-wrapper">
+       <div class="fileapi-browse" data-fileapi="active.hide">
            <span class="glyphicon glyphicon-picture"></span>
            <span><?= Yii::t('app', 'Upload') ?></span>
            <input type="file" name="<?= $paramName ?>">
@@ -18,10 +18,11 @@ use yii\helpers\Html;
     } ?>
     <?= \demogorgorn\sortable\Sortable::widget([
         'options' => [
-            'class' => 'uploader-files',
+            'class' => 'fileapi-files',
         ],
         'clientOptions' => [
-            'animation' => 150
+            'animation' => 150,
+            'handle' => 'img'
         ],
         'items' => $items
     ]); ?>

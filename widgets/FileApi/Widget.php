@@ -11,7 +11,7 @@ use yii\widgets\InputWidget;
 use Yii;
 
 /** 
- * Uploader.
+ * File Api.
  * Based on https://github.com/vova07/yii2-fileapi-widget
  * 
  * Usage:
@@ -41,7 +41,7 @@ use Yii;
  *             'imageSize' => $model->getFileRules('preview')['imageSize']
  *         ]
  *     ])
- *     ->hint($model->getFileRulesDescription('preview'), ['class' => 'uploader-rules']
+ *     ->hint($model->getFileRulesDescription('preview'), ['class' => 'fileapi-rules']
  * ); ?>
  * ~~~
  *
@@ -57,12 +57,12 @@ use Yii;
  *                 if (uiEvt.result.error) {
  *                     forms.showError(
  *                         $(this).closest(".form"), 
- *                         "uploader-' . Html::getInputId($model, 'gallery') . '", 
+ *                         "fileapi-' . Html::getInputId($model, 'gallery') . '", 
  *                         uiEvt.result.error
  *                     );
  *                 } else {
- *                     forms.clearError("uploader-' . Html::getInputId($model, 'gallery') . '");
- *                     $(this).find(".uploader-files").append(uiEvt.result);
+ *                     forms.clearError("fileapi-' . Html::getInputId($model, 'gallery') . '");
+ *                     $(this).find(".fileapi-files").append(uiEvt.result);
  *                 }
  *             }'),
  *         ],
@@ -73,7 +73,7 @@ use Yii;
  *         ]
  *     ])
  *     ->hint($model->getFileRulesDescription('gallery'), [
- *         'tag' => 'blockquote', 'class' => 'uploader-rules text-muted small'
+ *         'tag' => 'blockquote', 'class' => 'fileapi-rules text-muted small'
  *     ]
  * ); ?>
  * ~~~
@@ -151,8 +151,8 @@ class Widget extends InputWidget
             ],
             'dnd' => [
                 // DropZone: selector or element
-                'el' => '.uploader-dnd',
-                'hover' => '.uploader-dnd-active'
+                'el' => '.fileapi-dnd',
+                'hover' => '.fileapi-dnd-active'
             ]
         ]
     ];
@@ -170,8 +170,8 @@ class Widget extends InputWidget
             'name' => '[data-fileapi="name"]',
             'dnd' => [
                 // DropZone: selector or element
-                'el' => '.uploader-dnd',
-                'hover' => '.uploader-dnd-active'
+                'el' => '.fileapi-dnd',
+                'hover' => '.fileapi-dnd-active'
             ]
         ]
     ];
@@ -243,7 +243,7 @@ class Widget extends InputWidget
      */
     public function getSelector()
     {
-        return $this->selector !== null ? $this->selector : 'uploader-' . $this->options['id'];
+        return $this->selector !== null ? $this->selector : 'fileapi-' . $this->options['id'];
     }
     
     /**
@@ -297,7 +297,7 @@ class Widget extends InputWidget
             if (ui.other.length && ui.other[0].errors) {
                 $(this)
                     .closest(".form-group")
-                    .find(".uploader-rules")
+                    .find(".fileapi-rules")
                     .addClass("animated shake")
                     .one(
                         "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend", 

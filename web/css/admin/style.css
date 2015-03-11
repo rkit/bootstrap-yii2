@@ -45,7 +45,7 @@ table thead a {
     z-index: 1060;
 }
 
-.hint-block, blockquote, .uploader-rules {
+.hint-block, blockquote, .fileapi-rules {
     padding: 0 10px;
     margin: 7px 0;
     border-left: 5px solid #eee;
@@ -55,6 +55,10 @@ table thead a {
 
 .checkbox-list label {
     font-weight: normal
+}
+
+.help-block:empty {
+    display: none
 }
 
 /* Gridview
@@ -190,23 +194,22 @@ table thead a {
         margin-bottom: 10px;
     }
     
-/* Uploader
+/* FileApi
 -------------------------------------------------- */
 
-.uploader {
+.fileapi {
     overflow: hidden;
     clear: both;
 }
-.uploader .btn {
+.fileapi .btn {
     position: relative;
     clear: both;
 }
-.uploader-browse input {
+.fileapi-browse input {
     border: none;
     outline: none;
     opacity: 0;
     filter: alpha(opacity=0);
-    font-size: 100px;
     position: absolute;
     cursor: pointer;
     top: -20px;
@@ -214,20 +217,20 @@ table thead a {
     left: 0;
     right: 0;
 }
-.uploader-progress {
+.fileapi-progress {
     display: none;
 }
-.uploader-progress .progress {
+.fileapi-progress .progress {
     margin-bottom: 0 !important;
 }
-.uploader-preview {
+.fileapi-preview {
     float: left;
     position: relative;
     margin-top: 10px;
     overflow: hidden;
     clear: both;
 }
-.uploader-preview-delete {
+.fileapi-preview-delete {
     display: none;
     position: absolute;
     top: 0;
@@ -236,36 +239,36 @@ table thead a {
     right: 0;
     color: #ffffff;
 }
-.uploader-preview-delete span {
+.fileapi-preview-delete span {
     position: absolute;
     left: 50%;
     top: 50%;
     margin-left: -8px;
     margin-top: -8px;
 }
-.uploader-preview:hover .uploader-preview-delete {
+.fileapi-preview:hover .fileapi-preview-delete {
     display: block;
     background: #f38083;
     opacity: 0.9;
     filter: alpha(opacity=0.9);
     cursor: pointer;
 }
-.uploader-preview > span.uploader-preview-wrapper,
-.uploader-preview > span.uploader-preview-wrapper > canvas {
+.fileapi-preview > span.fileapi-preview-wrapper,
+.fileapi-preview > span.fileapi-preview-wrapper > canvas {
     display: block;
 }
 
-.uploader-files {
+.fileapi-files {
     list-style: none;
     padding: 10px 0px 0px 0px;
 }
-    .uploader-files li {
+    .fileapi-files li {
         padding-bottom: 5px
     }
-    .uploader-files .btn {
+    .fileapi-files .btn {
         padding: 3px;
     }
-    .uploader-files input {
+    .fileapi-files input {
         display: inline-block; 
         width: 300px; 
         font-size: 13px

@@ -29,6 +29,6 @@ use app\widgets\FileApi\Widget as FileApi;
         ]
     ])
     ->hint($model->getFileRulesDescription($attribute), [
-        'class' => 'uploader-rules'
+        'class' => 'fileapi-rules'
     ]
 ); ?>

@@ -1,6 +1,6 @@
-<div id="<?= $selector; ?>" class="uploader">
+<div id="<?= $selector; ?>" class="fileapi">
     <div class="btn btn-default js-fileapi-wrapper">
-        <div class="uploader-browse" data-fileapi="active.hide">
+        <div class="fileapi-browse" data-fileapi="active.hide">
             <span class="glyphicon glyphicon-picture"></span>
             <span data-fileapi="browse-text" class="<?= $value ? 'hidden' : 'browse-text' ?>">
                 <?= Yii::t('app', 'Upload') ?>
@@ -8,27 +8,27 @@
             <span data-fileapi="name"></span>
             <input type="file" name="<?= $paramName ?>">
         </div>
-        <div class="uploader-progress" data-fileapi="active.show">
+        <div class="fileapi-progress" data-fileapi="active.show">
             <div class="progress progress-striped">
-                <div class="uploader-progress-bar progress-bar progress-bar-info" data-fileapi="progress"
+                <div class="fileapi-progress-bar progress-bar progress-bar-info" data-fileapi="progress"
                      role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
         </div>
     </div><br>
     <?php if ($preview === true) : ?>
-        <a href="#" class="uploader-preview">
-            <span data-fileapi="delete" class="uploader-preview-delete">
+        <a href="#" class="fileapi-preview">
+            <span data-fileapi="delete" class="fileapi-preview-delete">
             <span class="glyphicon glyphicon-trash"></span></span>
-            <span data-fileapi="preview" class="uploader-preview-wrapper"></span>
+            <span data-fileapi="preview" class="fileapi-preview-wrapper"></span>
         </a>
         
         <?php $this->registerJs(
             "$(document).on('click', '#$selector [data-fileapi=\"delete\"]', function(evt) {" .
                 "evt.preventDefault();" .
-                "var uploader = $(this).closest('#$selector');" .
-                "uploader.fileapi('clear');" .
-                "uploader.find('[data-fileapi=\"browse-text\"]').removeClass('hidden');" .
-                "uploader.find('input[type=\"hidden\"]').val('');" .
+                "var file = $(this).closest('#$selector');" .
+                "file.fileapi('clear');" .
+                "file.find('[data-fileapi=\"browse-text\"]').removeClass('hidden');" .
+                "file.find('input[type=\"hidden\"]').val('');" .
             "})"
         ); ?>
     <?php endif; ?>
@@ -65,7 +65,7 @@
     
     <?php $this->registerJs('$(document).on("click", "#' . $selector . '-crop .crop-save", 
         function() {
-            $(this).closest(".uploader").fileapi("upload");
+            $(this).closest(".fileapi").fileapi("upload");
             $(this).closest(".modal").modal("hide");
         }
     );'); ?>

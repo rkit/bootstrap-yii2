@@ -13,12 +13,12 @@ use app\widgets\FileApi\Widget as FileApi;
                 if (uiEvt.result.error) {
                     forms.showError(
                         $(this).closest(".form"), 
-                        "uploader-' . Html::getInputId($model, $attribute) . '", 
+                        "fileapi-' . Html::getInputId($model, $attribute) . '", 
                         uiEvt.result.error
                     );
                 } else {
-                    forms.clearError("uploader-' . Html::getInputId($model, $attribute) . '");
-                    $(this).find(".uploader-files").append(uiEvt.result);
+                    forms.clearError("fileapi-' . Html::getInputId($model, $attribute) . '");
+                    $(this).find(".fileapi-files").append(uiEvt.result);
                 }
             }'),
         ],
@@ -29,6 +29,6 @@ use app\widgets\FileApi\Widget as FileApi;
         ]
     ])
     ->hint($model->getFileRulesDescription($attribute), [
-        'class' => 'uploader-rules'
+        'class' => 'fileapi-rules'
     ]
 ); ?>
