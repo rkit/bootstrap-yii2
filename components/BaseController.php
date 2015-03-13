@@ -62,11 +62,12 @@ class BaseController extends Controller
      *
      * @param string $type success|error
      * @param string $message
+     * @param string $url If null go Home
      */
-    public function alert($type, $message)
+    public function alert($type, $message, $url = null)
     {
         Yii::$app->getSession()->setFlash($type, $message);
-        return $this->goHome();
+        return $url ? $this->redirect($url) : $this->goHome();
     }
     
     /**
