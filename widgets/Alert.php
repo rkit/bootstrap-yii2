@@ -28,6 +28,10 @@ namespace app\widgets;
  */
 class Alert extends \yii\bootstrap\Widget
 {
+    /** 
+     * @var string
+     */
+    public $template = null;
     /**
      * @var array the alert types configuration for the flash messages.
      * This array is setup as $key => $value, where:
@@ -53,11 +57,14 @@ class Alert extends \yii\bootstrap\Widget
         $session = \Yii::$app->getSession();
         $flashes = $session->getAllFlashes();
         $appendCss = isset($this->options['class']) ? ' ' . $this->options['class'] : '';
-        
+
         foreach ($flashes as $type => $data) {
             if (isset($this->alertTypes[$type])) {
                 $data = (array) $data;
                 foreach ($data as $i => $message) {
+                    if ($this->template) {
+                        $message = $this->render($this->template, ['message' => $message, 'type' => $type]);
+                    }
                     /* initialize css class for each alert box */
                     $this->options['class'] = $this->alertTypes[$type] . $appendCss;
                     /* assign unique id to each alert box */
