@@ -191,16 +191,16 @@ class File extends BaseActive
      *
      * @param UploadedFile $data
      * @param int $ownerType
-     * @param bool $tmp The temporary file.
+     * @param bool $saveTmpFile Save temporary file.
      * @return File|bool
      */
-    public static function createFromUpload($data, $ownerType, $tmp = true)
+    public static function createFromUpload($data, $ownerType, $saveTmpFile = false)
     {
         $fileInfo = pathinfo($data->name);
         
         $file = new self();
         $file->owner_type = $ownerType;
-        $file->tmp = $tmp;
+        $file->tmp = true;
         $file->size = $data->size;
         $file->mime = $data->type;
         $file->title = $fileInfo['filename'];
@@ -208,6 +208,7 @@ class File extends BaseActive
         
         if (FileHelper::createDirectory($file->dir(true))) {
             if (move_uploaded_file($data->tempName, $file->path(true))) {
+                $file = $saveTmpFile ? self::saveTmpFile($file, $file->owner_type) : $file;
                 if ($file->save()) {
                     return $file;
                 }   
@@ -222,10 +223,10 @@ class File extends BaseActive
      *
      * @param string $url
      * @param int $ownerType
-     * @param bool $tmp The temporary file.
+     * @param bool $saveTmpFile Save temporary file.
      * @return File|bool
      */
-    public static function createFromUrl($url, $ownerType, $tmp = true)
+    public static function createFromUrl($url, $ownerType, $saveTmpFile = false)
     {
         $tmpFile = tempnam(sys_get_temp_dir(), 'file');
         
@@ -235,7 +236,7 @@ class File extends BaseActive
                 
                 $file = new self();
                 $file->owner_type = $ownerType;
-                $file->tmp = $tmp;
+                $file->tmp = true;
                 $file->size = filesize($tmpFile);
                 $file->mime = FileHelper::getMimeType($tmpFile);
                 $file->title = $fileInfo['filename'];
@@ -243,6 +244,7 @@ class File extends BaseActive
 
                 if (FileHelper::createDirectory($file->dir(true))) {
                     if (rename($tmpFile, $file->path(true))) {
+                        $file = $saveTmpFile ? self::saveTmpFile($file, $file->owner_type) : $file;
                         if ($file->save()) {
                             return $file;
                         }   

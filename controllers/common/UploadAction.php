@@ -40,6 +40,10 @@ class UploadAction extends Action
      */
     public $resultName = 'path';
     /**
+     * @var bool $saveTmpFile Save temporary file.
+     */
+    public $saveTmpFile = false;
+    /**
      * @var ActiveRecord $model
      */
     private $model;
@@ -78,7 +82,7 @@ class UploadAction extends Action
         if ($model->hasErrors()) {
             return $this->controller->response(['error' => $model->getFirstError('file')]);
         } else {
-            if ($file = File::createFromUpload($file, $this->model->getFileOwnerType($this->attribute))) {
+            if ($file = File::createFromUpload($file, $this->model->getFileOwnerType($this->attribute), $this->saveTmpFile)) {
                 if ($this->multiple) {
                     return $this->controller->response(
                         $this->controller->renderPartial($this->template, [
