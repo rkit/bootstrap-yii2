@@ -7,10 +7,21 @@ use app\models\User;
 
 class LoginForm extends \yii\base\Model
 {
+    /**
+     * @var string
+     */
     public $email;
+    /**
+     * @var string
+     */
     public $password;
+    /**
+     * @var bool
+     */
     public $rememberMe = true;
-
+    /**
+     * @var \app\models\User
+     */
     private $user = false;
     
     /**

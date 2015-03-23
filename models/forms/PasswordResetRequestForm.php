@@ -7,6 +7,9 @@ use app\models\User;
 
 class PasswordResetRequestForm extends \yii\base\Model
 {
+    /**
+     * @var string
+     */
     public $email;
     
     /**

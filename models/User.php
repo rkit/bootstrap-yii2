@@ -43,6 +43,9 @@ class User extends BaseActive implements IdentityInterface
     
     const ROLE_SUPERUSER = 'SuperUser';
     
+    /**
+     * @var string
+     */
     public $passwordNew;
     
     /**
@@ -299,6 +302,11 @@ class User extends BaseActive implements IdentityInterface
         }
     }
     
+    /**
+     * Is SuperUser?
+     *
+     * @return bool
+     */
     public function isSuperUser()
     {
         return $this->role === self::ROLE_SUPERUSER;

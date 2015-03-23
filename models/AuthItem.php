@@ -18,7 +18,13 @@ use yii\helpers\ArrayHelper;
  */
 class AuthItem extends \yii\db\ActiveRecord
 {
+    /**
+     * @var array
+     */
     public $roles;
+    /**
+     * @var array
+     */
     public $permissions;
      
     /**
@@ -70,6 +76,11 @@ class AuthItem extends \yii\db\ActiveRecord
         ];
     }
     
+    /**
+     * Is SuperUser?
+     *
+     * @return bool
+     */
     public function isSuperUser()
     {
         return $this->name === \app\models\User::ROLE_SUPERUSER;

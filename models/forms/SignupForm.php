@@ -8,9 +8,21 @@ use app\models\UserProfile;
 
 class SignupForm extends \yii\base\Model
 {
+    /**
+     * @var string
+     */
     public $email;
+    /**
+     * @var string
+     */
     public $password;
+    /**
+     * @var string
+     */
     public $full_name;
+    /**
+     * @var \app\models\User
+     */
     public $user;
     
     /**

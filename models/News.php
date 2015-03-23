@@ -26,7 +26,13 @@ class News extends BaseActive
     const STATUS_BLOCKED = 0;
     const STATUS_ACTIVE  = 1;
     
+    /**
+     * @var array
+     */
     public $tagsList;
+    /**
+     * @var array
+     */
     public $gallery;
     
     /**

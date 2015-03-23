@@ -13,8 +13,17 @@ use Yii;
  */
 class Settings extends \yii\base\Model
 {
+    /**
+     * @var string
+     */
     public $emailMain;
+    /**
+     * @var string
+     */
     public $emailName;
+    /**
+     * @var string
+     */
     public $emailPrefix;
 
     /**
