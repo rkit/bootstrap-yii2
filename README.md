@@ -17,30 +17,28 @@ Screenshots:
 [User List](https://cloud.githubusercontent.com/assets/4242765/5601755/2d9aad0c-9341-11e4-8ee2-ab5e02f90314.png),
 [User Form](https://cloud.githubusercontent.com/assets/4242765/5601756/2fb0cdb0-9341-11e4-8d25-6aca3bc9baf8.png)
 
-
-## Check requirements
-
-```
-php requirements.php
-```
-
 ## Installation
 
-1. Create project 
+1. Check requirements
+   ```
+   php requirements.php
+   ```
+
+2. Create project 
 
    ```
    composer global require "fxp/composer-asset-plugin:~1.0"
    composer create-project --prefer-dist --stability=dev rkit/bootstrap2
    ```
 
-2. Create a new database and local config
+3. Create a new database and local config
 
    ```
    php yii create-local-config/init
    ```
    > config will be created in **config/local/config.php**
 
-3. Run
+4. Run
    ```
    npm install
    bower install
@@ -51,7 +49,7 @@ php requirements.php
    php yii rbac/init
    ```
 
-**Authentication in control panel:**  
+#### Superuser
 username: editor  
 password: fghfgh
 
