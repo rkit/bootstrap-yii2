@@ -11,41 +11,48 @@ use app\models\UserProfile;
 
 class SignupProviderForm extends \yii\base\Model
 {
+    /**
+     * @var string
+     */
     public $email;
+    /**
+     * @var array
+     */
     public $provider;
+    /**
+     * @var array
+     */
     public $profile;
+    /**
+     * @var string
+     */
     public $token;
-    
+    /**
+     * @var \app\models\User
+     */
     private $user = null;
+    /**
+     * @var bool
+     */
     private $verified = false;
     
     /**
-     * Creates a form model given a provider.
+     * Form for social auth.
      *
-     * @param array $provider
-     * @param array $config Name-value pairs that will be used to initialize the object properties.
-     * @throws \yii\base\InvalidParamException If token is empty or not valid.
+     * @param array $data
+     * @param array $config
      */
     public function __construct($data, $config = [])
-    {
-        if (!isset($data['provider']) || !isset($data['profile']) || !isset($data['token'])) {
-            throw new InvalidParamException(Yii::t('app', 'Incorrect data, please try again'));
-        }
-        
+    {        
         $this->provider = $data['provider'];
         $this->email = ArrayHelper::getValue($data['profile'], 'email');
-        $this->prepareProfile($data['profile']);
-        $this->prepareToken($data['token']);
+        $this->prepareAttributes($data);
  
         if (ArrayHelper::getValue($data['profile'], 'verified') && !empty($this->email)) {
             $this->verified = true;
             $this->user = User::findByEmail($this->email);
             
-            if ($this->user) {
-                if (!$this->user->isActive()) {
-                    throw new InvalidParamException(Yii::t('app', $this->user->getStatusDescription()));
-                } 
-            } else {
+            if (!$this->user) {
                 $this->user = new User();
                 $this->user->setConfirmed();
             }
@@ -83,6 +90,21 @@ class SignupProviderForm extends \yii\base\Model
         return (new User())->attributeLabels();
     }
     
+    /**
+     * Get User
+     *
+     * @return User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+    
+    /**
+     * Is verified?
+     *
+     * @return bool
+     */
     public function isVerified()
     {
         return $this->verified;
@@ -131,65 +153,91 @@ class SignupProviderForm extends \yii\base\Model
     }
     
     /**
-     * Prepore token.
-     *
-     * @param array $data Token from social network.
-     */
-    private function prepareToken($data)
-    {
-        $token = [];
-        switch ($this->provider) {
-            case 'facebook': 
-                $token['access_token'] = $data['access_token'];
-                $token['access_token_secret'] = '';
-                break;
-                
-            case 'vkontakte': 
-                $token['access_token'] = $data['access_token'];
-                $token['access_token_secret'] = '';
-                break;
-                
-            case 'twitter': 
-                $token['access_token'] = $data['oauth_token'];
-                $token['access_token_secret'] = $data['oauth_token_secret'];
-                break;
-        }
-        
-        $this->token = $token; 
-    }
-    
-    /**
-     * Prepore profile.
+     * Prepare profile and token.
      *
      * @param array $data Data from social network.
      */
-    private function prepareProfile($data)
+    private function prepareAttributes($data)
     {
-        $profile = [];
         switch ($this->provider) {
             case 'facebook': 
-                $profile['profile_id']  = $data['id'];
-                $profile['profile_url'] = $data['link'];
-                $profile['full_name']   = trim($data['first_name'] . ' ' . $data['last_name']);
+                $attributes = $this->prepareFacebook($data);
                 break;
                 
             case 'vkontakte': 
-                $profile['profile_id']  = $data['id'];
-                $profile['profile_url'] = 'https://vk.com/id' . $data['id'];
-                $profile['full_name']   = trim($data['first_name'] . ' ' . $data['last_name']);
-                $profile['birth_day']   = date_format(date_create_from_format('d.m.Y', $data['bdate']), 'Y-m-d');
-                $profile['photo']       = str_replace('_50', '_400', $data['photo']);
+                $attributes = $this->prepareVkontakte($data);
                 break;
                 
             case 'twitter': 
-                $profile['profile_id']  = $data['id'];
-                $profile['profile_url'] = 'https://twitter.com/' . $data['screen_name'];
-                $profile['full_name']   = $data['name'];
-                $profile['photo']       = str_replace('_normal', '_400x400', $data['profile_image_url']);
+                $attributes = $this->prepareTwitter($data);
                 break;
         }
 
-        $this->profile = $profile;
+        $this->profile = $attributes['profile'];
+        $this->token = $attributes['token'];
+    }
+    
+    /**
+     * Prepare Facebook attributes.
+     *
+     * @return array
+     */
+    private function prepareFacebook($data)
+    {
+        return [
+            'profile' => [
+                'profile_id' => $data['profile']['id'],
+                'profile_url' => $data['profile']['link'],
+                'full_name' => trim($data['profile']['first_name'] . ' ' . $data['profile']['last_name'])
+            ],
+            'token' => [
+                'access_token' => $data['token']['access_token'],
+                'access_token_secret' => ''
+            ]
+        ];
+    }
+    
+    /**
+     * Prepare Vkontakte attributes.
+     *
+     * @return array
+     */
+    private function prepareVkontakte($data)
+    {
+        return [
+            'profile' => [
+                'profile_id' => $data['profile']['id'],
+                'profile_url' => 'https://vk.com/id' . $data['profile']['id'],
+                'full_name' => trim($data['profile']['first_name'] . ' ' . $data['profile']['last_name']),
+                'birth_day' => date_format(date_create_from_format('d.m.Y', $data['profile']['bdate']), 'Y-m-d'),
+                'photo' => str_replace('_50', '_400', $data['profile']['photo'])
+            ],
+            'token' => [
+                'access_token' => $data['token']['access_token'],
+                'access_token_secret' => ''
+            ]
+        ];
+    }
+    
+    /**
+     * Prepare Twitter attributes.
+     *
+     * @return array
+     */
+    private function prepareTwitter($data)
+    {
+        return [
+            'profile' => [
+                'profile_id' => $data['profile']['id'],
+                'profile_url' => 'https://twitter.com/' . $data['profile']['screen_name'],
+                'full_name' => $data['profile']['name'],
+                'photo' => str_replace('_normal', '_400x400', $data['profile']['profile_image_url'])
+            ],
+            'token' => [
+                'access_token' => $data['token']['oauth_token'],
+                'access_token_secret' => $data['token']['oauth_token_secret']
+            ]
+        ];
     }
     
     /**

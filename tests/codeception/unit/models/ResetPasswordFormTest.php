@@ -13,26 +13,23 @@ class ResetPasswordFormTest extends DbTestCase
 {
     use Specify;
     
-    /**
-     * @expectedException \yii\base\InvalidParamException
-     */
     public function testResetPasswordWrongToken()
     {
-        new ResetPasswordForm('notexistingtoken_1391882543');
+        $form = new ResetPasswordForm();
+        expect('token should be wrong', $form->validateToken('notexistingtoken_1391882543'))->false();
     }
     
-    /**
-     * @expectedException \yii\base\InvalidParamException
-     */
     public function testResetPasswordEmptyToken()
     {
-        new ResetPasswordForm('');
+        $form = new ResetPasswordForm();
+        expect('token should be wrong', $form->validateToken(''))->false();
     }
     
     public function testResetPasswordCorrect()
     {
-        $form = new ResetPasswordForm($this->user[0]['password_reset_token']);
+        $form = new ResetPasswordForm();
         
+        expect('token should be corrent', $form->validateToken($this->user[0]['password_reset_token']))->true();
         expect('password should be resetted', $form->resetPassword())->true();
         
         $user = User::findByEmail($this->user[0]['email']);

@@ -14,25 +14,24 @@ class ConfirmEmailForm extends \yii\base\Model
     private $user;
     
     /**
-     * Creates a form model given a token.
+     * Validate token.
      *
      * @param string $token
-     * @param array $config Name-value pairs that will be used to initialize the object properties.
-     * @throws \yii\base\InvalidParamException If token is empty or not valid.
+     * @return boolean
      */
-    public function __construct($token, $config = [])
+    public function validateToken($token)
     {
         if (empty($token) || !is_string($token)) {
-            throw new InvalidParamException(Yii::t('app', 'Invalid link'));
+            return false;
         }
         
         $this->user = User::findByEmailConfirmToken($token);
         
         if (!$this->user) {
-            throw new InvalidParamException(Yii::t('app', 'Invalid link'));
+            return false;
         }
         
-        parent::__construct($config);
+        return true;
     }
 
     /**
@@ -42,8 +41,7 @@ class ConfirmEmailForm extends \yii\base\Model
      */
     public function confirmEmail()
     {
-        $user = $this->user;
-        $user->setConfirmed();
-        return $user->save(false);
+        $this->user->setConfirmed();
+        return $this->user->save(false);
     }
 }

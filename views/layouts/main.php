@@ -50,7 +50,7 @@ use yii\bootstrap\NavBar;
         ?>
       
         <div class="container">
-            <?= app\widgets\Alert::widget() ?>
+            <?= app\widgets\Alert::widget(['template' => '/shared/alert']) ?>
             <?= $content ?>
         </div>
         

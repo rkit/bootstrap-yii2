@@ -13,26 +13,23 @@ class ConfirmEmailFormTest extends DbTestCase
 {
     use Specify;
     
-    /**
-     * @expectedException \yii\base\InvalidParamException
-     */
     public function testConfirmEmailWrongToken()
     {
-        new ConfirmEmailForm('notexistingtoken_1391882543');
+        $form = new ConfirmEmailForm();
+        expect('token should be wrong', $form->validateToken('notexistingtoken_1391882543'))->false();
     }
     
-    /**
-     * @expectedException \yii\base\InvalidParamException
-     */
     public function testConfirmEmailEmptyToken()
     {
-        new ConfirmEmailForm('');
+        $form = new ConfirmEmailForm();
+        expect('token should be wrong', $form->validateToken(''))->false();
     }
     
     public function testConfirmEmailCorrect()
     {
-        $form = new ConfirmEmailForm($this->user[0]['email_confirm_token']);
+        $form = new ConfirmEmailForm();
         
+        expect('token should be corrent', $form->validateToken($this->user[0]['email_confirm_token']))->true();
         expect('confirmed token should be ok', $form->confirmEmail())->true();
         
         $user = User::findByEmail($this->user[0]['email']);

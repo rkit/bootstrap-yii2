@@ -8,33 +8,14 @@ use app\models\User;
 
 class ResetPasswordForm extends \yii\base\Model
 {
+    /**
+     * @var string
+     */
     public $password;
     /**
      * @var \app\models\User
      */
     private $user;
-    
-    /**
-     * Creates a form model given a token.
-     *
-     * @param  string $token
-     * @param  array $config Name-value pairs that will be used to initialize the object properties.
-     * @throws \yii\base\InvalidParamException If token is empty or not valid.
-     */
-    public function __construct($token, $config = [])
-    {
-        if (empty($token) || !is_string($token)) {
-            throw new InvalidParamException(Yii::t('app', 'Invalid link'));
-        }
-        
-        $this->user = User::findByPasswordResetToken($token);
-        
-        if (!$this->user) {
-            throw new InvalidParamException(Yii::t('app', 'Invalid link'));
-        }
-        
-        parent::__construct($config);
-    }
     
     /**
      * @inheritdoc
@@ -56,17 +37,37 @@ class ResetPasswordForm extends \yii\base\Model
     }
     
     /**
+     * Validate token.
+     *
+     * @param string $token
+     * @return boolean
+     */
+    public function validateToken($token)
+    {
+        if (empty($token) || !is_string($token)) {
+            return false;
+        }
+        
+        $this->user = User::findByPasswordResetToken($token);
+        
+        if (!$this->user) {
+            return false;
+        }
+        
+        return true;
+    }
+    
+    /**
      * Resets password.
      *
      * @return boolean If password was reset.
      */
     public function resetPassword()
     {
-        $user = $this->user;
-        $user->setPassword($this->password);
-        $user->removePasswordResetToken();
-        $user->authorize(true);
+        $this->user->setPassword($this->password);
+        $this->user->removePasswordResetToken();
+        $this->user->authorize(true);
         
-        return $user->save(false);
+        return $this->user->save(false);
     }
 }
