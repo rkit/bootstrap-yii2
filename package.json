@@ -7,5 +7,9 @@
     "file-loader": "^0.8.1",
     "style-loader": "^0.8.3",
     "webpack": "^1.*"
+  },
+  "scripts": {
+    "watch": "webpack --config assets/webpack.config.js --watch",
+    "build": "webpack --config assets/webpack.config.js -p"
   }
 }

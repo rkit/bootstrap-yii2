@@ -11,7 +11,7 @@ Bootstrap for Yii2
 - Geo: Countries / Regions / Cities
 - Tags
 - Settings
-- [Webpack](http://webpack.github.io/) for assets
+- Webpack for assets
 
 Screenshots:
 [User List](https://cloud.githubusercontent.com/assets/4242765/5601755/2d9aad0c-9341-11e4-8ee2-ab5e02f90314.png),
@@ -42,7 +42,7 @@ Screenshots:
    ```
    npm install
    bower install
-   webpack --config assets/webpack.config.js
+   npm run build
    php yii migrate --migrationPath=@yii/log/migrations/
    php yii migrate --migrationPath=@yii/rbac/migrations/
    php yii migrate/up
@@ -60,7 +60,7 @@ SetEnv APPLICATION_ENV "development"
 ~~~~
 
 ~~~~
-webpack --config assets/webpack.config.js --watch
+npm run watch
 ~~~~
 
 ## [Tests](https://github.com/rkit/bootstrap2/tree/master/tests)

@@ -21,7 +21,7 @@ use yii\helpers\Html;
     <li>Geo: <span class="text-muted">Countries / Regions / Cities</span></li>
     <li>Tags</li>
     <li>Settings</li>
-    <li><a href="http://webpack.github.io/">Webpack</a> for assets</li>
+    <li>Webpack for assets</li>
 </ul>
 
 <hr>

@@ -21,7 +21,7 @@ namespace :deploy do
           execute :composer, "install"
           execute :npm, "install"
           execute :bower, "install"
-          execute :webpack, "--config assets/webpack.config.js -p"
+          execute :npm, "run build"
           execute :php, "yii migrate/up --interactive"
           execute :php, "yii rbac/init"
         end
