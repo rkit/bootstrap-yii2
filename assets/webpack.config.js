@@ -56,7 +56,7 @@ module.exports = {
                 var hash = stats.toJson().hash;
                 fs.exists(assetsDir + '/' + hash, function (exist) {
                     if (!exist) {
-                        fs.symlink(assetsDir + '/bundles', assetsDir  + '/' + hash, 'dir');
+                        fs.symlink('./bundles', assetsDir  + '/' + hash, 'dir');
                         fs.writeFileSync(assetsDir + '/hash', hash);
                     }
                 });
