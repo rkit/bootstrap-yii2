@@ -5,109 +5,106 @@
 
 require('jquery-form');
 
-var forms = (function ($) {
-    var pub = {
-        ALERT_WARNING: 'warning',
-        ALERT_DANGER:  'danger',
-        ALERT_INFO:    'info',
-    
-        init: function() {
-            $('.form').on('click', ':submit', function(e) {
-                $(this).addClass('submitted');
-            });
-    
-            $('.form').each(function() {
-                var $form = $(this);
-    
-                $(this).ajaxForm({
-                    delegation: true,
-                    
-                    beforeSubmit: function(formData, form, options) {
-                        $(form)
-                            .find(':submit').prop('disabled', true).end()
-                            .find('.submitted').button('loading').end()
-                            .find('.alert').remove();
+var forms = {
+    ALERT_WARNING: 'warning',
+    ALERT_DANGER:  'danger',
+    ALERT_INFO:    'info',
 
-                        forms.clearErrors(form);
-    
-                        return true;
-                    },
-    
-                    complete: function() {
-                        $form.find('.submitted').button('reset');
-                        $form.find(':submit').prop('disabled', false).removeClass('submitted');
-                    },
-    
-                    error: function() {
-                        forms.alert(
-                            $form,
-                            'Извините, попробуйте позже',
-                            forms.ALERT_DANGER,
-                            'Критическая ошибка');
-                    },
-    
-                    success: function(data, statusText, xhr, $form) {
-                        if (data.redirect) {
-                            document.location.href = data.redirect;
-                        }
-                        
-                        if (data.reload) {
-                            location.reload(true);
-                        }
-    
-                        if (data.errors) {
-                            forms.showErrors($form, data.errors, data.prefix);
-                        }
-                    },
-                });
+    init: function() {
+        $('.form').on('click', ':submit', function(e) {
+            $(this).addClass('submitted');
+        });
+
+        $('.form').each(function() {
+            var $form = $(this);
+
+            $(this).ajaxForm({
+                delegation: true,
+                
+                beforeSubmit: function(formData, form, options) {
+                    $(form)
+                        .find(':submit').prop('disabled', true).end()
+                        .find('.submitted').button('loading').end()
+                        .find('.alert').remove();
+
+                    forms.clearErrors(form);
+
+                    return true;
+                },
+
+                complete: function() {
+                    $form.find('.submitted').button('reset');
+                    $form.find(':submit').prop('disabled', false).removeClass('submitted');
+                },
+
+                error: function() {
+                    forms.alert(
+                        $form,
+                        'Извините, попробуйте позже',
+                        forms.ALERT_DANGER,
+                        'Критическая ошибка');
+                },
+
+                success: function(data, statusText, xhr, $form) {
+                    if (data.redirect) {
+                        document.location.href = data.redirect;
+                    }
+                    
+                    if (data.reload) {
+                        location.reload(true);
+                    }
+
+                    if (data.errors) {
+                        forms.showErrors($form, data.errors, data.prefix);
+                    }
+                },
             });
-        },
-        
-        showErrors: function($form, errors, prefix) {
-            var c = 0;
-            $.each(errors, function(fieldId, text) {
-                forms.showError($form, prefix + fieldId, text); c++;
-            });
-            
-            forms.alert(
-                $form,
-                'Пожалуйста, исправьте ошибки',
-                forms.ALERT_WARNING, 
-                'Найдено ошибок: <span class="forms-error-count">' + c + '</span>');
-        },
-        
-        showError: function($form, fieldId, text) {
-            var $field = $form.find('#' + fieldId.toLowerCase()).closest('.form-group');
-            $field.find('.help-block').text(text);
-            $field.addClass('has-error');
-        },
+        });
+    },
     
-        clearErrors: function(form) {
-            $(form).find('.has-error .help-block').empty();
-            $(form).find('.has-error').removeClass('has-error');
-        },
+    showErrors: function($form, errors, prefix) {
+        var c = 0;
+        $.each(errors, function(fieldId, text) {
+            forms.showError($form, prefix + fieldId, text); c++;
+        });
         
-        clearError: function(fieldId) {
-            var $field = $('#' + fieldId.toLowerCase()).closest('.form-group');
-            $field.find('.help-block').empty();
-            $field.removeClass('has-error');
-        },
+        forms.alert(
+            $form,
+            'Пожалуйста, исправьте ошибки',
+            forms.ALERT_WARNING, 
+            'Найдено ошибок: <span class="forms-error-count">' + c + '</span>');
+    },
     
-        alert: function($form, text, type, description) {
-            $form.find('.forms-callout').remove();
+    showError: function($form, fieldId, text) {
+        var $field = $form.find('#' + fieldId.toLowerCase()).closest('.form-group');
+        $field.find('.help-block').text(text);
+        $field.addClass('has-error');
+    },
+
+    clearErrors: function(form) {
+        $(form).find('.has-error .help-block').empty();
+        $(form).find('.has-error').removeClass('has-error');
+    },
     
-            $('<div style="display:none" class="forms-callout" />')
-                .addClass('callout animated fadeInUp callout-' + (type ? type : forms.ALERT_WARNING))
-                .html('<h4>' + text + '</h4><p>' + description + '</p>')
-                .insertBefore($form.find('.form-controls'))
-                .fadeIn(100);
-        }
+    clearError: function(fieldId) {
+        var $field = $('#' + fieldId.toLowerCase()).closest('.form-group');
+        $field.find('.help-block').empty();
+        $field.removeClass('has-error');
+    },
+
+    alert: function($form, text, type, description) {
+        $form.find('.forms-callout').remove();
+
+        $('<div style="display:none" class="forms-callout" />')
+            .addClass('callout animated fadeInUp callout-' + (type ? type : forms.ALERT_WARNING))
+            .html('<h4>' + text + '</h4><p>' + description + '</p>')
+            .insertBefore($form.find('.form-controls'))
+            .fadeIn(100);
     }
-    
-    pub.init();
-    
-    return pub;
-    
-})(jQuery);
+}
+
+$(function () {
+    forms.init();
+});
 
 module.exports = forms;
