@@ -51,7 +51,7 @@ class UploadAction extends Action
      * @var array $rules
      */
     private $rules;
-    
+
     public function init()
     {
         if ($this->modelName === null) {
@@ -59,30 +59,31 @@ class UploadAction extends Action
         }
 
         $this->model = new $this->modelName();
-        
+
         $this->rules = $this->model->getFileRules($this->attribute);
-        
+
         if (isset($this->rules['imageSize'])) {
             $this->rules = array_merge($this->rules, $this->rules['imageSize']);
             unset($this->rules['imageSize']);
         }
     }
- 
+
     public function run()
-    {       
+    {
         $file = UploadedFile::getInstanceByName($this->inputName);
-        
+
         if (!$file) {
             return $this->controller->response(['error' => Yii::t('app', 'An error occured, try again later…')]);
         }
 
         $model = new DynamicModel(compact('file'));
         $model->addRule('file', $this->type, $this->rules)->validate();
-        
+
         if ($model->hasErrors()) {
             return $this->controller->response(['error' => $model->getFirstError('file')]);
         } else {
-            if ($file = File::createFromUpload($file, $this->model->getFileOwnerType($this->attribute), $this->saveTmpFile)) {
+            $ownerType = $this->model->getFileOwnerType($this->attribute);
+            if ($file = File::createFromUploader($file, $ownerType, $this->saveTmpFile)) {
                 if ($this->multiple) {
                     return $this->controller->response(
                         $this->controller->renderPartial($this->template, [

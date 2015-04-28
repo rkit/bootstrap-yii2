@@ -9,10 +9,10 @@ use yii\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
 use app\models\File;
 
-/** 
+/**
  * Binding files to the owner.
  * The rules are checked in UploadAction.
- * 
+ *
  * Usage:
  * ~~~
  * 'class' => 'app\components\behaviors\FileBehavior',
@@ -27,16 +27,16 @@ use app\models\File;
  *             'maxSize'    => 1024 * 1024 * 2, // 2 MB
  *         ]
  *     ],
- * ] 
+ * ]
  * ~~~
- */ 
+ */
 class FileBehavior extends Behavior
 {
     /**
      * @var array
      */
     public $attributes = [];
-    
+
     /**
      * @inheritdoc
      */
@@ -50,34 +50,34 @@ class FileBehavior extends Behavior
             ActiveRecord::EVENT_BEFORE_DELETE => 'beforeDelete',
         ];
     }
-    
+
     public function beforeSave($insert)
     {
         foreach ($this->attributes as $attribute => $data) {
             $oldValue = $this->owner->isNewRecord ? null : $this->owner->getOldAttribute($attribute);
             $isAttributeChanged = $oldValue === null ? true : $this->owner->isAttributeChanged($attribute);
-            
+
             $this->attributes[$attribute]['isAttributeChanged'] = $isAttributeChanged;
             $this->attributes[$attribute]['oldValue'] = $oldValue;
         }
     }
-        
+
     public function afterSave()
     {
         foreach ($this->attributes as $attribute => $data) {
-            $file = $this->owner->{$attribute};
-            
-            if ($data['isAttributeChanged'] === false || $file === null) {
+            $fileId = $this->owner->{$attribute};
+
+            if ($data['isAttributeChanged'] === false || $fileId === null) {
                 continue;
             }
-            // binding file/files
-            $file = File::bind($this->owner->primaryKey, $data['ownerType'], $file);
+
+            $file = File::bind($this->owner->primaryKey, $data['ownerType'], $fileId);
             // if savePath, then path saved in current model
-            if (isset($data['savePath']) && $data['savePath'] === true) {    
+            if (isset($data['savePath']) && $data['savePath'] === true) {
                 if (is_object($file)) {
                     $path = $file->path();
                 } elseif ($file === false && $data['oldValue'] !== null) {
-                    $path = $data['oldValue'];   
+                    $path = $data['oldValue'];
                 } else {
                     $path = '';
                 }
@@ -92,18 +92,18 @@ class FileBehavior extends Behavior
             File::deleteByOwner($this->owner->primaryKey, $data['ownerType']);
         }
     }
-    
+
     /**
      * Get ownerType.
      *
      * @param string $attribute
      * @return int
      */
-    public function getFileOwnerType($attribute) 
+    public function getFileOwnerType($attribute)
     {
         return $this->attributes[$attribute]['ownerType'];
     }
-    
+
     /**
      * Get files.
      *
@@ -114,7 +114,7 @@ class FileBehavior extends Behavior
     {
         return File::getByOwner($this->owner->primaryKey, $this->getFileOwnerType($attribute));
     }
-    
+
     /**
      * Get rules.
      *
@@ -125,7 +125,7 @@ class FileBehavior extends Behavior
     {
         return $this->attributes[$attribute]['rules'];
     }
-    
+
     /**
      * Get rules description.
      *
@@ -135,38 +135,38 @@ class FileBehavior extends Behavior
     public function getFileRulesDescription($attribute)
     {
         $text = '';
-        
+
         $rules = $this->attributes[$attribute]['rules'];
-        
+
         if (isset($rules['imageSize'])) {
             $text .= $this->prepareImageSizeDescription($rules['imageSize']);
             $text = !empty($text) ? $text . '<br>' : $text;
         }
-        
+
         if (isset($rules['extensions'])) {
             $text .= $this->prepareExtensionDescription($rules['extensions']);
             $text = isset($rules['maxSize']) ? $text . '<br>' : $text;
         }
-        
+
         if (isset($rules['maxSize'])) {
             $text .= $this->prepareMaxSizeDescription($rules['maxSize']);
         }
-        
+
         return $text;
     }
-    
+
     private function prepareMaxSizeDescription($rules)
     {
         $maxSize = Yii::$app->formatter->asShortSize($rules);
         return Yii::t('app', 'Max. file size') . ': ' . $maxSize . ' ';
     }
-    
+
     private function prepareExtensionDescription($rules)
     {
         $extensions = strtoupper(implode(', ', $rules));
         return Yii::t('app', 'File types') . ': ' . $extensions . ' ';
     }
-    
+
     private function prepareImageSizeDescription($rules)
     {
         $maxWidth  = ArrayHelper::getValue($rules, 'maxWidth');
@@ -184,10 +184,10 @@ class FileBehavior extends Behavior
         } else {
             $text .= $this->prepareImageSizeFullDescription($rules);
         }
-        
+
         return $text;
     }
-    
+
     private function prepareImageSizeFullDescription($rules)
     {
         $text = '';
@@ -207,7 +207,7 @@ class FileBehavior extends Behavior
                     break;
             }
         }
-        
-        return $text;   
+
+        return $text;
     }
 }
