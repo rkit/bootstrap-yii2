@@ -20,7 +20,7 @@ var forms = {
 
             $(this).ajaxForm({
                 delegation: true,
-                
+
                 beforeSubmit: function(formData, form, options) {
                     $(form)
                         .find(':submit').prop('disabled', true).end()
@@ -37,19 +37,21 @@ var forms = {
                     $form.find(':submit').prop('disabled', false).removeClass('submitted');
                 },
 
-                error: function() {
-                    forms.alert(
-                        $form,
-                        'Извините, попробуйте позже',
-                        forms.ALERT_DANGER,
-                        'Критическая ошибка');
+                error: function(data) {
+                    if (data.status != 302) {
+                        forms.alert(
+                            $form,
+                            'Извините, попробуйте позже',
+                            forms.ALERT_DANGER,
+                            'Критическая ошибка');
+                    }
                 },
 
                 success: function(data, statusText, xhr, $form) {
                     if (data.redirect) {
                         document.location.href = data.redirect;
                     }
-                    
+
                     if (data.reload) {
                         location.reload(true);
                     }
@@ -61,20 +63,20 @@ var forms = {
             });
         });
     },
-    
+
     showErrors: function($form, errors, prefix) {
         var c = 0;
         $.each(errors, function(fieldId, text) {
             forms.showError($form, prefix + fieldId, text); c++;
         });
-        
+
         forms.alert(
             $form,
             'Пожалуйста, исправьте ошибки',
-            forms.ALERT_WARNING, 
+            forms.ALERT_WARNING,
             'Найдено ошибок: <span class="forms-error-count">' + c + '</span>');
     },
-    
+
     showError: function($form, fieldId, text) {
         var $field = $form.find('#' + fieldId.toLowerCase()).closest('.form-group');
         $field.find('.help-block').text(text);
@@ -85,7 +87,7 @@ var forms = {
         $(form).find('.has-error .help-block').empty();
         $(form).find('.has-error').removeClass('has-error');
     },
-    
+
     clearError: function(fieldId) {
         var $field = $('#' + fieldId.toLowerCase()).closest('.form-group');
         $field.find('.help-block').empty();
