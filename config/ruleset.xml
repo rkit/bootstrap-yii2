@@ -2,7 +2,7 @@
 <ruleset name="PSR-MOD">
 
     <description>Based on PSR-2</description>
-    
+
     <exclude-pattern>*/web/*</exclude-pattern>
     <exclude-pattern>*/views/*</exclude-pattern>
     <exclude-pattern>*/vendor/*</exclude-pattern>
@@ -17,6 +17,13 @@
         <exclude name="PSR1.Classes.ClassDeclaration"/>
         <exclude name="PSR1.Files.SideEffects"/>
         <exclude name="Squiz.WhiteSpace.SuperfluousWhitespace"/>
+    </rule>
+
+    <rule ref="Generic.Files.LineLength">
+        <properties>
+            <property name="lineLimit" value="120"/>
+            <property name="absoluteLineLimit" value="120"/>
+        </properties>
     </rule>
 
 </ruleset>
