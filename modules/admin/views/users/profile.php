@@ -18,7 +18,7 @@ $this->title = Yii::t('app', 'Users');
         <div class="col-md-8">
             <!-- full_name -->
             <?= $form->field($model, 'full_name')->textInput(['maxlength' => true]) ?>
-            
+
             <!-- birth_day -->
             <?php $model->birth_day = $model->birth_day > 0 ? $model->birth_day : '' ?>
             <?= $form->field($model, 'birth_day')->widget(DatePicker::classname(), [
@@ -31,11 +31,15 @@ $this->title = Yii::t('app', 'Users');
         <div class="col-md-4">
             <!-- photo -->
             <?= $this->render('/shared/files/image-input', [
-                'form' => $form, 'model' => $model, 'attribute' => 'photo', 'crop' => true
+                'form' => $form,
+                'model' => $model,
+                'attribute' => 'photo',
+                'crop' => true,
+                'cropMinSize' => [300, 300]
             ]) ?>
         </div>
     </div>
-        
+
     <?= $this->render('/shared/forms/controls', ['model' => $model]) ?>
 
 <?php ActiveForm::end(); ?>

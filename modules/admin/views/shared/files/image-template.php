@@ -21,7 +21,7 @@
             <span class="glyphicon glyphicon-trash"></span></span>
             <span data-fileapi="preview" class="fileapi-preview-wrapper"></span>
         </a>
-        
+
         <?php $this->registerJs(
             "$(document).on('click', '#$selector [data-fileapi=\"delete\"]', function(evt) {" .
                 "evt.preventDefault();" .
@@ -32,11 +32,11 @@
             "})"
         ); ?>
     <?php endif; ?>
-    
+
     <?= $input ?>
-    
+
     <?php if ($crop === true) : ?>
-    <div id="<?= $selector; ?>-crop" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -44,7 +44,7 @@
                     <h4 class="modal-title" id="myModalLabel"><?= Yii::t('app', 'Edit') ?></h4>
                 </div>
                 <div class="modal-body">
-                    <div id="crop-preview"></div>
+                    <div class="crop-area"></div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal"><?= Yii::t('app', 'Cancel') ?></button>
@@ -53,23 +53,7 @@
             </div>
         </div>
     </div>
-    
-    <?php $this->registerJs('$(document).on("' . $selector . '-initialize", 
-        function (e, el, jcropSettings) {
-            $(el).find("#' . $selector . '-crop").modal("show");
-            setTimeout(function () {
-                $(el).find("#' . $selector . '-crop #crop-preview").cropper(jcropSettings);
-            }, 700);
-        }
-    );'); ?>
-    
-    <?php $this->registerJs('$(document).on("click", "#' . $selector . '-crop .crop-save", 
-        function() {
-            $(this).closest(".fileapi").fileapi("upload");
-            $(this).closest(".modal").modal("hide");
-        }
-    );'); ?>
-    
+
     <?php endif; ?>
-    
+
 </div>

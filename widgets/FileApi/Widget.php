@@ -10,74 +10,36 @@ use yii\web\JsExpression;
 use yii\widgets\InputWidget;
 use Yii;
 
-/** 
- * File Api.
- * Based on https://github.com/vova07/yii2-fileapi-widget
- * 
+/**
+ * FileApi
+ * Widget for https://github.com/RubaXa/jquery.fileapi/
+ *
  * Usage:
  * ~~~
- * <?= $form->field($model, 'preview', ['template' => "{label}\n{error}\n{input}\n{hint}"])
+ * <?= $form->field($model, $attribute, ['template' => "{label}\n{error}\n{input}\n{hint}"])
  *     ->widget(FileApi::className(), [
- *         'template' => '@app/modules/admin/views/shared/files/image',
- *         'crop' => true,
+ *         'template' => '@app/modules/admin/views/shared/files/image-template',
+ *         'crop' => $crop,
  *         'callbacks' => [
- *             'filecomplete' => new JsExpression('function (evt, uiEvt) { 
- *                 if (uiEvt.result.error) {
- *                     forms.showError(
- *                         $(this).closest(".form"), 
- *                         "' . Html::getInputId($model, 'preview') . '", 
- *                         uiEvt.result.error
- *                     );
- *                 } else {
- *                     forms.clearError("' . Html::getInputId($model, 'preview') . '");
- *                     $(this).find("input[type=\"hidden\"]").val(uiEvt.result.id);
- *                     $(this).find("[data-fileapi=\"browse-text\"]").addClass("hidden");
- *                     $(this).find("[data-fileapi=\"delete\"]").attr("data-fileapi-uid", FileAPI.uid(uiEvt.file));
- *                 }
+ *             'select' => new JsExpression('function (evt, ui) {
+
+ *             }'),
+ *             'filecomplete' => new JsExpression('function (evt, uiEvt) {
+
  *             }'),
  *         ],
  *         'settings' => [
- *             'url' => 'preview-upload',
- *             'imageSize' => $model->getFileRules('preview')['imageSize']
+ *             'url' => $attribute . '-upload',
+ *             'imageSize' => $model->getFileRules($attribute)['imageSize'],
+ *             'accept' => implode(',', $model->getFileRules($attribute)['mimeTypes']),
  *         ]
  *     ])
- *     ->hint($model->getFileRulesDescription('preview'), ['class' => 'fileapi-rules']
- * ); ?>
- * ~~~
- *
- * Multiple:
- * ~~~
- * <?= $form->field($model, 'gallery', ['template' => "{error}\n{input}\n{hint}"])
- *     ->widget(FileApi::className(), [
- *         'template' => '@app/modules/admin/views/shared/files/gallery',
- *         'files' => $model->getFiles('gallery'),
- *         'preview' => false,
- *         'callbacks' => [
- *             'filecomplete' => new JsExpression('function (evt, uiEvt) { 
- *                 if (uiEvt.result.error) {
- *                     forms.showError(
- *                         $(this).closest(".form"), 
- *                         "fileapi-' . Html::getInputId($model, 'gallery') . '", 
- *                         uiEvt.result.error
- *                     );
- *                 } else {
- *                     forms.clearError("fileapi-' . Html::getInputId($model, 'gallery') . '");
- *                     $(this).find(".fileapi-files").append(uiEvt.result);
- *                 }
- *             }'),
- *         ],
- *         'settings' => [
- *             'url' => 'gallery-upload',
- *             'imageSize' => $model->getFileRules('gallery')['imageSize'],
- *             'multiple' => true
- *         ]
- *     ])
- *     ->hint($model->getFileRulesDescription('gallery'), [
- *         'tag' => 'blockquote', 'class' => 'fileapi-rules text-muted small'
+ *     ->hint($model->getFileRulesDescription($attribute), [
+ *         'class' => 'fileapi-rules'
  *     ]
  * ); ?>
  * ~~~
- */ 
+ */
 class Widget extends InputWidget
 {
     /**
@@ -112,25 +74,6 @@ class Widget extends InputWidget
      * @var boolean Enable/disable crop.
      */
     public $crop = false;
-    /**
-     * @var array JCrop Default settings.
-     */
-    public $jcropSettings = [
-        'aspectRatio' => 1,
-        'bgColor' => '#ffffff',
-        'maxSize' => [570],
-        'minSize' => [300, 300],
-        'keySupport' => false, // Important param to hide jCrop radio button.
-        'selection' => '100%'
-    ];
-    /**
-     * @var integer|null Crop resize width.
-     */
-    public $cropResizeWidth;
-    /**
-     * @var integer|null Crop resize height.
-     */
-    public $cropResizeHeight;
     /**
      * @var array Default settings array for single upload.
      */
@@ -182,32 +125,32 @@ class Widget extends InputWidget
     public function init()
     {
         parent::init();
-        
+
         $this->registerTranslations();
-        
+
         $request = Yii::$app->getRequest();
 
         if ($request->enableCsrfValidation === true) {
             $this->settings['data'][$request->csrfParam] = $request->getCsrfToken();
         }
-        
+
         if (!isset($this->settings['url'])) {
             $this->settings['url'] = $request->getUrl();
         } else {
             $this->settings['url'] = Url::to($this->settings['url']);
         }
-        
+
         if ($this->crop === true) {
             $this->settings['autoUpload'] = false;
         }
-        
+
         if (isset($this->settings['multiple']) && $this->settings['multiple'] === true) {
             if ($this->preview === false) {
                 unset($this->defaultMultipleSettings['elements']['file']['preview']);
             }
             $this->defaultSettings = $this->defaultMultipleSettings;
         }
-        
+
         $this->settings = ArrayHelper::merge($this->defaultSettings, $this->settings);
     }
 
@@ -218,7 +161,7 @@ class Widget extends InputWidget
     {
         $this->register();
 
-        $input = $this->hasModel() 
+        $input = $this->hasModel()
         ? Html::activeHiddenInput($this->model, $this->attribute, $this->options)
         : Html::hiddenInput($this->name, $this->value, $this->options);
 
@@ -237,7 +180,7 @@ class Widget extends InputWidget
             ]
         );
     }
-    
+
     /**
      * @return string Widget selector
      */
@@ -245,80 +188,37 @@ class Widget extends InputWidget
     {
         return $this->selector !== null ? $this->selector : 'fileapi-' . $this->options['id'];
     }
-    
+
     /**
      * Register all widget scripts and callbacks
      */
     public function register()
     {
         $this->registerFiles();
-                
+
         $selector = $this->getSelector();
         $options = Json::encode($this->settings);
         $view = $this->getView();
-        
+
         Asset::register($view);
-        
+
         if ($this->crop === true) {
             CropAsset::register($view);
         }
-        
+
         $view->registerJs("jQuery('#$selector').fileapi($options);");
-        
-        if ($this->crop === true) {
-            $jcropSettings = Json::encode($this->jcropSettings);
-            if ($this->cropResizeWidth !== null && $this->cropResizeHeight !== null) {
-                $cropResize = "el.fileapi('resize', ufile, $this->cropResizeWidth, $this->cropResizeHeight);";
-            } else {
-                $cropResize = '';
-            }
-            
-            $cropResizeJs = '
-            var ufile = ui.files[0],
-            jcropSettings = ' . $jcropSettings . ',
-            el = jQuery(this);
-            if (ufile) {
-                jcropSettings.file = ufile;
-                jcropSettings.onSelect = function (coordinates) {
-                    jQuery("#' . $selector . '").fileapi("crop", ufile, coordinates);
-                    ' . $cropResize . '
-                }
-                jQuery(document).trigger("' . $selector . '-initialize", [el, jcropSettings]);
-            }';
-        } else {
-            $cropResizeJs = '';
-        }
-        
-        // Crop event handler
-        $this->callbacks['select'] = new JsExpression('function (evt, ui) {
-            if (ui === undefined) {
-                return;
-            }
-            if (ui.other.length && ui.other[0].errors) {
-                $(this)
-                    .closest(".form-group")
-                    .find(".fileapi-rules")
-                    .addClass("animated shake")
-                    .one(
-                        "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend", 
-                        function () {
-                            $(this).removeClass("animated shake");
-                        }
-                    );
-            }' . $cropResizeJs . '
-        }');
-        
+
         $this->registerCallbacks();
     }
-    
+
     /**
      * Registering already uploaded files.
      */
     public function registerFiles()
     {
         if (!isset($this->settings['multiple']) || $this->settings['multiple'] === false) {
-            if ($this->hasModel() && 
-                $this->model->{$this->attribute} && 
+            if ($this->hasModel() &&
+                $this->model->{$this->attribute} &&
                 file_exists(Yii::getAlias('@webroot') . '/' . $this->model->{$this->attribute})
             ) {
                 $this->settings['files'][] = [
@@ -328,7 +228,7 @@ class Widget extends InputWidget
             }
         }
     }
-    
+
     /**
      * Register widget callbacks.
      */
@@ -354,7 +254,10 @@ class Widget extends InputWidget
             }
         }
     }
-    
+
+    /**
+     * Register widget translator.
+     */
     public function registerTranslations()
     {
         Yii::$app->i18n->translations['fileapi'] = [
