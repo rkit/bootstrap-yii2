@@ -1,8 +1,8 @@
 Bootstrap for Yii2
 ========
 
-[![Build Status](https://img.shields.io/travis/rkit/bootstrap2/master.svg?style=flat-square)](https://travis-ci.org/rkit/bootstrap2)
-[![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/rkit/bootstrap2/master.svg?style=flat-square)](https://scrutinizer-ci.com/g/rkit/bootstrap2/?branch=master)
+[![Build Status](https://img.shields.io/travis/rkit/bootstrap-yii2/master.svg?style=flat-square)](https://travis-ci.org/rkit/bootstrap-yii2)
+[![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/rkit/bootstrap-yii2/master.svg?style=flat-square)](https://scrutinizer-ci.com/g/rkit/bootstrap-yii2/?branch=master)
 
 ## Advanced Application Template
 
