@@ -1,15 +1,19 @@
 {
+  "name": "bootstrap-yii2",
+  "version": "0.0.1",
+  "author": "Igor Romanov",
+  "description": "Bootstrap for Yii2",
+  "repository": "https://github.com/rkit/bootstrap-yii2",
   "devDependencies": {
     "bower-webpack-plugin": "^0.1.6",
-    "browser-sync": "2.*",
     "css-loader": "^0.9.1",
     "extract-text-webpack-plugin": "^0.3.8",
     "file-loader": "^0.8.1",
     "style-loader": "^0.8.3",
-    "webpack": "^1.*"
+    "webpack": "^1.8.11"
   },
   "scripts": {
     "watch": "webpack --config assets/webpack.config.js --watch",
-    "build": "webpack --config assets/webpack.config.js -p"
+    "build": "NODE_ENV=production webpack --config assets/webpack.config.js -p"
   }
 }
