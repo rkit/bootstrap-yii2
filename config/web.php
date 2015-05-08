@@ -6,18 +6,18 @@ $config = [
     'id'             => 'iNCVrvPTpDQuWpdnqqz6NPXeUHsRQoV3',
     'basePath'       => dirname(__DIR__),
     'bootstrap'      => ['log'],
-    'name'           => 'Bootstrap 2',
+    'name'           => 'Bootstrap',
     'defaultRoute'   => 'index/index',
     'sourceLanguage' => 'en',
     'language'       => 'ru',
     'timeZone'       => 'Europe/Moscow',
-    
+
     'modules' => [
         'admin' => [
             'class' => 'app\modules\admin\Module',
         ],
     ],
-    
+
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
@@ -26,7 +26,7 @@ $config = [
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
-            
+
             'rules' => [
                 'signup' => 'index/signup',
                 'login' => 'index/login',

@@ -1,12 +1,12 @@
 {
-    "name": "rkit/bootstrap2",
+    "name": "rkit/bootstrap-yii2",
     "description": "Bootstrap for Yii2",
-    "keywords": ["yii2", "framework", "basic", "application template"],
+    "keywords": ["yii2", "framework", "application template", "bootstrap"],
     "type": "project",
     "license": "BSD-3-Clause",
     "support": {
-        "issues": "https://github.com/rkit/bootstrap2/issues?state=open",
-        "source": "https://github.com/rkit/bootstrap2"
+        "issues": "https://github.com/rkit/bootstrap-yii2/issues?state=open",
+        "source": "https://github.com/rkit/bootstrap-yii2"
     },
     "minimum-stability": "dev",
     "require": {

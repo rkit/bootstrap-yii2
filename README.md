@@ -24,11 +24,11 @@ Screenshots:
    php requirements.php
    ```
 
-2. Create project 
+2. Create project
 
    ```
    composer global require "fxp/composer-asset-plugin:~1.0"
-   composer create-project --prefer-dist --stability=dev rkit/bootstrap2
+   composer create-project --prefer-dist --stability=dev rkit/bootstrap-yii2
    ```
 
 3. Create a new database and local config
@@ -63,5 +63,5 @@ SetEnv APPLICATION_ENV "development"
 npm run watch
 ~~~~
 
-## [Tests](https://github.com/rkit/bootstrap2/tree/master/tests)
+## [Tests](https://github.com/rkit/bootstrap-yii2/tree/master/tests)
 ## [Coding Style Guide (PSR-2)](http://www.php-fig.org/psr/psr-2)

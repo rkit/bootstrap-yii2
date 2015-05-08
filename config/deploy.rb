@@ -1,7 +1,7 @@
 # Main settings
 # --------------------------------------------------
 
-set :application,    'Bootstrap2'
+set :application,    'bootstrap-yii2'
 set :repo_url,       ''
 set :scm,            :git
 set :deploy_via,     :remote_cache
@@ -11,7 +11,7 @@ set :linked_dirs,  %w{web/uploads web/assets runtime vendor node_modules config/
 
 # Tasks
 # --------------------------------------------------
-        
+
 namespace :deploy do
 
   desc 'Prepare application'
@@ -27,7 +27,7 @@ namespace :deploy do
         end
     end
   end
-  
+
   desc 'Enable maintenance mode'
   task :lock do
     on roles(:all) do
@@ -44,8 +44,8 @@ namespace :deploy do
 
   # Deploy flow
   # --------------------------------------------------
-  
+
   after :updated,    'deploy:prepare'
   after :finishing,  'deploy:cleanup'
-  
+
 end

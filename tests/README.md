@@ -27,7 +27,7 @@ After creating the basic application, follow these steps to prepare for the test
    composer require --dev yiisoft/yii2-faker:*
    ```
 
-3. Create `bootstrap2_tests` database and update it by applying migrations:
+3. Create `bootstrap_yii2_tests` database and update it by applying migrations:
 
    ```
    php codeception/bin/yii migrate --migrationPath=@yii/rbac/migrations/

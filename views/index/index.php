@@ -25,5 +25,5 @@ use yii\helpers\Html;
 </ul>
 
 <hr>
-<a href="https://github.com/rkit/bootstrap2" class="btn btn-info">GitHub</a>
+<a href="https://github.com/rkit/bootstrap-yii2" class="btn btn-info">GitHub</a>
 <a href="/admin" class="btn btn-default">Control Panel</a>

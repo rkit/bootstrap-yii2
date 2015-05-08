@@ -8,7 +8,7 @@ $allowedIPs = ['127.0.0.1'];
 
 $config['components']['db'] = [
     'class'                 => 'yii\db\Connection',
-    'dsn'                   => 'mysql:host=localhost;dbname=bootstrap2',
+    'dsn'                   => 'mysql:host=localhost;dbname=bootstrap_yii2',
     'username'              => 'root',
     'password'              => '',
     'emulatePrepare'        => true,
@@ -24,7 +24,7 @@ if (YII_ENV_DEV) {
     $config['modules']['gii'] = [
         'class' => 'yii\gii\Module',
     ];
-    
+
     if ($profiling) {
         $config['bootstrap'][] = 'debug';
         $config['modules']['debug'] = [
