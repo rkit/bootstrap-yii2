@@ -4,6 +4,7 @@
   "author": "Igor Romanov <rkit.ru@gmail.com>",
   "description": "Bootstrap for Yii2",
   "repository": "https://github.com/rkit/bootstrap-yii2",
+  "license": "BSD-3-Clause",
   "devDependencies": {
     "bower-webpack-plugin": "^0.1.6",
     "css-loader": "^0.9.1",
