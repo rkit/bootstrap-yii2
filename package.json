@@ -1,7 +1,7 @@
 {
   "name": "bootstrap-yii2",
   "version": "0.0.1",
-  "author": "Igor Romanov",
+  "author": "Igor Romanov <rkit.ru@gmail.com>",
   "description": "Bootstrap for Yii2",
   "repository": "https://github.com/rkit/bootstrap-yii2",
   "devDependencies": {
