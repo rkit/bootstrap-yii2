@@ -36,18 +36,18 @@ class User extends BaseActive implements IdentityInterface
     const STATUS_DELETED = 0;
     const STATUS_ACTIVE  = 1;
     const STATUS_BLOCKED = 2;
-    
+
     const PROVIDER_TWITTER   = 1;
     const PROVIDER_FACEBOOK  = 2;
     const PROVIDER_VKONTAKTE = 3;
-    
+
     const ROLE_SUPERUSER = 'SuperUser';
-    
+
     /**
      * @var string
      */
     public $passwordNew;
-    
+
     /**
      * @inheritdoc
      */
@@ -60,7 +60,7 @@ class User extends BaseActive implements IdentityInterface
      * @inheritdoc
      */
     public function rules()
-    {                    
+    {
         return [
             ['username', 'string', 'min' => 3, 'max' => 40],
             ['username', 'match', 'pattern' => '/^[a-zA-Z0-9_-]+$/'],
@@ -71,23 +71,23 @@ class User extends BaseActive implements IdentityInterface
             ['email', 'string', 'max' => 255],
             ['email', 'unique'],
             ['email', 'default', 'value' => null],
-            
+
             ['status', 'integer'],
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => array_keys(self::getStatuses())],
-            
+
             //
             // scenario: admin-edit
             //
 
             ['role', 'string', 'on' => 'admin-edit'],
-            
+
             ['username', 'required', 'when' => function ($model) {
                 return empty($model->email);
             }, 'whenClient' => "function (attribute, value) {
                 return !$('#user-email').val().length
             }", 'message' => Yii::t('app', 'You must fill in username or email'), 'on' => 'admin-edit'],
-            
+
             ['passwordNew', 'string', 'min' => 6, 'on' => 'admin-edit'],
         ];
     }
@@ -108,11 +108,22 @@ class User extends BaseActive implements IdentityInterface
             'ip' => Yii::t('app', 'IP'),
             'role' => Yii::t('app', 'Role'),
             'status' => Yii::t('app', 'Status'),
-            
+
             'passwordNew' => Yii::t('app', 'New password'),
         ];
     }
-    
+
+    /**
+     * @inheritdoc
+     */
+    public function attributeHints()
+    {
+        return [
+            'username' => Yii::t('app', 'Only letters, numbers, symbols _ and -'),
+            'passwordNew' => Yii::t('app', 'Set a new password')
+        ];
+    }
+
     /**
      * @inheritdoc
      */
@@ -126,8 +137,8 @@ class User extends BaseActive implements IdentityInterface
                 'value' => new \yii\db\Expression('NOW()'),
             ],
         ];
-    }    
-    
+    }
+
     /**
      * @inheritdoc
      */
@@ -137,7 +148,7 @@ class User extends BaseActive implements IdentityInterface
             ActiveRecord::EVENT_BEFORE_DELETE => 'beforeDelete',
         ];
     }
-    
+
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -145,7 +156,7 @@ class User extends BaseActive implements IdentityInterface
     {
         return $this->hasOne(UserProfile::className(), ['user_id' => 'id']);
     }
-    
+
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -153,7 +164,7 @@ class User extends BaseActive implements IdentityInterface
     {
         return $this->hasOne(AuthItem::className(), ['name' => 'role']);
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -163,34 +174,34 @@ class User extends BaseActive implements IdentityInterface
             if ($insert) {
                 $this->generateAuthKey();
                 $this->ip = !isset(Yii::$app->enableCoreCommands) ? ip2long(Yii::$app->request->getUserIP()) : 0;
-                
+
                 if ($this->profile === null) {
                     $this->populateRelation('profile', new UserProfile());
                 }
             }
-        
+
             if (!empty($this->passwordNew)) {
                 $this->setPassword($this->passwordNew);
             }
-            
+
             return true;
         }
-        
+
         return false;
     }
-    
+
     /**
      * @inheritdoc
      */
     public function afterSave($insert, $changedAttributes)
     {
         parent::afterSave($insert, $changedAttributes);
-        
+
         if ($this->profile !== null) {
             $this->link('profile', $this->profile);
         }
     }
-    
+
     /**
      * Get providers.
      *
@@ -204,14 +215,14 @@ class User extends BaseActive implements IdentityInterface
             self::PROVIDER_FACEBOOK => 'facebook',
             self::PROVIDER_VKONTAKTE => 'vkontakte',
         ];
-        
+
         if ($provider) {
             return array_flip($providers)[$provider];
         }
-        
+
         return $providers;
     }
-    
+
     /**
      * Get all statuses.
      *
@@ -225,18 +236,18 @@ class User extends BaseActive implements IdentityInterface
             self::STATUS_ACTIVE  => Yii::t('app', 'Active'),
         ];
     }
-    
+
     /**
      * Get statuse name
      *
      * @return string
-     */  
+     */
     public function getStatusName()
     {
         $statuses = $this->getStatuses();
         return isset($statuses[$this->status]) ? $statuses[$this->status] : '';
     }
-    
+
     /**
      * Is it deleted?
      *
@@ -246,7 +257,7 @@ class User extends BaseActive implements IdentityInterface
     {
         return $this->status == self::STATUS_DELETED;
     }
-    
+
     /**
      * Is it blocked?
      *
@@ -256,7 +267,7 @@ class User extends BaseActive implements IdentityInterface
     {
         return $this->status == self::STATUS_BLOCKED;
     }
-    
+
     /**
      * Is it active?
      *
@@ -266,7 +277,7 @@ class User extends BaseActive implements IdentityInterface
     {
         return $this->status == self::STATUS_ACTIVE;
     }
-    
+
     /**
      * Is it confirmed?
      *
@@ -276,7 +287,7 @@ class User extends BaseActive implements IdentityInterface
     {
         return $this->date_confirm > 0;
     }
-    
+
     /**
      * Set confirmed.
      */
@@ -285,7 +296,7 @@ class User extends BaseActive implements IdentityInterface
         $this->email_confirm_token = null;
         $this->date_confirm = new \yii\db\Expression('NOW()');
     }
-    
+
     /**
      * Get status description.
      *
@@ -301,7 +312,7 @@ class User extends BaseActive implements IdentityInterface
             return Yii::t('app', 'Your account is activated');
         }
     }
-    
+
     /**
      * Is SuperUser?
      *
@@ -335,7 +346,7 @@ class User extends BaseActive implements IdentityInterface
     {
         return $this->getAuthKey() === $authKey;
     }
-    
+
     /**
      * Generates "remember me" authentication key.
      */
@@ -354,10 +365,10 @@ class User extends BaseActive implements IdentityInterface
         if (empty($this->password)) {
             return false;
         }
-        
+
         return Yii::$app->security->validatePassword($password, $this->password);
     }
-        
+
     /**
      * Generates password hash from password and sets it to the model
      * @param string $password
@@ -366,7 +377,7 @@ class User extends BaseActive implements IdentityInterface
     {
         $this->password = Yii::$app->security->generatePasswordHash($password);
     }
-    
+
     /**
      * Generate new token.
      */
@@ -374,7 +385,7 @@ class User extends BaseActive implements IdentityInterface
     {
         return Yii::$app->security->generateRandomString() . '_' . time();
     }
-    
+
     /**
      * Authorize user.
      *
@@ -389,8 +400,8 @@ class User extends BaseActive implements IdentityInterface
         ]);
 
         return Yii::$app->user->login($this, $rememberMe ? 3600 * 24 * 30 : 0);
-    }     
-    
+    }
+
     /**
      * Finds out if token is valid.
      *
@@ -402,14 +413,14 @@ class User extends BaseActive implements IdentityInterface
         if (empty($token)) {
             return false;
         }
-        
+
         $expire = Yii::$app->params['user.tokenExpire'];
         $parts = explode('_', $token);
         $timestamp = (int) end($parts);
-        
+
         return $timestamp + $expire >= time();
     }
-    
+
     /**
      * Generates new password reset token.
      */
@@ -417,7 +428,7 @@ class User extends BaseActive implements IdentityInterface
     {
         $this->password_reset_token = self::generateToken();
     }
-    
+
     /**
      * Removes password reset token.
      */
@@ -425,7 +436,7 @@ class User extends BaseActive implements IdentityInterface
     {
         $this->password_reset_token = null;
     }
-    
+
     /**
      * Finds user by password reset token.
      *
@@ -437,13 +448,13 @@ class User extends BaseActive implements IdentityInterface
         if (!static::isTokenValid($token)) {
             return null;
         }
-        
+
         return static::findOne([
             'password_reset_token' => $token,
             'status' => self::STATUS_ACTIVE,
         ]);
     }
-    
+
     /**
      * Generates new confirm email token.
      */
@@ -452,7 +463,7 @@ class User extends BaseActive implements IdentityInterface
         $this->email_confirm_token = self::generateToken();
         $this->date_confirm = null;
     }
-    
+
     /**
      * Finds user by confirm email token.
      *
@@ -464,7 +475,7 @@ class User extends BaseActive implements IdentityInterface
         if (!static::isTokenValid($token)) {
             return null;
         }
-        
+
         return static::findOne([
             'email_confirm_token' => $token,
             'status' => self::STATUS_ACTIVE,
@@ -486,7 +497,7 @@ class User extends BaseActive implements IdentityInterface
     {
         throw new NotSupportedException('findIdentityByAccessToken is not implemented.');
     }
-    
+
     /**
      * Finds user by username.
      *
@@ -497,7 +508,7 @@ class User extends BaseActive implements IdentityInterface
     {
         return static::findOne(['username' => $username]);
     }
-    
+
     /**
      * Finds user by email.
      *
@@ -508,7 +519,7 @@ class User extends BaseActive implements IdentityInterface
     {
         return static::findOne(['email' => $email]);
     }
-    
+
     /**
      * Finds user by provider and profileId.
      *
@@ -526,10 +537,10 @@ class User extends BaseActive implements IdentityInterface
                 'profile_id' => $profileId
             ])
             ->one();
- 
+
         return $exist ? static::findOne($exist['user_id']) : null;
     }
-    
+
     /**
      * Get all connected providers.
      *
@@ -543,7 +554,7 @@ class User extends BaseActive implements IdentityInterface
             ->where(['user_id' => $this->id])
             ->all();
     }
-    
+
     /**
      * Save provider.
      *
@@ -561,22 +572,22 @@ class User extends BaseActive implements IdentityInterface
             'provider' => $provider,
             'profile_id' => $profileId,
             'profile_url' => $profileUrl,
-            'access_token' => $accessToken, 
+            'access_token' => $accessToken,
             'access_token_secret' => $accessTokenSecret
         ];
-        
+
         $exist = (new Query())
             ->select('*')
             ->from('user_provider')
             ->where(['user_id' => $this->id, 'provider' => $provider])
             ->one();
-        
+
         if ($exist) {
             return Yii::$app->db
                 ->createCommand()
                 ->update('user_provider', $params, 'id = :id', ['id' => $exist['id']])
                 ->execute();
-            
+
         } else {
             return Yii::$app->db
                 ->createCommand()
@@ -584,18 +595,18 @@ class User extends BaseActive implements IdentityInterface
                 ->execute();
         }
     }
-    
+
     /**
      * @return bool
      */
     public function beforeDelete()
     {
         Yii::$app->authManager->revokeAll($this->id);
-        
+
         if ($this->profile !== null) {
             $this->profile->delete();
         }
-        
+
         return true;
     }
 }

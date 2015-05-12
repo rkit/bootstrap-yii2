@@ -21,35 +21,33 @@ $this->title = Yii::t('app', 'Users');
 
     <div class="row">
         <div class="col-md-<?= $model->isNewRecord ? '12' : '8' ?>">
-        
+
             <!-- role -->
             <?= $form->field($model, 'role')
                 ->dropDownList(ArrayHelper::map($roles, 'name', 'description'), [
-                    'class' => 'form-control',  
+                    'class' => 'form-control',
                     'prompt' => Yii::t('app', 'No role')
                 ])
                 ->label(Html::a(Yii::t('app', 'Role'), Url::toRoute('/admin/roles'))); ?>
-            
+
             <!-- username -->
-            <?= $form->field($model, 'username')
-                ->textInput(['maxlength' => true])
-                ->hint(Yii::t('app', 'Only letters, numbers, symbols _ and -')) ?>
-            
+            <?= $form->field($model, 'username')->textInput(['maxlength' => true]) ?>
+
             <!-- email -->
             <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
-            
+
             <!-- passwordNew -->
             <input type="password" name="password" id="password_" style="display: none">
-            <?= $form->field($model, 'passwordNew')->passwordInput(['maxlength' => true])->hint(Yii::t('app', 'Set a new password')) ?>
-            
+            <?= $form->field($model, 'passwordNew')->passwordInput(['maxlength' => true]) ?>
+
             <!-- status -->
             <?= $form->field($model, 'status')
                 ->dropDownList($model->getStatuses(), [
-                    'class' => 'form-control',  
+                    'class' => 'form-control',
                     'prompt' => Yii::t('app', 'Select status')
                 ]
             ); ?>
-            
+
         </div>
         <?php if (!$model->isNewRecord) : ?>
         <div class="col-md-4">
@@ -66,8 +64,8 @@ $this->title = Yii::t('app', 'Users');
                 <li class="list-group-item text-right">
                     <span class="pull-left"><strong><?= Yii::t('app', 'IP') ?></strong></span>
                     <?= long2ip($model->ip) ?>
-                </li>   
-            </ul> 
+                </li>
+            </ul>
         </div>
         <?php if (count($model->providers())) : ?>
         <div class="col-md-4">
@@ -79,9 +77,9 @@ $this->title = Yii::t('app', 'Users');
                         <strong><?= ucfirst(User::getProviders()[$provider['provider']]) ?></strong>
                     </span>
                     <?= Html::a(Yii::t('app', 'Link to profile'), $provider['profile_url'], ['target' => '_blank']) ?>
-                </li>  
-                <?php endforeach?> 
-            </ul> 
+                </li>
+                <?php endforeach?>
+            </ul>
         </div>
         <?php endif?>
         <?php if (!$model->isConfirmed()): ?>

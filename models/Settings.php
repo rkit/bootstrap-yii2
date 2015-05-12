@@ -34,7 +34,7 @@ class Settings extends \yii\base\Model
         return [
             ['emailMain', 'trim'],
             ['emailMain', 'email'],
-            
+
             ['emailName', 'trim'],
             ['emailName', 'string', 'max' => 255],
 
@@ -52,6 +52,17 @@ class Settings extends \yii\base\Model
             'emailMain' => Yii::t('app', 'Primary email'),
             'emailName' => Yii::t('app', 'Sender name'),
             'emailPrefix' => Yii::t('app', 'Prefix'),
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function attributeHints()
+    {
+        return [
+            'emailMain' => Yii::t('app', 'All notifications for users go to this address'),
+            'emailPrefix' => Yii::t('app', 'Subject in the email: "Prefix: Subject"')
         ];
     }
 }

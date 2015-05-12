@@ -25,7 +25,7 @@ class News extends BaseActive
 {
     const STATUS_BLOCKED = 0;
     const STATUS_ACTIVE  = 1;
-    
+
     /**
      * @var array
      */
@@ -34,7 +34,7 @@ class News extends BaseActive
      * @var array
      */
     public $gallery;
-    
+
     /**
      * @inheritdoc
      */
@@ -52,21 +52,21 @@ class News extends BaseActive
             [['title'], 'trim'],
             [['title', 'type_id', 'text', 'date_pub'], 'required'],
             [['title', 'type_id', 'text', 'date_pub', 'preview', 'gallery', 'reference', 'status', 'tagsList'], 'safe'],
-        
+
             ['type_id', 'integer'],
             ['type_id', 'exist', 'targetClass' => NewsType::className(), 'targetAttribute' => ['type_id' => 'id']],
-            
+
             ['title', 'string', 'max' => 255],
 
             ['text', 'string'],
-            
+
             ['preview', 'string', 'max' => 255],
 
             ['date_pub', 'date', 'format' => 'php:Y-m-d H:i:s'],
-            
+
             ['reference', 'url'],
             ['reference', 'string', 'max' => 255],
-            
+
             ['status', 'integer'],
             ['status', 'in', 'range' => array_keys(News::getStatuses())],
         ];
@@ -89,11 +89,21 @@ class News extends BaseActive
             'date_pub' => Yii::t('app', 'Date publication'),
             'reference' => Yii::t('app', 'Reference'),
             'status' => Yii::t('app', 'Status'),
-            
+
             'tagsList' => Yii::t('app', 'Tags'),
         ];
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function attributeHints()
+    {
+        return [
     
+        ];
+    }
+
     /**
      * @inheritdoc
      */
@@ -113,7 +123,7 @@ class News extends BaseActive
                 'tableRelation' => 'news_tag_assn',
                 'tableRelationField' => 'news_id'
             ],
-            
+
             [
                 'class' => 'app\behaviors\FileBehavior',
                 'attributes' => [
@@ -147,17 +157,17 @@ class News extends BaseActive
                 ]
             ]
         ];
-    }  
-    
+    }
+
     public function transactions()
     {
-        return [ 
+        return [
             'create' => self::OP_ALL,
             'update' => self::OP_ALL,
-            'delete' => self::OP_ALL, 
+            'delete' => self::OP_ALL,
         ];
-    } 
-    
+    }
+
     /**
      * @inheritdoc
      */
@@ -167,7 +177,7 @@ class News extends BaseActive
             $this->date_pub = Util::convertTz($this->date_pub, Yii::$app->params['mainTimeZone'], 'UTC');
             return true;
         }
-        
+
         return false;
     }
 
@@ -175,7 +185,7 @@ class News extends BaseActive
      * Get all statuses.
      *
      * @return array
-     */        
+     */
     public static function getStatuses()
     {
         return [
@@ -183,18 +193,18 @@ class News extends BaseActive
             self::STATUS_ACTIVE  => Yii::t('app', 'Published'),
         ];
     }
-   
+
     /**
      * Get statuse name
      *
      * @return string
-     */  
+     */
     public function getStatusName()
     {
         $statuses = $this->getStatuses();
         return isset($statuses[$this->status]) ? $statuses[$this->status] : '';
     }
-    
+
     /**
      * @return \yii\db\ActiveQuery
      */
