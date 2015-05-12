@@ -4,7 +4,7 @@ use yii\helpers\Url;
 use yii\grid\CheckboxColumn;
 use yii\grid\GridView;
 use yii\web\JsExpression;
-use kartik\widgets\Select2;
+use kartik\select2\Select2;
 
 $this->title = Yii::t('app', 'Cities');
 ?>
@@ -40,7 +40,7 @@ $this->title = Yii::t('app', 'Cities');
             'value' => 'country.title',
             'headerOptions' => ['style' => 'width: 200px'],
             'filter' => Select2::widget([
-                'model' => $citySearch, 
+                'model' => $citySearch,
                 'attribute' => 'country_id',
                 'options' => ['placeholder' => ' '],
                 'pluginOptions' => [
@@ -69,7 +69,7 @@ $this->title = Yii::t('app', 'Cities');
             'value' => 'region.title',
             'headerOptions' => ['style' => 'width: 200px'],
             'filter' => Select2::widget([
-                'model' => $citySearch, 
+                'model' => $citySearch,
                 'attribute' => 'region_id',
                 'options' => ['placeholder' => ' '],
                 'pluginOptions' => [

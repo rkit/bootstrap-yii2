@@ -4,7 +4,7 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use yii\grid\CheckboxColumn;
 use yii\grid\GridView;
-use kartik\widgets\DatePicker;
+use kartik\date\DatePicker;
 
 $this->title = Yii::t('app', 'Users');
 ?>
@@ -32,10 +32,10 @@ $this->title = Yii::t('app', 'Users');
             'format' => 'raw',
             'value' => function ($model) {
                 $username = $model['username'] ? $model['username'] : '(' . Yii::t('app', 'not set') . ')';
-                return Html::a(Html::encode($username), ['edit', 'id' => $model['id']]) . 
+                return Html::a(Html::encode($username), ['edit', 'id' => $model['id']]) .
                 (
-                    $model['id'] === Yii::$app->user->id 
-                    ? ' <span class="label label-info">' . Yii::t('app', 'it`s me') . '</span>' 
+                    $model['id'] === Yii::$app->user->id
+                    ? ' <span class="label label-info">' . Yii::t('app', 'it`s me') . '</span>'
                     : ''
                 );
             }
@@ -68,10 +68,10 @@ $this->title = Yii::t('app', 'Users');
                 ]
             ),
             'value' => function ($model) {
-                return 
+                return
                     Yii::$app->formatter->asDateTime($model->date_create) . '<br>' .
                     '<span class="text-muted small">
-                        ' . Yii::t('app', 'Login') . ': ' . 
+                        ' . Yii::t('app', 'Login') . ': ' .
                         ($model->date_login > 0 ? Yii::$app->formatter->asDateTime($model->date_login) : '—') .
                     '</span>';
             }

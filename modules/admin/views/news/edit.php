@@ -3,7 +3,7 @@ use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use kartik\widgets\DateTimePicker;
+use kartik\datetime\DateTimePicker;
 
 $this->title = Yii::t('app', 'News');
 ?>

@@ -3,7 +3,7 @@ use yii\widgets\ActiveForm;
 use yii\web\JsExpression;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use kartik\widgets\Select2;
+use kartik\select2\Select2;
 
 $this->title = Yii::t('app', 'Cities');
 ?>
@@ -33,7 +33,7 @@ $this->title = Yii::t('app', 'Cities');
              }')
          ]
     ])->label(Html::a($model->getAttributeLabel('country_id'), Url::toRoute('/admin/countries'))) ?>
-    
+
     <!-- region_id -->
     <?= $form->field($model, 'region_id')->widget(Select2::classname(), [
          'options' => ['placeholder' => ' '],
@@ -56,16 +56,16 @@ $this->title = Yii::t('app', 'Cities');
              }')
          ]
     ])->label(Html::a($model->getAttributeLabel('region_id'), Url::toRoute('/admin/regions'))) ?>
-    
+
     <!-- area -->
     <?= $form->field($model, 'area')->textInput() ?>
-    
+
     <!-- title -->
     <?= $form->field($model, 'title')->textInput() ?>
-    
+
     <!-- important -->
     <?= $form->field($model, 'important')->checkbox() ?>
-    
+
     <?= $this->render('/shared/forms/controls', ['model' => $model]) ?>
 
 <?php ActiveForm::end(); ?>

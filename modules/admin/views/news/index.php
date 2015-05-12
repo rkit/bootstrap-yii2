@@ -4,7 +4,7 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use yii\grid\CheckboxColumn;
 use yii\grid\GridView;
-use kartik\widgets\DatePicker;
+use kartik\date\DatePicker;
 
 $this->title = Yii::t('app', 'News');
 ?>
@@ -40,12 +40,12 @@ $this->title = Yii::t('app', 'News');
             'attribute' => 'type_id',
             'value' => 'type.title',
             'filter' => Html::activeDropDownList(
-                $newsSearch, 
-                'type_id', 
+                $newsSearch,
+                'type_id',
                 ArrayHelper::map($types, 'id', 'title'),
                 ['class' => 'form-control', 'prompt' => Yii::t('app', 'All types')]
             )
-            
+
         ],
             // date_pub
         [

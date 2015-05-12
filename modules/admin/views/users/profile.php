@@ -1,7 +1,7 @@
 <?php
 use yii\widgets\ActiveForm;
 use yii\helpers\Html;
-use kartik\widgets\DatePicker;
+use kartik\date\DatePicker;
 
 $this->title = Yii::t('app', 'Users');
 ?>
