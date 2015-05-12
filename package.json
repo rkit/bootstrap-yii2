@@ -6,12 +6,12 @@
   "repository": "https://github.com/rkit/bootstrap-yii2",
   "license": "BSD-3-Clause",
   "devDependencies": {
-    "bower-webpack-plugin": "^0.1.6",
-    "css-loader": "^0.9.1",
-    "extract-text-webpack-plugin": "^0.3.8",
-    "file-loader": "^0.8.1",
-    "style-loader": "^0.8.3",
-    "webpack": "^1.8.11"
+    "bower-webpack-plugin": "~0.1.6",
+    "css-loader": "~0.9.1",
+    "extract-text-webpack-plugin": "~0.3.8",
+    "file-loader": "~0.8.1",
+    "style-loader": "~0.8.3",
+    "webpack": "~1.8.11"
   },
   "scripts": {
     "watch": "webpack --config assets/webpack.config.js --watch",
