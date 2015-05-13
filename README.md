@@ -19,16 +19,16 @@ Screenshots:
 
 ## Installation
 
-1. Check requirements
-   ```
-   php requirements.php
-   ```
-
-2. Create project
+1. Create project
 
    ```
    composer global require "fxp/composer-asset-plugin:~1.0"
    composer create-project --prefer-dist --stability=dev rkit/bootstrap-yii2
+   ```
+
+2. Check requirements
+   ```
+   php requirements.php
    ```
 
 3. Create a new database and local config
