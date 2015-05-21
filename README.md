@@ -66,5 +66,7 @@ password: fghfgh
   ~~~~
 
 * [Tests](https://github.com/rkit/bootstrap-yii2/tree/master/tests)
+
 * [PHP Coding Style Guide](http://www.php-fig.org/psr/psr-2)
+
 * [JS Coding Style Guide](https://github.com/airbnb/javascript)
