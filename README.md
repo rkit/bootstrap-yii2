@@ -53,15 +53,18 @@ Screenshots:
 username: editor  
 password: fghfgh
 
-## Debug Mode
+## Development
 
-~~~~
-SetEnv APPLICATION_ENV "development"
-~~~~
+* To enable debug mode
+  ~~~~
+  SetEnv APPLICATION_ENV "development"
+  ~~~~
 
-~~~~
-npm run watch
-~~~~
+* Run webpack to build the JS/CSS bundles
+  ~~~~
+  npm run watch
+  ~~~~
 
 ## [Tests](https://github.com/rkit/bootstrap-yii2/tree/master/tests)
-## [Coding Style Guide (PSR-2)](http://www.php-fig.org/psr/psr-2)
+## [PHP Coding Style Guide](http://www.php-fig.org/psr/psr-2)
+## [JS Coding Style Guide](https://github.com/airbnb/javascript)
