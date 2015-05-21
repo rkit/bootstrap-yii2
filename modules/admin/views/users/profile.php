@@ -40,6 +40,4 @@ $this->title = Yii::t('app', 'Users');
         </div>
     </div>
 
-    <?= $this->render('/shared/forms/controls', ['model' => $model]) ?>
-
-<?php ActiveForm::end(); ?>
+<?= $this->render('/shared/forms/bottom', ['model' => $model]) ?>

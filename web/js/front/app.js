@@ -1,22 +1,23 @@
 var app = {
-    init: function() {
-        this.ajaxSetup();
-    },
-    
-    ajaxSetup: function() {
-        $.ajaxSetup({
-            type: "POST",
-            dataType: "json",
-        });
-        
-        $(document).ajaxError(function(event, jqxhr, settings, exception) {
-            console.log(jqxhr.responseText);
-        });
-    }
-}
+  init: function() {
+    this.ajaxSetup();
+    this.binding();
+  },
 
-$(function () {
-    app.init();
-});
+  ajaxSetup: function() {
+    $.ajaxSetup({
+      type: 'POST',
+      dataType: 'json'
+    });
+
+    $(document).ajaxError(function(event, jqxhr, settings, exception) {
+      console.log(jqxhr.responseText);
+    });
+  },
+
+  binding: function() {
+
+  }
+}
 
 module.exports = app;

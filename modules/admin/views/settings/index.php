@@ -18,6 +18,4 @@ $this->title = Yii::t('app', 'Settings');
         <?= $form->field($model, 'emailPrefix') ?>
     </div>
 
-    <?= $this->render('/shared/forms/controls', ['model' => $model]) ?>
-
-<?php ActiveForm::end(); ?>
+<?= $this->render('/shared/forms/bottom', ['model' => $model]) ?>

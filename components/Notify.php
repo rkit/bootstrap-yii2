@@ -10,6 +10,18 @@ use Yii;
 class Notify extends \yii\base\Component
 {
     /**
+     * @var object
+     */
+    private $params = null;
+
+    public function init()
+    {
+        parent::init();
+
+        $this->params = Yii::$app->settings;
+    }
+
+    /**
      * Send message.
      *
      * @param string $to
@@ -21,22 +33,16 @@ class Notify extends \yii\base\Component
     public function sendMessage($to, $subject, $view, $params = [])
     {
         $message = \Yii::$app->getMailer()->compose($view, $params);
-        
-        if (!empty(Yii::$app->settings->get('emailMain')) && 
-            !empty(Yii::$app->settings->get('emailName'))) {
-            $message->setFrom([
-                Yii::$app->settings->emailMain => Yii::$app->settings->emailName
-            ]);
-        }
-        
+
+        $message->setFrom([$this->params->emailMain => $this->params->emailName]);
         $message->setTo($to);
-        
-        if (empty(Yii::$app->settings->get('emailPrefix'))) {
-            $message->setSubject($subject);
+
+        if (strlen($this->params->emailPrefix)) {
+            $message->setSubject($this->params->emailPrefix . ': ' . $subject);
         } else {
-            $message->setSubject(Yii::$app->settings->emailPrefix . ': ' . $subject);
+            $message->setSubject($subject);
         }
-        
+
         return $message->send();
     }
 }

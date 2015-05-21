@@ -37,6 +37,4 @@ $this->title = Yii::t('app', 'Regions');
     <!-- title -->
     <?= $form->field($model, 'title')->textInput() ?>
 
-    <?= $this->render('/shared/forms/controls', ['model' => $model]) ?>
-
-<?php ActiveForm::end(); ?>
+<?= $this->render('/shared/forms/bottom', ['model' => $model]) ?>

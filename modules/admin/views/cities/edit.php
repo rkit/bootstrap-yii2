@@ -66,6 +66,4 @@ $this->title = Yii::t('app', 'Cities');
     <!-- important -->
     <?= $form->field($model, 'important')->checkbox() ?>
 
-    <?= $this->render('/shared/forms/controls', ['model' => $model]) ?>
-
-<?php ActiveForm::end(); ?>
+<?= $this->render('/shared/forms/bottom', ['model' => $model]) ?>

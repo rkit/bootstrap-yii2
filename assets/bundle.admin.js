@@ -13,9 +13,13 @@ require('./../vendor/yiisoft/yii2/assets/yii.gridView.js');
 require('./../web/css/admin/style.css');
 
 // SourceMap
-require("file?name=[name].[ext]!./../vendor/bower/bootstrap/dist/css/bootstrap.css.map");
+require('file?name=[name].[ext]!./../vendor/bower/bootstrap/dist/css/bootstrap.css.map');
 
 // Application
-app = require('./../web/js/admin/app');
-forms = require('./../web/js/admin/forms');
+var form = require('./../web/js/admin/form');
+var app = require('./../web/js/admin/app');
 
+$(function() {
+  form.init();
+  app.init();
+});

@@ -13,6 +13,4 @@ $this->title = Yii::t('app', 'Tags');
     <!-- count -->
     <?= $form->field($model, 'count') ?>
 
-    <?= $this->render('/shared/forms/controls', ['model' => $model]) ?>
-
-<?php ActiveForm::end(); ?>
+<?= $this->render('/shared/forms/bottom', ['model' => $model]) ?>

@@ -1,7 +1,7 @@
 <?php
 use yii\helpers\Html;
+use yii\widgets\ActiveForm;
 ?>
-
 <hr>
 <div class="form-controls">
     <div class="form-group pull-left">
@@ -10,18 +10,6 @@ use yii\helpers\Html;
             'class' => 'btn btn-info',
             'data-loading-text' => Yii::t('app', 'Please wait…')
         ]) ?>
-        <?php if (isset($model->primaryKey) && $model->primaryKey): ?>
-        <?= Html::a(Yii::t('app', 'Delete'),
-        	['delete', 'id' => $model->primaryKey, 'reload' => true],
-        	[
-        		'title' => Yii::t('app', 'Delete'),
-        		'class' => 'btn btn-danger',
-        		'data-pjax' => '1',
-        		'data-method' => 'post',
-        		'data-confirm' => Yii::t('app', 'Are you sure you want to delete this record?')
-        	]
-        ); ?>
-        <?php endif?>
     </div>
 
     <?php if (isset($model->date_create) && isset($model->date_update)): ?>
@@ -37,3 +25,17 @@ use yii\helpers\Html;
     </div>
     <?php endif?>
 </div>
+<?php ActiveForm::end(); ?>
+&nbsp;
+<?php if (isset($model->primaryKey) && $model->primaryKey): ?>
+<?= Html::a(Yii::t('app', 'Delete'),
+  ['delete', 'id' => $model->primaryKey, 'reload' => true],
+  [
+    'title' => Yii::t('app', 'Delete'),
+    'class' => 'btn btn-danger',
+    'data-pjax' => '1',
+    'data-method' => 'post',
+    'data-confirm' => Yii::t('app', 'Are you sure you want to delete this record?')
+  ]
+); ?>
+<?php endif?>

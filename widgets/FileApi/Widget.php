@@ -59,6 +59,10 @@ class Widget extends InputWidget
      */
     public $template;
     /**
+     * @var string Title for button.
+     */
+    public $title = null;
+    /**
      * @var array
      */
     public $files;
@@ -130,6 +134,10 @@ class Widget extends InputWidget
 
         $request = Yii::$app->getRequest();
 
+        if ($this->title === null) {
+            $this->title = Yii::t('app', 'Upload');
+        }
+
         if ($request->enableCsrfValidation === true) {
             $this->settings['data'][$request->csrfParam] = $request->getCsrfToken();
         }
@@ -170,6 +178,7 @@ class Widget extends InputWidget
             [
                 'selector' => $this->getSelector(),
                 'input' => $input,
+                'title' => $this->title,
                 'paramName' => $this->paramName,
                 'value' => $this->model->{$this->attribute},
                 'preview' => $this->preview,

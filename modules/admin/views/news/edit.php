@@ -79,6 +79,4 @@ $this->title = Yii::t('app', 'News');
     <!-- status -->
     <?= $form->field($model, 'status')->checkbox(['label' => Yii::t('app', 'Publish')]) ?>
 
-    <?= $this->render('/shared/forms/controls', ['model' => $model]) ?>
-
-<?php ActiveForm::end(); ?>
+<?= $this->render('/shared/forms/bottom', ['model' => $model]) ?>

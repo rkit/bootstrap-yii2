@@ -51,6 +51,10 @@ class UploadAction extends Action
      * @var array $rules
      */
     private $rules;
+    /**
+     * @var array $resizeRules
+     */
+    private $resizeRules;
 
     public function init()
     {
@@ -61,6 +65,7 @@ class UploadAction extends Action
         $this->model = new $this->modelName();
 
         $this->rules = $this->model->getFileRules($this->attribute);
+        $this->resizeRules = $this->model->getFileResizeRules($this->attribute);
 
         if (isset($this->rules['imageSize'])) {
             $this->rules = array_merge($this->rules, $this->rules['imageSize']);
@@ -84,6 +89,9 @@ class UploadAction extends Action
         } else {
             $ownerType = $this->model->getFileOwnerType($this->attribute);
             if ($file = File::createFromUploader($file, $ownerType, $this->saveTmpFile)) {
+                if (count($this->resizeRules)) {
+                    File::resize($file->path(), $this->resizeRules['width'], $this->resizeRules['height'], false, true);
+                }
                 if ($this->multiple) {
                     return $this->controller->response(
                         $this->controller->renderPartial($this->template, [

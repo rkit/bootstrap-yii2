@@ -10,27 +10,25 @@ use app\widgets\FileApi\Widget as FileApi;
         'preview' => false,
         'callbacks' => [
             'select' => new JsExpression('function (evt, ui) {
-                if (ui && ui.other.length && ui.other[0].errors) {
-                    alert("'.Yii::t('app', 'Incorrect file format').': " + ui.other.map(function(v) { return v.name; }));
-                }
+               if (ui && ui.other.length && ui.other[0].errors) {
+                 alert("'.Yii::t('app', 'Incorrect file format').': " + ui.other.map(function(v) { return v.name; }));
+               }
             }'),
             'filecomplete' => new JsExpression('function (evt, uiEvt) {
-                if (uiEvt.result.error) {
-                    forms.showError(
-                        $(this).closest(".form"),
-                        "fileapi-' . Html::getInputId($model, $attribute) . '",
-                        uiEvt.result.error
-                    );
-                } else {
-                    forms.clearError("fileapi-' . Html::getInputId($model, $attribute) . '");
-                    $(this).find(".fileapi-files").append(uiEvt.result);
-                }
+               if (uiEvt.result.error) {
+                 alert(uiEvt.result.error);
+               } else {
+                 $(".field-' . Html::getInputId($model, $attribute) . '").find(".help-block").empty();
+                 $(".field-' . Html::getInputId($model, $attribute) . '").removeClass("has-error");
+                 $(this).find(".fileapi-files").append(uiEvt.result);
+               }
             }'),
         ],
         'settings' => [
-            'url' => $attribute . '-upload',
+            'url' => yii\helpers\Url::toRoute([$attribute . '-upload']),
             'imageSize' => $model->getFileRules($attribute)['imageSize'],
-            'multiple' => true
+            'multiple' => true,
+            'duplicate' => true
         ]
     ])
     ->hint($model->getFileRulesDescription($attribute), [

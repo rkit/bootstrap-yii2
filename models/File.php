@@ -423,19 +423,24 @@ class File extends BaseActive
      * @param int $width
      * @param int $height
      * @param bool $ratio
+     * @param bool $replace
      * @return string
      */
-    public static function resize($file, $width, $height, $ratio = false)
+    public static function resize($file, $width, $height, $ratio = false, $replace = false)
     {
         if (!file_exists(Yii::getAlias('@webroot') . $file)) {
             return $file;
         }
 
-        $fileName = pathinfo($file, PATHINFO_FILENAME);
-        $thumb = str_replace($fileName, $width . 'x' . $height . '_' . $fileName, $file);
+        if ($replace) {
+          $thumb = $file;
+        } else {
+          $fileName = pathinfo($file, PATHINFO_FILENAME);
+          $thumb = str_replace($fileName, $width . 'x' . $height . '_' . $fileName, $file);
 
-        if (file_exists(Yii::getAlias('@webroot') . $thumb)) {
-            return $thumb;
+          if (file_exists(Yii::getAlias('@webroot') . $thumb)) {
+              return $thumb;
+          }
         }
 
         $imagine = imagine\Image::getImagine();

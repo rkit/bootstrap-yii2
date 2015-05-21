@@ -1,31 +1,31 @@
 <?php $this->title = Yii::t('app', 'Welcome!') ?>
 <p class="lead">
-    <span class="label label-info">
-        <?= Yii::t('app', 'You') ?>
-        «<?= @Yii::$app->authManager->getRole(Yii::$app->user->identity->role)->description ?>»
-    </span>
+  <span class="label label-info">
+    <?= Yii::t('app', 'You') ?>
+    «<?= @Yii::$app->authManager->getRole(Yii::$app->user->identity->role)->description ?>»
+  </span>
 </p>
 
 <?php if (YII_ENV_DEV):?>
 <hr>
 <p class="lead">
-    <span class="label label-danger">
-        <?= Yii::t('app', 'Debug mode is enabled') ?>
-    </span>
+  <span class="label label-danger">
+    <?= Yii::t('app', 'Debug mode is enabled') ?>
+  </span>
 </p>
 <?php endif?>
 
 <hr>
 <div class="text-muted small">
-    <h6><?= Yii::t('app', 'Time zone') ?></h6>
-    <ul>
-        <li><?= Yii::$app->timeZone ?></li>
-    </ul>
-    
-    <h6><?= Yii::t('app', 'Information about the system') ?></h6>
-    <ul>
-        <li><?= php_uname('n') ?></li>
-        <li><?= php_uname('v') ?></li>
-        <li>PHP <?= phpversion() ?></li>
-    </ul>
+  <h6><?= Yii::t('app', 'Time zone') ?></h6>
+  <ul>
+    <li><?= Yii::$app->timeZone ?></li>
+  </ul>
+
+  <h6><?= Yii::t('app', 'Information about the system') ?></h6>
+  <ul>
+    <li><?= php_uname('n') ?></li>
+    <li><?= php_uname('v') ?></li>
+    <li>PHP <?= phpversion() ?></li>
+  </ul>
 </div>

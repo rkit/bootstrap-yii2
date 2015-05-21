@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace app\components;
 
@@ -10,9 +10,9 @@ use Yii;
  */
 class BaseQuery extends ActiveQuery
 {
-    public function active()
-    {    
-        $this->andWhere(['status' => true]);
+    public function active($active = true)
+    {
+        $this->andWhere(['status' => $active]);
         return $this;
     }
 

@@ -92,6 +92,4 @@ $this->title = Yii::t('app', 'Users');
         <?php endif?>
     </div>
 
-    <?= $this->render('/shared/forms/controls', ['model' => $model]) ?>
-
-<?php ActiveForm::end(); ?>
+<?= $this->render('/shared/forms/bottom', ['model' => $model]) ?>

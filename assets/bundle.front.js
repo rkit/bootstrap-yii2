@@ -12,7 +12,11 @@ require('./../vendor/yiisoft/yii2/assets/yii.activeForm.js');
 require('./../web/css/front/style.css');
 
 // SourceMap
-require("file?name=[name].[ext]!./../vendor/bower/bootstrap/dist/css/bootstrap.css.map");
+require('file?name=[name].[ext]!./../vendor/bower/bootstrap/dist/css/bootstrap.css.map');
 
 // Application
-app = require('./../web/js/front/app');
+var app = require('./../web/js/front/app');
+
+$(function() {
+  app.init();
+});

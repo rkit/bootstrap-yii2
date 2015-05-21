@@ -127,6 +127,17 @@ class FileBehavior extends Behavior
     }
 
     /**
+     * Get resize rule.
+     *
+     * @param string $attribute
+     * @return array
+     */
+    public function getFileResizeRules($attribute)
+    {
+        return ArrayHelper::getValue($this->attributes[$attribute], 'resize', []);
+    }
+
+    /**
      * Get rules description.
      *
      * @param string $attribute
