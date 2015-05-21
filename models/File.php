@@ -433,14 +433,14 @@ class File extends BaseActive
         }
 
         if ($replace) {
-          $thumb = $file;
+            $thumb = $file;
         } else {
-          $fileName = pathinfo($file, PATHINFO_FILENAME);
-          $thumb = str_replace($fileName, $width . 'x' . $height . '_' . $fileName, $file);
+            $fileName = pathinfo($file, PATHINFO_FILENAME);
+            $thumb = str_replace($fileName, $width . 'x' . $height . '_' . $fileName, $file);
 
-          if (file_exists(Yii::getAlias('@webroot') . $thumb)) {
-              return $thumb;
-          }
+            if (file_exists(Yii::getAlias('@webroot') . $thumb)) {
+                return $thumb;
+            }
         }
 
         $imagine = imagine\Image::getImagine();
