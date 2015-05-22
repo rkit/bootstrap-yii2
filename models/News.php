@@ -29,7 +29,7 @@ class News extends BaseActive
     /**
      * @var array
      */
-    public $tagsList;
+    public $tagValues;
     /**
      * @var array
      */
@@ -51,7 +51,7 @@ class News extends BaseActive
         return [
             [['title'], 'trim'],
             [['title', 'type_id', 'text', 'date_pub'], 'required'],
-            [['title', 'type_id', 'text', 'date_pub', 'preview', 'gallery', 'reference', 'status', 'tagsList'], 'safe'],
+            [['title', 'type_id', 'text', 'date_pub', 'preview', 'gallery', 'reference', 'status', 'tagValues'], 'safe'],
 
             ['type_id', 'integer'],
             ['type_id', 'exist', 'targetClass' => NewsType::className(), 'targetAttribute' => ['type_id' => 'id']],
@@ -90,7 +90,7 @@ class News extends BaseActive
             'reference' => Yii::t('app', 'Reference'),
             'status' => Yii::t('app', 'Status'),
 
-            'tagsList' => Yii::t('app', 'Tags'),
+            'tagValues' => Yii::t('app', 'Tags'),
         ];
     }
 
@@ -100,7 +100,7 @@ class News extends BaseActive
     public function attributeHints()
     {
         return [
-    
+
         ];
     }
 
@@ -118,10 +118,11 @@ class News extends BaseActive
             ],
 
             [
-                'class' => 'app\behaviors\TagBehavior',
-                'attribute' => 'tagsList',
-                'tableRelation' => 'news_tag_assn',
-                'tableRelationField' => 'news_id'
+                'class' => 'creocoder\taggable\TaggableBehavior',
+                // 'tagValuesAsArray' => false,
+                // 'tagRelation' => 'tags',
+                 'tagValueAttribute' => 'title',
+                 'tagFrequencyAttribute' => 'count',
             ],
 
             [
@@ -175,6 +176,8 @@ class News extends BaseActive
     {
         if (parent::beforeSave($insert)) {
             $this->date_pub = Util::convertTz($this->date_pub, Yii::$app->params['mainTimeZone'], 'UTC');
+            $this->setTagValues($this->tagValues);
+
             return true;
         }
 
@@ -211,5 +214,17 @@ class News extends BaseActive
     public function getType()
     {
         return $this->hasOne(NewsType::className(), array('id' => 'type_id'));
+    }
+
+    /**
+     * Get tags.
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTags()
+    {
+        return $this->owner
+            ->hasMany(Tag::className(), ['id' => 'tag_id'])
+            ->viaTable('{{%news_tag_assn}}', ['news_id' => 'id']);
     }
 }

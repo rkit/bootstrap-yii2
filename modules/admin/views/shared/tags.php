@@ -5,7 +5,7 @@ use yii\helpers\Url;
 use yii\web\JsExpression;
 use kartik\select2\Select2;
 ?>
-<?php $model->{$attribute} = $model->tagsToString() ?>
+<?php $model->{$attribute} = $model->getTagValues() ?>
 <?= $form->field($model, $attribute)->widget(Select2::classname(), [
      'pluginOptions' => [
          'width' => '100%',

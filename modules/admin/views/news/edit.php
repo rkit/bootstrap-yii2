@@ -71,7 +71,7 @@ $this->title = Yii::t('app', 'News');
     ]) ?>
 
     <!-- tags -->
-    <?= $this->render('/shared/tags', ['form' => $form, 'model' => $model, 'attribute' => 'tagsList']) ?>
+    <?= $this->render('/shared/tags', ['form' => $form, 'model' => $model, 'attribute' => 'tagValues']) ?>
 
     <!-- reference -->
     <?= $form->field($model, 'reference')->textInput(['maxlength' => true]) ?>

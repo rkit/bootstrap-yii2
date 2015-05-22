@@ -9,6 +9,7 @@ use Yii;
  * This is the model class for table "tag".
  *
  * @property integer $id
+ * @property string $user_id
  * @property string $title
  * @property integer $count
  */
@@ -49,7 +50,7 @@ class Tag extends BaseActive
             'count' => Yii::t('app', 'Amount'),
         ];
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -59,48 +60,10 @@ class Tag extends BaseActive
             if ($insert) {
                 $this->user_id = Yii::$app->user->id;
             }
-            
+
             return true;
         }
-        
+
         return false;
-    }
-    
-    /**
-     * Finds by title.
-     *
-     * @param string $title
-     * @return static
-     */
-    public static function findByTitle($title)
-    {
-        return static::findOne(['title' => $title]);
-    }
-    
-    /**
-     * Prepare (and save new tags) tags.
-     *
-     * @param array $tags
-     * @return array
-     */
-    public static function prepare($tags)
-    {
-        $data = [];
-        foreach ($tags as $title) {
-            $tag = static::findByTitle($title);
-            
-            if (!$tag) {
-                $tag = new Tag();
-                $tag->title = $title;
-                
-                if (!$tag->save()) {
-                    continue;
-                }
-            }
-            
-            $data[] = $tag;
-        }
-        
-        return $data;
     }
 }
