@@ -24,7 +24,7 @@ $this->title = Yii::t('app', 'Login');
           </div>
           <div class="pull-right">
             <?= yii\authclient\widgets\AuthChoice::widget([
-                 'baseAuthUrl' => ['index/auth']
+                'baseAuthUrl' => ['index/auth']
             ]) ?>
           </div>
         </div>

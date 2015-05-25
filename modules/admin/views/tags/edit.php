@@ -7,10 +7,10 @@ $this->title = Yii::t('app', 'Tags');
 
 <?php $form = ActiveForm::begin(['options' => ['class' => 'form']]); ?>
 
-    <!-- title -->
-    <?= $form->field($model, 'title')->textInput() ?>
+  <!-- title -->
+  <?= $form->field($model, 'title')->textInput() ?>
 
-    <!-- count -->
-    <?= $form->field($model, 'count') ?>
+  <!-- count -->
+  <?= $form->field($model, 'count') ?>
 
 <?= $this->render('/shared/forms/bottom', ['model' => $model]) ?>

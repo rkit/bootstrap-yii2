@@ -7,7 +7,7 @@ $this->title = Yii::t('app', 'Type of news');
 
 <?php $form = ActiveForm::begin(['options' => ['class' => 'form']]); ?>
 
-    <!-- title -->
-    <?= $form->field($model, 'title')->textInput() ?>
+  <!-- title -->
+  <?= $form->field($model, 'title')->textInput() ?>
 
 <?= $this->render('/shared/forms/bottom', ['model' => $model]) ?>

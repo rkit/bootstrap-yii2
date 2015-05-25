@@ -10,23 +10,22 @@ use yii\helpers\Html;
     </div>
   </div>
   <?php $items = []; foreach ($files as $file) {
-    $items[]['content'] = $this->render('gallery-item', [
-      'file' => $file,
-      'model' => $model,
-      'attribute' => $attribute
+      $items[]['content'] = $this->render('gallery-item', [
+          'file' => $file,
+          'model' => $model,
+          'attribute' => $attribute
       ]);
-    }
-  ?>
+  }?>
   <?= \demogorgorn\sortable\Sortable::widget([
-    'options' => [
-      'class' => 'fileapi-files',
-    ],
-    'clientOptions' => [
-      'animation' => 150,
-      'handle' => 'img'
-    ],
+      'options' => [
+          'class' => 'fileapi-files',
+      ],
+      'clientOptions' => [
+          'animation' => 150,
+          'handle' => 'img'
+      ],
     'items' => $items
-    ]);
+  ]);
   ?>
   <?= Html::hiddenInput(Html::getInputName($model, $attribute) . '[]', null, ['id' => Html::getInputId($model, $attribute)]) ?>
 </div>

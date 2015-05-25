@@ -11,59 +11,59 @@ $this->title = Yii::t('app', 'Cities');
 
 <?php $form = ActiveForm::begin(['options' => ['class' => 'form']]); ?>
 
-    <!-- country_id -->
-    <?= $form->field($model, 'country_id')->widget(Select2::classname(), [
-         'options' => ['placeholder' => ' '],
-         'pluginOptions' => [
-             'width' => '100%',
-             'multiple' => false,
-             'allowClear' => true,
-             'minimumInputLength' => 2,
-             'maximumSelectionSize' => 30,
-             'ajax' => [
-                 'url'      => Url::toRoute('suggestions/countries'),
-                 'dataType' => 'json',
-                 'type'     => 'POST',
-                 'data'     => new JsExpression('function (term) { return {term: term}; }'),
-                 'results'  => new JsExpression('function (data) { return {results: data}; }')
-             ],
-             'initSelection' => new JsExpression('function (element, callback) {
-                 var data = {id: element.val(), text: "'.@Html::encode($model->country->title).'"};
-                 callback(data);
-             }')
-         ]
-    ])->label(Html::a($model->getAttributeLabel('country_id'), Url::toRoute('/admin/countries'))) ?>
+  <!-- country_id -->
+  <?= $form->field($model, 'country_id')->widget(Select2::classname(), [
+      'options' => ['placeholder' => ' '],
+      'pluginOptions' => [
+          'width' => '100%',
+          'multiple' => false,
+          'allowClear' => true,
+          'minimumInputLength' => 2,
+          'maximumSelectionSize' => 30,
+          'ajax' => [
+              'url'      => Url::toRoute('suggestions/countries'),
+              'dataType' => 'json',
+              'type'     => 'POST',
+              'data'     => new JsExpression('function (term) { return {term: term}; }'),
+              'results'  => new JsExpression('function (data) { return {results: data}; }')
+          ],
+          'initSelection' => new JsExpression('function (element, callback) {
+              var data = {id: element.val(), text: "'.@Html::encode($model->country->title).'"};
+              callback(data);
+          }')
+      ]
+  ])->label(Html::a($model->getAttributeLabel('country_id'), Url::toRoute('/admin/countries'))) ?>
 
-    <!-- region_id -->
-    <?= $form->field($model, 'region_id')->widget(Select2::classname(), [
-         'options' => ['placeholder' => ' '],
-         'pluginOptions' => [
-             'width' => '100%',
-             'multiple' => false,
-             'allowClear' => true,
-             'minimumInputLength' => 2,
-             'maximumSelectionSize' => 30,
-             'ajax' => [
-                 'url'      => Url::toRoute('suggestions/regions'),
-                 'dataType' => 'json',
-                 'type'     => 'POST',
-                 'data'     => new JsExpression('function (term) { return {term: term}; }'),
-                 'results'  => new JsExpression('function (data) { return {results: data}; }')
-             ],
-             'initSelection' => new JsExpression('function (element, callback) {
-                 var data = {id: element.val(), text: "'.@Html::encode($model->region->title).'"};
-                 callback(data);
-             }')
-         ]
-    ])->label(Html::a($model->getAttributeLabel('region_id'), Url::toRoute('/admin/regions'))) ?>
+  <!-- region_id -->
+  <?= $form->field($model, 'region_id')->widget(Select2::classname(), [
+      'options' => ['placeholder' => ' '],
+      'pluginOptions' => [
+          'width' => '100%',
+          'multiple' => false,
+          'allowClear' => true,
+          'minimumInputLength' => 2,
+          'maximumSelectionSize' => 30,
+          'ajax' => [
+              'url'      => Url::toRoute('suggestions/regions'),
+              'dataType' => 'json',
+              'type'     => 'POST',
+              'data'     => new JsExpression('function (term) { return {term: term}; }'),
+              'results'  => new JsExpression('function (data) { return {results: data}; }')
+          ],
+          'initSelection' => new JsExpression('function (element, callback) {
+              var data = {id: element.val(), text: "'.@Html::encode($model->region->title).'"};
+              callback(data);
+          }')
+      ]
+  ])->label(Html::a($model->getAttributeLabel('region_id'), Url::toRoute('/admin/regions'))) ?>
 
-    <!-- area -->
-    <?= $form->field($model, 'area')->textInput() ?>
+  <!-- area -->
+  <?= $form->field($model, 'area')->textInput() ?>
 
-    <!-- title -->
-    <?= $form->field($model, 'title')->textInput() ?>
+  <!-- title -->
+  <?= $form->field($model, 'title')->textInput() ?>
 
-    <!-- important -->
-    <?= $form->field($model, 'important')->checkbox() ?>
+  <!-- important -->
+  <?= $form->field($model, 'important')->checkbox() ?>
 
 <?= $this->render('/shared/forms/bottom', ['model' => $model]) ?>

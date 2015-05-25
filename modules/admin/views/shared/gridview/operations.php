@@ -8,7 +8,7 @@ use yii\helpers\Html;
     'value' => 'delete',
     'data-confirmation' => Yii::t('app', 'Are you sure you want to delete this records?'),
     'data-loading-text' => Yii::t('app', 'Please wait…'),
-	'class' => 'submit disabled confirmation btn btn-danger btn-xs'
+	  'class' => 'submit disabled confirmation btn btn-danger btn-xs'
 ]) ?>
 <?php endif ?>
 
@@ -17,7 +17,7 @@ use yii\helpers\Html;
     'name' => 'operation',
     'value' => 'activate',
     'data-loading-text' => Yii::t('app', 'Please wait…'),
-	'class' => 'submit disabled btn btn-success btn-xs'
+	  'class' => 'submit disabled btn btn-success btn-xs'
 ]) ?>
 <?php endif ?>
 
@@ -26,6 +26,6 @@ use yii\helpers\Html;
     'name' => 'operation',
     'value' => 'block',
     'data-loading-text' => Yii::t('app', 'Please wait…'),
-	'class' => 'submit disabled btn btn-warning btn-xs'
+	  'class' => 'submit disabled btn btn-warning btn-xs'
 ]) ?>
 <?php endif ?>
