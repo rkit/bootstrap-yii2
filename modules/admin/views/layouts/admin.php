@@ -2,6 +2,9 @@
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
 
+$title  = ($this->title ? app\helpers\Util::clearText($this->title) . ' / ' : '');
+$title .= Yii::t('app', 'Control Panel');
+
 /* @var $this \yii\web\View */
 /* @var $content string */
 ?>
@@ -12,7 +15,7 @@ use yii\bootstrap\Nav;
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title><?= app\helpers\Util::clearText($this->title) ?> / <?= Yii::t('app', 'Control Panel') ?></title>
+  <title><?= $title; ?></title>
   <?= Html::csrfMetaTags() ?>
   <?php $this->head() ?>
   <link href="<?= Yii::$app->controller->getCssBundle() ?>" rel="stylesheet">

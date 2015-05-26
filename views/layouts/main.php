@@ -2,6 +2,9 @@
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
+
+$title  = ($this->title ? app\helpers\Util::clearText($this->title) . ' / ' : '');
+$title .= Yii::$app->name;
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -10,7 +13,7 @@ use yii\bootstrap\NavBar;
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title><?= ($this->title ? app\helpers\Util::clearText($this->title) . ' / ' : '') . Yii::$app->name ?></title>
+  <title><?= $title; ?></title>
   <?= Html::csrfMetaTags()?>
   <?php $this->head() ?>
   <link href="<?= Yii::$app->controller->getCssBundle() ?>" rel="stylesheet">
