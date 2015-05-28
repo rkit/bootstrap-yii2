@@ -3,15 +3,15 @@ var fs = require('fs');
 var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var BowerWebpackPlugin = require('bower-webpack-plugin');
-var assetsDir = path.join(__dirname, './../web/assets');
+var assetsDir = path.join(__dirname, './web/assets');
 var ENV_PRODUCTION = process.env.NODE_ENV === 'production';
 
 module.exports = {
   context: path.join(__dirname, '.'),
 
   entry: {
-    admin: './bundle.admin',
-    front: './bundle.front'
+    admin: './web/js/admin',
+    front: './web/js/front'
   },
 
   output: {
@@ -34,7 +34,7 @@ module.exports = {
     new ExtractTextPlugin('[name].css'),
 
     new BowerWebpackPlugin({
-      modulesDirectories: ['./../vendor/bower'],
+      modulesDirectories: ['./vendor/bower'],
       manifestFiles: ['bower.json', '.bower.json'],
       includes: /.*/,
       excludes: /.*\.less$/
