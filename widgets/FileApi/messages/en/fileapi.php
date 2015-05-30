@@ -18,4 +18,5 @@
  */
 return [
     'FILE_LOADED' => 'File is loaded',
+    'BTN_UPLOAD' => 'Upload'
 ];

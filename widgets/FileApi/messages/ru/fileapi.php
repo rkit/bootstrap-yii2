@@ -18,4 +18,5 @@
  */
 return [
     'FILE_LOADED' => 'Файл загружен',
+    'BTN_UPLOAD' => 'Загрузить'
 ];

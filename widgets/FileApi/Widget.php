@@ -135,7 +135,7 @@ class Widget extends InputWidget
         $request = Yii::$app->getRequest();
 
         if ($this->title === null) {
-            $this->title = Yii::t('app', 'Upload');
+            $this->title = Yii::t('fileapi', 'BTN_UPLOAD');
         }
 
         if ($request->enableCsrfValidation === true) {

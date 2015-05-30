@@ -17,7 +17,7 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Incorrect file format' => 'Неверный формат файла',
+    'Upload' => '@@Загрузить@@',
     'A letter for activation was sent to {email}' => 'Письмо для активации было отправлено на {email}',
     'Access Denied' => 'Доступ закрыт',
     'Access to the Control Panel' => 'Доступ к панели управления',
@@ -86,6 +86,7 @@ return [
     'If you need help, please {email}' => 'Если вам нужна помощь, пожалуйста {email}',
     'Image size' => 'Размер картинки',
     'Incorrect email or password' => 'Неверный email или пароль',
+    'Incorrect file format' => 'Неверный формат файла',
     'Incorrect username or password' => 'Неверное имя пользователя или пароль',
     'Index' => 'Главная',
     'Info' => 'Информация',
@@ -176,7 +177,6 @@ return [
     'To complete the registration process, you must activate your account' => 'Для завершения процесса регистрации необходимо активировать ваш аккаунт',
     'Type' => 'Тип',
     'Type of news' => 'Тип новости',
-    'Upload' => 'Загрузить',
     'User' => 'Пользователь',
     'Username' => 'Имя пользователя',
     'Users' => 'Пользователи',
