@@ -7,8 +7,6 @@ $I->wantTo('login');
 
 $page = LoginPage::openBy($I);
 
-$I->see('login-button');
-
 $I->amGoingTo('try to login with empty credentials');
 $page->login('', '');
 $I->expectTo('see validations errors');

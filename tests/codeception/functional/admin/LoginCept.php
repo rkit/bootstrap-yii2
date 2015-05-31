@@ -7,8 +7,6 @@ $I->wantTo('admin, login');
 
 $page = LoginPage::openBy($I);
 
-$I->see('login-button');
-
 $I->amGoingTo('try to login with empty credentials');
 $page->login('', '');
 $I->expectTo('see validations errors');
@@ -32,4 +30,4 @@ $I->see('.help-block-error');
 $I->amGoingTo('try to login with correct credentials');
 $page->login('admin', 'fghfgh');
 $I->expectTo('see welcome');
-$I->see('Добро пожаловать');
+$I->see('Welcome');
