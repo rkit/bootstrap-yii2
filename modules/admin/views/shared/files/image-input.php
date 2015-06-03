@@ -22,7 +22,7 @@ use app\widgets\FileApi\Widget as FileApi;
                  setTimeout(function () {
                    $el.find(".crop-area").cropper({
                      "file": ufile,
-                     "aspectRatio": 1,
+                     "aspectRatio": 0,
                      "bgColor": "#ffffff",
                      "maxSize": [570],
                      "minSize": '.($crop ? json_encode($cropMinSize) : "[]").',

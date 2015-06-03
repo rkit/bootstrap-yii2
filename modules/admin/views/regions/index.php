@@ -30,7 +30,7 @@ $this->title = Yii::t('app', 'Regions');
               'attribute' => 'title',
               'format' => 'raw',
               'value' => function ($model) {
-                  return Html::a(Html::encode($model['title']), ['edit', 'id' => $model['region_id']]);
+                  return Html::a(Html::encode($model['title']), ['edit', 'id' => $model['region_id']], ['data-pjax' => 0]);
               }
           ],
               // country_id
