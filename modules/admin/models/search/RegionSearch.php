@@ -20,7 +20,7 @@ class RegionSearch extends Region
      * @var int
      */
     public $country_id;
-        
+
     /**
      * @inheritdoc
      */
@@ -32,7 +32,7 @@ class RegionSearch extends Region
             ['country_id', 'integer'],
         ];
     }
-    
+
     /**
      * Search by request criteria.
      *
@@ -41,7 +41,7 @@ class RegionSearch extends Region
      */
     public function search($params)
     {
-        $query = Region::find();
+        $query = Region::find()->with('country');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -54,9 +54,9 @@ class RegionSearch extends Region
                 'pageSizeLimit' => [50, 100],
             ],
         ]);
-        
+
         $dataProvider->getPagination()->setPageSize(Yii::$app->request->get('pageSize'), true);
-            
+
         if (!($this->load($params) && $this->validate())) {
             return $dataProvider;
         }
@@ -64,7 +64,7 @@ class RegionSearch extends Region
         $query->andFilterWhere([
             'country_id' => $this->country_id,
         ]);
-        
+
         $query->andFilterWhere(['like', 'title', $this->title]);
 
         return $dataProvider;

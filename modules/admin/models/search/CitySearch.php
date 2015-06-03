@@ -24,7 +24,7 @@ class CitySearch extends City
      * @var int
      */
     public $region_id;
-        
+
     /**
      * @inheritdoc
      */
@@ -32,13 +32,13 @@ class CitySearch extends City
     {
         return [
             ['title', 'string'],
-            
+
             ['country_id', 'integer'],
 
             ['region_id', 'integer'],
         ];
     }
-    
+
     /**
      * Search by request criteria.
      *
@@ -47,7 +47,7 @@ class CitySearch extends City
      */
     public function search($params)
     {
-        $query = City::find();
+        $query = City::find()->with(['country', 'region']);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -60,9 +60,9 @@ class CitySearch extends City
                 'pageSizeLimit' => [50, 100],
             ],
         ]);
-        
+
         $dataProvider->getPagination()->setPageSize(Yii::$app->request->get('pageSize'), true);
-            
+
         if (!($this->load($params) && $this->validate())) {
             return $dataProvider;
         }
@@ -71,7 +71,7 @@ class CitySearch extends City
             'country_id' => $this->country_id,
             'region_id' => $this->region_id
         ]);
-        
+
         $query->andFilterWhere(['like', 'title', $this->title]);
 
         return $dataProvider;
