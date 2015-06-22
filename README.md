@@ -49,7 +49,7 @@ Screenshots:
    php yii rbac/init
    ```
 
-#### Superuser
+#### Access to the Control Panel
 username: editor  
 password: fghfgh
 
