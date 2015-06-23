@@ -42,6 +42,7 @@
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
           <h4 class="modal-title" id="myModalLabel"><?= Yii::t('app', 'Edit') ?></h4>
+          <span class="text-muted"><?= Yii::t('app', 'Click on the image for editing')?></span>
         </div>
         <div class="modal-body">
           <div class="crop-area"></div>

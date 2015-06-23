@@ -42,6 +42,7 @@ return [
     'Cancel' => 'Отмена',
     'Cities' => 'Города',
     'City' => 'Город',
+    'Click on the image for editing' => 'Щелкните на картинку для редактирования',
     'Control Panel' => 'Панель управления',
     'Control Panel / Cities' => 'Панель управления / Города',
     'Control Panel / Countries' => 'Панель управления / Страны',

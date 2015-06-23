@@ -27,7 +27,6 @@ use app\widgets\FileApi\Widget as FileApi;
                      "maxSize": [570],
                      "minSize": '.($crop ? json_encode($cropMinSize) : "[]").',
                      "keySupport": false,
-                     "selection": "100%",
                      "onSelect": function (coordinates) {
                         $el.fileapi("crop", ufile, coordinates);
                      }
