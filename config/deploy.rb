@@ -22,7 +22,7 @@ namespace :deploy do
           execute :npm, "install"
           execute :bower, "install"
           execute :npm, "run build"
-          execute :php, "yii migrate/up --interactive"
+          execute :php, "yii migrate/up --interactive=0"
           execute :php, "yii rbac/init"
         end
     end
