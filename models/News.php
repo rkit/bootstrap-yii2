@@ -133,7 +133,7 @@ class News extends BaseActive
                         'rules' => [
                             'mimeTypes'  => ['image/png', 'image/jpg', 'image/jpeg'],
                             'extensions' => ['jpg', 'jpeg', 'png'],
-                            'maxSize'    => 1024 * 1024 * 2, // 2 MB
+                            'maxSize'    => 1024 * 1024 * 1, // 1 MB
                         ]
                     ],
                     'preview' => [
@@ -143,7 +143,7 @@ class News extends BaseActive
                             'imageSize'  => ['minWidth' => 300, 'minHeight' => 300],
                             'mimeTypes'  => ['image/png', 'image/jpg', 'image/jpeg'],
                             'extensions' => ['jpg', 'jpeg', 'png'],
-                            'maxSize'    => 1024 * 1024 * 2, // 2 MB
+                            'maxSize'    => 1024 * 1024 * 1, // 1 MB
                         ]
                     ],
                     'gallery' => [
@@ -152,7 +152,7 @@ class News extends BaseActive
                             'imageSize'  => ['minWidth' => 300, 'minHeight' => 300],
                             'mimeTypes'  => ['image/png', 'image/jpg', 'image/jpeg'],
                             'extensions' => ['jpg', 'jpeg', 'png'],
-                            'maxSize'    => 1024 * 1024 * 2, // 2 MB
+                            'maxSize'    => 1024 * 1024 * 1, // 1 MB
                         ]
                     ]
                 ]
