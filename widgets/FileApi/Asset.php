@@ -18,7 +18,7 @@ class Asset extends AssetBundle
      */
     public $js = [
         'FileAPI/FileAPI.min.js',
-        'FileAPI/FileAPI.exif.js',
+        //'FileAPI/FileAPI.exif.js',
         'jquery.fileapi.min.js'
     ];
     /**
