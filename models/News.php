@@ -131,28 +131,31 @@ class News extends BaseActive
                     'text' => [
                         'ownerType' => File::OWNER_TYPE_NEWS_TEXT,
                         'rules' => [
-                            'mimeTypes'  => ['image/png', 'image/jpg', 'image/jpeg'],
+                            'mimeTypes' => ['image/png', 'image/jpg', 'image/jpeg'],
                             'extensions' => ['jpg', 'jpeg', 'png'],
-                            'maxSize'    => 1024 * 1024 * 1, // 1 MB
+                            'maxSize' => 1024 * 1024 * 1, // 1 MB
+                            'tooBig' => Yii::t('app', 'File size must not exceed') . ' 1Mb'
                         ]
                     ],
                     'preview' => [
                         'ownerType' => File::OWNER_TYPE_NEWS_PREVIEW,
                         'savePath' => true, // save 'path' in current model
                         'rules' => [
-                            'imageSize'  => ['minWidth' => 300, 'minHeight' => 300],
-                            'mimeTypes'  => ['image/png', 'image/jpg', 'image/jpeg'],
+                            'imageSize' => ['minWidth' => 300, 'minHeight' => 300],
+                            'mimeTypes' => ['image/png', 'image/jpg', 'image/jpeg'],
                             'extensions' => ['jpg', 'jpeg', 'png'],
-                            'maxSize'    => 1024 * 1024 * 1, // 1 MB
+                            'maxSize' => 1024 * 1024 * 1, // 1 MB
+                            'tooBig' => Yii::t('app', 'File size must not exceed') . ' 1Mb'
                         ]
                     ],
                     'gallery' => [
                         'ownerType' => File::OWNER_TYPE_NEWS_GALLERY,
                         'rules' => [
-                            'imageSize'  => ['minWidth' => 300, 'minHeight' => 300],
-                            'mimeTypes'  => ['image/png', 'image/jpg', 'image/jpeg'],
+                            'imageSize' => ['minWidth' => 300, 'minHeight' => 300],
+                            'mimeTypes' => ['image/png', 'image/jpg', 'image/jpeg'],
                             'extensions' => ['jpg', 'jpeg', 'png'],
-                            'maxSize'    => 1024 * 1024 * 1, // 1 MB
+                            'maxSize' => 1024 * 1024 * 1, // 1 MB
+                            'tooBig' => Yii::t('app', 'File size must not exceed') . ' 1Mb'
                         ]
                     ]
                 ]

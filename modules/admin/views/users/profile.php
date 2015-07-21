@@ -34,8 +34,7 @@ $this->title = Yii::t('app', 'Users');
           'form' => $form,
           'model' => $model,
           'attribute' => 'photo',
-          'crop' => true,
-          'cropMinSize' => [300, 300]
+          'crop' => false
       ]) ?>
     </div>
   </div>

@@ -32,8 +32,7 @@ $this->title = Yii::t('app', 'News');
       'form' => $form,
       'model' => $model,
       'attribute' => 'preview',
-      'crop' => true,
-      'cropMinSize' => [300, 300]
+      'crop' => false
   ]) ?>
 
   <!-- gallery -->

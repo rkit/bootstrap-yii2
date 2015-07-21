@@ -33,9 +33,9 @@ class UserProfile extends BaseActive
         return [
             ['birth_day', 'safe'],
             ['birth_day', 'default', 'value' => '0000-00-00'],
-            
+
             ['full_name', 'string', 'max' => 40],
-            
+
             ['photo', 'string', 'max' => 255]
         ];
     }
@@ -52,7 +52,7 @@ class UserProfile extends BaseActive
             'birth_day' => Yii::t('app', 'Birth Day'),
         ];
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -65,17 +65,19 @@ class UserProfile extends BaseActive
                     'photo' => [
                         'ownerType' => File::OWNER_TYPE_USER_PHOTO,
                         'savePath' => true, // save 'path' in current model
+                        'resize' => ['width' => 1000, 'height' => 1000, 'ratio' => true],
                         'rules' => [
-                            'imageSize'  => ['minWidth' => 300, 'minHeight' => 300],
-                            'mimeTypes'  => ['image/png', 'image/jpg', 'image/jpeg'],
+                            'imageSize' => ['minWidth' => 300, 'minHeight' => 300],
+                            'mimeTypes' => ['image/png', 'image/jpg', 'image/jpeg'],
                             'extensions' => ['jpg', 'jpeg', 'png'],
-                            'maxSize'    => 1024 * 1024 * 1, // 1 MB
+                            'maxSize' => 1024 * 1024 * 1, // 1 MB
+                            'tooBig' => Yii::t('app', 'File size must not exceed') . ' 1Mb'
                         ]
                     ],
                 ]
             ]
         ];
-    } 
+    }
 
     /**
      * @return \yii\db\ActiveQuery
