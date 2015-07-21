@@ -90,7 +90,11 @@ class UploadAction extends Action
             $ownerType = $this->model->getFileOwnerType($this->attribute);
             if ($file = File::createFromUploader($file, $ownerType, $this->saveTmpFile)) {
                 if (count($this->resizeRules)) {
-                    File::resize($file->path(), $this->resizeRules['width'], $this->resizeRules['height'], false, true);
+                    File::resize(
+                        $file->path(),
+                        $this->resizeRules['width'],
+                        $this->resizeRules['height'],
+                        $this->resizeRules['ratio'], true);
                 }
                 if ($this->multiple) {
                     return $this->controller->response(
