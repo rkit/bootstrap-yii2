@@ -10,18 +10,19 @@ use yii\helpers\Html;
     </div>
   </div>
   <?php $items = []; foreach ($files as $file) {
-      $items[]['content'] = $this->render('gallery-item', [
+      $content = $this->render('gallery-item', [
           'file' => $file,
           'model' => $model,
           'attribute' => $attribute
       ]);
-  }?>
-  <?= \demogorgorn\sortable\Sortable::widget([
+      $content = str_replace(['<li>', '</li>'], '', $content);
+      $items[]['content'] = $content;
+  };?>
+  <?= \kartik\sortable\Sortable::widget([
       'options' => [
           'class' => 'fileapi-files',
       ],
-      'clientOptions' => [
-          'animation' => 150,
+      'pluginOptions' => [
           'handle' => 'img'
       ],
     'items' => $items

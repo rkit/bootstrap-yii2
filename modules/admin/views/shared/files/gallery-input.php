@@ -21,6 +21,7 @@ use app\widgets\FileApi\Widget as FileApi;
                  $(".field-' . Html::getInputId($model, $attribute) . '").find(".help-block").empty();
                  $(".field-' . Html::getInputId($model, $attribute) . '").removeClass("has-error");
                  $(this).find(".fileapi-files").append(uiEvt.result);
+                 $(this).find(".sortable").sortable();
                }
             }'),
         ],
