@@ -22,7 +22,9 @@
     <li><?= Yii::t('app', 'Time zone') ?> <?= Yii::$app->timeZone ?></li>
     <li>Yii <?= Yii::getVersion() ?></li>
     <li>PHP <?= phpversion() ?> (<?= strtoupper(php_sapi_name()) ?>)</li>
+    <?php if (isset($_SERVER['SERVER_SOFTWARE'])):?>
     <li>Server <?= ucfirst($_SERVER['SERVER_SOFTWARE']); ?></li>
+    <?php endif?>
     <li>OS <?= ucfirst(php_uname('s')) ?></li>
   </ul>
 </div>
