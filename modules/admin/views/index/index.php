@@ -17,15 +17,12 @@
 
 <hr>
 <div class="text-muted small">
-  <h6><?= Yii::t('app', 'Time zone') ?></h6>
-  <ul>
-    <li><?= Yii::$app->timeZone ?></li>
-  </ul>
-
   <h6><?= Yii::t('app', 'Information about the system') ?></h6>
   <ul>
-    <li><?= php_uname('n') ?></li>
-    <li><?= php_uname('v') ?></li>
-    <li>PHP <?= phpversion() ?></li>
+    <li><?= Yii::t('app', 'Time zone') ?> <?= Yii::$app->timeZone ?></li>
+    <li>Yii <?= Yii::getVersion() ?></li>
+    <li>PHP <?= phpversion() ?> (<?= strtoupper(php_sapi_name()) ?>)</li>
+    <li>Server <?= ucfirst($_SERVER['SERVER_SOFTWARE']); ?></li>
+    <li>OS <?= ucfirst(php_uname('s')) ?></li>
   </ul>
 </div>
