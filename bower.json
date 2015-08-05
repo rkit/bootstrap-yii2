@@ -1,12 +1,8 @@
 {
   "name": "bootstrap",
-  "version": "0.0.1",
-  "authors": [
-    "Igor Romanov <rkit.ru@gmail.com>"
-  ],
-  "license": "BSD-3-Clause",
+  "private": true,
   "dependencies": {
-    "nprogress": "0.1.6",
+    "nprogress": "~0.1.6",
     "jquery-form": "3.51"
   }
 }
