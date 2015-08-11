@@ -173,7 +173,9 @@ class User extends BaseActive implements IdentityInterface
         if (parent::beforeSave($insert)) {
             if ($insert) {
                 $this->generateAuthKey();
-                $this->ip = !isset(Yii::$app->enableCoreCommands) ? ip2long(Yii::$app->request->getUserIP()) : 0;
+                if (!isset(Yii::$app->enableCoreCommands)) {
+                    $this->ip = ip2long(Yii::$app->request->getUserIP());
+                }
 
                 if ($this->profile === null) {
                     $this->populateRelation('profile', new UserProfile());

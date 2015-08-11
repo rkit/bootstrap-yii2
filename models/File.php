@@ -148,7 +148,7 @@ class File extends BaseActive
     /**
      * Path to directory of file.
      *
-     * @param bool $full.
+     * @param bool $full
      * @return string
      */
     public function dir($full = false)

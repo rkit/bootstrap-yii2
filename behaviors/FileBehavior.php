@@ -208,7 +208,7 @@ class FileBehavior extends Behavior
         return $text;
     }
 
-    private function prepareImageFullSizeDescription($rules, $exclude)
+    private function prepareImageFullSizeDescription($rules, $exclude = [])
     {
         foreach ($exclude as $item) {
             unset($rules[$item]);
