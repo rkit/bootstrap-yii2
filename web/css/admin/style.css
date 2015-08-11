@@ -258,7 +258,7 @@ table thead a {
 
 .sidebar {
   position: fixed; /* Undo the static from mobile first approach */
-  top: 24px;
+  top: 23px;
 }
   .sidebar .logo {
     padding: 0px 0px 10px 19px;
