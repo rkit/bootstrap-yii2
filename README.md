@@ -55,18 +55,22 @@ password: fghfgh
 
 ## Development
 
-* To enable debug mode
-  ~~~~
+- Enable debug mode for Yii
+  ```
   SetEnv APPLICATION_ENV "development"
-  ~~~~
+  ```
 
-* Run webpack to build the JS/CSS bundles
-  ~~~~
+- Run webpack in watch mode
+  ```
   npm run watch
-  ~~~~
+  ```
 
-* [Tests](https://github.com/rkit/bootstrap-yii2/tree/master/tests)
+- Run webpack for build
+  ```
+  npm run build
+  ```
 
-* [PHP Coding Style Guide](http://www.php-fig.org/psr/psr-2)
+- [Tests](tests/)
+- [PHP Coding Style Guide](http://www.php-fig.org/psr/psr-2)
 
-* [JS Coding Style Guide](https://github.com/airbnb/javascript)
+- [JS Coding Style Guide](https://github.com/airbnb/javascript)
