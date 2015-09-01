@@ -40,9 +40,17 @@ class UploadAction extends Action
      */
     public $resultName = 'path';
     /**
-     * @var bool $saveTmpFile Save temporary file.
+     * @var int $ownerId Owner Id
      */
-    public $saveTmpFile = false;
+    public $ownerId = null;
+    /**
+     * @var bool $saveAfterUpload Save the file immediately after upload
+     */
+    public $saveAfterUpload = false;
+    /**
+     * @var int $status Status a file. Unprotected or Protected.
+     */
+    public $status = File::STATUS_UNPROTECTED;
     /**
      * @var ActiveRecord $model
      */
@@ -87,29 +95,41 @@ class UploadAction extends Action
         if ($model->hasErrors()) {
             return $this->controller->response(['error' => $model->getFirstError('file')]);
         } else {
-            $ownerType = $this->model->getFileOwnerType($this->attribute);
-            if ($file = File::createFromUploader($file, $ownerType, $this->saveTmpFile)) {
-                if (count($this->resizeRules)) {
-                    File::resize(
-                        $file->path(),
-                        $this->resizeRules['width'],
-                        $this->resizeRules['height'],
-                        $this->resizeRules['ratio'], true);
-                }
-                if ($this->multiple) {
-                    return $this->controller->response(
-                        $this->controller->renderPartial($this->template, [
-                            'file' => $file,
-                            'model' => $this->model,
-                            'attribute' => $this->attribute
-                        ])
-                    );
-                } else {
-                    return $this->controller->response(['id' => $file->id, $this->resultName => $file->path()]);
-                }
-            } else {
-                return $this->controller->response(['error' => Yii::t('app', 'Error saving file')]);
+            return $this->upload($file);
+        }
+    }
+
+    private function upload($file)
+    {
+        $ownerType = $this->model->getFileOwnerType($this->attribute);
+        if ($this->saveAfterUpload && $this->ownerId === null) {
+            $this->ownerId = 0;
+        }
+
+        $file = File::createFromUploader($file, $this->ownerId, $ownerType, $this->saveAfterUpload, $this->status);
+        if ($file) {
+            if (count($this->resizeRules)) {
+                File::resize(
+                    $file->path(),
+                    $this->resizeRules['width'],
+                    $this->resizeRules['height'],
+                    $this->resizeRules['ratio'],
+                    true
+                );
             }
+            if ($this->multiple) {
+                return $this->controller->response(
+                    $this->controller->renderPartial($this->template, [
+                        'file' => $file,
+                        'model' => $this->model,
+                        'attribute' => $this->attribute
+                    ])
+                );
+            } else {
+                return $this->controller->response(['id' => $file->id, $this->resultName => $file->path()]);
+            }
+        } else {
+            return $this->controller->response(['error' => Yii::t('app', 'Error saving file')]);
         }
     }
 }

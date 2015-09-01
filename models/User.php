@@ -173,7 +173,7 @@ class User extends BaseActive implements IdentityInterface
         if (parent::beforeSave($insert)) {
             if ($insert) {
                 $this->generateAuthKey();
-                if (!isset(Yii::$app->enableCoreCommands)) {
+                if (!Yii::$app instanceof \yii\console\Application) {
                     $this->ip = ip2long(Yii::$app->request->getUserIP());
                 }
 

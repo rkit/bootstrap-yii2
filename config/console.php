@@ -20,7 +20,7 @@ $config = [
             'class' => 'yii\rbac\DbManager',
         ],
         'db' => [
-            'class' => 'yii\db\Connection',        
+            'class' => 'yii\db\Connection',
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
@@ -30,6 +30,9 @@ $config = [
                     'levels' => ['error', 'warning'],
                 ],
             ],
+        ],
+        'settings' => [
+            'class' => 'app\components\Settings',
         ],
     ],
     'params' => $params,

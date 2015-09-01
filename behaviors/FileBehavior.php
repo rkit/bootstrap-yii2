@@ -20,12 +20,14 @@ use app\models\File;
  *     'preview' => [
  *         'ownerType' => File::OWNER_TYPE_NEWS_PREVIEW,
  *         'savePath' => true, // save 'path' in current model
- *         //'resize' => ['width' => 1600, 'height' => 1600, 'ratio' => true],
+ *         // 'saveFileId' => true, // save 'fileId' in current model
+ *         // 'resize' => ['width' => 1600, 'height' => 1600, 'ratio' => true],
  *         'rules' => [
- *             'imageSize'  => ['minWidth' => 300, 'minHeight' => 300],
- *             'mimeTypes'  => ['image/png', 'image/jpg', 'image/jpeg'],
+ *             'imageSize' => ['minWidth' => 300, 'minHeight' => 300],
+ *             'mimeTypes' => ['image/png', 'image/jpg', 'image/jpeg'],
  *             'extensions' => ['jpg', 'jpeg', 'png'],
- *             'maxSize'    => 1024 * 1024 * 2, // 2 MB
+ *             'maxSize' => 1024 * 1024 * 1, // 1 MB
+ *             'tooBig' => 'File size must not exceed 1Mb'
  *         ]
  *     ],
  * ]
@@ -73,16 +75,13 @@ class FileBehavior extends Behavior
             }
 
             $file = File::bind($this->owner->primaryKey, $data['ownerType'], $fileId);
-            // if savePath, then path saved in current model
+
             if (isset($data['savePath']) && $data['savePath'] === true) {
-                if (is_object($file)) {
-                    $path = $file->path();
-                } elseif ($file === false && $data['oldValue'] !== null) {
-                    $path = $data['oldValue'];
-                } else {
-                    $path = '';
-                }
-                $this->owner->updateAttributes([$attribute => $path]);
+                $this->owner->updateAttributes([$attribute => $this->getFilePath($file, $data['oldValue'])]);
+            }
+
+            if (isset($data['saveFileId']) && $data['saveFileId'] === true) {
+                $this->owner->updateAttributes([$attribute => $this->getFileId($file, $data['oldValue'])]);
             }
         }
     }
@@ -91,6 +90,42 @@ class FileBehavior extends Behavior
     {
         foreach ($this->attributes as $attribute => $data) {
             File::deleteByOwner($this->owner->primaryKey, $data['ownerType']);
+        }
+    }
+
+    /**
+     * Get file path.
+     *
+     * @param mixed $file
+     * @param mixed $oldValue
+     * @return string
+     */
+    private function getFilePath($file, $oldValue)
+    {
+        if (is_object($file)) {
+            return $file->path();
+        } elseif ($file === false && $oldValue !== null) {
+            return $oldValue;
+        } else {
+            return '';
+        }
+    }
+
+    /**
+     * Get file id.
+     *
+     * @param mixed $file
+     * @param mixed $oldValue
+     * @return int
+     */
+    private function getFileId($file, $oldValue)
+    {
+        if (is_object($file)) {
+            return $file->id;
+        } elseif ($file === false && $oldValue !== null) {
+            return $oldValue;
+        } else {
+            return 0;
         }
     }
 

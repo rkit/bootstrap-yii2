@@ -35,7 +35,7 @@ class SignupProviderForm extends \yii\base\Model
      * @var bool
      */
     private $verified = false;
-    
+
     /**
      * Form for social auth.
      *
@@ -43,28 +43,28 @@ class SignupProviderForm extends \yii\base\Model
      * @param array $config
      */
     public function __construct($data, $config = [])
-    {        
+    {
         $this->provider = $data['provider'];
         $this->email = ArrayHelper::getValue($data['profile'], 'email');
         $this->prepareAttributes($data);
- 
+
         if (ArrayHelper::getValue($data['profile'], 'verified') && !empty($this->email)) {
             $this->verified = true;
             $this->user = User::findByEmail($this->email);
-            
+
             if (!$this->user) {
                 $this->user = new User();
                 $this->user->setConfirmed();
             }
         }
-        
+
         if ($this->user === null) {
             $this->user = new User();
         }
-        
+
         parent::__construct($config);
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -75,13 +75,13 @@ class SignupProviderForm extends \yii\base\Model
             ['email', 'required'],
             ['email', 'string', 'max' => 255],
             ['email', 'email'],
-            ['email', 'unique', 
-                'targetClass' => '\app\models\User', 
+            ['email', 'unique',
+                'targetClass' => '\app\models\User',
                 'message' => Yii::t('app', 'This email address has already been taken')
-            ],            
+            ],
         ];
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -89,7 +89,7 @@ class SignupProviderForm extends \yii\base\Model
     {
         return (new User())->attributeLabels();
     }
-    
+
     /**
      * Get User
      *
@@ -99,7 +99,7 @@ class SignupProviderForm extends \yii\base\Model
     {
         return $this->user;
     }
-    
+
     /**
      * Is verified?
      *
@@ -109,7 +109,7 @@ class SignupProviderForm extends \yii\base\Model
     {
         return $this->verified;
     }
-    
+
     /**
      * Signs user up.
      *
@@ -117,29 +117,29 @@ class SignupProviderForm extends \yii\base\Model
      */
     public function signup($validate = true)
     {
-        if ($this->validate($validate ? null : [])) {       
+        if ($this->validate($validate ? null : [])) {
             if ($this->user->isNewRecord) {
                 $this->user->email = $this->email;
-                
+
                 $profile = new UserProfile();
                 $profile->load($this->profile, '');
-                
+
                 if (!empty($profile->photo)) {
-                    $file = File::createFromUrl($profile->photo, File::OWNER_TYPE_USER_PHOTO);
+                    $file = File::createFromUrl($profile->photo, null, File::OWNER_TYPE_USER_PHOTO);
                     if ($file) {
                         $profile->photo = $file->id;
                     }
                 }
-                
+
                 $this->user->populateRelation('profile', $profile);
             }
-       
+
             if ($this->user->save()) {
                 if ($this->user->saveProvider(
-                    User::getProviders($this->provider), 
-                    $this->profile['profile_id'], 
-                    $this->profile['profile_url'], 
-                    $this->token['access_token'], 
+                    User::getProviders($this->provider),
+                    $this->profile['profile_id'],
+                    $this->profile['profile_url'],
+                    $this->token['access_token'],
                     $this->token['access_token_secret']
                 )) {
                     if ($this->user->authorize(true)) {
@@ -148,10 +148,10 @@ class SignupProviderForm extends \yii\base\Model
                 }
             }
         }
-        
+
         return null;
     }
-    
+
     /**
      * Prepare profile and token.
      *
@@ -160,15 +160,15 @@ class SignupProviderForm extends \yii\base\Model
     private function prepareAttributes($data)
     {
         switch ($this->provider) {
-            case 'facebook': 
+            case 'facebook':
                 $attributes = $this->prepareFacebook($data);
                 break;
-                
-            case 'vkontakte': 
+
+            case 'vkontakte':
                 $attributes = $this->prepareVkontakte($data);
                 break;
-                
-            case 'twitter': 
+
+            case 'twitter':
                 $attributes = $this->prepareTwitter($data);
                 break;
         }
@@ -176,7 +176,7 @@ class SignupProviderForm extends \yii\base\Model
         $this->profile = $attributes['profile'];
         $this->token = $attributes['token'];
     }
-    
+
     /**
      * Prepare Facebook attributes.
      *
@@ -196,7 +196,7 @@ class SignupProviderForm extends \yii\base\Model
             ]
         ];
     }
-    
+
     /**
      * Prepare Vkontakte attributes.
      *
@@ -218,7 +218,7 @@ class SignupProviderForm extends \yii\base\Model
             ]
         ];
     }
-    
+
     /**
      * Prepare Twitter attributes.
      *
@@ -239,7 +239,7 @@ class SignupProviderForm extends \yii\base\Model
             ]
         ];
     }
-    
+
     /**
      * Sends an email with a link, for confirm the email.
      *
@@ -251,17 +251,17 @@ class SignupProviderForm extends \yii\base\Model
             if (!User::isTokenValid($this->user->email_confirm_token)) {
                 $this->user->generateEmailConfirmToken();
             }
-            
+
             if ($this->user->save(false)) {
                 return Yii::$app->notify->sendMessage(
-                    $this->email, 
-                    Yii::t('app', 'Activate Your Account'), 
-                    'emailConfirmToken', 
+                    $this->email,
+                    Yii::t('app', 'Activate Your Account'),
+                    'emailConfirmToken',
                     ['user' => $this->user]
                 );
             }
         }
-        
+
         return false;
     }
 }

@@ -27,10 +27,13 @@ use Yii;
  * @property string $date_update
  * @property integer $ip
  * @property integer $position
+ * @property integer $status
  */
 class File extends BaseActive
 {
-    const UPLOAD_DIR_TMP = 'uploads/files/tmp';
+    const STATUS_UNPROTECTED = 0;
+    const STATUS_PROTECTED = 1;
+
     const UPLOAD_DIR = 'uploads/files';
 
     //
@@ -38,7 +41,7 @@ class File extends BaseActive
     //
     const OWNER_TYPE_NEWS_GALLERY = 1;
     const OWNER_TYPE_NEWS_PREVIEW = 2;
-    const OWNER_TYPE_NEWS_TEXT    = 3;
+    const OWNER_TYPE_NEWS_TEXT = 3;
 
     const OWNER_TYPE_USER_PHOTO = 4;
 
@@ -109,8 +112,15 @@ class File extends BaseActive
     {
         if (parent::beforeSave($insert)) {
             if ($insert) {
-                $this->user_id = Yii::$app->user->isGuest ? 0 : Yii::$app->user->id;
-                $this->ip = ip2long(Yii::$app->request->getUserIP());
+                if (!Yii::$app instanceof \yii\console\Application) {
+                    $this->user_id = Yii::$app->user->isGuest ? 0 : Yii::$app->user->id;
+                    $this->ip = ip2long(Yii::$app->request->getUserIP());
+                }
+
+                // To remove unused files
+                if ($this->owner_id === null) {
+                    $this->owner_id = -1;
+                }
             }
 
             return true;
@@ -120,15 +130,62 @@ class File extends BaseActive
     }
 
     /**
-     * Generate a name for new file.
+     * Get all statuses.
      *
-     * @param string $extension
+     * @return array
+     */
+    public static function getStatuses()
+    {
+        return [
+            self::STATUS_UNPROTECTED => Yii::t('app', 'Unprotected, access from the web'),
+            self::STATUS_PROTECTED  => Yii::t('app', 'Protected'),
+        ];
+    }
+
+    /**
+     * Get statuse name
+     *
      * @return string
      */
-    public static function generateName($extension = null)
+    public function getStatusName()
     {
-        $name = date('YmdHis') . substr(md5(microtime() . uniqid()), 0, 10);
-        return $extension ? $name . '.' . $extension : $name;
+        $statuses = $this->getStatuses();
+        return isset($statuses[$this->status]) ? $statuses[$this->status] : '';
+    }
+
+    /**
+     * Is it protected?
+     *
+     * @param bool
+     */
+    public function isProtected()
+    {
+        return $this->status == self::STATUS_PROTECTED;
+    }
+
+    /**
+     * Is it unprotected?
+     *
+     * @param bool
+     */
+    public function isUnprotected()
+    {
+        return $this->status == self::STATUS_UNPROTECTED;
+    }
+
+
+    private function getTimestampOfFile()
+    {
+        if ($this->isNewRecord || is_object($this->date_create)) {
+            return date('Ym');
+        } else {
+            return date_format(date_create($this->date_create), 'Ym');
+        }
+    }
+
+    private static function getFullPathToDir($status)
+    {
+        return $status === self::STATUS_PROTECTED ? Yii::getAlias('@runtime') : Yii::getAlias('@app/web');
     }
 
     /**
@@ -139,10 +196,12 @@ class File extends BaseActive
      */
     public function dirTmp($full = false)
     {
+        $uploadDir = $full ? self::getFullPathToDir($this->status) : '';
         return
-            ($full ? Yii::getAlias('@webroot') : '') .
-            '/' . self::UPLOAD_DIR_TMP .
-            '/' . $this->owner_type;
+            $uploadDir . '/' .
+            self::UPLOAD_DIR . '/tmp/' .
+            $this->owner_type . '/' .
+            $this->getTimestampOfFile();
     }
 
     /**
@@ -156,11 +215,14 @@ class File extends BaseActive
         if ($this->tmp) {
             return $this->dirTmp($full);
         } else {
+            $uploadDir = $full ? self::getFullPathToDir($this->status) : '';
             return
-                ($full ? Yii::getAlias('@webroot') : '') .
-                '/' . self::UPLOAD_DIR .
-                '/' . $this->owner_type .
-                '/' . $this->owner_id;
+                $uploadDir . '/' .
+                self::UPLOAD_DIR . '/' .
+                $this->owner_type . '/' .
+                $this->getTimestampOfFile() . '/' .
+                $this->owner_id . '/' .
+                $this->id;
         }
     }
 
@@ -187,31 +249,133 @@ class File extends BaseActive
     }
 
     /**
+     * Generate a name.
+     *
+     * @param string $extension
+     * @return string
+     */
+    public static function generateName($extension = null)
+    {
+        $name = date('YmdHis') . substr(md5(microtime() . uniqid()), 0, 10);
+        return $extension ? $name . '.' . $extension : $name;
+    }
+
+    /**
+     * Generate a thumb-name.
+     *
+     * @param string $file
+     * @param int $width
+     * @param int $height
+     * @return string
+     */
+    public static function generateThumbName($file, $width, $height)
+    {
+        $fileName = pathinfo($file, PATHINFO_FILENAME);
+        return str_replace($fileName, $width . 'x' . $height . '_' . $fileName, $file);
+    }
+
+    /**
      * Create file from uploader (UploadedFile).
      *
      * @param UploadedFile $data
      * @param int $ownerType
-     * @param bool $saveFile Save temporary file.
+     * @param bool $saveAfterUpload Save the file immediately after upload.
+     * @param int $status Status a file. Unprotected or Protected.
      * @return File|bool
      */
-    public static function createFromUploader($data, $ownerType, $saveFile = false)
-    {
+    public static function createFromUploader(
+        $data,
+        $ownerId = null,
+        $ownerType,
+        $saveAfterUpload = false,
+        $status = self::STATUS_UNPROTECTED
+    ) {
         $fileInfo = pathinfo($data->name);
-
         $file = new self([
             'tmp' => true,
+            'owner_id' => $ownerId,
             'owner_type' => $ownerType,
             'size' => $data->size,
             'mime' => $data->type,
             'title' => $fileInfo['filename'],
-            'name' => self::generateName($fileInfo['extension'])
+            'name' => self::generateName($fileInfo['extension']),
+            'status' => $status
         ]);
 
-        if (FileHelper::createDirectory($file->dir(true))) {
-            if (move_uploaded_file($data->tempName, $file->path(true))) {
-                $file = $saveFile ? self::saveFile($file, $file->owner_type) : $file;
-                if ($file->save()) {
-                    return $file;
+        return $file->moveUploadedFile($data->tempName, $saveAfterUpload);
+    }
+
+    /**
+     * Create file from Url
+     *
+     * @param string $url
+     * @param int $ownerType
+     * @param bool $saveAfterUpload Save the file immediately after upload.
+     * @param int $status Status a file. Unprotected or Protected.
+     * @return File|bool
+     */
+    public static function createFromUrl(
+        $url,
+        $ownerId = null,
+        $ownerType,
+        $saveAfterUpload = false,
+        $status = self::STATUS_UNPROTECTED
+    ) {
+        $tmpFile = tempnam(sys_get_temp_dir(), 'file');
+        if ($tmpFileContent = @file_get_contents($url)) {
+            if (@file_put_contents($tmpFile, $tmpFileContent)) {
+                $fileInfo = pathinfo($url);
+                $file = new self([
+                    'tmp' => true,
+                    'owner_id' => $ownerId,
+                    'owner_type' => $ownerType,
+                    'size' => filesize($tmpFile),
+                    'mime' => FileHelper::getMimeType($tmpFile),
+                    'title' => $fileInfo['filename'],
+                    'name' => self::generateName($fileInfo['extension']),
+                    'status' => $status
+                ]);
+
+                return $file->renameUploadedFile($tmpFile, $saveAfterUpload);
+            }
+        }
+
+        return false;
+    }
+
+    private function moveUploadedFile($tempFile, $saveAfterUpload)
+    {
+        if (FileHelper::createDirectory($this->dir(true))) {
+            if (move_uploaded_file($tempFile, $this->path(true))) {
+                if ($saveAfterUpload) {
+                    $this->tmp = false;
+                    if ($this->save() && $this->saveFile()) {
+                        return $this;
+                    }
+                } else {
+                    if ($this->save()) {
+                        return $this;
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+
+    private function renameUploadedFile($tempFile, $saveAfterUpload)
+    {
+        if (FileHelper::createDirectory($this->dir(true))) {
+            if (rename($tempFile, $this->path(true))) {
+                if ($saveAfterUpload) {
+                    $this->tmp = false;
+                    if ($this->save() && $this->saveFile()) {
+                        return $this;
+                    }
+                } else {
+                    if ($this->save()) {
+                        return $this;
+                    }
                 }
             }
         }
@@ -220,38 +384,15 @@ class File extends BaseActive
     }
 
     /**
-     * Create file from Url
+     * Save file.
      *
-     * @param string $url
-     * @param int $ownerType
-     * @param bool $saveFile Save temporary file.
-     * @return File|bool
+     * @return bool
      */
-    public static function createFromUrl($url, $ownerType, $saveFile = false)
+    private function saveFile()
     {
-        $tmpFile = tempnam(sys_get_temp_dir(), 'file');
-
-        if ($tmpFileContent = @file_get_contents($url)) {
-            if (@file_put_contents($tmpFile, $tmpFileContent)) {
-                $fileInfo = pathinfo($url);
-
-                $file = new self([
-                    'tmp' => true,
-                    'owner_type' => $ownerType,
-                    'size' => filesize($tmpFile),
-                    'mime' => FileHelper::getMimeType($tmpFile),
-                    'title' => $fileInfo['filename'],
-                    'name' => self::generateName($fileInfo['extension'])
-                ]);
-
-                if (FileHelper::createDirectory($file->dir(true))) {
-                    if (rename($tmpFile, $file->path(true))) {
-                        $file = $saveFile ? self::saveFile($file, $file->owner_type) : $file;
-                        if ($file->save()) {
-                            return $file;
-                        }
-                    }
-                }
+        if (file_exists($this->pathTmp(true)) && FileHelper::createDirectory($this->dir(true))) {
+            if (rename($this->pathTmp(true), $this->path(true))) {
+                return true;
             }
         }
 
@@ -266,7 +407,7 @@ class File extends BaseActive
      * @param int $ownerType
      * @return bool
      */
-    public static function checkOwner($file, $ownerId, $ownerType)
+    private static function checkOwner($file, $ownerId, $ownerType)
     {
         $ownerType = $file->owner_type === $ownerType;
         $ownerId = $file->owner_id === $ownerId;
@@ -305,7 +446,7 @@ class File extends BaseActive
      * @param int $fileId
      * @return File|bool
      */
-    public static function bindSingle($ownerId, $ownerType, $fileId)
+    private static function bindSingle($ownerId, $ownerType, $fileId)
     {
         $file = $fileId ? static::findOne($fileId) : false;
 
@@ -314,9 +455,13 @@ class File extends BaseActive
             return false;
         }
 
-        // save tmp file
-        if ($file->tmp && $file = self::saveFile($file, $ownerId)) {
-            $file->updateAttributes(['tmp' => $file->tmp, 'owner_id' => $file->owner_id]);
+        // save a file
+        if ($file->tmp) {
+            $file->owner_id = $ownerId;
+            $file->tmp = false;
+            if ($file->saveFile()) {
+                $file->updateAttributes(['tmp' => $file->tmp, 'owner_id' => $file->owner_id]);
+            }
         } else {
             return false;
         }
@@ -332,6 +477,36 @@ class File extends BaseActive
         return $file;
     }
 
+    private static function bindMultiplePrepare($files)
+    {
+        $files = array_filter($files);
+        $files = array_combine(array_map(function ($a) {
+            return substr($a, 2);
+        }, array_keys($files)), $files);
+
+        return $files;
+    }
+
+    private static function bindMultipleFile($file, $ownerId, $files)
+    {
+        if ($file->tmp) {
+            $file->owner_id = $ownerId;
+            $file->tmp = false;
+            if (!$file->saveFile()) {
+                return false;
+            }
+        }
+
+        $file->updateAttributes([
+            'tmp'      => $file->tmp,
+            'owner_id' => $file->owner_id,
+            'title'    => @$files[$file->id],
+            'position' => @array_search($file->id, array_keys($files)) + 1
+        ]);
+
+        return true;
+    }
+
     /**
      * Binding files with owner.
      *
@@ -340,21 +515,11 @@ class File extends BaseActive
      * @param array $files
      * @return array|bool
      */
-    public static function bindMultiple($ownerId, $ownerType, $files)
+    private static function bindMultiple($ownerId, $ownerType, $files)
     {
-        // prepare files
-        $files = array_filter($files);
-        $files = array_combine(array_map(function ($a) {
-            return substr($a, 2);
-        }, array_keys($files)), $files);
-
-        // get new files
-        $newFiles = static::findAll(array_keys($files));
-        $newFiles = ArrayHelper::index($newFiles, 'id');
-
-        // get current files
-        $currentFiles = self::getByOwner($ownerId, $ownerType);
-        $currentFiles = ArrayHelper::index($currentFiles, 'id');
+        $files = self::bindMultiplePrepare($files);
+        $newFiles = ArrayHelper::index(static::findAll(array_keys($files)), 'id');
+        $currentFiles = ArrayHelper::index(self::getByOwner($ownerId, $ownerType), 'id');
 
         if (count($newFiles)) {
             foreach ($newFiles as $file) {
@@ -363,20 +528,8 @@ class File extends BaseActive
                     unset($newFiles[$file->id]);
                     continue;
                 }
-                // save tmp file
-                if ($file->tmp) {
-                    $file = self::saveFile($file, $ownerId);
-                    if (!$file) {
-                        return false;
-                    }
-                }
-
-                $file->updateAttributes([
-                    'tmp'      => $file->tmp,
-                    'owner_id' => $file->owner_id,
-                    'title'    => @$files[$file->id],
-                    'position' => @array_search($file->id, array_keys($files)) + 1
-                ]);
+                // save a file
+                self::bindMultipleFile($file, $ownerId, $files, $newFiles);
             }
 
             // delete unnecessary files
@@ -397,26 +550,6 @@ class File extends BaseActive
     }
 
     /**
-     * Save file.
-     *
-     * @param File $file
-     * @return File|bool
-     */
-    public static function saveFile($file, $ownerId)
-    {
-        $file->tmp = false;
-        $file->owner_id = $ownerId;
-
-        if (file_exists($file->pathTmp(true)) && FileHelper::createDirectory($file->dir(true))) {
-            if (rename($file->pathTmp(true), $file->path(true))) {
-                return $file;
-            }
-        }
-
-        return false;
-    }
-
-    /**
      * Resize.
      *
      * @param string $file
@@ -424,39 +557,36 @@ class File extends BaseActive
      * @param int $height
      * @param bool $ratio
      * @param bool $replace
+     * @param int $status Status a file. Unprotected or Protected.
      * @return string
      */
-    public static function resize($file, $width, $height, $ratio = false, $replace = false)
-    {
-        if (!file_exists(Yii::getAlias('@webroot') . $file)) {
+    public static function resize(
+        $file,
+        $width,
+        $height,
+        $ratio = false,
+        $replace = false,
+        $status = self::STATUS_UNPROTECTED
+    ) {
+        $fullPathToDir = self::getFullPathToDir($status);
+
+        if (!file_exists($fullPathToDir . $file)) {
             return $file;
         }
 
         if ($replace) {
             $thumb = $file;
         } else {
-            $fileName = pathinfo($file, PATHINFO_FILENAME);
-            $thumb = str_replace($fileName, $width . 'x' . $height . '_' . $fileName, $file);
-
-            if (file_exists(Yii::getAlias('@webroot') . $thumb)) {
+            $thumb = self::generateThumbName($file, $width, $height);
+            if (file_exists($fullPathToDir . $thumb)) {
                 return $thumb;
             }
         }
 
         $imagine = imagine\Image::getImagine();
-
-        try {
-            $image = $imagine->open(Yii::getAlias('@webroot') . $file);
-            $image = self::resizeMagic($image, $width, $height, $ratio);
-
-            $image->save(Yii::getAlias('@webroot') . $thumb, [
-                'jpeg_quality' => 100,
-                'png_compression_level' => 9
-            ]);
-
-        } catch (Exception $exception) {
-            return $file;
-        }
+        $image = $imagine->open($fullPathToDir . $file);
+        $image = self::resizeMagic($image, $width, $height, $ratio);
+        $image->save($fullPathToDir . $thumb, ['jpeg_quality' => 100, 'png_compression_level' => 9]);
 
         return $thumb;
     }
@@ -520,12 +650,7 @@ class File extends BaseActive
         $files = self::getByOwner($ownerId, $ownerType);
 
         foreach ($files as $file) {
-            $dir = $file->dir(true);
             $file->delete();
-        }
-
-        if (isset($dir) && !empty($dir)) {
-            FileHelper::removeDirectory($dir);
         }
     }
 
@@ -536,10 +661,7 @@ class File extends BaseActive
      */
     public function beforeDelete()
     {
-        if (file_exists($this->path(true))) {
-            return @unlink($this->path(true));
-        }
-
+        FileHelper::removeDirectory($this->dir(true));
         return true;
     }
 }
