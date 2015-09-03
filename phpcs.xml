@@ -1,13 +1,10 @@
 <?xml version="1.0"?>
 <ruleset name="PSR-MOD">
-
     <description>Based on PSR-2</description>
 
     <exclude-pattern>*/web/*</exclude-pattern>
     <exclude-pattern>*/views/*</exclude-pattern>
     <exclude-pattern>*/vendor/*</exclude-pattern>
-    <exclude-pattern>*/runtime/*</exclude-pattern>
-    <exclude-pattern>*/node_modules/*</exclude-pattern>
     <exclude-pattern>*/migrations/*</exclude-pattern>
     <exclude-pattern>*/messages/*</exclude-pattern>
     <exclude-pattern>*/mail/*</exclude-pattern>
