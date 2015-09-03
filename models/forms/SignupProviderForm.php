@@ -5,7 +5,7 @@ namespace app\models\forms;
 use Yii;
 use yii\helpers\ArrayHelper;
 use yii\base\InvalidParamException;
-use app\models\File;
+use rkit\filemanager\models\File;
 use app\models\User;
 use app\models\UserProfile;
 
@@ -125,7 +125,11 @@ class SignupProviderForm extends \yii\base\Model
                 $profile->load($this->profile, '');
 
                 if (!empty($profile->photo)) {
-                    $file = File::createFromUrl($profile->photo, null, File::OWNER_TYPE_USER_PHOTO);
+                    $file = File::createFromUrl(
+                        $profile->photo,
+                        null,
+                        Yii::$app->fileManager->getOwnerType('user_profile.photo')
+                    );
                     if ($file) {
                         $profile->photo = $file->id;
                     }

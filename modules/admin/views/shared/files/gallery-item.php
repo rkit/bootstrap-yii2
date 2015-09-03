@@ -1,5 +1,5 @@
 <?php
-use app\models\File;
+use rkit\filemanager\models\File;
 use yii\helpers\Html;
 ?>
 <li>

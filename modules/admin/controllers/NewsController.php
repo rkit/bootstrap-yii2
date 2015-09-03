@@ -49,7 +49,7 @@ class NewsController extends BaseController
                 'modelName' => 'app\models\News',
             ],
             'text-upload' => [
-                'class' => 'app\controllers\common\UploadAction',
+                'class' => 'rkit\filemanager\actions\UploadAction',
                 'modelName' => 'app\models\News',
                 'attribute' => 'text',
                 'inputName' => 'file',
@@ -58,14 +58,14 @@ class NewsController extends BaseController
                 'saveAfterUpload' => true
             ],
             'preview-upload' => [
-                'class'     => 'app\controllers\common\UploadAction',
+                'class'     => 'rkit\filemanager\actions\UploadAction',
                 'modelName' => 'app\models\News',
                 'attribute' => 'preview',
                 'inputName' => 'file',
                 'type'      => 'image',
             ],
             'gallery-upload' => [
-                'class'     => 'app\controllers\common\UploadAction',
+                'class'     => 'rkit\filemanager\actions\UploadAction',
                 'modelName' => 'app\models\News',
                 'attribute' => 'gallery',
                 'inputName' => 'file',

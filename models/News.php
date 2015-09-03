@@ -49,7 +49,7 @@ class News extends BaseActive
     public function rules()
     {
         return [
-            [['title'], 'trim'],
+            //[['title'], 'trim'],
             [['title', 'type_id', 'text', 'date_pub'], 'required'],
             [['title', 'type_id', 'text', 'date_pub', 'preview', 'gallery', 'reference', 'status', 'tagValues'], 'safe'],
 
@@ -126,10 +126,10 @@ class News extends BaseActive
             ],
 
             [
-                'class' => 'app\behaviors\FileBehavior',
+                'class' => 'rkit\filemanager\behaviors\FileBehavior',
                 'attributes' => [
                     'text' => [
-                        'ownerType' => File::OWNER_TYPE_NEWS_TEXT,
+                        'ownerType' => 'news.text',
                         'rules' => [
                             'mimeTypes' => ['image/png', 'image/jpg', 'image/jpeg'],
                             'extensions' => ['jpg', 'jpeg', 'png'],
@@ -138,7 +138,7 @@ class News extends BaseActive
                         ]
                     ],
                     'preview' => [
-                        'ownerType' => File::OWNER_TYPE_NEWS_PREVIEW,
+                        'ownerType' => 'news.preview',
                         'savePath' => true, // save 'path' in current model
                         'rules' => [
                             'imageSize' => ['minWidth' => 300, 'minHeight' => 300],
@@ -149,7 +149,7 @@ class News extends BaseActive
                         ]
                     ],
                     'gallery' => [
-                        'ownerType' => File::OWNER_TYPE_NEWS_GALLERY,
+                        'ownerType' => 'news.gallery',
                         'rules' => [
                             'imageSize' => ['minWidth' => 300, 'minHeight' => 300],
                             'mimeTypes' => ['image/png', 'image/jpg', 'image/jpeg'],

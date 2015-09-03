@@ -28,7 +28,7 @@ class UsersController extends BaseController
             ],
         ];
     }
-    
+
     public function actions()
     {
         return [
@@ -49,21 +49,21 @@ class UsersController extends BaseController
                 'modelName' => 'app\models\User',
             ],
             'photo-upload' => [
-                'class'     => 'app\controllers\common\UploadAction',
+                'class'     => 'rkit\filemanager\actions\UploadAction',
                 'modelName' => 'app\models\UserProfile',
-                'attribute' => 'photo', 
+                'attribute' => 'photo',
                 'inputName' => 'file',
                 'type'      => 'image',
             ],
         ];
     }
-        
-    public function actionIndex() 
+
+    public function actionIndex()
     {
         $userSearch = new UserSearch();
         $dataProvider = $userSearch->search(Yii::$app->request->get());
         $statuses = User::getStatuses();
-        
+
         return $this->render('index', [
             'userSearch' => $userSearch,
             'dataProvider' => $dataProvider,
@@ -79,29 +79,29 @@ class UsersController extends BaseController
         if ($id) {
             $model = $this->loadModel($model, $id);
         }
-        
+
         $model->scenario = 'admin-edit';
-        
+
         if (Yii::$app->request->isPost) {
             if ($model->isNewRecord) {
                 $model->setConfirmed();
             }
-            
+
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 $auth = Yii::$app->authManager;
                 $auth->revokeAll($model->id);
-                
+
                 if (!empty($model->role)) {
                     $role = $auth->getRole($model->role);
                     if ($role) {
                         $auth->assign($role, $model->id);
                     }
                 }
-                
+
                 Yii::$app->session->setFlash('success', Yii::t('app', 'Saved successfully'));
-                return $this->response(['redirect' => Url::toRoute(['edit', 'id' => $model->id])]);   
+                return $this->response(['redirect' => Url::toRoute(['edit', 'id' => $model->id])]);
             } else {
-                return $this->response(['errors' => $model->getErrors(), 'prefix' => 'user-']);            
+                return $this->response(['errors' => $model->getErrors(), 'prefix' => 'user-']);
             }
         }
 
@@ -110,17 +110,17 @@ class UsersController extends BaseController
             'roles' => Yii::$app->authManager->getRoles()
         ]);
     }
-    
+
     public function actionProfile($id)
     {
         $model = $this->loadModel(new UserProfile(), $id);
 
-        if (Yii::$app->request->isPost) { 
+        if (Yii::$app->request->isPost) {
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 Yii::$app->session->setFlash('success', Yii::t('app', 'Saved successfully'));
-                return $this->response(['redirect' => Url::toRoute(['profile', 'id' => $model->user_id])]);   
+                return $this->response(['redirect' => Url::toRoute(['profile', 'id' => $model->user_id])]);
             } else {
-                return $this->response(['errors' => $model->getErrors(), 'prefix' => 'user-profile-']);            
+                return $this->response(['errors' => $model->getErrors(), 'prefix' => 'user-profile-']);
             }
         }
 

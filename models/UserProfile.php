@@ -60,10 +60,10 @@ class UserProfile extends BaseActive
     {
         return [
             [
-                'class' => 'app\behaviors\FileBehavior',
+                'class' => 'rkit\filemanager\behaviors\FileBehavior',
                 'attributes' => [
                     'photo' => [
-                        'ownerType' => File::OWNER_TYPE_USER_PHOTO,
+                        'ownerType' => 'user_profile.photo',
                         'savePath' => true, // save 'path' in current model
                         'resize' => ['width' => 1000, 'height' => 1000, 'ratio' => true],
                         'rules' => [
