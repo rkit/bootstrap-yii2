@@ -5,16 +5,16 @@
 
 ## Advanced Application Template
 
-- Users: Roles / Registration / Basic and social authorization
-- Files: Upload / Crop / Gallery
-- Geo: Countries / Regions / Cities
+- Users, Roles, Registration, Basic and social authorization
+- Countries, Regions, Cities
 - Tags
 - Settings
-- Webpack for assets
+- [File Manager](https://github.com/rkit/filemanager-yii2)
+- [Webpack for assets](https://webpack.github.io/)
 
 Screenshots:
-[User List](https://cloud.githubusercontent.com/assets/4242765/5601755/2d9aad0c-9341-11e4-8ee2-ab5e02f90314.png),
-[User Form](https://cloud.githubusercontent.com/assets/4242765/5601756/2fb0cdb0-9341-11e4-8d25-6aca3bc9baf8.png)
+- [User List](https://cloud.githubusercontent.com/assets/4242765/5601755/2d9aad0c-9341-11e4-8ee2-ab5e02f90314.png),
+- [User Form](https://cloud.githubusercontent.com/assets/4242765/5601756/2fb0cdb0-9341-11e4-8d25-6aca3bc9baf8.png)
 
 ## Installation
 
@@ -48,9 +48,11 @@ Screenshots:
    php yii rbac/init
    ```
 
-#### Access to the Control Panel
+Access to the Control Panel
+```
 username: editor  
 password: fghfgh
+```
 
 ## Development
 

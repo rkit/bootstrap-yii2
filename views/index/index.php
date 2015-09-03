@@ -16,12 +16,12 @@ use yii\helpers\Html;
 
 <p class="lead">Advanced Application Template</p>
 <ul>
-  <li>Users: <span class="text-muted">Roles / Registration / Basic and social authorization</span></li>
-  <li>Files: <span class="text-muted">Upload / Crop / Gallery</span></li>
-  <li>Geo: <span class="text-muted">Countries / Regions / Cities</span></li>
+  <li>Users, Roles, Registration, Basic and social authorization</li>
+  <li>Countries, Regions, Cities</span></li>
   <li>Tags</li>
   <li>Settings</li>
-  <li>Webpack for assets</li>
+  <li><a href="https://github.com/rkit/filemanager-yii2">File Manager</a></li>
+  <li><a href="https://webpack.github.io/">Webpack for assets</a></li>
 </ul>
 
 <hr>
