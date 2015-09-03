@@ -9,18 +9,18 @@ var app = {
   ajaxSetup: function() {
     $.ajaxSetup({
       type: 'POST',
-      dataType: 'json'
+      dataType: 'json',
     });
 
-    $(document).ajaxSend(function(event, jqXHR, settings) {
+    $(document).ajaxSend(function() {
       nprogress.start();
     });
 
-    $(document).ajaxComplete(function(event, jqXHR, settings) {
+    $(document).ajaxComplete(function() {
       nprogress.done();
     });
 
-    $(document).ajaxError(function(event, jqxhr, settings, exception) {
+    $(document).ajaxError(function(event, jqxhr) {
       console.log(jqxhr.responseText);
     });
   },
@@ -43,14 +43,14 @@ var app = {
     });
 
     // Gridview: Ajax submit
-    $(document).on('click', '.gridview .submit', function(e) {
+    $(document).on('click', '.gridview .submit', function() {
       var _this = this;
       var $form = $(this).closest('form');
 
       $.post(
         $(_this).prop('href') ? $(_this).prop('href') : $form.prop('action'),
         $form.serialize() + '&' + $(_this).prop('name') + '=' + $(_this).val(),
-        function(data) {
+        function() {
           $(_this).closest('.gridview').yiiGridView('applyFilter');
           return false;
         }
@@ -126,7 +126,7 @@ var app = {
     $(document).on('click', '.remove-item', function() {
       $(this).closest($(this).data('remove-item')).remove();
     });
-  }
-}
+  },
+};
 
 module.exports = app;

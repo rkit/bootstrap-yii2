@@ -7,17 +7,17 @@ var app = {
   ajaxSetup: function() {
     $.ajaxSetup({
       type: 'POST',
-      dataType: 'json'
+      dataType: 'json',
     });
 
-    $(document).ajaxError(function(event, jqxhr, settings, exception) {
+    $(document).ajaxError(function(event, jqxhr) {
       console.log(jqxhr.responseText);
     });
   },
 
   binding: function() {
 
-  }
-}
+  },
+};
 
 module.exports = app;

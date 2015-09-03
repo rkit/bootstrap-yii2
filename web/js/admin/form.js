@@ -7,11 +7,11 @@ require('jquery-form');
 
 var form = {
   ALERT_WARNING: 'warning',
-  ALERT_DANGER:  'danger',
-  ALERT_INFO:    'info',
+  ALERT_DANGER: 'danger',
+  ALERT_INFO: 'info',
 
   init: function() {
-    $('.form').on('click', ':submit', function(e) {
+    $('.form').on('click', ':submit', function() {
       $(this).addClass('submitted');
     });
 
@@ -20,11 +20,11 @@ var form = {
       beforeSubmit: form.beforeSubmit,
       complete: form.complete,
       error: form.error,
-      success: form.success
+      success: form.success,
     });
   },
 
-  beforeSubmit: function(formData, $form, options) {
+  beforeSubmit: function(formData, $form) {
     $form
       .find(':submit').prop('disabled', true).end()
       .find('.submitted').button('loading').end()
@@ -41,7 +41,7 @@ var form = {
   },
 
   error: function(data, statusText, xhr, $form) {
-    if (data.status != 302) {
+    if (data.status !== 302) {
       form.alert(
         $form,
         'Извините, попробуйте позже',
@@ -85,9 +85,9 @@ var form = {
     $field.addClass('has-error');
   },
 
-  clearErrors: function(form) {
-    $(form).find('.has-error .help-block').empty();
-    $(form).find('.has-error').removeClass('has-error');
+  clearErrors: function(el) {
+    $(el).find('.has-error .help-block').empty();
+    $(el).find('.has-error').removeClass('has-error');
   },
 
   clearError: function(fieldId) {
@@ -104,7 +104,7 @@ var form = {
       .html('<h4>' + text + '</h4><p>' + description + '</p>')
       .insertBefore($form.find('.form-controls'))
       .fadeIn(100);
-  }
-}
+  },
+};
 
 module.exports = form;
