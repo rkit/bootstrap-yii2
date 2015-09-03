@@ -1,5 +1,4 @@
-Bootstrap for Yii2
-========
+# Bootstrap for Yii2
 
 [![Build Status](https://img.shields.io/travis/rkit/bootstrap-yii2/master.svg?style=flat-square)](https://travis-ci.org/rkit/bootstrap-yii2)
 [![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/rkit/bootstrap-yii2/master.svg?style=flat-square)](https://scrutinizer-ci.com/g/rkit/bootstrap-yii2/?branch=master)
@@ -71,6 +70,7 @@ password: fghfgh
   ```
 
 - [Tests](tests/)
-- [PHP Coding Style Guide](http://www.php-fig.org/psr/psr-2)
 
-- [JS Coding Style Guide](https://github.com/airbnb/javascript)
+- [PHP Coding Style](/phpcs.xml)
+
+- [JS Coding Style](/.eslintrc)
