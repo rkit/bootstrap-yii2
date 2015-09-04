@@ -6,6 +6,7 @@ use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
 
 /**
  * Global base controller.
@@ -26,7 +27,7 @@ class BaseController extends Controller
      */
     public function getCssBundle()
     {
-        return '/assets/' . Yii::$app->params['assets'][$this->cssBundle];
+        return '/assets/' . ArrayHelper::getValue(Yii::$app->params['assets'], $this->cssBundle);
     }
 
     /**
@@ -34,7 +35,7 @@ class BaseController extends Controller
      */
     public function getJsBundle()
     {
-        return '/assets/' . Yii::$app->params['assets'][$this->jsBundle];
+        return '/assets/' . ArrayHelper::getValue(Yii::$app->params['assets'], $this->jsBundle);
     }
 
     /**
