@@ -22,6 +22,7 @@ before_script:
   - cd tests
   - php codeception/bin/yii migrate --migrationPath=@yii/rbac/migrations/ --interactive=0
   - php codeception/bin/yii migrate --interactive=0
+  - php codeception/bin/yii migrate --migrationPath=@vendor/rkit/filemanager/migrations/ --interactive=0
   - php codeception/bin/yii rbac/init
   - codecept build
 script:
