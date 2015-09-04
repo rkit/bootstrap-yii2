@@ -32,6 +32,7 @@ After creating the basic application, follow these steps to prepare for the test
    ```
    php codeception/bin/yii migrate --migrationPath=@yii/rbac/migrations/
    php codeception/bin/yii migrate
+   php codeception/bin/yii migrate --migrationPath=@vendor/rkit/filemanager-yii2/migrations/ --interactive=0
    php codeception/bin/yii rbac/init
    ```
 
