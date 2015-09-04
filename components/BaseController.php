@@ -20,23 +20,23 @@ class BaseController extends Controller
      * @var string Path to css bundle.
      */
     public $cssBundle = 'front.css';
-    
+
     /**
      * @return string Return CSS bundle.
      */
     public function getCssBundle()
     {
-        return '/assets/' . Yii::$app->params['assets.hash'] . '/' . $this->cssBundle;
+        return '/assets/' . Yii::$app->params['assets'][$this->cssBundle];
     }
-    
+
     /**
      * @return string Return JS bundle.
      */
     public function getJsBundle()
     {
-        return '/assets/' . Yii::$app->params['assets.hash'] . '/' . $this->jsBundle;
+        return '/assets/' . Yii::$app->params['assets'][$this->jsBundle];
     }
-    
+
     /**
      * Load the model based on its primary key value.
      * If the model is not found or access denied, a 404 HTTP exception will be thrown.
@@ -49,11 +49,11 @@ class BaseController extends Controller
     public function loadModel($model, $id, $ownerCheck = false)
     {
         $model = $model::findOne($id);
-        
+
         if ($model === null || ($ownerCheck && !$model->isOwner())) {
             return $this->pageNotFound();
         }
-        
+
         return $model;
     }
 
@@ -69,7 +69,7 @@ class BaseController extends Controller
         Yii::$app->getSession()->setFlash($type, $message);
         return $url ? $this->redirect($url) : $this->goHome();
     }
-    
+
     /**
      * JSON Response.
      *
@@ -80,7 +80,7 @@ class BaseController extends Controller
         \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
         return $data;
     }
-    
+
     /**
      * Echo and exit.
      *
@@ -91,7 +91,7 @@ class BaseController extends Controller
         echo $data;
         Yii::$app->end();
     }
-    
+
     /**
      * Triggers a 404 (Page Not Found) error.
      *
@@ -117,7 +117,7 @@ class BaseController extends Controller
     /**
      * Triggers a 400 (Bad Request) error.
      *
-     * @param string $msg 
+     * @param string $msg
      * @throws CHttpException when invoked.
      */
     public function badRequest($msg = null)

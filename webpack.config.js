@@ -1,19 +1,18 @@
 var path = require('path');
-var fs = require('fs');
 var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var BowerWebpackPlugin = require('bower-webpack-plugin');
-var assetsDir = path.join(__dirname, './web/assets');
+var ManifestPlugin = require('webpack-manifest-plugin');
 
 module.exports = {
   entry: {
     admin: './web/js/admin',
-    front: './web/js/front'
+    front: './web/js/front',
   },
 
   output: {
-    path: assetsDir + '/bundles',
-    filename: '[name].js'
+    path: path.join(__dirname, 'web/assets'),
+    filename: '[name].[chunkhash].js',
   },
 
   module: {
@@ -29,38 +28,24 @@ module.exports = {
     ],
 
     noParse: [
-      /\.min\.js/
-    ]
+      /\.min\.js/,
+    ],
   },
 
   plugins: [
-    new ExtractTextPlugin('[name].css'),
     new BowerWebpackPlugin({
       modulesDirectories: ['./vendor/bower'],
       manifestFiles: ['bower.json', '.bower.json'],
       includes: /.*/,
-      excludes: /.*\.less$/
+      excludes: /.*\.less$/,
     }),
     new webpack.ProvidePlugin({
       $: 'jquery',
-      jQuery: 'jquery'
+      jQuery: 'jquery',
     }),
+    new ExtractTextPlugin('[name].[chunkhash].css'),
+    new ManifestPlugin(),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurenceOrderPlugin(),
-
-    function() {
-      this.plugin('done', function(stats) {
-        var hash = stats.toJson().hash;
-        fs.exists(assetsDir + '/' + hash, function(exist) {
-          if (!exist) {
-            fs.symlink('./bundles', assetsDir  + '/' + hash, 'dir');
-            fs.writeFileSync(assetsDir + '/hash', hash);
-          }
-        });
-      });
-
-    }
-
-  ]
-
+  ],
 };

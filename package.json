@@ -1,16 +1,17 @@
 {
   "private": true,
   "devDependencies": {
-    "webpack": "^1.8.11",
-    "file-loader": "^0.8.1",
-    "css-loader": "^0.9.1",
-    "style-loader": "^0.8.3",
-    "bower-webpack-plugin": "^0.1.6",
-    "extract-text-webpack-plugin": "^0.3.8",
+    "babel-eslint": "^4.1.1",
     "bower": "^1.4.1",
+    "bower-webpack-plugin": "^0.1.6",
+    "css-loader": "^0.9.1",
     "eslint": "^1.0.0",
     "eslint-config-airbnb": "^0.0.8",
-    "babel-eslint": "^4.1.1"
+    "extract-text-webpack-plugin": "^0.3.8",
+    "file-loader": "^0.8.1",
+    "style-loader": "^0.8.3",
+    "webpack": "^1.8.11",
+    "webpack-manifest-plugin": "^0.4.0"
   },
   "scripts": {
     "bower-install": "bower install",
