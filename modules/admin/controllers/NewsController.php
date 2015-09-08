@@ -71,7 +71,7 @@ class NewsController extends BaseController
                 'inputName' => 'file',
                 'type'      => 'image',
                 'multiple'  => true,
-                'template'  => '/shared/files/gallery-item',
+                'template'  => Yii::getAlias('@app/modules/admin/views/shared/files/gallery-item.php'),
             ],
         ];
     }

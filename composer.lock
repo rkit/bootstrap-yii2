@@ -682,21 +682,25 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/rkit/filemanager-yii2.git",
-                "reference": "50aa3971a62305c5839f19ac4a208b96392f6886"
+                "reference": "0f0c898865b896353429690ee2fd9e792ce1ffe4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rkit/filemanager-yii2/zipball/50aa3971a62305c5839f19ac4a208b96392f6886",
-                "reference": "50aa3971a62305c5839f19ac4a208b96392f6886",
+                "url": "https://api.github.com/repos/rkit/filemanager-yii2/zipball/0f0c898865b896353429690ee2fd9e792ce1ffe4",
+                "reference": "0f0c898865b896353429690ee2fd9e792ce1ffe4",
                 "shasum": ""
             },
             "require": {
                 "yiisoft/yii2-imagine": "~2.0.3"
             },
+            "require-dev": {
+                "phpunit/dbunit": "^1.4",
+                "phpunit/phpunit": "^4.8"
+            },
             "type": "yii2-extension",
             "autoload": {
                 "psr-4": {
-                    "rkit\\filemanager\\": ""
+                    "rkit\\filemanager\\": "src"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -720,7 +724,7 @@
                 "upload",
                 "yii2"
             ],
-            "time": "2015-09-03 06:06:45"
+            "time": "2015-09-08 09:43:29"
         },
         {
             "name": "rubaxa/fileapi",
