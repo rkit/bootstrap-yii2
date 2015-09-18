@@ -1,6 +1,6 @@
 # Tests
 
-1. Create `bootstrap_yii2_tests` and run
+1. Create `bootstrap_yii2_tests` database and run
 
    ```
    composer test-prepare
