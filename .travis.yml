@@ -9,21 +9,18 @@ cache:
   directories:
     - vendor
     - $HOME/.composer/cache
+
 install:
   - composer self-update
   - composer global require "fxp/composer-asset-plugin:~1.0"
-  - composer install --prefer-dist --dev
-  - composer global require "codeception/codeception=2.0.*" "codeception/specify=*" "codeception/verify=*"
-  - export PATH="$HOME/.composer/vendor/bin:$PATH"
+  - composer install
+
 before_script:
   - chmod -R a+w runtime
   - mysql -e 'create database bootstrap_yii2_tests;'
   - php yii create-local-config/init
-  - cd tests
-  - php codeception/bin/yii migrate --migrationPath=@yii/rbac/migrations/ --interactive=0
-  - php codeception/bin/yii migrate --interactive=0
-  - php codeception/bin/yii migrate --migrationPath=@vendor/rkit/filemanager-yii2/src/migrations/ --interactive=0
-  - php codeception/bin/yii rbac/init
-  - codecept build
+  - composer test-prepare
+  - composer test-build
+
 script:
-  - codecept run
+  - composer test
