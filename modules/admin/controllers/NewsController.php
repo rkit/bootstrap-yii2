@@ -53,7 +53,6 @@ class NewsController extends BaseController
                 'modelName' => 'app\models\News',
                 'attribute' => 'text',
                 'inputName' => 'file',
-                'type' => 'image',
                 'resultName' => 'filelink',
                 'saveAfterUpload' => true
             ],
@@ -62,14 +61,12 @@ class NewsController extends BaseController
                 'modelName' => 'app\models\News',
                 'attribute' => 'preview',
                 'inputName' => 'file',
-                'type'      => 'image',
             ],
             'gallery-upload' => [
                 'class'     => 'rkit\filemanager\actions\UploadAction',
                 'modelName' => 'app\models\News',
                 'attribute' => 'gallery',
                 'inputName' => 'file',
-                'type'      => 'image',
                 'multiple'  => true,
                 'template'  => Yii::getAlias('@app/modules/admin/views/shared/files/gallery-item.php'),
             ],

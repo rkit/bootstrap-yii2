@@ -118,14 +118,14 @@ $config = [
         ],
         'fileManager' => [
             'class' => 'rkit\filemanager\FileManager',
-            'uploadDirProtected' => '@runtime',
+            'uploadDirProtected' => '@app/runtime',
             'uploadDirUnprotected' => '@app/web',
-            'publicPath' => 'uploads/files',
+            'publicPath' => 'uploads',
             'ownerTypes' => [
                 'news.text' => 1,
                 'news.preview' => 2,
                 'news.gallery' => 3,
-                'user_profile.photo' => 4
+                'user_profile.photo' => 4,
             ]
         ]
     ],
@@ -137,7 +137,7 @@ require_once __DIR__ . '/local/config.php';
 /* Maintenance mode
 -------------------------------------------------- */
 
-if (file_exists($config['basePath'].'/runtime/maintenance')) {
+if (file_exists($config['basePath'] . '/runtime/maintenance')) {
     if (!in_array($_SERVER['REMOTE_ADDR'], $allowedIPs)) {
         $config['catchAll'] = ['index/maintenance'];
     }

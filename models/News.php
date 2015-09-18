@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use Intervention\Image\ImageManagerStatic as Image;
 use app\components\BaseActive;
 use app\helpers\Util;
 use yii\behaviors\TimestampBehavior;
@@ -51,7 +52,8 @@ class News extends BaseActive
         return [
             //[['title'], 'trim'],
             [['title', 'type_id', 'text', 'date_pub'], 'required'],
-            [['title', 'type_id', 'text', 'date_pub', 'preview', 'gallery', 'reference', 'status', 'tagValues'], 'safe'],
+            [['title', 'type_id', 'text', 'date_pub',
+            'preview', 'gallery', 'reference', 'status', 'tagValues'], 'safe'],
 
             ['type_id', 'integer'],
             ['type_id', 'exist', 'targetClass' => NewsType::className(), 'targetAttribute' => ['type_id' => 'id']],
@@ -129,7 +131,6 @@ class News extends BaseActive
                 'class' => 'rkit\filemanager\behaviors\FileBehavior',
                 'attributes' => [
                     'text' => [
-                        'ownerType' => 'news.text',
                         'rules' => [
                             'mimeTypes' => ['image/png', 'image/jpg', 'image/jpeg'],
                             'extensions' => ['jpg', 'jpeg', 'png'],
@@ -138,25 +139,46 @@ class News extends BaseActive
                         ]
                     ],
                     'preview' => [
-                        'ownerType' => 'news.preview',
-                        'savePath' => true, // save 'path' in current model
+                        'saveFilePath' => true,
                         'rules' => [
                             'imageSize' => ['minWidth' => 300, 'minHeight' => 300],
                             'mimeTypes' => ['image/png', 'image/jpg', 'image/jpeg'],
                             'extensions' => ['jpg', 'jpeg', 'png'],
                             'maxSize' => 1024 * 1024 * 1, // 1 MB
                             'tooBig' => Yii::t('app', 'File size must not exceed') . ' 1Mb'
-                        ]
+                        ],
+                        'preset' => [
+                            '200x200' => function ($realPath, $publicPath, $thumbPath) {
+                                Image::make($realPath . $publicPath)
+                                    ->fit(200, 200)
+                                    ->save($realPath . $thumbPath, 100);
+                            },
+                            '1000x1000' => function ($realPath, $publicPath, $thumbPath) {
+                                Image::make($realPath . $publicPath)
+                                    ->resize(1000, 1000, function ($constraint) {
+                                        $constraint->aspectRatio();
+                                        $constraint->upsize();
+                                    })
+                                    ->save(null, 100);
+                            },
+                        ],
+                        'applyPresetAfterUpload' => '*'
                     ],
                     'gallery' => [
-                        'ownerType' => 'news.gallery',
                         'rules' => [
                             'imageSize' => ['minWidth' => 300, 'minHeight' => 300],
                             'mimeTypes' => ['image/png', 'image/jpg', 'image/jpeg'],
                             'extensions' => ['jpg', 'jpeg', 'png'],
                             'maxSize' => 1024 * 1024 * 1, // 1 MB
                             'tooBig' => Yii::t('app', 'File size must not exceed') . ' 1Mb'
-                        ]
+                        ],
+                        'preset' => [
+                            '80x80' => function ($realPath, $publicPath, $thumbPath) {
+                                Image::make($realPath . $publicPath)
+                                    ->fit(80, 80)
+                                    ->save($realPath . $thumbPath, 100);
+                            },
+                        ],
                     ]
                 ]
             ]

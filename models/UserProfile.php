@@ -4,6 +4,7 @@ namespace app\models;
 
 use Yii;
 use app\components\BaseActive;
+use Intervention\Image\ImageManagerStatic as Image;
 
 /**
  * This is the model class for table "user_profile".
@@ -63,16 +64,25 @@ class UserProfile extends BaseActive
                 'class' => 'rkit\filemanager\behaviors\FileBehavior',
                 'attributes' => [
                     'photo' => [
-                        'ownerType' => 'user_profile.photo',
-                        'savePath' => true, // save 'path' in current model
-                        'resize' => ['width' => 1000, 'height' => 1000, 'ratio' => true],
+                        'saveFilePath' => true,
                         'rules' => [
                             'imageSize' => ['minWidth' => 300, 'minHeight' => 300],
                             'mimeTypes' => ['image/png', 'image/jpg', 'image/jpeg'],
                             'extensions' => ['jpg', 'jpeg', 'png'],
                             'maxSize' => 1024 * 1024 * 1, // 1 MB
                             'tooBig' => Yii::t('app', 'File size must not exceed') . ' 1Mb'
-                        ]
+                        ],
+                        'preset' => [
+                            '1000x1000' => function ($realPath, $publicPath, $thumbPath) {
+                                Image::make($realPath . $publicPath)
+                                    ->resize(1000, 1000, function ($constraint) {
+                                        $constraint->aspectRatio();
+                                        $constraint->upsize();
+                                    })
+                                    ->save(null, 100);
+                            },
+                        ],
+                        'applyPresetAfterUpload' => ['1000x1000']
                     ],
                 ]
             ]
