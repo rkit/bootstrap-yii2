@@ -72,8 +72,6 @@ password: fghfgh
   npm run build
   ```
 
-- [Tests](tests/)
-
 - [PHP Coding Style](/phpcs.xml)
 
 - [JS Coding Style](/.eslintrc)
