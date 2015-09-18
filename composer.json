@@ -37,7 +37,10 @@
         "yiisoft/yii2-codeception": "^2.0.4",
         "yiisoft/yii2-debug": "^2.0.4",
         "yiisoft/yii2-gii": "^2.0.4",
-        "yiisoft/yii2-faker": "^2.0.3"
+        "yiisoft/yii2-faker": "^2.0.3",
+        "codeception/codeception": "*",
+        "codeception/specify": "*",
+        "codeception/verify": "*"
     },
     "config": {
         "process-timeout": 1800
@@ -45,7 +48,15 @@
     "scripts": {
         "post-create-project-cmd": [
             "yii\\composer\\Installer::postCreateProject"
-        ]
+        ],
+        "test-prepare": [
+            "php tests/codeception/bin/yii migrate --migrationPath=@yii/rbac/migrations/ --interactive=0",
+            "php tests/codeception/bin/yii migrate --migrationPath=@vendor/rkit/filemanager-yii2/src/migrations/ --interactive=0",
+            "php tests/codeception/bin/yii migrate --interactive=0",
+            "php tests/codeception/bin/yii rbac/init"
+        ],
+        "test-build": "cd tests && codecept build",
+        "test": "cd tests && codecept run"
     },
     "extra": {
         "yii\\composer\\Installer::postCreateProject": {

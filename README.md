@@ -42,8 +42,8 @@ Screenshots:
    npm install
    npm run bower-install
    npm run build
-   php yii migrate --migrationPath=@yii/log/migrations/
-   php yii migrate --migrationPath=@yii/rbac/migrations/
+   php yii migrate --migrationPath=@yii/log/migrations/ --interactive=0
+   php yii migrate --migrationPath=@yii/rbac/migrations/ --interactive=0
    php yii migrate --migrationPath=@vendor/rkit/filemanager-yii2/src/migrations/ --interactive=0
    php yii migrate/up
    php yii rbac/init

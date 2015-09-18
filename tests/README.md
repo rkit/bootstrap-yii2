@@ -1,58 +1,19 @@
-This directory contains various tests for the basic application.
+# Tests
 
-Tests in `codeception` directory are developed with [Codeception PHP Testing Framework](http://codeception.com/).
-
-After creating the basic application, follow these steps to prepare for the tests:
-
-1. Install Codeception if it's not yet installed:
+1. Create `bootstrap_yii2_tests` and run
 
    ```
-   composer global require "codeception/codeception=2.0.*"
-   composer global require "codeception/specify=*"
-   composer global require "codeception/verify=*"
+   composer test-prepare
    ```
 
-   If you've never used Composer for global packages run `composer global status`. It should output:
+2. Run build tests
 
    ```
-   Changed current directory to <directory>
+   composer test-build
    ```
 
-   Then add `<directory>/vendor/bin` to you `PATH` environment variable. Now we're able to use `codecept` from command
-   line globally.
-
-2. Install faker extension by running the following from template root directory where `composer.json` is:
+3. Run tests
 
    ```
-   composer require --dev yiisoft/yii2-faker:*
+   composer test
    ```
-
-3. Create `bootstrap_yii2_tests` database and update it by applying migrations:
-
-   ```
-   php codeception/bin/yii migrate --migrationPath=@yii/rbac/migrations/
-   php codeception/bin/yii migrate --migrationPath=@vendor/rkit/filemanager-yii2/src/migrations/ --interactive=0
-   php codeception/bin/yii migrate
-   php codeception/bin/yii rbac/init
-   ```
-
-4. Build the test suites:
-
-   ```
-   codecept build
-   ```
-
-5. Now you can run the tests with the following commands:
-
-   ```
-   codecept run
-   ```
-
-Code coverage support
----------------------
-
-```
-codecept run functional,unit --coverage-html --coverage-xml
-```
-
-You can see code coverage output under the `tests/_output` directory.
