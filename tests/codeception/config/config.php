@@ -7,7 +7,7 @@ return [
     'language' => 'en',
     'components' => [
         'db' => [
-            'dsn' => 'mysql:host=192.168.59.103;dbname=bootstrap_yii2_tests',
+            'dsn' => 'mysql:host=127.0.0.1;dbname=bootstrap_yii2_tests',
         ],
         'mailer' => [
             'useFileTransport' => true,
