@@ -18,12 +18,7 @@ namespace :deploy do
   task :prepare do
     on roles(:all) do
         within release_path do
-          execute :composer, "install"
-          execute :npm, "install"
-          execute :npm, "run bower-install"
-          execute :npm, "run build"
-          execute :php, "yii migrate/up --interactive=0"
-          execute :php, "yii rbac/init"
+          # …
         end
     end
   end
