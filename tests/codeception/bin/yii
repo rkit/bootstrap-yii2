@@ -10,9 +10,12 @@
 
 require_once __DIR__ . '/_bootstrap.php';
 
+$baseConfig = require YII_APP_BASE_PATH . '/config/console.php';
+$baseConfig['components']['db']['dsn'] .= '_tests';
+
 $config = yii\helpers\ArrayHelper::merge(
-    require(YII_APP_BASE_PATH . '/config/console.php'),
-    require(__DIR__ . '/../config/config.php'),
+    $baseConfig,
+    require __DIR__ . '/../config/config.php',
     [
         'controllerMap' => [
             'fixture' => [
