@@ -800,12 +800,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/rkit/filemanager-yii2.git",
-                "reference": "6a226b937608bf0a0a2297163655de9cd1591aa0"
+                "reference": "dcee7638b7810f9000fe179d6149bab4f99f1d1a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rkit/filemanager-yii2/zipball/6a226b937608bf0a0a2297163655de9cd1591aa0",
-                "reference": "6a226b937608bf0a0a2297163655de9cd1591aa0",
+                "url": "https://api.github.com/repos/rkit/filemanager-yii2/zipball/dcee7638b7810f9000fe179d6149bab4f99f1d1a",
+                "reference": "dcee7638b7810f9000fe179d6149bab4f99f1d1a",
                 "shasum": ""
             },
             "require": {
@@ -843,7 +843,7 @@
                 "upload",
                 "yii2"
             ],
-            "time": "2015-09-18 10:23:59"
+            "time": "2015-09-20 09:56:54"
         },
         {
             "name": "rubaxa/fileapi",
