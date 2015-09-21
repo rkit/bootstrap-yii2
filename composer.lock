@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "79ba787384d12b22c880f71daaa09714",
-    "content-hash": "252685d739d172267a74d73de80f62f4",
+    "hash": "eebdcedc4647d5074b4bd26dda23fb98",
+    "content-hash": "ba3161a9bd55af34b3fa73053cfa25ed",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -796,16 +796,16 @@
         },
         {
             "name": "rkit/filemanager-yii2",
-            "version": "dev-master",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rkit/filemanager-yii2.git",
-                "reference": "dcee7638b7810f9000fe179d6149bab4f99f1d1a"
+                "reference": "118f5b7e82047b8483fb6a9d756ec030c8345e15"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rkit/filemanager-yii2/zipball/dcee7638b7810f9000fe179d6149bab4f99f1d1a",
-                "reference": "dcee7638b7810f9000fe179d6149bab4f99f1d1a",
+                "url": "https://api.github.com/repos/rkit/filemanager-yii2/zipball/118f5b7e82047b8483fb6a9d756ec030c8345e15",
+                "reference": "118f5b7e82047b8483fb6a9d756ec030c8345e15",
                 "shasum": ""
             },
             "require": {
@@ -843,7 +843,7 @@
                 "upload",
                 "yii2"
             ],
-            "time": "2015-09-20 09:56:54"
+            "time": "2015-09-21 10:18:52"
         },
         {
             "name": "rubaxa/fileapi",
@@ -3352,9 +3352,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "rkit/filemanager-yii2": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
