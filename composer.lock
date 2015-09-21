@@ -4,21 +4,21 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "eebdcedc4647d5074b4bd26dda23fb98",
-    "content-hash": "ba3161a9bd55af34b3fa73053cfa25ed",
+    "hash": "2b638cce7cafa7821397a46884075f5a",
+    "content-hash": "4cb64e5c25d5ff0db994fde7cca53b6f",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
-            "version": "v3.3.4",
+            "version": "v3.3.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twbs/bootstrap.git",
-                "reference": "a10eb60bc0b07b747fa0c4ebd8821eb7307bd07f"
+                "reference": "16b48259a62f576e52c903c476bd42b90ab22482"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/a10eb60bc0b07b747fa0c4ebd8821eb7307bd07f",
-                "reference": "a10eb60bc0b07b747fa0c4ebd8821eb7307bd07f",
+                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/16b48259a62f576e52c903c476bd42b90ab22482",
+                "reference": "16b48259a62f576e52c903c476bd42b90ab22482",
                 "shasum": ""
             },
             "require": {
@@ -28,13 +28,7 @@
             "extra": {
                 "bower-asset-main": [
                     "less/bootstrap.less",
-                    "dist/css/bootstrap.css",
-                    "dist/js/bootstrap.js",
-                    "dist/fonts/glyphicons-halflings-regular.eot",
-                    "dist/fonts/glyphicons-halflings-regular.svg",
-                    "dist/fonts/glyphicons-halflings-regular.ttf",
-                    "dist/fonts/glyphicons-halflings-regular.woff",
-                    "dist/fonts/glyphicons-halflings-regular.woff2"
+                    "dist/js/bootstrap.js"
                 ],
                 "bower-asset-ignore": [
                     "/.*",
@@ -47,6 +41,9 @@
                     "test-infra"
                 ]
             },
+            "license": [
+                "MIT"
+            ],
             "description": "The most popular front-end framework for developing responsive, mobile first projects on the web.",
             "keywords": [
                 "css",
@@ -601,20 +598,20 @@
         },
         {
             "name": "kartik-v/yii2-widget-datepicker",
-            "version": "v1.3.2",
+            "version": "v1.3.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-widget-datepicker.git",
-                "reference": "3fb31048bb70ebddf94a827aec77779835305629"
+                "reference": "368b181ef658c05707fe41dd16eee4d9ffd9da38"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-widget-datepicker/zipball/3fb31048bb70ebddf94a827aec77779835305629",
-                "reference": "3fb31048bb70ebddf94a827aec77779835305629",
+                "url": "https://api.github.com/repos/kartik-v/yii2-widget-datepicker/zipball/368b181ef658c05707fe41dd16eee4d9ffd9da38",
+                "reference": "368b181ef658c05707fe41dd16eee4d9ffd9da38",
                 "shasum": ""
             },
             "require": {
-                "kartik-v/yii2-krajee-base": "*"
+                "kartik-v/yii2-krajee-base": "~1.7"
             },
             "type": "yii2-extension",
             "autoload": {
@@ -624,7 +621,7 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "BSD 3-Clause"
+                "BSD-3-Clause"
             ],
             "authors": [
                 {
@@ -646,7 +643,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2015-03-02 13:03:59"
+            "time": "2015-07-19 04:49:03"
         },
         {
             "name": "kartik-v/yii2-widget-datetimepicker",
@@ -847,16 +844,16 @@
         },
         {
             "name": "rubaxa/fileapi",
-            "version": "0.4.7",
+            "version": "0.4.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/RubaXa/jquery.fileapi.git",
-                "reference": "99f914fbe7060859436f1bbc1cf2d81e1ac15cb5"
+                "reference": "5fc1013e103bb0931f5fbd18f15a9194ddf573d4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/RubaXa/jquery.fileapi/zipball/99f914fbe7060859436f1bbc1cf2d81e1ac15cb5",
-                "reference": "99f914fbe7060859436f1bbc1cf2d81e1ac15cb5",
+                "url": "https://api.github.com/repos/RubaXa/jquery.fileapi/zipball/5fc1013e103bb0931f5fbd18f15a9194ddf573d4",
+                "reference": "5fc1013e103bb0931f5fbd18f15a9194ddf573d4",
                 "shasum": ""
             },
             "type": "library",
@@ -879,7 +876,7 @@
                 "multiupload",
                 "upload"
             ],
-            "time": "2014-10-29 09:15:36"
+            "time": "2015-09-11 15:56:14"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -936,16 +933,16 @@
         },
         {
             "name": "vova07/yii2-imperavi-widget",
-            "version": "1.2.2",
+            "version": "1.2.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vova07/yii2-imperavi-widget.git",
-                "reference": "d51f5708f123984cb16644c944fdfeb49de45a2d"
+                "reference": "afb59bff9a4ce18f5ecd144cf1fe224bf939ec15"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vova07/yii2-imperavi-widget/zipball/d51f5708f123984cb16644c944fdfeb49de45a2d",
-                "reference": "d51f5708f123984cb16644c944fdfeb49de45a2d",
+                "url": "https://api.github.com/repos/vova07/yii2-imperavi-widget/zipball/afb59bff9a4ce18f5ecd144cf1fe224bf939ec15",
+                "reference": "afb59bff9a4ce18f5ecd144cf1fe224bf939ec15",
                 "shasum": ""
             },
             "require": {
@@ -994,7 +991,7 @@
                 "yii 2",
                 "yii2"
             ],
-            "time": "2015-04-03 08:07:30"
+            "time": "2015-08-21 11:36:17"
         },
         {
             "name": "yiisoft/yii2",
