@@ -6,11 +6,6 @@ php:
 
 sudo: false
 
-cache:
-  directories:
-    - vendor
-    - $HOME/.composer/cache
-
 install:
   - composer self-update
   - composer global require "fxp/composer-asset-plugin:~1.0"
