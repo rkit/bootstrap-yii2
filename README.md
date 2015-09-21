@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/rkit/bootstrap-yii2.svg?branch=master)](https://travis-ci.org/rkit/bootstrap-yii2)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/rkit/bootstrap-yii2/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/rkit/bootstrap-yii2/?branch=master)
 
-## Advanced Application Template
+## Features
 
 - Users, Roles, Registration, Basic and social authorization
 - Countries, Regions, Cities

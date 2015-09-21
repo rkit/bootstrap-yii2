@@ -14,7 +14,7 @@ use yii\helpers\Html;
   <h1>Bootstrap for Yii2</h1>
 </div>
 
-<p class="lead">Advanced Application Template</p>
+<p class="lead">Features</p>
 <ul>
   <li>Users, Roles, Registration, Basic and social authorization</li>
   <li>Countries, Regions, Cities</span></li>
