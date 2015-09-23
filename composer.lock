@@ -793,16 +793,16 @@
         },
         {
             "name": "rkit/filemanager-yii2",
-            "version": "1.0.0",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rkit/filemanager-yii2.git",
-                "reference": "118f5b7e82047b8483fb6a9d756ec030c8345e15"
+                "reference": "60a226df17923090e83273a0c20652f258e9d6be"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rkit/filemanager-yii2/zipball/118f5b7e82047b8483fb6a9d756ec030c8345e15",
-                "reference": "118f5b7e82047b8483fb6a9d756ec030c8345e15",
+                "url": "https://api.github.com/repos/rkit/filemanager-yii2/zipball/60a226df17923090e83273a0c20652f258e9d6be",
+                "reference": "60a226df17923090e83273a0c20652f258e9d6be",
                 "shasum": ""
             },
             "require": {
@@ -840,7 +840,7 @@
                 "upload",
                 "yii2"
             ],
-            "time": "2015-09-21 10:18:52"
+            "time": "2015-09-23 03:53:01"
         },
         {
             "name": "rubaxa/fileapi",
