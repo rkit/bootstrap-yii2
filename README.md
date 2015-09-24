@@ -45,7 +45,7 @@ Screenshots:
    php yii migrate --migrationPath=@yii/log/migrations/ --interactive=0
    php yii migrate --migrationPath=@yii/rbac/migrations/ --interactive=0
    php yii migrate --migrationPath=@vendor/rkit/filemanager-yii2/src/migrations/ --interactive=0
-   php yii migrate/up
+   php yii migrate/up --interactive=0
    php yii rbac/init
    ```
 

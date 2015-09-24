@@ -31,11 +31,11 @@
         "kartik-v/yii2-sortable": "^1.2.0",
         "vova07/yii2-imperavi-widget": "^1.2.2",
         "rubaxa/fileapi": "^0.4.7",
-        "bower-asset/bootstrap": "^3.3.4"
+        "bower-asset/bootstrap": "^3.3.4",
+        "yiisoft/yii2-debug": "^2.0.4"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "^2.0.4",
-        "yiisoft/yii2-debug": "^2.0.4",
         "yiisoft/yii2-gii": "^2.0.4",
         "yiisoft/yii2-faker": "^2.0.3",
         "codeception/codeception": "2.0.*",

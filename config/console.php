@@ -7,11 +7,8 @@ $params = require(__DIR__ . '/params.php');
 $config = [
     'id' => 'iNCVrvPTpDQuWpdnqqz6NPXeUHsRQoV3',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log', 'gii'],
+    'bootstrap' => ['log'],
     'controllerNamespace' => 'app\commands',
-    'modules' => [
-        'gii' => 'yii\gii\Module',
-    ],
     'components' => [
         'cache' => [
             'class' => 'yii\caching\FileCache',
@@ -38,8 +35,7 @@ $config = [
     'params' => $params,
 ];
 
-if (file_exists(__DIR__ . '/local/config.php')) {
-    require_once __DIR__ . '/local/config.php';
-}
+require_once __DIR__ . '/common.php';
+require_once __DIR__ . '/local/config.php';
 
 return $config;

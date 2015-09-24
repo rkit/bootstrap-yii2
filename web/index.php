@@ -8,7 +8,7 @@ defined('APPLICATION_ENV')
 
 if (APPLICATION_ENV !== 'production') {
     ini_set('display_errors', 1);
-    error_reporting(E_ALL);
+    error_reporting(-1);
 
     defined('YII_DEBUG') or define('YII_DEBUG', true);
     defined('YII_ENV') or define('YII_ENV', 'dev');
