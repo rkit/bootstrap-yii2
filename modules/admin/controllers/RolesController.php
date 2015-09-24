@@ -24,7 +24,7 @@ class RolesController extends BaseController
             ],
         ];
     }
-    
+
     public function actions()
     {
         return [
@@ -38,12 +38,12 @@ class RolesController extends BaseController
             ],
         ];
     }
-    
-    public function actionIndex() 
+
+    public function actionIndex()
     {
         $authItemSearch = new AuthItemSearch();
         $dataProvider = $authItemSearch->search(Yii::$app->request->get());
-        
+
         return $this->render('index', [
             'authItemSearch' => $authItemSearch,
             'dataProvider' => $dataProvider,
@@ -54,41 +54,41 @@ class RolesController extends BaseController
     {
         $model = new AuthItem();
         $auth = Yii::$app->authManager;
-        
+
         $roles = ArrayHelper::index($auth->getRoles(), 'name');
         $permissions = ArrayHelper::index($auth->getPermissions(), 'name');
-        
+
         if ($name) {
             $model = $this->loadModel($model, $name);
-            
+
             $model->permissions = ArrayHelper::index($auth->getPermissionsByRole($model->name), 'name', []);
             $model->permissions = array_keys($model->permissions);
-            
+
             $model->roles = ArrayHelper::index($auth->getChildren($model->name), 'name', []);
             $model->roles = array_keys($model->roles);
-            
+
             unset($roles[$model->name]);
         }
-        
+
         if (Yii::$app->request->isPost) {
             $model->type = \yii\rbac\Item::TYPE_ROLE;
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 if (!$model->isSuperUser()) {
                     $role = $auth->getRole($model->name);
-                    $auth->removeChildren($role); 
-                    
-                    if (is_array($model->roles)) {              
+                    $auth->removeChildren($role);
+
+                    if (is_array($model->roles)) {
                         foreach ($model->roles as $r) {
                             $auth->addChild($role, $roles[$r]);
                         }
                     }
-                    
-                    if (is_array($model->permissions)) {   
+
+                    if (is_array($model->permissions)) {
                         $currPermissions = ArrayHelper::index(
-                            $auth->getPermissionsByRole($model->name), 
-                            'name', 
+                            $auth->getPermissionsByRole($model->name),
+                            'name',
                             []
-                        );    
+                        );
                         foreach ($model->permissions as $permission) {
                             if (!array_key_exists($permission, $currPermissions)) {
                                 $auth->addChild($role, $permissions[$permission]);
@@ -96,14 +96,14 @@ class RolesController extends BaseController
                         }
                     }
                 }
-                
+
                 Yii::$app->session->setFlash('success', Yii::t('app', 'Saved successfully'));
-                return $this->response(['redirect' => Url::toRoute(['edit', 'name' => $model->name])]);   
+                return $this->response(['redirect' => Url::toRoute(['edit', 'name' => $model->name])]);
             } else {
-                return $this->response(['errors' => $model->getErrors(), 'prefix' => 'authitem-']);            
+                return $this->response(['errors' => $model->getErrors(), 'prefix' => 'authitem-']);
             }
         }
-        
+
         return $this->render('edit', [
             'model' => $model,
             'roles' => $roles,

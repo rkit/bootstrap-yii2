@@ -11,7 +11,7 @@ class OperationsAction extends Action
      * @var string $modelName
      */
     public $modelName;
-    
+
     public function run()
     {
         $model = new $this->modelName();
@@ -19,7 +19,7 @@ class OperationsAction extends Action
         if (($ids = Yii::$app->request->post('selection')) !== null) {
             $models = $model::findAll($ids);
             $operation = Yii::$app->request->post('operation');
-            
+
             foreach ($models as $model) {
                 switch ($operation) {
                     case 'delete':
@@ -34,7 +34,7 @@ class OperationsAction extends Action
                 }
             }
         }
-        
+
         return $this->controller->response(true);
     }
 }

@@ -10,49 +10,49 @@ class Module extends \yii\base\Module
     public $controllerNamespace = 'app\modules\admin\controllers';
     public $defaultRoute = 'index/index';
     public $layout = 'admin';
-    
+
     public function init()
     {
         parent::init();
 
         Yii::$app->user->loginUrl = ['admin/index/login'];
         Yii::$app->timeZone = Yii::$app->params['mainTimeZone'];
-        
+
         \Yii::$container->set('yii\widgets\LinkPager', [
             'maxButtonCount' => 5,
             'nextPageLabel'  => '&rarr;',
             'prevPageLabel'  => '&larr;',
             'firstPageLabel' => '&lArr;',
-            'lastPageLabel'  => '&rArr;',       
+            'lastPageLabel'  => '&rArr;',
         ]);
     }
-    
+
     public function beforeAction($action)
     {
         if (parent::beforeAction($action)) {
             $action->controller->cssBundle = 'admin.css';
             $action->controller->jsBundle = 'admin.js';
-            
+
             return $this->checkAccess($action);
         } else {
             return false;
         }
     }
-    
+
     public function checkAccess($action)
     {
         $access = 'ACTION_Admin' . ucfirst($action->controller->id);
         if ($action->controller->id == 'index') {
             return true;
         }
-        
+
         if (!\Yii::$app->user->can('AdminModule') || !\Yii::$app->user->can($access)) {
             return Yii::$app->controller->accessDenied();
         }
-        
+
         return true;
     }
-    
+
     public function defaultGridTemplate($dataProvider, $operations)
     {
         return '
@@ -64,7 +64,7 @@ class Module extends \yii\base\Module
         </div>
         <div class="pull-left operations">
             ' . Yii::$app->getView()->render('/shared/gridview/operations', ['operations' => $operations]) . '
-        </div>  
+        </div>
         <div class="pull-right">
             ' . Yii::$app->getView()->render('/shared/gridview/pagination-sizes', ['dataProvider' => $dataProvider]) . '
         </div>
@@ -72,10 +72,10 @@ class Module extends \yii\base\Module
         {pager}
         ';
     }
-    
+
     public function defaultGridButtons($buttons = ['status', 'delete'])
     {
-        $defaultButtons = [  
+        $defaultButtons = [
             'status' => function ($url, $model) {
                 if ($model->status == $model::STATUS_BLOCKED) {
                     return Html::a(
@@ -99,7 +99,7 @@ class Module extends \yii\base\Module
                     );
                 }
             },
-            
+
             'delete' => function ($url, $model) {
                 return Html::a(
                     '<span class="glyphicon glyphicon-remove"></span>',
@@ -113,13 +113,13 @@ class Module extends \yii\base\Module
                 );
             }
         ];
-        
+
         foreach ($defaultButtons as $name => $button) {
             if (!in_array($name, $buttons)) {
                 unset($defaultButtons[$name]);
             }
         }
-        
+
         return $defaultButtons;
     }
 }

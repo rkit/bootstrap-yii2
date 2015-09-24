@@ -19,7 +19,7 @@ class SuggestionsController extends BaseController
             ],
         ];
     }
-    
+
     public function actionTags()
     {
         if (($term = Yii::$app->request->post('term')) !== null) {
@@ -30,10 +30,10 @@ class SuggestionsController extends BaseController
                 ->all();
             return $this->response($this->prepare($data));
         }
-        
+
         return $this->response([]);
     }
-    
+
     public function actionCountries()
     {
         if (($term = Yii::$app->request->post('term')) !== null) {
@@ -44,10 +44,10 @@ class SuggestionsController extends BaseController
                 ->all();
             return $this->response($this->prepare($data, 'title', 'country_id'));
         }
-        
+
         return $this->response([]);
     }
-    
+
     public function actionRegions()
     {
         if (($term = Yii::$app->request->post('term')) !== null) {
@@ -57,17 +57,17 @@ class SuggestionsController extends BaseController
                 ->asArray()
                 ->limit(10)
                 ->all();
-          
+
             foreach ($data as &$item) {
                 $item['title'] = $item['country']['title'] . ', ' . $item['title'];
             }
-            
+
             return $this->response($this->prepare($data, 'title', 'region_id'));
         }
-        
+
         return $this->response([]);
     }
-    
+
     private function prepare(
         $list,
         $valueField = 'title',
@@ -82,7 +82,7 @@ class SuggestionsController extends BaseController
                 $resultId    => $item[$idField]
             ];
         }
-        
+
         return $result;
     }
 }

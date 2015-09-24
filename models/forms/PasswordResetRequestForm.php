@@ -28,7 +28,7 @@ class PasswordResetRequestForm extends \yii\base\Model
             ],
         ];
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -36,7 +36,7 @@ class PasswordResetRequestForm extends \yii\base\Model
     {
         return (new User())->attributeLabels();
     }
-    
+
     /**
      * Sends an email with a link, for resetting the password.
      *
@@ -49,22 +49,22 @@ class PasswordResetRequestForm extends \yii\base\Model
             'status' => User::STATUS_ACTIVE,
             'email' => $this->email,
         ]);
-        
+
         if ($user) {
             if (!User::isTokenValid($user->password_reset_token)) {
                 $user->generatePasswordResetToken();
             }
-            
+
             if ($user->save(false)) {
                 return Yii::$app->notify->sendMessage(
-                    $this->email, 
-                    Yii::t('app', 'Password Reset'), 
-                    'passwordResetToken', 
+                    $this->email,
+                    Yii::t('app', 'Password Reset'),
+                    'passwordResetToken',
                     ['user' => $user]
                 );
             }
         }
-        
+
         return false;
     }
 }

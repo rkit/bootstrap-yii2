@@ -16,7 +16,7 @@ class AuthItemSearch extends AuthItem
      * @var string
      */
     public $name;
-        
+
     /**
      * @inheritdoc
      */
@@ -26,7 +26,7 @@ class AuthItemSearch extends AuthItem
             ['name', 'string'],
         ];
     }
-    
+
     /**
      * Search by request criteria.
      *
@@ -48,11 +48,11 @@ class AuthItemSearch extends AuthItem
                 'pageSizeLimit' => [50, 100],
             ],
         ]);
-        
+
         $dataProvider->getPagination()->setPageSize(Yii::$app->request->get('pageSize'), true);
-            
+
         $query->andFilterWhere(['type' => \yii\rbac\Item::TYPE_ROLE]);
-        
+
         if (!($this->load($params) && $this->validate())) {
             return $dataProvider;
         }

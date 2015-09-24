@@ -9,12 +9,12 @@ class User extends \yii\web\User
     public function init()
     {
         parent::init();
-        
+
         if (!$this->getIsGuest() && !$this->getIdentity()->isActive()) {
             $this->logout();
         }
     }
-    
+
     /**
      * Checks if the user can perform the operation as specified by the given permission.
      *

@@ -10,11 +10,11 @@ class BlockAction extends Action
      * @var string $modelName
      */
     public $modelName;
-    
+
     public function run($id)
     {
         $model = new $this->modelName();
-        
+
         $model = $this->controller->loadModel($model, $id);
         $model->updateAttributes(['status' => $model::STATUS_BLOCKED]);
 

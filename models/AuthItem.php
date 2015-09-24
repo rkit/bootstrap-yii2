@@ -26,7 +26,7 @@ class AuthItem extends \yii\db\ActiveRecord
      * @var array
      */
     public $permissions;
-     
+
     /**
      * @inheritdoc
      */
@@ -42,11 +42,11 @@ class AuthItem extends \yii\db\ActiveRecord
     {
         return [
             [['name', 'description'], 'required'],
-            
+
             ['roles', 'safe'],
-            
+
             ['permissions', 'safe'],
-            
+
             ['name', 'unique'],
             ['name', 'string', 'max' => 64],
             ['name', 'match', 'pattern' => '/^[a-z]\w*$/i'],
@@ -60,12 +60,12 @@ class AuthItem extends \yii\db\ActiveRecord
     {
         return [
             'name'        => Yii::t('app', 'Name'),
-            'description' => Yii::t('app', 'Description'),         
+            'description' => Yii::t('app', 'Description'),
             'roles'       => Yii::t('app', 'Inherit role'),
             'permissions' => Yii::t('app', 'Permissions'),
         ];
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -75,7 +75,7 @@ class AuthItem extends \yii\db\ActiveRecord
             ActiveRecord::EVENT_BEFORE_DELETE => 'beforeDelete',
         ];
     }
-    
+
     /**
      * Is SuperUser?
      *
@@ -85,14 +85,14 @@ class AuthItem extends \yii\db\ActiveRecord
     {
         return $this->name === \app\models\User::ROLE_SUPERUSER;
     }
-    
+
     /**
      * Deleting a file from the db and from the file system.
      *
      * @return bool
      */
     public function beforeDelete()
-    {   
+    {
         return !$this->isSuperUser();
     }
 }

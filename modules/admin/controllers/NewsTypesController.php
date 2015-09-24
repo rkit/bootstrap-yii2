@@ -23,7 +23,7 @@ class NewsTypesController extends BaseController
             ],
         ];
     }
-    
+
     public function actions()
     {
         return [
@@ -37,12 +37,12 @@ class NewsTypesController extends BaseController
             ],
         ];
     }
-        
-    public function actionIndex() 
+
+    public function actionIndex()
     {
         $newsTypeSearch = new NewsTypeSearch();
         $dataProvider = $newsTypeSearch->search(Yii::$app->request->get());
-        
+
         return $this->render('index', [
             'newsTypeSearch' => $newsTypeSearch,
             'dataProvider' => $dataProvider,
@@ -56,13 +56,13 @@ class NewsTypesController extends BaseController
         if ($id) {
             $model = $this->loadModel($model, $id);
         }
-        
+
         if (Yii::$app->request->isPost) {
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 Yii::$app->session->setFlash('success', Yii::t('app', 'Saved successfully'));
-                return $this->response(['redirect' => Url::toRoute(['edit', 'id' => $model->id])]);   
+                return $this->response(['redirect' => Url::toRoute(['edit', 'id' => $model->id])]);
             } else {
-                return $this->response(['errors' => $model->getErrors(), 'prefix' => 'newstype-']);            
+                return $this->response(['errors' => $model->getErrors(), 'prefix' => 'newstype-']);
             }
         }
 

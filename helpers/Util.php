@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace app\helpers;
 
@@ -19,14 +19,14 @@ class Util
     {
         $date = new \DateTime($date, new \DateTimeZone($fromTimeZone));
         $date->setTimeZone(new \DateTimeZone($toTimeZone));
-        
+
         return $date->format($format);
     }
-    
+
     /**
      * Clear text.
      * For meta tags & title page.
-     * 
+     *
      * @param string $text
      * @return string
      */

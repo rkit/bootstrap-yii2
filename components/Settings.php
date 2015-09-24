@@ -24,24 +24,24 @@ class Settings extends \yii\base\Component
      * @var array $keys
      */
     private $keys = [];
-    
+
     public function init()
     {
         parent::init();
-        
+
         $this->load();
     }
-    
+
     public function __set($key, $value)
     {
         return $this->set($key, $value);
     }
-    
+
     public function __get($key)
     {
         return $this->get($key);
     }
-    
+
     /**
      * Get value by key.
      *
@@ -53,7 +53,7 @@ class Settings extends \yii\base\Component
         $data = ArrayHelper::getValue($this->keys, $key);
         return is_array($data) ? $data['value'] : null;
     }
-    
+
     /**
      * Set value.
      *
@@ -66,14 +66,14 @@ class Settings extends \yii\base\Component
             Yii::$app->db->createCommand()->update(
                 $this->tableName,
                 ['value' => $value],
-                '`key` = :key', 
+                '`key` = :key',
                 [':key' => $key]
             )->execute();
         } else {
             Yii::$app->db->createCommand()->insert($this->tableName, [
                 'key'   => $key,
                 'value' => $value,
-            ])->execute();            
+            ])->execute();
         }
 
         $this->keys[$key]['value'] = $value;
@@ -87,18 +87,18 @@ class Settings extends \yii\base\Component
      * @return array
      */
     public function load($reload = false)
-    {    
+    {
         $keys = Yii::$app->cache->get($this->cacheName);
-        
+
         if (!$keys || $reload) {
             $settings = (new Query())->select('*')->from($this->tableName)->all();
-            
+
             $keys = ArrayHelper::index($settings, 'key');
             $keys = serialize($keys);
-            
+
             Yii::$app->cache->set($this->cacheName, $keys);
         }
-        
+
         $this->keys = unserialize($keys);
 
         return $this->keys;

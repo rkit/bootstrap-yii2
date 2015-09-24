@@ -16,7 +16,7 @@ class ResetPasswordForm extends \yii\base\Model
      * @var \app\models\User
      */
     private $user;
-    
+
     /**
      * @inheritdoc
      */
@@ -27,7 +27,7 @@ class ResetPasswordForm extends \yii\base\Model
             ['password', 'string', 'min' => 6],
         ];
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -35,7 +35,7 @@ class ResetPasswordForm extends \yii\base\Model
     {
         return (new User())->attributeLabels();
     }
-    
+
     /**
      * Validate token.
      *
@@ -47,16 +47,16 @@ class ResetPasswordForm extends \yii\base\Model
         if (empty($token) || !is_string($token)) {
             return false;
         }
-        
+
         $this->user = User::findByPasswordResetToken($token);
-        
+
         if (!$this->user) {
             return false;
         }
-        
+
         return true;
     }
-    
+
     /**
      * Resets password.
      *
@@ -67,7 +67,7 @@ class ResetPasswordForm extends \yii\base\Model
         $this->user->setPassword($this->password);
         $this->user->removePasswordResetToken();
         $this->user->authorize(true);
-        
+
         return $this->user->save(false);
     }
 }

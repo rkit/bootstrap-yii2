@@ -12,7 +12,7 @@ class ConfirmEmailForm extends \yii\base\Model
      * @var \app\models\User
      */
     private $user;
-    
+
     /**
      * Validate token.
      *
@@ -24,13 +24,13 @@ class ConfirmEmailForm extends \yii\base\Model
         if (empty($token) || !is_string($token)) {
             return false;
         }
-        
+
         $this->user = User::findByEmailConfirmToken($token);
-        
+
         if (!$this->user) {
             return false;
         }
-        
+
         return true;
     }
 

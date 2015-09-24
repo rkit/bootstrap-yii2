@@ -23,7 +23,7 @@ class TagsController extends BaseController
             ],
         ];
     }
-    
+
     public function actions()
     {
         return [
@@ -37,12 +37,12 @@ class TagsController extends BaseController
             ],
         ];
     }
-        
-    public function actionIndex() 
+
+    public function actionIndex()
     {
         $tagSearch = new TagSearch();
         $dataProvider = $tagSearch->search(Yii::$app->request->get());
-        
+
         return $this->render('index', [
             'tagSearch' => $tagSearch,
             'dataProvider' => $dataProvider,
@@ -56,13 +56,13 @@ class TagsController extends BaseController
         if ($id) {
             $model = $this->loadModel($model, $id);
         }
-        
+
         if (Yii::$app->request->isPost) {
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 Yii::$app->session->setFlash('success', Yii::t('app', 'Saved successfully'));
-                return $this->response(['redirect' => Url::toRoute(['edit', 'id' => $model->id])]);   
+                return $this->response(['redirect' => Url::toRoute(['edit', 'id' => $model->id])]);
             } else {
-                return $this->response(['errors' => $model->getErrors(), 'prefix' => 'tag-']);            
+                return $this->response(['errors' => $model->getErrors(), 'prefix' => 'tag-']);
             }
         }
 

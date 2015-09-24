@@ -23,7 +23,7 @@ class CountriesController extends BaseController
             ],
         ];
     }
-    
+
     public function actions()
     {
         return [
@@ -37,12 +37,12 @@ class CountriesController extends BaseController
             ],
         ];
     }
-        
-    public function actionIndex() 
+
+    public function actionIndex()
     {
         $countrySearch = new CountrySearch();
         $dataProvider = $countrySearch->search(Yii::$app->request->get());
-        
+
         return $this->render('index', [
             'countrySearch' => $countrySearch,
             'dataProvider' => $dataProvider,
@@ -56,13 +56,13 @@ class CountriesController extends BaseController
         if ($id) {
             $model = $this->loadModel($model, $id);
         }
-        
+
         if (Yii::$app->request->isPost) {
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 Yii::$app->session->setFlash('success', Yii::t('app', 'Saved successfully'));
-                return $this->response(['redirect' => Url::toRoute(['edit', 'id' => $model->country_id])]);   
+                return $this->response(['redirect' => Url::toRoute(['edit', 'id' => $model->country_id])]);
             } else {
-                return $this->response(['errors' => $model->getErrors(), 'prefix' => 'country-']);            
+                return $this->response(['errors' => $model->getErrors(), 'prefix' => 'country-']);
             }
         }
 

@@ -16,7 +16,7 @@ class CountrySearch extends Country
      * @var string
      */
     public $title;
-        
+
     /**
      * @inheritdoc
      */
@@ -26,7 +26,7 @@ class CountrySearch extends Country
             ['title', 'string'],
         ];
     }
-    
+
     /**
      * Search by request criteria.
      *
@@ -48,9 +48,9 @@ class CountrySearch extends Country
                 'pageSizeLimit' => [50, 100],
             ],
         ]);
-        
+
         $dataProvider->getPagination()->setPageSize(Yii::$app->request->get('pageSize'), true);
-            
+
         if (!($this->load($params) && $this->validate())) {
             return $dataProvider;
         }

@@ -23,7 +23,7 @@ class RegionsController extends BaseController
             ],
         ];
     }
-    
+
     public function actions()
     {
         return [
@@ -37,12 +37,12 @@ class RegionsController extends BaseController
             ],
         ];
     }
-        
-    public function actionIndex() 
+
+    public function actionIndex()
     {
         $regionSearch = new RegionSearch();
         $dataProvider = $regionSearch->search(Yii::$app->request->get());
-        
+
         return $this->render('index', [
             'regionSearch' => $regionSearch,
             'dataProvider' => $dataProvider,
@@ -56,13 +56,13 @@ class RegionsController extends BaseController
         if ($id) {
             $model = $this->loadModel($model, $id);
         }
-        
+
         if (Yii::$app->request->isPost) {
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 Yii::$app->session->setFlash('success', Yii::t('app', 'Saved successfully'));
-                return $this->response(['redirect' => Url::toRoute(['edit', 'id' => $model->region_id])]);   
+                return $this->response(['redirect' => Url::toRoute(['edit', 'id' => $model->region_id])]);
             } else {
-                return $this->response(['errors' => $model->getErrors(), 'prefix' => 'region-']);            
+                return $this->response(['errors' => $model->getErrors(), 'prefix' => 'region-']);
             }
         }
 

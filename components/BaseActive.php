@@ -19,7 +19,7 @@ class BaseActive extends \yii\db\ActiveRecord
         $isSuperUser = !Yii::$app->getUser()->getIsGuest() && Yii::$app->getUser()->getIdentity()->isSuperUser();
         return $isSuperUser || Yii::$app->getUser()->id === $this->user_id;
     }
-    
+
     /**
      * @inheritdoc
      * @return BaseQuery

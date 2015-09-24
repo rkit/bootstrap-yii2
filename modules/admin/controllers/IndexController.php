@@ -47,7 +47,7 @@ class IndexController extends BaseController
             ],
         ];
     }
-    
+
     public function actionIndex()
     {
         if (!Yii::$app->user->can('AdminModule')) {
@@ -56,11 +56,11 @@ class IndexController extends BaseController
 
         return $this->render('index');
     }
-    
+
     public function actionLogin()
     {
         $model = new LoginForm();
-        
+
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();
         } else {
@@ -69,7 +69,7 @@ class IndexController extends BaseController
             ]);
         }
     }
-    
+
     public function actionLogout()
     {
         Yii::$app->user->logout();

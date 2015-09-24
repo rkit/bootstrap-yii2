@@ -41,7 +41,7 @@ class City extends BaseActive
             ['region_id', 'default', 'value' => null],
 
             ['area', 'string', 'max' => 150],
-            
+
             ['important', 'integer'],
 
             ['title', 'string', 'max' => 150],
@@ -79,7 +79,7 @@ class City extends BaseActive
     {
         return $this->hasOne(Region::className(), ['region_id' => 'region_id']);
     }
-    
+
     /**
      * Return: City, Region, Country
      *
@@ -90,7 +90,7 @@ class City extends BaseActive
         $full  = $this->title;
         $full .= $this->region ? ', '.$this->region->title : '';
         $full .= $this->country ? ', '.$this->country->title : '';
-        
+
         return $full;
     }
 }

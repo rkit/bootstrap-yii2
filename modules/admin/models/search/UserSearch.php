@@ -36,7 +36,7 @@ class UserSearch extends User
      * @var int
      */
     public $status;
-    
+
     /**
      * @inheritdoc
      */
@@ -44,20 +44,20 @@ class UserSearch extends User
     {
         return [
             ['username', 'string'],
-            
+
             ['email', 'string'],
-            
+
             ['date_create', 'date', 'format' => 'yyyy-mm-dd'],
-            
+
             ['ip', 'string'],
-            
+
             ['role', 'string'],
-            
+
             ['status', 'integer'],
             ['status', 'in', 'range' => array_keys(User::getStatuses())],
         ];
     }
-    
+
     /**
      * Search by request criteria.
      *
@@ -79,20 +79,20 @@ class UserSearch extends User
                 'pageSizeLimit' => [50, 100],
             ],
         ]);
-        
+
         $dataProvider->getPagination()->setPageSize(Yii::$app->request->get('pageSize'), true);
-            
+
         if (!($this->load($params) && $this->validate())) {
             return $dataProvider;
         }
-        
+
         $query->andFilterWhere([
             'ip' => !empty($this->ip) ? ip2long($this->ip) : null,
             'status' => $this->status,
             'role' => $this->role,
             'DATE(date_create)' => $this->date_create
         ]);
-        
+
         $query->andFilterWhere(['like', 'user.username', $this->username]);
         $query->andFilterWhere(['like', 'user.email', $this->email]);
 

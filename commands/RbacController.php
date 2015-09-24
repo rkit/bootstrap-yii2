@@ -12,7 +12,7 @@ use yii\helpers\Console;
 class RbacController extends Controller
 {
     private $permissions = [];
-    
+
     public function init()
     {
         // ALL PERMISSIONS!
@@ -29,31 +29,31 @@ class RbacController extends Controller
             'ACTION_AdminCountries' => Yii::t('app', 'Control Panel / Countries'),
             'ACTION_AdminSuggestions' => Yii::t('app', 'Control Panel / Suggestions'),
         ];
-       
+
         Yii::$app->cache->delete('rbac-permissions');
     }
-    
+
     public function actionInit()
-    {   
+    {
         $auth = Yii::$app->authManager;
-        
+
         $currentPermissions = $auth->getPermissions();
 
         foreach ($currentPermissions as $currentPermission) {
             if (!isset($this->permissions[$currentPermission->name])) {
-                $auth->remove($currentPermission); 
+                $auth->remove($currentPermission);
             }
         }
-        
+
         foreach ($this->permissions as $name => $description) {
             $isNew = !isset($currentPermissions[$name]);
-            
+
             $permission = $isNew ? $auth->createPermission($name) : $auth->getPermission($name);
             $permission->description = $description;
-            
+
             $isNew ? $auth->add($permission) : $auth->update($name, $permission);
         }
-        
+
         $this->stdout("RBAC updated\n", Console::FG_GREEN);
     }
 }

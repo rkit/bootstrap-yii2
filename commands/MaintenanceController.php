@@ -18,7 +18,7 @@ class MaintenanceController extends Controller
     {
         $this->stdout("Trying disabling maintenance mode...\n");
         $file = $this->resolveFile();
-        
+
         if (file_exists($file)) {
             unlink($file);
             $this->stdout("Done\n", Console::FG_GREEN);
@@ -26,7 +26,7 @@ class MaintenanceController extends Controller
             $this->stdout("Application is NOT in maintenance mode.\n", Console::FG_YELLOW);
         }
     }
-    
+
     /**
      * Enables the maintenance mode.
      */
@@ -34,7 +34,7 @@ class MaintenanceController extends Controller
     {
         $this->stdout("Trying enabling maintenance mode...\n");
         $file = $this->resolveFile();
-        
+
         if (!file_exists($file)) {
             file_put_contents($file, time());
             $this->stdout("Done\n", Console::FG_GREEN);
@@ -42,7 +42,7 @@ class MaintenanceController extends Controller
             $this->stdout("Application is already in maintenance mode.\n", Console::FG_YELLOW);
         }
     }
-    
+
     /**
      * Returns the path to the 'maintenance' file.
      *

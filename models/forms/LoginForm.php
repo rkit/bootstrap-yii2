@@ -23,7 +23,7 @@ class LoginForm extends \yii\base\Model
      * @var \app\models\User
      */
     private $user = false;
-    
+
     /**
      * @return array the validation rules.
      */
@@ -31,15 +31,15 @@ class LoginForm extends \yii\base\Model
     {
         return [
             [['email', 'password'], 'required'],
-            
+
             ['email', 'email'],
-            
+
             ['rememberMe', 'boolean'],
 
             ['password', 'validatePassword'],
         ];
     }
-    
+
     /**
      * @inheritdoc
      */

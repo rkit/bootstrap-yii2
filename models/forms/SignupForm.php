@@ -24,7 +24,7 @@ class SignupForm extends \yii\base\Model
      * @var \app\models\User
      */
     public $user;
-    
+
     /**
      * @inheritdoc
      */
@@ -33,7 +33,7 @@ class SignupForm extends \yii\base\Model
         return [
             ['full_name', 'required'],
             ['full_name', 'string', 'max' => 40],
-            
+
             ['password', 'required'],
             ['password', 'string', 'min' => 6],
 
@@ -41,13 +41,13 @@ class SignupForm extends \yii\base\Model
             ['email', 'required'],
             ['email', 'string', 'max' => 255],
             ['email', 'email'],
-            ['email', 'unique', 
-                'targetClass' => '\app\models\User', 
+            ['email', 'unique',
+                'targetClass' => '\app\models\User',
                 'message' => Yii::t('app', 'This email address has already been taken')
-            ],            
+            ],
         ];
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -55,7 +55,7 @@ class SignupForm extends \yii\base\Model
     {
         return array_merge((new User())->attributeLabels(), ['full_name' => Yii::t('app', 'Full Name')]);
     }
-    
+
     /**
      * Signs user up.
      *
@@ -68,21 +68,21 @@ class SignupForm extends \yii\base\Model
             $this->user->email = $this->email;
             $this->user->setPassword($this->password);
             $this->user->generateEmailConfirmToken();
-            
+
             $profile = new UserProfile();
             $profile->full_name = $this->full_name;
             $this->user->populateRelation('profile', $profile);
-            
+
             if ($this->user->save()) {
                 if ($this->user->authorize(true)) {
                     return $this->user;
                 }
             }
         }
-        
+
         return null;
     }
-    
+
     /**
      * Sends an email with a link, for confirm the email.
      *
@@ -94,17 +94,17 @@ class SignupForm extends \yii\base\Model
             if (!User::isTokenValid($this->user->email_confirm_token)) {
                 $this->user->generateEmailConfirmToken();
             }
-            
+
             if ($this->user->save(false)) {
                 return Yii::$app->notify->sendMessage(
-                    $this->email, 
-                    Yii::t('app', 'Activate Your Account'), 
-                    'emailConfirmToken', 
+                    $this->email,
+                    Yii::t('app', 'Activate Your Account'),
+                    'emailConfirmToken',
                     ['user' => $this->user]
                 );
             }
         }
-        
+
         return false;
     }
 }

@@ -33,7 +33,7 @@ class Region extends BaseActive
         return [
             ['country_id', 'required'],
             ['country_id', 'integer'],
-            
+
             ['title', 'string', 'max' => 150],
             ['title', 'required']
         ];
