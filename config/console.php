@@ -36,6 +36,8 @@ $config = [
 ];
 
 require_once __DIR__ . '/common.php';
-require_once __DIR__ . '/local/config.php';
+if (file_exists(__DIR__ . '/local/config.php')) {
+    require_once __DIR__ . '/local/config.php';
+}
 
 return $config;
