@@ -115,6 +115,7 @@ class User extends BaseActive implements IdentityInterface
 
     /**
      * @inheritdoc
+     * @codeCoverageIgnore
      */
     public function attributeHints()
     {
@@ -141,6 +142,7 @@ class User extends BaseActive implements IdentityInterface
 
     /**
      * @inheritdoc
+     * @codeCoverageIgnore
      */
     public function events()
     {
@@ -187,7 +189,7 @@ class User extends BaseActive implements IdentityInterface
             }
 
             return true;
-        }
+        } // @codeCoverageIgnore
 
         return false;
     }
@@ -287,7 +289,7 @@ class User extends BaseActive implements IdentityInterface
      */
     public function isConfirmed()
     {
-        return $this->date_confirm > 0;
+        return strtotime($this->date_confirm) > 0;
     }
 
     /**

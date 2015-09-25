@@ -20,7 +20,7 @@ class IndexController extends BaseController
      * @var array
      */
     private $providers = [];
-    
+
     /**
      * @inheritdoc
      */
@@ -51,7 +51,7 @@ class IndexController extends BaseController
             ],
         ];
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -68,14 +68,14 @@ class IndexController extends BaseController
             ],
         ];
     }
-        
+
     public function successCallback($provider)
     {
         Yii::$app->session['provider'] = null;
-        
+
         $profile = $provider->getUserAttributes();
         $token = $provider->getAccessToken()->getParams();
-        
+
         if ($user = User::findByProvider(User::getProviders($provider->id), $profile['id'])) {
             // if user exist, then login
             if (!$user->isActive()) {
@@ -92,18 +92,18 @@ class IndexController extends BaseController
             ];
         }
     }
-    
+
     public function actionIndex()
     {
         return $this->render('index');
     }
-    
+
     public function actionLogin()
     {
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
-        
+
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();
@@ -113,7 +113,7 @@ class IndexController extends BaseController
             ]);
         }
     }
-    
+
     public function actionSignup()
     {
         $model = new SignupForm();
@@ -121,165 +121,165 @@ class IndexController extends BaseController
             if ($model->signup()) {
                 if ($model->sendEmail()) {
                     return $this->alert(
-                        'success', 
-                        Yii::t('app', 'Please activate your account') . '. ' . 
+                        'success',
+                        Yii::t('app', 'Please activate your account') . '. ' .
                         Yii::t('app', 'A letter for activation was sent to {email}', ['email' => $model->email])
                     );
                 } else {
                     return $this->alert(
-                        'error', 
+                        'error',
                         Yii::t('app', 'An error occurred while sending a message to activate account')
                     );
                 }
             }
         }
-        
+
         return $this->render('signup', [
             'model' => $model,
         ]);
     }
-    
+
     public function actionSignupProvider()
-    {        
+    {
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
-        
+
         $model = new SignupProviderForm(Yii::$app->session['provider']);
-        
+
         if (!$model->getUser()->isNewRecord && !$model->getUser()->isActive()) {
             return $this->alert('error', $model->getUser()->getStatusDescription());
         }
-        
+
         if ($model->isVerified()) {
             if ($model->signup(false)) {
                 Yii::$app->session['provider'] = null;
                 return $this->goHome();
             }
         }
-        
+
         if ($model->load(Yii::$app->request->post())) {
             if ($model->signup()) {
-                Yii::$app->session['provider'] = null;            
+                Yii::$app->session['provider'] = null;
                 if ($model->sendEmail()) {
                     return $this->alert(
-                        'success',  
-                        Yii::t('app', 'Please activate your account') . '. ' . 
+                        'success',
+                        Yii::t('app', 'Please activate your account') . '. ' .
                         Yii::t('app', 'A letter for activation was sent to {email}', ['email' => $model->email])
                     );
                 } else {
                     return $this->alert(
-                        'error', 
+                        'error',
                         Yii::t('app', 'An error occurred while sending a message to activate account')
                     );
                 }
             }
         }
-        
+
         return $this->render('signupProvider', [
             'model' => $model
         ]);
     }
-    
+
     public function actionConfirmEmail($token)
-    { 
+    {
         $model = new ConfirmEmailForm();
-        
+
         if (!$model->validateToken($token)) {
             return $this->alert('error', Yii::t('app', 'Invalid link for activate account'));
         }
-        
-        if ($model->confirmEmail()) { 
+
+        if ($model->confirmEmail()) {
             return $this->alert(
-                'success', 
+                'success',
                 Yii::t('app', 'Your account is successfully activated')
             );
         } else {
             return $this->alert(
-                'error', 
+                'error',
                 Yii::t('app', 'An error occurred while activating account')
-            );      
+            );
         }
     }
-    
+
     public function actionConfirmAgain()
-    { 
+    {
         if (Yii::$app->user->identity->isConfirmed()) {
-            return $this->accessDenied(); 
+            return $this->accessDenied();
         }
-        
+
         $model = new SignupForm();
         $model->user = Yii::$app->user->identity;
         $model->email = Yii::$app->user->identity->email;
-        
-        if ($model->sendEmail()) { 
+
+        if ($model->sendEmail()) {
             return $this->alert(
-                'success', 
+                'success',
                 Yii::t('app', 'A letter for activation was sent to {email}', [
                     'email' => Yii::$app->user->identity->email
                 ])
             );
         } else {
             return $this->alert(
-                'error', 
+                'error',
                 Yii::t('app', 'An error occurred while sending a message to activate account')
-            );      
+            );
         }
     }
-    
+
     public function actionRequestPasswordReset()
     {
         $model = new PasswordResetRequestForm();
-        
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+
+        if ($model->load(Yii::$app->request->post())) {
             if ($model->sendEmail()) {
                 return $this->alert(
-                    'success', 
+                    'success',
                     Yii::t('app', 'We\'ve sent you an email with instructions to reset your password')
-                );                
+                );
             } else {
                 return $this->alert(
-                    'error', 
+                    'error',
                     Yii::t('app', 'An error occurred while sending a message to reset your password')
                 );
             }
         }
-        
+
         return $this->render('requestPasswordResetToken', [
             'model' => $model,
         ]);
     }
-    
+
     public function actionResetPassword($token)
     {
         $model = new ResetPasswordForm();
-        
+
         if (!$model->validateToken($token)) {
             return $this->alert('error', Yii::t('app', 'Invalid link for reset password'));
         }
-        
-        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->resetPassword()) {
+
+        if ($model->load(Yii::$app->request->post()) && $model->resetPassword()) {
             return $this->alert('success', Yii::t('app', 'New password was saved'));
         }
-        
+
         return $this->render('resetPassword', [
             'model' => $model,
         ]);
     }
-    
+
     public function actionLogout()
     {
-        Yii::$app->user->logout();  
+        Yii::$app->user->logout();
         return $this->goHome();
     }
-    
+
     /** @see commands/MaintenanceController **/
     public function actionMaintenance()
     {
         if (!Yii::$app->catchAll) {
             return $this->pageNotFound();
         }
-        
+
         $this->layout = 'maintenance';
         return $this->render('maintenance');
     }

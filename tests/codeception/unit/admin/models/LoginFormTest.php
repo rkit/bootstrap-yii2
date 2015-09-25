@@ -6,6 +6,7 @@ use Yii;
 use yii\codeception\DbTestCase;
 use app\modules\admin\models\forms\LoginForm;
 use tests\codeception\fixtures\UserFixture;
+use tests\codeception\fixtures\UserProfileFixture;
 use Codeception\Specify;
 
 class LoginFormTest extends DbTestCase
@@ -21,30 +22,26 @@ class LoginFormTest extends DbTestCase
     public function testLoginNotCorrect()
     {
         $model = new LoginForm([
-            'username' => 'example',
+            'username' => $this->user['1-superuser']['username'],
             'password' => 'gw35hhbp',
         ]);
 
-        $this->specify('user should not be able to login, when there is no identity', function () use ($model) {
-            expect('model should not login user', $model->login())->false();
-            expect('user should not be logged in', Yii::$app->user->isGuest)->true();
-        });
+        $this->assertFalse($model->login());
+        $this->assertTrue(Yii::$app->user->isGuest);
     }
 
     public function testLoginEmptyPassword()
     {
         $model = new LoginForm([
-            'username' => 'example',
+            'username' => $this->user['1-superuser']['username'],
             'password' => '',
         ]);
 
-        $this->specify('user should not be able to login with wrong password', function () use ($model) {
-            expect('model should not login user', $model->login())->false();
-            expect('error message should be set', $model->errors)->hasKey('password');
-            expect('user should not be logged in', Yii::$app->user->isGuest)->true();
-        });
+        $this->assertFalse($model->login());
+        $this->assertNotEmpty($model->errors['password'][0]);
+        $this->assertTrue(Yii::$app->user->isGuest);
     }
-    
+
     public function testLoginEmptyUsername()
     {
         $model = new LoginForm([
@@ -52,25 +49,34 @@ class LoginFormTest extends DbTestCase
             'password' => 'gw35hhbp',
         ]);
 
-        $this->specify('user should not be able to login with wrong username', function () use ($model) {
-            expect('model should not login user', $model->login())->false();
-            expect('error message should be set', $model->errors)->hasKey('username');
-            expect('user should not be logged in', Yii::$app->user->isGuest)->true();
-        });
+        $this->assertFalse($model->login());
+        $this->assertNotEmpty($model->errors['username'][0]);
+        $this->assertTrue(Yii::$app->user->isGuest);
+    }
+
+    public function testLoginBlocked()
+    {
+        $model = new LoginForm([
+            'username' => $this->user['3-blocked']['username'],
+            'password' => '123123',
+        ]);
+
+        $this->assertFalse($model->login());
+        $this->assertNotEmpty($model->errors);
+        $this->assertTrue(Yii::$app->user->isGuest);
+        $this->assertContains('Your account has been suspended', $model->errors['password'][0]);
     }
 
     public function testLoginCorrect()
     {
         $model = new LoginForm([
-            'username' => 'admin',
+            'username' => $this->user['1-superuser']['username'],
             'password' => 'fghfgh',
         ]);
 
-        $this->specify('user should be able to login with correct credentials', function () use ($model) {
-            expect('model should login user', $model->login())->true();
-            expect('error message should not be set', $model->errors)->hasntKey('password');
-            expect('user should be logged in', Yii::$app->user->isGuest)->false();
-        });
+        $this->assertTrue($model->login());
+        $this->assertEmpty($model->errors);
+        $this->assertFalse(Yii::$app->user->isGuest);
     }
 
     public function fixtures()
@@ -79,6 +85,10 @@ class LoginFormTest extends DbTestCase
             'user' => [
                 'class' => UserFixture::className(),
                 'dataFile' => '@tests/codeception/fixtures/data/user.php',
+            ],
+            'profile' => [
+                'class' => UserProfileFixture::className(),
+                'dataFile' => '@tests/codeception/fixtures/data/user_profile.php',
             ],
         ];
     }

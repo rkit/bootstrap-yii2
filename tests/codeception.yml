@@ -13,6 +13,27 @@ settings:
     log: true
     colors: true
 
+coverage:
+    enabled: true
+    white_list:
+       include:
+           - ../models/*
+           - ../controllers/*
+           - ../commands/*
+           - ../mail/*
+           - ../modules/*
+
+    blacklist:
+       include:
+           - ../config/*
+           - ../web/*
+           - ../widgets/*
+           - ../runtime/*
+           - ../vendor/*
+           - ../tests/*
+           - ../views/*
+           - ../modules/admin/views/*
+
 config:
     # the entry script URL (with host info) for functional and acceptance tests
     # PLEASE ADJUST IT TO THE ACTUAL ENTRY SCRIPT URL

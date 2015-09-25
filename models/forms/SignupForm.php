@@ -59,7 +59,7 @@ class SignupForm extends \yii\base\Model
     /**
      * Signs user up.
      *
-     * @return User|null The saved model or null if saving fails.
+     * @return User|bool The saved model or bool if saving fails.
      */
     public function signup()
     {
@@ -67,7 +67,6 @@ class SignupForm extends \yii\base\Model
             $this->user = new User();
             $this->user->email = $this->email;
             $this->user->setPassword($this->password);
-            $this->user->generateEmailConfirmToken();
 
             $profile = new UserProfile();
             $profile->full_name = $this->full_name;
@@ -77,10 +76,10 @@ class SignupForm extends \yii\base\Model
                 if ($this->user->authorize(true)) {
                     return $this->user;
                 }
-            }
-        }
+            } // @codeCoverageIgnore
+        } // @codeCoverageIgnore
 
-        return null;
+        return false;
     }
 
     /**
@@ -102,8 +101,8 @@ class SignupForm extends \yii\base\Model
                     'emailConfirmToken',
                     ['user' => $this->user]
                 );
-            }
-        }
+            } // @codeCoverageIgnore
+        } // @codeCoverageIgnore
 
         return false;
     }

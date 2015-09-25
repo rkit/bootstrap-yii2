@@ -35,7 +35,7 @@ Screenshots:
    ```
    php yii create-local-config/init
    ```
-   > config will be created in **config/local/config.php**
+   > config will be created in *config/local/config.php*
 
 4. Run
    ```

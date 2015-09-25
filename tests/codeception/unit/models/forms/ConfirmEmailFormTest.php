@@ -1,6 +1,6 @@
 <?php
 
-namespace tests\codeception\unit\models;
+namespace tests\codeception\unit\models\forms;
 
 use Yii;
 use yii\codeception\DbTestCase;
@@ -12,31 +12,33 @@ use Codeception\Specify;
 class ConfirmEmailFormTest extends DbTestCase
 {
     use Specify;
-    
+
     public function testConfirmEmailWrongToken()
     {
         $form = new ConfirmEmailForm();
-        expect('token should be wrong', $form->validateToken('notexistingtoken_1391882543'))->false();
+        $this->assertFalse($form->validateToken('notexistingtoken_1391882543'));
     }
-    
+
     public function testConfirmEmailEmptyToken()
     {
         $form = new ConfirmEmailForm();
-        expect('token should be wrong', $form->validateToken(''))->false();
+        $this->assertFalse($form->validateToken(''));
     }
-    
+
     public function testConfirmEmailCorrect()
     {
+        $user = User::findByEmail($this->user['2-active']['email']);
+        $this->assertFalse($user->isConfirmed());
+
         $form = new ConfirmEmailForm();
-        
-        expect('token should be corrent', $form->validateToken($this->user[0]['email_confirm_token']))->true();
-        expect('confirmed token should be ok', $form->confirmEmail())->true();
-        
-        $user = User::findByEmail($this->user[0]['email']);
-        
-        expect('user should be confirmed', $user->isConfirmed())->true();
+        $this->assertTrue($form->validateToken($user->email_confirm_token));
+        $this->assertTrue($form->confirmEmail());
+
+        $user = User::findByEmail($user->email);
+        $this->assertEmpty($user->email_confirm_token);
+        $this->assertTrue($user->isConfirmed());
     }
-     
+
     public function fixtures()
     {
         return [

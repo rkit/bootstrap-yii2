@@ -11,7 +11,7 @@ class PasswordResetRequestForm extends \yii\base\Model
      * @var string
      */
     public $email;
-    
+
     /**
      * @inheritdoc
      */
@@ -45,12 +45,8 @@ class PasswordResetRequestForm extends \yii\base\Model
     public function sendEmail()
     {
         /* @var $user User */
-        $user = User::findOne([
-            'status' => User::STATUS_ACTIVE,
-            'email' => $this->email,
-        ]);
-
-        if ($user) {
+        $user = User::findByEmail($this->email);
+        if ($this->validate() && $user) {
             if (!User::isTokenValid($user->password_reset_token)) {
                 $user->generatePasswordResetToken();
             }
@@ -62,8 +58,8 @@ class PasswordResetRequestForm extends \yii\base\Model
                     'passwordResetToken',
                     ['user' => $user]
                 );
-            }
-        }
+            } // @codeCoverageIgnore
+        } // @codeCoverageIgnore
 
         return false;
     }

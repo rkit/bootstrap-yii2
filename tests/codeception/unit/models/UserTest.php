@@ -8,134 +8,196 @@ use app\models\User;
 use app\models\UserProfile;
 use app\models\AuthItem;
 use tests\codeception\fixtures\UserFixture;
+use tests\codeception\fixtures\AuthItemFixture;
 use Codeception\Specify;
 
 class UserTest extends DbTestCase
 {
     use Specify;
-    
+
     protected function tearDown()
     {
-        Yii::$app->user->logout();
+        User::deleteAll();
         parent::tearDown();
     }
-    
-    public function testUserNotCorrect()
-    {
-        $user = new User();
-        $user->username = 'one';
-        $user->email = 'two';
 
-        expect('user should be false', $user->save())->false();
-    }
-    
-    public function testUserEmpty()
-    {
-        $user = new User();
-        $user->scenario = 'admin-edit';
-
-        expect('user should be false', $user->save())->false();
-    }
-    
-    public function testUserUnconfirmed()
+    protected function addUser()
     {
         $user = new User();
         $user->username = 'demo';
         $user->email = 'demo@example.com';
+        $user->generateEmailConfirmToken();
         $user->setPassword('fghfgh');
-        $user->save();
 
-        $user = User::findByEmail($user->email);
-        
-        $this->assertInstanceOf('app\models\User', $user, 'user should be exist');
-        expect('user should not be confirmed', !$user->isConfirmed())->true();
-        
-        $user->delete();
+        $this->assertTrue($user->save());
+        $this->assertInstanceOf('app\models\User', $user);
+
+        return $user;
     }
-    
-    public function testUserNewPassword()
+
+    protected function addRole()
     {
-        $user = User::findByEmail($this->user[0]['email']);
-        
-        $this->assertInstanceOf('app\models\User', $user, 'user should be exist');
-        
-        $user->passwordNew = 'password-new';
-        $user->save();
-        
-        expect('password should be correct', $user->validatePassword('password-new'))->true();
+        $role = new AuthItem([
+            'type' => \yii\rbac\Item::TYPE_ROLE,
+            'name' => 'test',
+            'description' => 'test role'
+        ]);
+
+        $this->assertTrue($role->save());
+
+        return $role;
     }
 
     public function testUserSaving()
     {
-        $user = new User();
-        $user->username = 'demo';
-        $user->email = 'demo@example.com';
-        $user->setPassword('fghfgh');
+        $user = $this->addUser();
         $user->setConfirmed();
-        $user->save();
+        $this->assertTrue($user->save());
 
         $user = User::findByEmail($user->email);
-        
-        $this->assertInstanceOf('app\models\User', $user, 'user should be exist');
-        expect('user should be active', $user->isActive())->true();
-        expect('user should be confirmed', $user->isConfirmed())->true();
-        expect('email should be correct', $user->email)->equals($user->email);
-        expect('password should be correct', $user->validatePassword('fghfgh'))->true();
-        
-        $user->delete();
+        $this->assertTrue($user->isActive());
+        $this->assertTrue($user->isConfirmed());
+        $this->assertTrue($user->validatePassword('fghfgh'));
     }
-    
+
+    public function testUserUnconfirmed()
+    {
+        $user = $this->addUser();
+
+        $this->assertFalse($user->isConfirmed());
+        $this->assertNotEmpty($user->email_confirm_token);
+    }
+
+    public function testUserConfirmed()
+    {
+        $user = $this->addUser();
+        $user->setConfirmed();
+
+        $this->assertTrue($user->save());
+
+        $user = User::findByEmail($user->email);
+        $this->assertTrue($user->isConfirmed());
+        $this->assertEmpty($user->email_confirm_token);
+    }
+
+    public function testUserNewPassword()
+    {
+        $user = User::findByEmail($this->user['2-active']['email']);
+
+        $user->passwordNew = 'password-new';
+        $this->assertTrue($user->save());
+        $this->assertTrue($user->validatePassword('password-new'));
+    }
+
     public function testUserProfile()
     {
-        $user = new User();
-        $user->username = 'demo';
-        $user->email = 'demo@example.com';
-        $user->setPassword('fghfgh');
-        
-        $profile = new UserProfile();
-        $profile->full_name = 'Nomad';
-        $profile->birth_day = '2001-01-02';
-        
-        $user->populateRelation('profile', $profile);
-        $user->save();
+        $user = $this->addUser();
+        $user->profile->full_name = 'Nomad';
+        $user->profile->birth_day = '2001-01-02';
+        $this->assertTrue($user->save());
 
         $user = User::findByEmail($user->email);
-        
-        $this->assertInstanceOf('app\models\User', $user, 'user should be exist');
-        expect('full name should be correct', $user->profile->full_name)->equals('Nomad');
-        expect('birth_day should be correct', $user->profile->birth_day)->equals('2001-01-02');
-        
-        $user->delete();
+        $this->assertInstanceOf('app\models\User', $user);
+        $this->assertEquals('Nomad', $user->profile->full_name);
+        $this->assertEquals('2001-01-02', $user->profile->birth_day);
     }
-    
-    public function testUserRole()
+
+    public function testUserAssignRole()
     {
-        $role = new AuthItem();
-        $role->type = \yii\rbac\Item::TYPE_ROLE;
-        $role->name = 'testRole';
-        $role->description = 'test role';
-        $role->save();
-    
-        $user = new User();
-        $user->username = 'demo';
-        $user->email = 'demo@example.com';
-        $user->setPassword('fghfgh');
+        $user = $this->addUser();
+        $role = $this->addRole();
+
         $user->role = $role->name;
-        $user->save();
+        $this->assertTrue($user->save());
 
         $user = User::findByEmail($user->email);
-        
+
         $auth = Yii::$app->authManager;
-        $auth->assign($auth->getRole($role->name), $user->id);
-        
-        $this->assertInstanceOf('app\models\User', $user, 'user should be exist');
-        expect('role should be correct', $user->role)->equals($role->name);
-        expect('access should be corrent', key($auth->getRolesByUser($user->id)))->equals($role->name);
-        
+        $auth->assign($auth->getRole($user->role), $user->id);
+
+        $this->assertTrue($user->roles->name === $role->name);
+        $this->assertEquals($role->name, $user->role);
+        $this->assertEquals($role->name, key($auth->getRolesByUser($user->id)));
+
         $role->delete();
-        $user->delete();
     }
-        
+
+    public function testUserStatusDeleted()
+    {
+        $user = new User();
+
+        $user->status = User::STATUS_DELETED;
+        $this->assertTrue($user->isDeleted());
+        $this->assertEquals('Deleted', $user->getStatusName());
+        $this->assertEquals('Your account has been deleted', $user->getStatusDescription());
+    }
+
+    public function testUserStatusActive()
+    {
+        $user = new User();
+
+        $user->status = User::STATUS_ACTIVE;
+        $this->assertTrue($user->isActive());
+        $this->assertEquals('Active', $user->getStatusName());
+
+        $this->assertEquals('Your account is activated', $user->getStatusDescription());
+    }
+
+    public function testUserStatusBlocked()
+    {
+        $user = new User();
+
+        $user->status = User::STATUS_BLOCKED;
+        $this->assertTrue($user->isBlocked());
+        $this->assertEquals('Locked', $user->getStatusName());
+        $this->assertEquals('Your account has been suspended', $user->getStatusDescription());
+    }
+
+    public function testUserProviders()
+    {
+        $this->assertTrue(is_array(User::getProviders()));
+        $this->assertEquals(User::PROVIDER_TWITTER, User::getProviders('twitter'));
+    }
+
+    public function testUserIsSuperUser()
+    {
+        $user = new User();
+        $user->role = User::ROLE_SUPERUSER;
+        $this->assertTrue($user->isSuperUser());
+    }
+
+    public function testUserAuthKey()
+    {
+        $user = new User();
+        $user->auth_key = $user->generateAuthKey();
+        $this->assertTrue($user->validateAuthKey($user->getAuthKey()));
+    }
+
+    public function testUserValidatePassword()
+    {
+        $user = new User();
+        $this->assertFalse($user->validatePassword(''));
+
+        $user = User::findByEmail($this->user['2-active']['email']);
+        $this->assertTrue($user->validatePassword('123123'));
+    }
+
+    public function testFindIdentity()
+    {
+        $user = new User();
+        $this->assertInstanceOf('app\models\User', $user->findIdentity($this->user['2-active']['id']));
+    }
+
+    /**
+     * @expectedException Exception
+     * @expectedExceptionMessage findIdentityByAccessToken is not implemented.
+     */
+    public function testFindIdentityByAccessToken()
+    {
+        $user = new User();
+        $user->findIdentityByAccessToken('123');
+    }
+
     public function fixtures()
     {
         return [

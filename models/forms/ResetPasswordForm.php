@@ -30,6 +30,7 @@ class ResetPasswordForm extends \yii\base\Model
 
     /**
      * @inheritdoc
+     * @codeCoverageIgnore
      */
     public function attributeLabels()
     {
@@ -64,10 +65,14 @@ class ResetPasswordForm extends \yii\base\Model
      */
     public function resetPassword()
     {
-        $this->user->setPassword($this->password);
-        $this->user->removePasswordResetToken();
-        $this->user->authorize(true);
+        if ($this->validate()) {
+            $this->user->setPassword($this->password);
+            $this->user->removePasswordResetToken();
+            $this->user->authorize(true);
 
-        return $this->user->save(false);
+            return $this->user->save(false);
+        }
+
+        return false;
     }
 }
