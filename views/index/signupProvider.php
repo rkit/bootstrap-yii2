@@ -1,12 +1,15 @@
 <?php
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+use app\models\UserProvider;
 
 $this->title = Yii::t('app', 'Signup');
 ?>
 <div class="site-signup">
   <p class="lead">
-    <?= Html::encode($this->title) . ' '. Yii::t('app', 'through') . ' '. ucfirst($model->provider) ?>
+    <?= Html::encode($this->title) . ' ' .
+        Yii::t('app', 'through') . ' ' .
+        ucfirst(UserProvider::getTypes()[$model->type]) ?>
   </p>
   <hr>
 

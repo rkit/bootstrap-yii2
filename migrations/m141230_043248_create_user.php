@@ -4,12 +4,12 @@ use yii\db\Schema;
 use app\migrations\Migration;
 
 class m141230_043248_create_user extends Migration
-{ 
+{
     public function up()
     {
         //
         // User
-        // 
+        //
         $this->createTable('{{%user}}', [
             'id' => Schema::TYPE_PK,
             'username' => Schema::TYPE_STRING . "(40) DEFAULT NULL",
@@ -31,7 +31,7 @@ class m141230_043248_create_user extends Migration
         $this->createIndex('username', '{{%user}}', 'username', true);
         $this->createIndex('role', '{{%user}}', 'role');
         $this->createIndex('status', '{{%user}}', 'status');
-        
+
         //
         // Profile
         //
@@ -41,28 +41,28 @@ class m141230_043248_create_user extends Migration
             'photo' => Schema::TYPE_STRING . " NOT NULL DEFAULT ''",
             'birth_day' => Schema::TYPE_DATE . " NOT NULL DEFAULT '0000-00-00'",
         ], $this->tableOptions);
-        
+
         $this->addForeignKey(
             'fk_user_profile', '{{%user_profile}}', 'user_id', '{{%user}}', 'id', 'CASCADE', 'CASCADE'
         );
-        
+
         //
         // Provider
         //
         $this->createTable('{{%user_provider}}', [
             'id' => Schema::TYPE_PK,
             'user_id' => Schema::TYPE_INTEGER . " NOT NULL DEFAULT 0",
-            'provider' => "tinyint(1) NOT NULL DEFAULT 0",
+            'type' => "tinyint(1) NOT NULL DEFAULT 0",
             'profile_id' => Schema::TYPE_STRING . " NOT NULL DEFAULT ''",
             'profile_url' => Schema::TYPE_STRING . " NOT NULL DEFAULT ''",
             'access_token' => Schema::TYPE_STRING . " NOT NULL DEFAULT ''",
             'access_token_secret' => Schema::TYPE_STRING . " NOT NULL DEFAULT ''",
         ], $this->tableOptions);
-        
+
         $this->createIndex('user_id', '{{%user_provider}}', 'user_id');
         $this->createIndex('provider_profile', '{{%user_provider}}', 'provider, profile_id');
         $this->createIndex('user_provider', '{{%user_provider}}', 'user_id, provider');
-        
+
         $this->addForeignKey(
             'fk_user_provider', '{{%user_provider}}', 'user_id', '{{%user}}', 'id', 'CASCADE', 'CASCADE'
         );

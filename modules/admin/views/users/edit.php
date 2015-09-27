@@ -69,16 +69,16 @@ $this->title = Yii::t('app', 'Users');
       </ul>
     </div>
 
-    <?php if (count($model->providers())) : ?>
+    <?php if (count($model->providers)) : ?>
     <div class="col-md-4">
       <ul class="list-group">
         <li class="list-group-item text-muted"><?= Yii::t('app', 'Social Networks') ?></li>
-        <?php foreach ($model->providers() as $provider) : ?>
+        <?php foreach ($model->providers as $provider) : ?>
         <li class="list-group-item text-right">
           <span class="pull-left">
-            <strong><?= ucfirst(User::getProviders()[$provider['provider']]) ?></strong>
+            <strong><?= $provider->getTypeName() ?></strong>
           </span>
-          <?= Html::a(Yii::t('app', 'Link to profile'), $provider['profile_url'], ['target' => '_blank']) ?>
+          <?= Html::a(Yii::t('app', 'Link to profile'), $provider->profile_url, ['target' => '_blank']) ?>
         </li>
         <?php endforeach?>
       </ul>

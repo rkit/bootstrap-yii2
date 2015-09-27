@@ -156,7 +156,7 @@ class UserTest extends DbTestCase
     public function testUserProviders()
     {
         $this->assertTrue(is_array(User::getProviders()));
-        $this->assertEquals(User::PROVIDER_TWITTER, User::getProviders('twitter'));
+        $this->assertEquals(User::TYPE_TWITTER, User::getProviders('twitter'));
     }
 
     public function testUserIsSuperUser()

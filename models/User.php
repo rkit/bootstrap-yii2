@@ -10,6 +10,7 @@ use yii\web\IdentityInterface;
 use yii\behaviors\TimestampBehavior;
 use app\components\BaseActive;
 use app\models\UserProfile;
+use app\models\UserProvider;
 
 use Yii;
 
@@ -36,10 +37,6 @@ class User extends BaseActive implements IdentityInterface
     const STATUS_DELETED = 0;
     const STATUS_ACTIVE  = 1;
     const STATUS_BLOCKED = 2;
-
-    const PROVIDER_TWITTER   = 1;
-    const PROVIDER_FACEBOOK  = 2;
-    const PROVIDER_VKONTAKTE = 3;
 
     const ROLE_SUPERUSER = 'SuperUser';
 
@@ -162,6 +159,14 @@ class User extends BaseActive implements IdentityInterface
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getProviders()
+    {
+        return $this->hasMany(UserProvider::className(), ['user_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getRoles()
     {
         return $this->hasOne(AuthItem::className(), ['name' => 'role']);
@@ -204,27 +209,14 @@ class User extends BaseActive implements IdentityInterface
         if ($this->profile !== null) {
             $this->link('profile', $this->profile);
         }
-    }
 
-    /**
-     * Get providers.
-     *
-     * @param string $provider
-     * @param array|int
-     */
-    public static function getProviders($provider = null)
-    {
-        $providers = [
-            self::PROVIDER_TWITTER => 'twitter',
-            self::PROVIDER_FACEBOOK => 'facebook',
-            self::PROVIDER_VKONTAKTE => 'vkontakte',
-        ];
-
-        if ($provider) {
-            return array_flip($providers)[$provider];
+        if (count($this->providers)) {
+            foreach ($this->providers as $provider) {
+                if ($provider) {
+                    $this->link('providers', $provider);
+                }
+            }
         }
-
-        return $providers;
     }
 
     /**
@@ -525,79 +517,66 @@ class User extends BaseActive implements IdentityInterface
     }
 
     /**
-     * Finds user by provider and profileId.
+     * Finds user by type of provider and profile of provider
      *
-     * @param int $provider
+     * @param int $type
      * @param int $profileId
      * @return User|null
      */
-    public static function findByProvider($provider, $profileId)
+    public static function findByProvider($type, $profileId)
     {
-        $exist = (new Query())
-            ->select('*')
-            ->from('user_provider')
-            ->where([
-                'provider'  => $provider,
-                'profile_id' => $profileId
-            ])
-            ->one();
+        $provider = UserProvider::find()->where([
+            'type'  => $type,
+            'profile_id' => $profileId
+        ])->one();
 
-        return $exist ? static::findOne($exist['user_id']) : null;
+        return $provider ? static::findOne($provider->user_id) : null;
     }
 
     /**
-     * Get all connected providers.
+     * Add profile
      *
-     * @return array
+     * @param array $profile
+     * @return bool
      */
-    public function providers()
+    public function addProfile($profile)
     {
-        return (new Query())
-            ->select('*')
-            ->from('user_provider')
-            ->where(['user_id' => $this->id])
-            ->all();
+        $userProfile = new UserProfile();
+        $userProfile->load($profile, '');
+        $this->populateRelation('profile', $userProfile);
     }
 
     /**
-     * Save provider.
+     * Update provider
      *
-     * @param int $provider
-     * @param string $profileId
-     * @param string $profileUrl
-     * @param string $accessToken
-     * @param string $accessTokenSecret
-     * @return int Number of rows affected.
+     * @param array $provider
+     * @return bool
      */
-    public function saveProvider($provider, $profileId, $profileUrl, $accessToken, $accessTokenSecret)
+    public function addProvider($provider)
     {
-        $params = [
-            'user_id' => $this->id,
-            'provider' => $provider,
-            'profile_id' => $profileId,
-            'profile_url' => $profileUrl,
-            'access_token' => $accessToken,
-            'access_token_secret' => $accessTokenSecret
-        ];
+        $userProvider = new UserProvider();
+        $userProvider->load($provider, '');
+        $this->populateRelation('providers', [$userProvider]);
+    }
 
-        $exist = (new Query())
-            ->select('*')
-            ->from('user_provider')
-            ->where(['user_id' => $this->id, 'provider' => $provider])
-            ->one();
+    /**
+     * Update provider
+     *
+     * @param array $provider
+     * @return bool
+     */
+    public function updateProvider($provider)
+    {
+        $userProvider = $this->getProviders()->where(['user_id' => $this->id, 'type' => $provider['type']])->one();
 
-        if ($exist) {
-            return Yii::$app->db
-                ->createCommand()
-                ->update('user_provider', $params, 'id = :id', ['id' => $exist['id']])
-                ->execute();
+        if ($userProvider) {
+            $userProvider->load($provider, '');
+            $this->populateRelation('providers', [$userProvider]);
 
-        } else {
-            return Yii::$app->db
-                ->createCommand()
-                ->insert('user_provider', $params)
-                ->execute();
+            return $this->save();
         }
+
+        return false;
     }
 
     /**

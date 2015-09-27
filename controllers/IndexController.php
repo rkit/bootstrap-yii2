@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\components\BaseController;
 use app\models\User;
+use app\models\UserProvider;
 use app\models\forms\LoginForm;
 use app\models\forms\SignupForm;
 use app\models\forms\SignupProviderForm;
@@ -73,23 +74,23 @@ class IndexController extends BaseController
     {
         Yii::$app->session['provider'] = null;
 
+        $type = UserProvider::getTypeByName($provider->id);
         $profile = $provider->getUserAttributes();
         $token = $provider->getAccessToken()->getParams();
+        $data = [
+            'type' => $type,
+            'profile' => $profile,
+            'token' => $token
+        ];
 
-        if ($user = User::findByProvider(User::getProviders($provider->id), $profile['id'])) {
-            // if user exist, then login
+        if ($user = User::findByProvider($type, $profile['id'])) {
             if (!$user->isActive()) {
                 return $this->alert('error', $user->getStatusDescription());
             }
-
+            $user->updateProvider(UserProvider::parseProvider($type, $data));
             $user->authorize(true);
         } else {
-            // if user not exist, then try create
-            Yii::$app->session['provider'] = [
-                'provider' => $provider->id,
-                'profile' => $profile,
-                'token' => $token
-            ];
+            Yii::$app->session['provider'] = $data;
         }
     }
 

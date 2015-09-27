@@ -13,8 +13,6 @@ use Intervention\Image\ImageManagerStatic as Image;
  * @property string $full_name
  * @property string $photo
  * @property string $birth_day
- *
- * @property User $user
  */
 class UserProfile extends BaseActive
 {
