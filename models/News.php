@@ -212,7 +212,7 @@ class News extends BaseActive
     /**
      * Get all statuses.
      *
-     * @return array
+     * @return string[]
      */
     public static function getStatuses()
     {

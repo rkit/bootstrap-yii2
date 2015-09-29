@@ -4,7 +4,6 @@ namespace app\models\forms;
 
 use Yii;
 use yii\helpers\ArrayHelper;
-use yii\base\InvalidParamException;
 use app\models\User;
 use app\models\UserProfile;
 use app\models\UserProvider;

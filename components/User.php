@@ -2,8 +2,6 @@
 
 namespace app\components;
 
-use Yii;
-
 class User extends \yii\web\User
 {
     public function init()

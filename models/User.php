@@ -207,6 +207,8 @@ class User extends BaseActive implements IdentityInterface
 
     /**
      * @inheritdoc
+     * @property \app\models\UserProfile $profile
+     * @property \app\models\UserProvider $providers
      */
     public function afterSave($insert, $changedAttributes)
     {
@@ -225,6 +227,12 @@ class User extends BaseActive implements IdentityInterface
         }
     }
 
+    /**
+     * @inheritdoc
+     * @param boolean $runValidation
+     * @param array $attributeNames
+     * @return boolean
+     */
     public function save($runValidation = true, $attributeNames = null)
     {
         return $this->getDb()->transaction(function () use ($runValidation, $attributeNames) {

@@ -2,8 +2,6 @@
 
 namespace app\models\forms;
 
-use Yii;
-use yii\base\InvalidParamException;
 use app\models\User;
 
 class ConfirmEmailForm extends \yii\base\Model
