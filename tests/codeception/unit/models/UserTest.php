@@ -153,12 +153,6 @@ class UserTest extends DbTestCase
         $this->assertEquals('Your account has been suspended', $user->getStatusDescription());
     }
 
-    public function testUserProviders()
-    {
-        $this->assertTrue(is_array(User::getProviders()));
-        $this->assertEquals(User::TYPE_TWITTER, User::getProviders('twitter'));
-    }
-
     public function testUserIsSuperUser()
     {
         $user = new User();
