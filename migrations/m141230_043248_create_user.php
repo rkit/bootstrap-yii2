@@ -60,8 +60,8 @@ class m141230_043248_create_user extends Migration
         ], $this->tableOptions);
 
         $this->createIndex('user_id', '{{%user_provider}}', 'user_id');
-        $this->createIndex('provider_profile', '{{%user_provider}}', 'provider, profile_id');
-        $this->createIndex('user_provider', '{{%user_provider}}', 'user_id, provider');
+        $this->createIndex('provider_profile', '{{%user_provider}}', 'type, profile_id');
+        $this->createIndex('user_provider', '{{%user_provider}}', 'user_id, type');
 
         $this->addForeignKey(
             'fk_user_provider', '{{%user_provider}}', 'user_id', '{{%user}}', 'id', 'CASCADE', 'CASCADE'
