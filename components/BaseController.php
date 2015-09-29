@@ -43,7 +43,7 @@ class BaseController extends Controller
      * @param \yii\db\ActiveRecord $model
      * @param int $id
      * @param bool $ownerCheck
-     * @return ActiveRecord|void
+     * @return \yii\db\ActiveRecord|\yii\web\HttpException
      */
     public function loadModel($model, $id, $ownerCheck = false)
     {
