@@ -69,20 +69,6 @@ class User extends BaseActive implements IdentityInterface
             ['status', 'integer'],
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => array_keys(self::getStatuses())],
-
-            //
-            // scenario: admin-edit
-            //
-
-            ['role', 'string', 'on' => 'admin-edit'],
-
-            ['username', 'required', 'when' => function ($model) {
-                return empty($model->email);
-            }, 'whenClient' => "function (attribute, value) {
-                return !$('#user-email').val().length
-            }", 'message' => Yii::t('app', 'You must fill in username or email'), 'on' => 'admin-edit'],
-
-            ['passwordNew', 'string', 'min' => 6, 'on' => 'admin-edit'],
         ];
     }
 

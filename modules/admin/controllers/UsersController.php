@@ -6,6 +6,7 @@ use app\components\BaseController;
 use app\models\User;
 use app\models\UserProfile;
 use app\modules\admin\models\search\UserSearch;
+use app\modules\admin\models\forms\UserForm;
 use yii\filters\VerbFilter;
 use yii\helpers\Url;
 use Yii;
@@ -74,13 +75,11 @@ class UsersController extends BaseController
 
     public function actionEdit($id = null)
     {
-        $model = new User();
+        $model = new UserForm();
 
         if ($id) {
             $model = $this->loadModel($model, $id);
         }
-
-        $model->scenario = 'admin-edit';
 
         if (Yii::$app->request->isPost) {
             if ($model->isNewRecord) {
@@ -101,7 +100,7 @@ class UsersController extends BaseController
                 Yii::$app->session->setFlash('success', Yii::t('app', 'Saved successfully'));
                 return $this->response(['redirect' => Url::toRoute(['edit', 'id' => $model->id])]);
             } else {
-                return $this->response(['errors' => $model->getErrors(), 'prefix' => 'user-']);
+                return $this->response(['errors' => $model->getErrors(), 'prefix' => 'userform-']);
             }
         }
 
