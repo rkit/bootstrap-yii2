@@ -3,15 +3,12 @@
 namespace app\models;
 
 use yii\base\NotSupportedException;
-use yii\db\Query;
 use yii\db\ActiveRecord;
-use yii\helpers\Security;
 use yii\web\IdentityInterface;
 use yii\behaviors\TimestampBehavior;
 use app\components\BaseActive;
 use app\models\UserProfile;
 use app\models\UserProvider;
-
 use Yii;
 
 /**
@@ -553,7 +550,7 @@ class User extends BaseActive implements IdentityInterface
      * Add profile
      *
      * @param array $profile
-     * @return bool
+     * @return void
      */
     public function addProfile($profile)
     {
@@ -563,10 +560,10 @@ class User extends BaseActive implements IdentityInterface
     }
 
     /**
-     * Update provider
+     * Add provider
      *
      * @param array $provider
-     * @return bool
+     * @return void
      */
     public function addProvider($provider)
     {
