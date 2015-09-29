@@ -148,6 +148,15 @@ class User extends BaseActive implements IdentityInterface
         ];
     }
 
+    public function transactions()
+    {
+        return [
+            'create' => self::OP_ALL,
+            'update' => self::OP_ALL,
+            'delete' => self::OP_ALL,
+        ];
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -210,13 +219,20 @@ class User extends BaseActive implements IdentityInterface
             $this->link('profile', $this->profile);
         }
 
-        if (count($this->providers)) {
+        if ($this->providers !== null && count($this->providers)) {
             foreach ($this->providers as $provider) {
                 if ($provider) {
                     $this->link('providers', $provider);
                 }
             }
         }
+    }
+
+    public function save($runValidation = true, $attributeNames = null)
+    {
+        return $this->getDb()->transaction(function () use ($runValidation, $attributeNames) {
+            return parent::save($runValidation, $attributeNames);
+        });
     }
 
     /**
