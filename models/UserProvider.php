@@ -6,15 +6,15 @@ use app\components\BaseActive;
 use yii\helpers\ArrayHelper;
 
 /**
- * This is the model class for table "user_provider".
+ * This is the model class for table "user_provider"
  *
  * @property integer $id
  * @property integer $user_id
  * @property integer $type
- * @property string profile_id
- * @property string profile_url
- * @property string access_token
- * @property string access_token_secret
+ * @property string $profile_id
+ * @property string $profile_url
+ * @property string $access_token
+ * @property string $access_token_secret
  */
 class UserProvider extends BaseActive
 {
@@ -87,7 +87,7 @@ class UserProvider extends BaseActive
      * Parse provider
      *
      * @param int $type Type of provider
-     * @param array $data Data from social network.
+     * @param array $data Data from social network
      * @return array
      */
     public static function parseProvider($type, $data)
@@ -110,7 +110,7 @@ class UserProvider extends BaseActive
      * Parse profile
      *
      * @param int $type Type of provider
-     * @param array $data Data from social network.
+     * @param array $data Data from social network
      * @return array
      */
     public static function parseProfile($type, $data)
@@ -132,7 +132,7 @@ class UserProvider extends BaseActive
     /**
      * Prepare provider attributes for facebook
      *
-     * @param array $data Data from social network.
+     * @param array $data Data from social network
      * @return array
      */
     private static function parseProviderFacebook($data)
@@ -149,7 +149,7 @@ class UserProvider extends BaseActive
     /**
      * Prepare provider attributes for vkontakte
      *
-     * @param array $data Data from social network.
+     * @param array $data Data from social network
      * @return array
      */
     private static function parseProviderVkontakte($data)
@@ -166,7 +166,7 @@ class UserProvider extends BaseActive
     /**
      * Prepare provider attributes for twitter
      *
-     * @param array $data Data from social network.
+     * @param array $data Data from social network
      * @return array
      */
     private static function parseProviderTwitter($data)
@@ -183,7 +183,7 @@ class UserProvider extends BaseActive
     /**
      * Prepare profile attributes for facebook
      *
-     * @param array $data Data from social network.
+     * @param array $data Data from social network
      * @return array
      */
     private static function parseProfileFacebook($data)
@@ -198,7 +198,7 @@ class UserProvider extends BaseActive
     /**
      * Prepare profile attributes for vkontakte
      *
-     * @param array $data Data from social network.
+     * @param array $data Data from social network
      * @return array
      */
     private static function parseProfileVkontakte($data)
@@ -213,7 +213,7 @@ class UserProvider extends BaseActive
     /**
      * Prepare profile attributes for twitter
      *
-     * @param array $data Data from social network.
+     * @param array $data Data from social network
      * @return array
      */
     private static function parseProfileTwitter($data)

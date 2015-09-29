@@ -5,12 +5,12 @@ namespace app\components;
 use Yii;
 
 /**
- * Base class for ActiveRecord.
+ * Base class for ActiveRecord
  */
 class BaseActive extends \yii\db\ActiveRecord
 {
     /**
-     * Check owner.
+     * Check owner
      *
      * @return bool
      */

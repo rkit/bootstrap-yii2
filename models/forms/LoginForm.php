@@ -51,11 +51,11 @@ class LoginForm extends \yii\base\Model
     }
 
     /**
-     * Validates the password.
-     * This method serves as the inline validation for password.
+     * Validates the password
+     * This method serves as the inline validation for password
      *
-     * @param string $attribute The attribute currently being validated.
-     * @param array $params The additional name-value pairs given in the rule.
+     * @param string $attribute The attribute currently being validated
+     * @param array $params The additional name-value pairs given in the rule
      */
     public function validatePassword($attribute, $params)
     {
@@ -71,9 +71,9 @@ class LoginForm extends \yii\base\Model
     }
 
     /**
-     * Logs in a user using the provided email and password.
+     * Logs in a user using the provided email and password
      *
-     * @return boolean Whether the user is logged in successfully.
+     * @return boolean
      */
     public function login()
     {
@@ -87,7 +87,7 @@ class LoginForm extends \yii\base\Model
     /**
      * Finds user by [[email]]
      *
-     * @return User|null
+     * @return \app\models\User|null
      */
     public function getUser()
     {

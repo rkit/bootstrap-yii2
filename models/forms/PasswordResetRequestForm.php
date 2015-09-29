@@ -38,9 +38,9 @@ class PasswordResetRequestForm extends \yii\base\Model
     }
 
     /**
-     * Sends an email with a link, for resetting the password.
+     * Sends an email with a link, for resetting the password
      *
-     * @return boolean Whether the email was send.
+     * @return boolean
      */
     public function sendEmail()
     {

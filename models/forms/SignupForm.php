@@ -57,9 +57,9 @@ class SignupForm extends \yii\base\Model
     }
 
     /**
-     * Signs user up.
+     * Signs user up
      *
-     * @return User|bool The saved model or bool if saving fails.
+     * @return \app\models\User|bool
      */
     public function signup()
     {
@@ -67,11 +67,7 @@ class SignupForm extends \yii\base\Model
             $this->user = new User();
             $this->user->email = $this->email;
             $this->user->setPassword($this->password);
-
-            $profile = new UserProfile();
-            $profile->full_name = $this->full_name;
-            $this->user->populateRelation('profile', $profile);
-
+            $this->user->addProfile(['full_name' => $this->full_name]);
             if ($this->user->save()) {
                 if ($this->user->authorize(true)) {
                     return $this->user;
@@ -83,9 +79,9 @@ class SignupForm extends \yii\base\Model
     }
 
     /**
-     * Sends an email with a link, for confirm the email.
+     * Sends an email with a link, for confirm the email
      *
-     * @return boolean Whether the email was send.
+     * @return boolean
      */
     public function sendEmail()
     {

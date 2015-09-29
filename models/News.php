@@ -210,7 +210,7 @@ class News extends BaseActive
     }
 
     /**
-     * Get all statuses.
+     * Get all statuses
      *
      * @return string[]
      */

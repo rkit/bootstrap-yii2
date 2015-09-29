@@ -8,7 +8,7 @@ use yii\db\Schema;
 use yii\db\Query;
 
 /**
- * Component for storage settings in db.
+ * Component for storage settings in db
  */
 class Settings extends \yii\base\Component
 {
@@ -43,7 +43,7 @@ class Settings extends \yii\base\Component
     }
 
     /**
-     * Get value by key.
+     * Get value by key
      *
      * @param string $key
      * @return string
@@ -55,7 +55,7 @@ class Settings extends \yii\base\Component
     }
 
     /**
-     * Set value.
+     * Set value
      *
      * @param string $key
      * @param string|int $value
@@ -81,9 +81,9 @@ class Settings extends \yii\base\Component
     }
 
     /**
-     * Load all settings.
+     * Load all settings
      *
-     * @param bool $reload Get from storage.
+     * @param bool $reload Get from storage
      * @return array
      */
     public function load($reload = false)

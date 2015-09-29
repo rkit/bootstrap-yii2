@@ -32,7 +32,7 @@ class SignupProviderForm extends \yii\base\Model
     private $data = [];
 
     /**
-     * Form for social auth.
+     * Form for social auth
      *
      * @param array $data
      * @param array $config
@@ -88,7 +88,7 @@ class SignupProviderForm extends \yii\base\Model
     /**
      * Get User
      *
-     * @return User
+     * @return \app\models\User
      */
     public function getUser()
     {
@@ -106,9 +106,10 @@ class SignupProviderForm extends \yii\base\Model
     }
 
     /**
-     * Signs user up.
+     * Signs user up
      *
-     * @return User|null The saved model or null if saving fails.
+     * @param bool $validate
+     * @return \app\models\User|null The saved model or null if saving fails.
      */
     public function signup($validate = true)
     {
@@ -150,9 +151,9 @@ class SignupProviderForm extends \yii\base\Model
     }
 
     /**
-     * Sends an email with a link, for confirm the email.
+     * Sends an email with a link, for confirm the email
      *
-     * @return boolean Whether the email was send
+     * @return boolean
      */
     public function sendEmail()
     {

@@ -22,7 +22,7 @@ class Notify extends \yii\base\Component
     }
 
     /**
-     * Send message.
+     * Send message
      *
      * @param string $to
      * @param string $subject
@@ -46,6 +46,12 @@ class Notify extends \yii\base\Component
             $message->setSubject($subject);
         }
 
-        return $message->send();
+        $status = $message->send();
+
+        if (!$status) {
+            Yii::error('Failed to send email: `' . $message->getSubject() . '` for `' . $to . '`');
+        }
+
+        return $status;
     }
 }

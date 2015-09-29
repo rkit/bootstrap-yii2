@@ -118,20 +118,18 @@ class IndexController extends BaseController
     public function actionSignup()
     {
         $model = new SignupForm();
-        if ($model->load(Yii::$app->request->post())) {
-            if ($model->signup()) {
-                if ($model->sendEmail()) {
-                    return $this->alert(
-                        'success',
-                        Yii::t('app', 'Please activate your account') . '. ' .
-                        Yii::t('app', 'A letter for activation was sent to {email}', ['email' => $model->email])
-                    );
-                } else {
-                    return $this->alert(
-                        'error',
-                        Yii::t('app', 'An error occurred while sending a message to activate account')
-                    );
-                }
+        if ($model->load(Yii::$app->request->post()) && $model->signup()) {
+            if ($model->sendEmail()) {
+                return $this->alert(
+                    'success',
+                    Yii::t('app', 'Please activate your account') . '. ' .
+                    Yii::t('app', 'A letter for activation was sent to {email}', ['email' => $model->email])
+                );
+            } else {
+                return $this->alert(
+                    'error',
+                    Yii::t('app', 'An error occurred while sending a message to activate account')
+                );
             }
         }
 
@@ -159,21 +157,19 @@ class IndexController extends BaseController
             }
         }
 
-        if ($model->load(Yii::$app->request->post())) {
-            if ($model->signup()) {
-                Yii::$app->session['provider'] = null;
-                if ($model->sendEmail()) {
-                    return $this->alert(
-                        'success',
-                        Yii::t('app', 'Please activate your account') . '. ' .
-                        Yii::t('app', 'A letter for activation was sent to {email}', ['email' => $model->email])
-                    );
-                } else {
-                    return $this->alert(
-                        'error',
-                        Yii::t('app', 'An error occurred while sending a message to activate account')
-                    );
-                }
+        if ($model->load(Yii::$app->request->post()) && $model->signup()) {
+            Yii::$app->session['provider'] = null;
+            if ($model->sendEmail()) {
+                return $this->alert(
+                    'success',
+                    Yii::t('app', 'Please activate your account') . '. ' .
+                    Yii::t('app', 'A letter for activation was sent to {email}', ['email' => $model->email])
+                );
+            } else {
+                return $this->alert(
+                    'error',
+                    Yii::t('app', 'An error occurred while sending a message to activate account')
+                );
             }
         }
 

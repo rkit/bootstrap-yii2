@@ -87,7 +87,7 @@ class AuthItem extends \yii\db\ActiveRecord
     }
 
     /**
-     * Deleting a file from the db and from the file system.
+     * Deleting a file from the db and from the file system
      *
      * @return bool
      */

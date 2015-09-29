@@ -7,7 +7,7 @@ use yii\helpers\Html;
 class Util
 {
     /**
-     * Convert TZ.
+     * Convert TZ
      *
      * @param string $date
      * @param string $fromTimeZone
@@ -24,8 +24,8 @@ class Util
     }
 
     /**
-     * Clear text.
-     * For meta tags & title page.
+     * Clear text
+     * For meta tags & title page
      *
      * @param string $text
      * @return string

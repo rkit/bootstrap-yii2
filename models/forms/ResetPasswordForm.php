@@ -36,7 +36,7 @@ class ResetPasswordForm extends \yii\base\Model
     }
 
     /**
-     * Validate token.
+     * Validate token
      *
      * @param string $token
      * @return boolean
@@ -57,9 +57,9 @@ class ResetPasswordForm extends \yii\base\Model
     }
 
     /**
-     * Resets password.
+     * Resets password
      *
-     * @return boolean If password was reset.
+     * @return boolean
      */
     public function resetPassword()
     {

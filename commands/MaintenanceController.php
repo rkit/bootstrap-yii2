@@ -7,13 +7,10 @@ use yii\console\Controller;
 use yii\helpers\Console;
 
 /**
- * Command for enabling and disabling maintenance mode.
+ * Command for enabling and disabling maintenance mode
  */
 class MaintenanceController extends Controller
 {
-    /**
-     * Disables the maintenance mode.
-     */
     public function actionOff()
     {
         $this->stdout("Trying disabling maintenance mode...\n");
@@ -27,9 +24,6 @@ class MaintenanceController extends Controller
         }
     }
 
-    /**
-     * Enables the maintenance mode.
-     */
     public function actionOn()
     {
         $this->stdout("Trying enabling maintenance mode...\n");
@@ -44,7 +38,7 @@ class MaintenanceController extends Controller
     }
 
     /**
-     * Returns the path to the 'maintenance' file.
+     * Returns the path to the 'maintenance' file
      *
      * @return string
      */

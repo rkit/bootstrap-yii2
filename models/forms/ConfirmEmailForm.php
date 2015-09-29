@@ -12,7 +12,7 @@ class ConfirmEmailForm extends \yii\base\Model
     private $user;
 
     /**
-     * Validate token.
+     * Validate token
      *
      * @param string $token
      * @return boolean
@@ -33,9 +33,9 @@ class ConfirmEmailForm extends \yii\base\Model
     }
 
     /**
-     * Confirm email.
+     * Confirm email
      *
-     * @return boolean if email was confirm.
+     * @return boolean
      */
     public function confirmEmail()
     {

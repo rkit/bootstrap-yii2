@@ -7,21 +7,21 @@ use yii\web\Controller;
 use yii\helpers\ArrayHelper;
 
 /**
- * Global base controller.
+ * Global base controller
  */
 class BaseController extends Controller
 {
     /**
-     * @var string Path to js bundle.
+     * @var string Path to js bundle
      */
     public $jsBundle = 'front.js';
     /**
-     * @var string Path to css bundle.
+     * @var string Path to css bundle
      */
     public $cssBundle = 'front.css';
 
     /**
-     * @return string Return CSS bundle.
+     * @return string Return CSS bundle
      */
     public function getCssBundle()
     {
@@ -29,7 +29,7 @@ class BaseController extends Controller
     }
 
     /**
-     * @return string Return JS bundle.
+     * @return string Return JS bundle
      */
     public function getJsBundle()
     {
@@ -37,10 +37,10 @@ class BaseController extends Controller
     }
 
     /**
-     * Load the model based on its primary key value.
-     * If the model is not found or access denied, a 404 HTTP exception will be thrown.
+     * Load the model based on its primary key value
+     * If the model is not found or access denied, a 404 HTTP exception will be thrown
      *
-     * @param ActiveRecord $model
+     * @param \yii\db\ActiveRecord $model
      * @param int $id
      * @param bool $ownerCheck
      * @return ActiveRecord|void
@@ -57,7 +57,7 @@ class BaseController extends Controller
     }
 
     /**
-     * Show alert message.
+     * Show alert message
      *
      * @param string $type success|error
      * @param string $message
@@ -70,7 +70,7 @@ class BaseController extends Controller
     }
 
     /**
-     * JSON Response.
+     * JSON Response
      *
      * @param mixed $data
      */
@@ -81,7 +81,7 @@ class BaseController extends Controller
     }
 
     /**
-     * Echo and exit.
+     * Echo and exit
      *
      * @param mixed $data
      */
@@ -92,10 +92,10 @@ class BaseController extends Controller
     }
 
     /**
-     * Triggers a 404 (Page Not Found) error.
+     * Triggers a 404 (Page Not Found) error
      *
      * @param string $msg
-     * @throws CHttpException when invoked.
+     * @throws CHttpException when invoked
      */
     public function pageNotFound($msg = null)
     {
@@ -103,10 +103,10 @@ class BaseController extends Controller
     }
 
     /**
-     * Triggers a 403 (Access Denied) error.
+     * Triggers a 403 (Access Denied) error
      *
      * @param string $msg
-     * @throws CHttpException when invoked.
+     * @throws CHttpException when invoked
      */
     public function accessDenied($msg = null)
     {
@@ -114,10 +114,10 @@ class BaseController extends Controller
     }
 
     /**
-     * Triggers a 400 (Bad Request) error.
+     * Triggers a 400 (Bad Request) error
      *
      * @param string $msg
-     * @throws CHttpException when invoked.
+     * @throws CHttpException when invoked
      */
     public function badRequest($msg = null)
     {
