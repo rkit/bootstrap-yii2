@@ -796,19 +796,20 @@
         },
         {
             "name": "rkit/fileapi-widget-yii2",
-            "version": "1.0.0",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rkit/fileapi-widget-yii2.git",
-                "reference": "0fcdcebab572274b3fc38d1688266c930b1d7fb4"
+                "reference": "5e9096a4725ff4d3b732c4461af1094e83125e83"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rkit/fileapi-widget-yii2/zipball/0fcdcebab572274b3fc38d1688266c930b1d7fb4",
-                "reference": "0fcdcebab572274b3fc38d1688266c930b1d7fb4",
+                "url": "https://api.github.com/repos/rkit/fileapi-widget-yii2/zipball/5e9096a4725ff4d3b732c4461af1094e83125e83",
+                "reference": "5e9096a4725ff4d3b732c4461af1094e83125e83",
                 "shasum": ""
             },
             "require": {
+                "rubaxa/fileapi": "^0.4.11",
                 "yiisoft/yii2": "^2.0"
             },
             "type": "yii2-extension",
@@ -837,7 +838,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2015-10-01 11:07:44"
+            "time": "2015-10-01 14:27:54"
         },
         {
             "name": "rkit/filemanager-yii2",
@@ -889,6 +890,42 @@
                 "yii2"
             ],
             "time": "2015-10-01 10:55:55"
+        },
+        {
+            "name": "rubaxa/fileapi",
+            "version": "0.4.11",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/RubaXa/jquery.fileapi.git",
+                "reference": "5fc1013e103bb0931f5fbd18f15a9194ddf573d4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/RubaXa/jquery.fileapi/zipball/5fc1013e103bb0931f5fbd18f15a9194ddf573d4",
+                "reference": "5fc1013e103bb0931f5fbd18f15a9194ddf573d4",
+                "shasum": ""
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Konstantin Lebedev",
+                    "email": "ibnRubaXa@gmail.com"
+                }
+            ],
+            "description": "jQuery plugin for FileAPI (multiupload, image upload, crop, resize and etc.)",
+            "homepage": "https://github.com/RubaXa/jquery.fileapi",
+            "keywords": [
+                "file upload",
+                "fileapi",
+                "jquery",
+                "multiupload",
+                "upload"
+            ],
+            "time": "2015-09-11 15:56:14"
         },
         {
             "name": "swiftmailer/swiftmailer",
