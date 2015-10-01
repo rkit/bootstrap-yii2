@@ -199,6 +199,7 @@ table thead a {
     overflow: hidden;
     clear: both;
   }
+    .fileapi-preview img { max-height: 200px; }
     .fileapi-preview-delete {
       display: none;
       position: absolute;

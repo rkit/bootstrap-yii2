@@ -33,8 +33,7 @@ $this->title = Yii::t('app', 'Users');
       <?= $this->render('/shared/files/image-input', [
           'form' => $form,
           'model' => $model,
-          'attribute' => 'photo',
-          'crop' => false
+          'attribute' => 'photo'
       ]) ?>
     </div>
   </div>

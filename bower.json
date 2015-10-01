@@ -3,6 +3,6 @@
   "private": true,
   "dependencies": {
     "nprogress": "^0.1.6",
-    "jquery-form": "^3.51"
+    "jquery-form": "3.51"
   }
 }

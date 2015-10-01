@@ -17,6 +17,9 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
+    'Cancel' => '@@Отмена@@',
+    'Click on the image for editing' => '@@Щелкните на картинку для редактирования@@',
+    'Edit' => '@@Редактировать@@',
     'A letter for activation was sent to {email}' => 'Письмо для активации было отправлено на {email}',
     'Access Denied' => 'Доступ закрыт',
     'Access to the Control Panel' => 'Доступ к панели управления',
@@ -37,10 +40,8 @@ return [
     'Bad request' => 'Неверный запрос',
     'Big city' => 'Крупный город',
     'Birth Day' => 'День Рождения',
-    'Cancel' => 'Отмена',
     'Cities' => 'Города',
     'City' => 'Город',
-    'Click on the image for editing' => 'Щелкните на картинку для редактирования',
     'Control Panel' => 'Панель управления',
     'Control Panel / Cities' => 'Панель управления / Города',
     'Control Panel / Countries' => 'Панель управления / Страны',
@@ -63,7 +64,6 @@ return [
     'Description' => 'Описание',
     'Disable' => 'Отключить',
     'District' => 'Район',
-    'Edit' => 'Редактировать',
     'Email' => 'Email',
     'Enable' => 'Включить',
     'Enter password' => 'Введите пароль',
@@ -162,6 +162,8 @@ return [
     'To complete the registration process, you must activate your account' => 'Для завершения процесса регистрации необходимо активировать ваш аккаунт',
     'Type' => 'Тип',
     'Type of news' => 'Тип новости',
+    'Upload' => 'Загрузить',
+    'Uploaded' => 'Загружено',
     'User' => 'Пользователь',
     'Username' => 'Имя пользователя',
     'Users' => 'Пользователи',

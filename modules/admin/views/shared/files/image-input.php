@@ -1,12 +1,11 @@
 <?php
 use yii\helpers\Html;
 use yii\web\JsExpression;
-use app\widgets\FileApi\Widget as FileApi;
+use rkit\fileapi\Widget as FileApi;
 ?>
 <?= $form->field($model, $attribute, ['template' => "{label}\n{error}\n{input}\n{hint}"])
     ->widget(FileApi::className(), [
         'template' => '@app/modules/admin/views/shared/files/image-template',
-        'crop' => $crop,
         'callbacks' => [
             'select' => new JsExpression('function (evt, ui) {
                var ufile = ui.files[0],
@@ -15,44 +14,19 @@ use app\widgets\FileApi\Widget as FileApi;
                if (ui && ui.other.length && ui.other[0].errors) {
                  alert("'.Yii::t('app', 'Incorrect file format').': " + ui.other[0].name);
                }
-
-               if (ufile && $el.find(".crop-area").length) {
-                 $el.find(".modal").modal("show");
-
-                 setTimeout(function () {
-                   $el.find(".crop-area").cropper({
-                     "file": ufile,
-                     "aspectRatio": 0,
-                     "bgColor": "#ffffff",
-                     "maxSize": [570],
-                     "minSize": '.($crop ? json_encode($cropMinSize) : "[]").',
-                     "keySupport": false,
-                     "onSelect": function (coordinates) {
-                        $el.fileapi("crop", ufile, coordinates);
-                     }
-                   });
-                 }, 700);
-
-                 $el.on("click", ".crop-save",
-                   function() {
-                     $el.fileapi("upload");
-                     $(this).closest(".modal").modal("hide");
-                   }
-                 );
-               }
             }'),
-            'filecomplete' => new JsExpression('function (evt, uiEvt) {
+            'filecomplete' => [new JsExpression('function (evt, uiEvt) {
                if (uiEvt.result.error) {
                  alert(uiEvt.result.error);
                } else {
                  $(".field-' . Html::getInputId($model, $attribute) . '").find(".help-block").empty();
                  $(".field-' . Html::getInputId($model, $attribute) . '").removeClass("has-error");
                  $(this).find("input[type=\"hidden\"]").val(uiEvt.result.id);
-                 $(this).find("[data-fileapi=\"browse-text\"]").addClass("hidden");
-                 $(this).find("[data-fileapi=\"delete\"]").attr("data-fileapi-uid", FileAPI.uid(uiEvt.file));
+                 $(this).find(".fileapi-preview-wrapper").html("<img src=" + uiEvt.result.path + ">");
+                 $(this).find(".fileapi-browse-text").text("' . Yii::t('app', 'Uploaded') . '");
                }
             }'),
-        ],
+        ]],
         'settings' => [
             'url' => yii\helpers\Url::toRoute([$attribute . '-upload']),
             'imageSize' => $model->getFileRules($attribute)['imageSize'],

@@ -3,8 +3,6 @@ use yii\widgets\ActiveForm;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
-use app\models\User;
-use app\widgets\FileApi\Widget as FileApi;
 
 $this->title = Yii::t('app', 'Users');
 ?>

@@ -5,11 +5,11 @@ use yii\helpers\Html;
   <div class="btn btn-default btn-small fileapi-fileapi-wrapper">
     <div class="fileapi-browse" data-fileapi="active.hide">
       <span class="glyphicon glyphicon-picture"></span>
-      <span><?= $title ?></span>
-      <input type="file" name="<?= $paramName ?>">
+      <span><?= Yii::t('app', 'Upload')?></span>
+      <input type="file" name="<?= $inputName ?>">
     </div>
   </div>
-  <?php $items = []; foreach ($files as $file) {
+  <?php $files = $model->getFiles($attribute); $items = []; foreach ($files as $file) {
       $content = $this->render('gallery-item', [
           'file' => $file,
           'model' => $model,

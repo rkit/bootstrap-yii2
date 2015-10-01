@@ -1,12 +1,11 @@
 <?php
 use yii\helpers\Html;
 use yii\web\JsExpression;
-use app\widgets\FileApi\Widget as FileApi;
+use rkit\fileapi\Widget as FileApi;
 ?>
 <?= $form->field($model, $attribute, ['template' => "{error}\n{input}\n{hint}"])
     ->widget(FileApi::className(), [
         'template' => '@app/modules/admin/views/shared/files/gallery-template',
-        'files' => $model->getFiles($attribute),
         'preview' => false,
         'callbacks' => [
             'select' => new JsExpression('function (evt, ui) {
