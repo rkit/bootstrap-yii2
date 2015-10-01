@@ -31,7 +31,6 @@
         "kartik-v/yii2-widget-datetimepicker": "^1.4.0",
         "kartik-v/yii2-sortable": "^1.2.0",
         "vova07/yii2-imperavi-widget": "^1.2.2",
-        "rubaxa/fileapi": "^0.4.7",
         "bower-asset/bootstrap": "3.3.4",
         "yiisoft/yii2-debug": "^2.0.4"
     },

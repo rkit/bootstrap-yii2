@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "7e6e5d929304e904e9f060526485109d",
-    "content-hash": "af7d27703c8898789fa19fc5d234a8e7",
+    "hash": "7e8b8d93055add7a2944929c16fadd19",
+    "content-hash": "28cb3c882a78bfe1f4845c2234ef8a85",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -889,42 +889,6 @@
                 "yii2"
             ],
             "time": "2015-10-01 10:55:55"
-        },
-        {
-            "name": "rubaxa/fileapi",
-            "version": "0.4.11",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/RubaXa/jquery.fileapi.git",
-                "reference": "5fc1013e103bb0931f5fbd18f15a9194ddf573d4"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/RubaXa/jquery.fileapi/zipball/5fc1013e103bb0931f5fbd18f15a9194ddf573d4",
-                "reference": "5fc1013e103bb0931f5fbd18f15a9194ddf573d4",
-                "shasum": ""
-            },
-            "type": "library",
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Konstantin Lebedev",
-                    "email": "ibnRubaXa@gmail.com"
-                }
-            ],
-            "description": "jQuery plugin for FileAPI (multiupload, image upload, crop, resize and etc.)",
-            "homepage": "https://github.com/RubaXa/jquery.fileapi",
-            "keywords": [
-                "file upload",
-                "fileapi",
-                "jquery",
-                "multiupload",
-                "upload"
-            ],
-            "time": "2015-09-11 15:56:14"
         },
         {
             "name": "swiftmailer/swiftmailer",
