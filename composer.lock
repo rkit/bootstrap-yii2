@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "604890d7009aa101f1204f4d14161c1d",
-    "content-hash": "056be44a49624321dd4b2c9dad8b18df",
+    "hash": "7e6e5d929304e904e9f060526485109d",
+    "content-hash": "af7d27703c8898789fa19fc5d234a8e7",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -796,7 +796,7 @@
         },
         {
             "name": "rkit/fileapi-widget-yii2",
-            "version": "dev-master",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rkit/fileapi-widget-yii2.git",
@@ -3397,9 +3397,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "rkit/fileapi-widget-yii2": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

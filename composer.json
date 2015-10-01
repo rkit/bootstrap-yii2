@@ -24,7 +24,7 @@
         "yiisoft/yii2-authclient": "^2.0.4",
 
         "rkit/filemanager-yii2": "^1.0.0",
-        "rkit/fileapi-widget-yii2": "dev-master",
+        "rkit/fileapi-widget-yii2": "^1.0.0",
         "creocoder/yii2-taggable": "^2.0",
         "kartik-v/yii2-widget-select2": "^1.0.1",
         "kartik-v/yii2-widget-datepicker": "^1.3.2",
