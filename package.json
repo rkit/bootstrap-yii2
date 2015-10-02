@@ -11,7 +11,8 @@
     "file-loader": "^0.8.1",
     "style-loader": "^0.8.3",
     "webpack": "^1.8.11",
-    "webpack-manifest-plugin": "^0.4.0"
+    "webpack-manifest-plugin": "^0.4.0",
+    "bootstrap": "^3.3.5"
   },
   "scripts": {
     "bower-install": "bower install",

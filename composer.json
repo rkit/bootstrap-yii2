@@ -18,7 +18,7 @@
     "require": {
         "php": ">=5.5.0",
         "yiisoft/yii2": "^2.0.4",
-        "yiisoft/yii2-bootstrap": "2.0.4",
+        "yiisoft/yii2-bootstrap": "^2.0.4",
         "yiisoft/yii2-swiftmailer": "^2.0.4",
         "yiisoft/yii2-jui": "^2.0.4",
         "yiisoft/yii2-authclient": "^2.0.4",
@@ -31,12 +31,12 @@
         "kartik-v/yii2-widget-datetimepicker": "^1.4.0",
         "kartik-v/yii2-sortable": "^1.2.0",
         "vova07/yii2-imperavi-widget": "^1.2.2",
-        "bower-asset/bootstrap": "3.3.4",
+        "bower-asset/bootstrap": "^3.3.4",
         "yiisoft/yii2-debug": "^2.0.4"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "^2.0.4",
-        "yiisoft/yii2-gii": "2.0.4",
+        "yiisoft/yii2-gii": "^2.0.4",
         "yiisoft/yii2-faker": "^2.0.3",
         "codeception/codeception": "2.0.*",
         "codeception/specify": "*",

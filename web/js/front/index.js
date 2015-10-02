@@ -20,4 +20,8 @@ var app = {
   },
 };
 
+$(function() {
+  app.init();
+});
+
 module.exports = app;

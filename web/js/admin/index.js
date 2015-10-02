@@ -1,4 +1,5 @@
 var nprogress = require('nprogress');
+var form = require('./form');
 
 var app = {
   init: function() {
@@ -128,5 +129,10 @@ var app = {
     });
   },
 };
+
+$(function() {
+  form.init();
+  app.init();
+});
 
 module.exports = app;
