@@ -20,16 +20,9 @@ class Settings extends \yii\base\Component
      */
     public $cacheName = 'settings';
     /**
-     * @var array $keys
+     * @var array $data
      */
-    private $keys = [];
-
-    public function init()
-    {
-        parent::init();
-
-        $this->load();
-    }
+    private $data = [];
 
     public function __set($key, $value)
     {
@@ -41,33 +34,58 @@ class Settings extends \yii\base\Component
         return $this->get($key);
     }
 
+    public function init()
+    {
+        parent::init();
+
+        $data = Yii::$app->cache->get($this->cacheName);
+
+        if ($data) {
+            $this->data = unserialize($data);
+        } else {
+            $data = (new Query())->select('*')->from($this->tableName)->all();
+            $data = ArrayHelper::map($data, 'key', 'value');
+            $this->updateData($data);
+        }
+    }
+
+    /**
+     * Get all data
+     *
+     * @return array
+     */
+    public function all()
+    {
+        return $this->data;
+    }
+
     /**
      * Get value by key
      *
      * @param string $key
-     * @return mixed
+     * @return string
      */
     public function get($key)
     {
-        return ArrayHelper::getValue($this->keys, [$key, 'value'], null);
+        return ArrayHelper::getValue($this->data, $key, null);
     }
 
     /**
      * Set value
      *
      * @param string $key
-     * @param mixed $value
+     * @param string $value
      */
     public function set($key, $value)
     {
-        if (ArrayHelper::getValue($this->keys, $key, null)) {
+        if (ArrayHelper::getValue($this->data, $key, null)) {
             $this->update($key, $value);
         } else {
             $this->add($key, $value);
         }
 
-        $this->keys[$key]['value'] = $value;
-        Yii::$app->cache->set($this->cacheName, serialize($this->keys));
+        $this->data[$key] = $value;
+        $this->updateData($this->data);
     }
 
     /**
@@ -96,26 +114,31 @@ class Settings extends \yii\base\Component
             ->update($this->tableName, ['value' => $value], '`key` = :key', [':key' => $key])->execute();
     }
 
-    /**
-     * Load all settings
-     *
-     * @param bool $reload Get from storage
-     * @return array
-     */
-    public function load($reload = false)
+    public function load($data)
     {
-        $keys = Yii::$app->cache->get($this->cacheName);
+        $db = Yii::$app->db->createCommand();
+        $db->truncateTable($this->tableName)->execute();
+        $db->batchInsert($this->tableName, ['key', 'value'], $this->prepareInsertData($data))->execute();
 
-        if (!$keys || $reload) {
-            $settings = (new Query())->select('*')->from($this->tableName)->all();
-            $keys = ArrayHelper::index($settings, 'key');
-            $keys = serialize($keys);
+        $this->updateData($data);
+    }
 
-            Yii::$app->cache->set($this->cacheName, $keys);
+    private function prepareInsertData($data)
+    {
+        $items = [];
+        foreach ($data as $key => $value) {
+            $items[] = ['key' => $key, 'value' => $value];
         }
 
-        $this->keys = unserialize($keys);
+        return $items;
+    }
 
-        return $this->keys;
+    private function updateData($data)
+    {
+        $this->data = $data;
+
+        $cache = Yii::$app->cache;
+        $cache->delete($this->cacheName);
+        $cache->set($this->cacheName, serialize($this->data));
     }
 }
