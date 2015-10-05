@@ -1,8 +1,7 @@
 <?php
 
-namespace app\models;
+namespace app\modules\admin\models\forms;
 
-use app\components\BaseActive;
 use Yii;
 
 /**

@@ -4,7 +4,6 @@ namespace app\components;
 
 use Yii;
 use yii\helpers\ArrayHelper;
-use yii\db\Schema;
 use yii\db\Query;
 
 /**
@@ -46,38 +45,55 @@ class Settings extends \yii\base\Component
      * Get value by key
      *
      * @param string $key
-     * @return string
+     * @return mixed
      */
     public function get($key)
     {
-        $data = ArrayHelper::getValue($this->keys, $key);
-        return is_array($data) ? $data['value'] : null;
+        return ArrayHelper::getValue($this->keys, [$key, 'value'], null);
     }
 
     /**
      * Set value
      *
      * @param string $key
-     * @param string|int $value
+     * @param mixed $value
      */
     public function set($key, $value)
     {
-        if (ArrayHelper::getValue($this->keys, $key)) {
-            Yii::$app->db->createCommand()->update(
-                $this->tableName,
-                ['value' => $value],
-                '`key` = :key',
-                [':key' => $key]
-            )->execute();
+        if (ArrayHelper::getValue($this->keys, $key, null)) {
+            $this->update($key, $value);
         } else {
-            Yii::$app->db->createCommand()->insert($this->tableName, [
-                'key'   => $key,
-                'value' => $value,
-            ])->execute();
+            $this->add($key, $value);
         }
 
         $this->keys[$key]['value'] = $value;
         Yii::$app->cache->set($this->cacheName, serialize($this->keys));
+    }
+
+    /**
+     * Add setting
+     *
+     * @param string $key
+     * @param string $value
+     */
+    private function add($key, $value)
+    {
+        Yii::$app->db
+            ->createCommand()
+            ->insert($this->tableName, ['key' => $key, 'value' => $value])->execute();
+    }
+
+    /**
+     * Update setting
+     *
+     * @param string $key
+     * @param string $value
+     */
+    private function update($key, $value)
+    {
+        Yii::$app->db
+            ->createCommand()
+            ->update($this->tableName, ['value' => $value], '`key` = :key', [':key' => $key])->execute();
     }
 
     /**
@@ -92,7 +108,6 @@ class Settings extends \yii\base\Component
 
         if (!$keys || $reload) {
             $settings = (new Query())->select('*')->from($this->tableName)->all();
-
             $keys = ArrayHelper::index($settings, 'key');
             $keys = serialize($keys);
 
