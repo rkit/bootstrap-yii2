@@ -24,6 +24,7 @@
         "yiisoft/yii2-authclient": "^2.0.4",
 
         "rkit/filemanager-yii2": "^1.0.0",
+        "rkit/settings-yii2": "^1.0.0",
         "rkit/fileapi-widget-yii2": "^1.0.0",
         "creocoder/yii2-taggable": "^2.0",
         "kartik-v/yii2-widget-select2": "^1.0.1",
@@ -52,6 +53,7 @@
         "test-prepare": [
             "php tests/codeception/bin/yii migrate --migrationPath=@yii/rbac/migrations/ --interactive=0",
             "php tests/codeception/bin/yii migrate --migrationPath=@vendor/rkit/filemanager-yii2/src/migrations/ --interactive=0",
+            "php tests/codeception/bin/yii migrate --migrationPath=@vendor/rkit/settings-yii2/src/migrations/ --interactive=0",
             "php tests/codeception/bin/yii migrate/up --interactive=0",
             "php tests/codeception/bin/yii rbac/init"
         ],

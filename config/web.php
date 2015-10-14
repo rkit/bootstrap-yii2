@@ -91,7 +91,7 @@ $config = [
             'cache' => 'cache',
         ],
         'settings' => [
-            'class' => 'app\components\Settings',
+            'class' => 'rkit\settings\Settings',
         ],
         'notify' => [
             'class' => 'app\components\Notify',

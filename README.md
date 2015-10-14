@@ -10,7 +10,7 @@
 - Users, Roles, Registration, Basic and social authorization
 - Countries, Regions, Cities
 - Tags
-- Settings
+- [Settings](https://github.com/rkit/settings-yii2)
 - [File Manager](https://github.com/rkit/filemanager-yii2)
 - [Webpack for assets](https://webpack.github.io/)
 
@@ -47,6 +47,7 @@ Screenshots:
    php yii migrate --migrationPath=@yii/log/migrations/ --interactive=0
    php yii migrate --migrationPath=@yii/rbac/migrations/ --interactive=0
    php yii migrate --migrationPath=@vendor/rkit/filemanager-yii2/src/migrations/ --interactive=0
+   php yii migrate --migrationPath=@vendor/rkit/settings-yii2/src/migrations/ --interactive=0
    php yii migrate/up --interactive=0
    php yii rbac/init
    ```

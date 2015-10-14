@@ -29,7 +29,7 @@ $config = [
             ],
         ],
         'settings' => [
-            'class' => 'app\components\Settings',
+            'class' => 'rkit\settings\Settings',
         ],
     ],
     'params' => $params,
