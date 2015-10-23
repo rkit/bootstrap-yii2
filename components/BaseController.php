@@ -37,17 +37,22 @@ class BaseController extends Controller
     }
 
     /**
-     * Load the model based on its primary key value
-     * If the model is not found or access denied, a 404 HTTP exception will be thrown
+     * Load the model based on its primary key value or WHERE condition.
+     * If the model is not found or access denied, a 404 HTTP exception will be thrown.
      *
-     * @param \yii\db\ActiveRecord $model
-     * @param int $id
+     * @param ActiveRecord $model
+     * @param int|array $id primary key or WHERE condition
      * @param bool $ownerCheck
-     * @return \yii\db\ActiveRecord|\yii\web\HttpException
+     * @return ActiveRecord
+     * @throws CHttpException
      */
     public function loadModel($model, $id, $ownerCheck = false)
     {
-        $model = $model::findOne($id);
+        if (is_array($id)) {
+            $model = $model::find()->where($id)->one();
+        } else {
+            $model = $model::findOne($id);
+        }
 
         if ($model === null || ($ownerCheck && !$model->isOwner())) {
             return $this->pageNotFound();
