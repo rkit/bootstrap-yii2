@@ -1,5 +1,5 @@
-const webpack = require('webpack');
-const config = require('./webpack.config');
+var webpack = require('webpack');
+var config = require('./webpack.config');
 
 config.plugins.push(
   new webpack.optimize.OccurenceOrderPlugin(),
