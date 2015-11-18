@@ -1,12 +1,23 @@
 {
   "extends": "airbnb/base",
   "rules": {
-    "indent": [2, 2, {"SwitchCase": 1}],
+    // max length
     "max-len": [2, 120, 2],
+    // validate JSDoc
+    "valid-jsdoc": 2,
+    // disable requirement to use initial caps for constructors
     "new-cap": 0,
-    "func-names": 0,
+    // 2 space indent
+    "indent": [2, 2, {"SwitchCase": 1}],
+    // disable limit length for identifiers
+    "id-length": 0,
+    // disable require let or const instead of var
     "no-var": 0,
+    // disable require function expressions to have a name
+    "func-names": 0,
+    // disable require variable declarations to be at the top of their scope
     "vars-on-top": 0,
+    // disable disallow use of alert
     "no-alert": 0
   }
 }

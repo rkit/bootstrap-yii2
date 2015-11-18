@@ -1,6 +1,6 @@
 /**
  * AJAX Form based on jquery-form
- * Usage: <form class="form">
+ * Usage: <form class="form">…</form>
  */
 
 require('jquery-form');

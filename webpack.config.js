@@ -44,8 +44,6 @@ module.exports = {
       jQuery: 'jquery',
     }),
     new ExtractTextPlugin('[name].[chunkhash].css'),
-    new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.OccurenceOrderPlugin(),
     new ManifestPlugin(),
   ],
 };

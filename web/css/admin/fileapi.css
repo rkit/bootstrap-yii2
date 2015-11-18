@@ -1,0 +1,85 @@
+.fileapi {
+  overflow: hidden;
+  clear: both;
+}
+  .fileapi .btn {
+    position: relative;
+    clear: both;
+  }
+
+  .fileapi-browse input {
+    border: none;
+    outline: none;
+    opacity: 0;
+    filter: alpha(opacity=0);
+    position: absolute;
+    cursor: pointer;
+    top: -20px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+
+  .fileapi-progress {
+    display: none;
+  }
+    .fileapi-progress .progress {
+      margin-bottom: 0 !important;
+    }
+
+  .fileapi-preview {
+    float: left;
+    position: relative;
+    margin-top: 10px;
+    overflow: hidden;
+    clear: both;
+  }
+    .fileapi-preview img { max-height: 200px; }
+    .fileapi-preview-delete {
+      display: none;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      color: #ffffff;
+    }
+
+    .fileapi-preview-delete span {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      margin-left: -8px;
+      margin-top: -8px;
+    }
+
+    .fileapi-preview:hover .fileapi-preview-delete {
+      display: block;
+      background: #f38083;
+      opacity: 0.9;
+      filter: alpha(opacity=0.9);
+      cursor: pointer;
+    }
+
+    .fileapi-preview > span.fileapi-preview-wrapper,
+    .fileapi-preview > span.fileapi-preview-wrapper > canvas {
+      display: block;
+    }
+
+  .fileapi-files {
+    list-style: none;
+    padding: 10px 0px 0px 0px;
+  }
+    .fileapi-files li {
+      padding-bottom: 5px
+    }
+
+    .fileapi-files .btn {
+      padding: 3px;
+    }
+
+    .fileapi-files input {
+      display: inline-block;
+      width: 300px;
+      font-size: 13px
+    }
