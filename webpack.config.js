@@ -32,6 +32,16 @@ module.exports = {
     ],
   },
 
+  resolve: {
+    alias: {
+      css: __dirname + '/web/css',
+    },
+    modulesDirectories: [
+      'node_modules',
+      __dirname + '/vendor/yiisoft/yii2/assets',
+    ],
+  },
+
   plugins: [
     new BowerWebpackPlugin({
       modulesDirectories: ['./vendor/bower'],
@@ -43,7 +53,7 @@ module.exports = {
       $: 'jquery',
       jQuery: 'jquery',
     }),
-    new ExtractTextPlugin('[name].[chunkhash].css'),
+    new ExtractTextPlugin('[name].[contenthash].css'),
     new ManifestPlugin(),
   ],
 };
