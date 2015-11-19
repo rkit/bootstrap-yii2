@@ -1,12 +1,10 @@
 var $ = require('jquery');
+require('jquery-form');
 
 /**
  * AJAX Form based on jquery-form
  * Usage: <form class="form">…</form>
  */
-
-require('jquery-form');
-
 var form = {
   ALERT_WARNING: 'warning',
   ALERT_DANGER: 'danger',
