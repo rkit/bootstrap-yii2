@@ -1,5 +1,5 @@
 // Vendor
-jQuery = window.jQuery = window.$ = require('jquery');
+var $ = window.jQuery = window.$ = require('jquery');
 require('bootstrap/dist/js/bootstrap.min.js');
 require('bootstrap/dist/css/bootstrap.min.css');
 require('file?name=[name].[ext]!bootstrap/dist/css/bootstrap.css.map');

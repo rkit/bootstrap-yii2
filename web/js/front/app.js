@@ -1,3 +1,5 @@
+var $ = require('jquery');
+
 var app = {
   init: function() {
     this.ajaxSetup();

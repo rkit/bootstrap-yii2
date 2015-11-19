@@ -1,3 +1,5 @@
+var $ = require('jquery');
+
 /**
  * AJAX Form based on jquery-form
  * Usage: <form class="form">…</form>
