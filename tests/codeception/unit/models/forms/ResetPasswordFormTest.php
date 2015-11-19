@@ -4,28 +4,25 @@ namespace tests\codeception\unit\models\forms;
 
 use Yii;
 use yii\codeception\DbTestCase;
-use app\models\forms\ResetPasswordForm;
 use tests\codeception\fixtures\UserFixture;
 use app\models\User;
-use Codeception\Specify;
+use app\models\forms\ResetPasswordForm;
 
 class ResetPasswordFormTest extends DbTestCase
 {
-    use Specify;
-
-    public function testResetPasswordWrongToken()
+    public function testResetPasswordFormWrongToken()
     {
         $form = new ResetPasswordForm();
         $this->assertFalse($form->validateToken('notexistingtoken_1391882543'));
     }
 
-    public function testResetPasswordEmptyToken()
+    public function testResetPasswordFormEmptyToken()
     {
         $form = new ResetPasswordForm();
         $this->assertFalse($form->validateToken(''));
     }
 
-    public function testResetPasswordWrongPassword()
+    public function testResetPasswordFormTooShortPassword()
     {
         $form = new ResetPasswordForm();
         $form->password = 'qwe';
@@ -33,7 +30,7 @@ class ResetPasswordFormTest extends DbTestCase
         $this->assertFalse($form->resetPassword());
     }
 
-    public function testResetPasswordCorrect()
+    public function testResetPasswordFormCorrect()
     {
         $form = new ResetPasswordForm();
         $form->password = 'password-new';

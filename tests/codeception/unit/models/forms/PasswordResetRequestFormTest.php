@@ -4,15 +4,12 @@ namespace tests\codeception\unit\models\forms;
 
 use Yii;
 use yii\codeception\DbTestCase;
-use app\models\forms\PasswordResetRequestForm;
 use tests\codeception\fixtures\UserFixture;
 use app\models\User;
-use Codeception\Specify;
+use app\models\forms\PasswordResetRequestForm;
 
 class PasswordResetRequestFormTest extends DbTestCase
 {
-    use Specify;
-
     protected function setUp()
     {
         parent::setUp();
@@ -28,28 +25,35 @@ class PasswordResetRequestFormTest extends DbTestCase
         parent::tearDown();
     }
 
-    public function testPasswordResetRequestNonExistEmail()
+    public function testPasswordResetRequestFormNonExistEmail()
     {
         $form = new PasswordResetRequestForm();
         $form->email = 'not-exist@example.com';
         $this->assertFalse($form->sendEmail());
     }
 
-    public function testPasswordResetRequestBlockedUser()
+    public function testPasswordResetRequestFormUserBlocked()
     {
         $form = new PasswordResetRequestForm();
         $form->email = $this->user['3-blocked']['email'];
         $this->assertFalse($form->sendEmail());
     }
 
-    public function testPasswordResetRequestInvalidToken()
+    public function testPasswordResetRequestFormUserDeleted()
+    {
+        $form = new PasswordResetRequestForm();
+        $form->email = $this->user['4-deleted']['email'];
+        $this->assertFalse($form->sendEmail());
+    }
+
+    public function testPasswordResetRequestFormInvalidToken()
     {
         $form = new PasswordResetRequestForm();
         $form->email = $this->user['5-wrong_password_reset_token']['email'];
         $this->assertTrue($form->sendEmail());
     }
 
-    public function testPasswordResetRequestCorrect()
+    public function testPasswordResetRequestFormCorrect()
     {
         $form = new PasswordResetRequestForm();
         $form->email = $this->user['2-active']['email'];

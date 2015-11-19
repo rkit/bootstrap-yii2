@@ -4,17 +4,14 @@ namespace tests\codeception\unit\admin\models;
 
 use Yii;
 use yii\codeception\DbTestCase;
+use tests\codeception\fixtures\UserFixture;
+use tests\codeception\fixtures\AuthItemFixture;
 use app\models\User;
 use app\models\UserProfile;
 use app\models\AuthItem;
-use tests\codeception\fixtures\UserFixture;
-use tests\codeception\fixtures\AuthItemFixture;
-use Codeception\Specify;
 
 class UserTest extends DbTestCase
 {
-    use Specify;
-
     protected function tearDown()
     {
         User::deleteAll();
@@ -31,6 +28,8 @@ class UserTest extends DbTestCase
 
         $this->assertTrue($user->save());
         $this->assertInstanceOf('app\models\User', $user);
+        $this->assertTrue($user->isActive());
+        $this->assertTrue($user->validatePassword('fghfgh'));
 
         return $user;
     }
@@ -48,48 +47,21 @@ class UserTest extends DbTestCase
         return $role;
     }
 
-    public function testUserSaving()
+    public function testUserAdd()
     {
-        $user = $this->addUser();
-        $user->setConfirmed();
-        $this->assertTrue($user->save());
-
-        $user = User::findByEmail($user->email);
-        $this->assertTrue($user->isActive());
-        $this->assertTrue($user->isConfirmed());
-        $this->assertTrue($user->validatePassword('fghfgh'));
+        $this->addUser();
     }
 
-    public function testUserUnconfirmed()
+    public function testUserChangePassword()
     {
         $user = $this->addUser();
-
-        $this->assertFalse($user->isConfirmed());
-        $this->assertNotEmpty($user->email_confirm_token);
-    }
-
-    public function testUserConfirmed()
-    {
-        $user = $this->addUser();
-        $user->setConfirmed();
-
-        $this->assertTrue($user->save());
-
-        $user = User::findByEmail($user->email);
-        $this->assertTrue($user->isConfirmed());
-        $this->assertEmpty($user->email_confirm_token);
-    }
-
-    public function testUserNewPassword()
-    {
-        $user = User::findByEmail($this->user['2-active']['email']);
-
         $user->passwordNew = 'password-new';
+
         $this->assertTrue($user->save());
         $this->assertTrue($user->validatePassword('password-new'));
     }
 
-    public function testUserProfile()
+    public function testUserFillProfile()
     {
         $user = $this->addUser();
         $user->profile->full_name = 'Nomad';
@@ -120,6 +92,27 @@ class UserTest extends DbTestCase
         $this->assertEquals($role->name, key($auth->getRolesByUser($user->id)));
 
         $role->delete();
+    }
+
+    public function testUserStatusUnconfirmed()
+    {
+        $user = $this->addUser();
+
+        $this->assertFalse($user->isConfirmed());
+        $this->assertNotEmpty($user->email_confirm_token);
+    }
+
+    public function testUserStatusConfirmed()
+    {
+        $user = $this->addUser();
+        $user->setConfirmed();
+
+        $this->assertTrue($user->save());
+
+        $user = User::findByEmail($user->email);
+
+        $this->assertTrue($user->isConfirmed());
+        $this->assertEmpty($user->email_confirm_token);
     }
 
     public function testUserStatusDeleted()
@@ -160,7 +153,7 @@ class UserTest extends DbTestCase
         $this->assertTrue($user->isSuperUser());
     }
 
-    public function testUserAuthKey()
+    public function testUserValidateAuthKey()
     {
         $user = new User();
         $user->auth_key = $user->generateAuthKey();
@@ -176,17 +169,18 @@ class UserTest extends DbTestCase
         $this->assertTrue($user->validatePassword('123123'));
     }
 
-    public function testFindIdentity()
+    public function testUserFindIdentity()
     {
         $user = new User();
-        $this->assertInstanceOf('app\models\User', $user->findIdentity($this->user['2-active']['id']));
+        $user = $user->findIdentity($this->user['2-active']['id']);
+        $this->assertInstanceOf('app\models\User', $user);
     }
 
     /**
      * @expectedException Exception
      * @expectedExceptionMessage findIdentityByAccessToken is not implemented.
      */
-    public function testFindIdentityByAccessToken()
+    public function testUserFindIdentityByAccessToken()
     {
         $user = new User();
         $user->findIdentityByAccessToken('123');

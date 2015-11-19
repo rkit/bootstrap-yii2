@@ -4,15 +4,12 @@ namespace tests\codeception\unit\models\forms;
 
 use Yii;
 use yii\codeception\DbTestCase;
+use tests\codeception\fixtures\UserFixture;
 use app\models\forms\SignupForm;
 use app\models\User;
-use tests\codeception\fixtures\UserFixture;
-use Codeception\Specify;
 
 class SignupFormTest extends DbTestCase
 {
-    use Specify;
-
     protected function setUp()
     {
         parent::setUp();
@@ -29,7 +26,7 @@ class SignupFormTest extends DbTestCase
         parent::tearDown();
     }
 
-    public function testSignupNotCorrect()
+    public function testSignupFormTooShortPassword()
     {
         $form = new SignupForm([
             'full_name' => 'Demo',
@@ -42,7 +39,7 @@ class SignupFormTest extends DbTestCase
         $this->assertNotEmpty($form->errors['password'][0]);
     }
 
-    public function testSignupEmptyFullName()
+    public function testSignupFormEmptyFullName()
     {
         $form = new SignupForm([
             'full_name' => '',
@@ -55,7 +52,7 @@ class SignupFormTest extends DbTestCase
         $this->assertNotEmpty($form->errors['email'][0]);
     }
 
-    public function testSignupEmptyPassword()
+    public function testSignupFormEmptyPassword()
     {
         $form = new SignupForm([
             'full_name' => 'Demo',
@@ -68,7 +65,7 @@ class SignupFormTest extends DbTestCase
         $this->assertNotEmpty($form->errors['password'][0]);
     }
 
-    public function testSignupEmptyEmail()
+    public function testSignupFormEmptyEmail()
     {
         $form = new SignupForm([
             'full_name' => 'Demo',
@@ -81,7 +78,7 @@ class SignupFormTest extends DbTestCase
         $this->assertNotEmpty($form->errors['email'][0]);
     }
 
-    public function testSignupExist()
+    public function testSignupFormExist()
     {
         $form = new SignupForm([
             'full_name' => 'Demo',
@@ -94,7 +91,7 @@ class SignupFormTest extends DbTestCase
         $this->assertNotEmpty($form->errors['email'][0]);
     }
 
-    public function testSignupCorrect()
+    public function testSignupFormCorrect()
     {
         $form = new SignupForm([
             'full_name' => 'Demo',

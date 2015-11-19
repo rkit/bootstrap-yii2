@@ -35,6 +35,7 @@ class LoginForm extends \yii\base\Model
             ['rememberMe', 'boolean'],
 
             ['password', 'validatePassword'],
+            ['password', 'string', 'min' => 6],
         ];
     }
 

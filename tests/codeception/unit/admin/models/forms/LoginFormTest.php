@@ -1,11 +1,12 @@
 <?php
 
-namespace tests\codeception\unit\models\forms;
+namespace tests\codeception\unit\admin\models\forms;
 
 use Yii;
 use yii\codeception\DbTestCase;
 use tests\codeception\fixtures\UserFixture;
-use app\models\forms\LoginForm;
+use tests\codeception\fixtures\UserProfileFixture;
+use app\modules\admin\models\forms\LoginForm;
 
 class LoginFormTest extends DbTestCase
 {
@@ -18,19 +19,19 @@ class LoginFormTest extends DbTestCase
     public function testLoginFormWrong()
     {
         $form = new LoginForm([
-            'email' => $this->user['2-active']['email'],
+            'username' => $this->user['1-superuser']['username'],
             'password' => 'gw35hhbp',
         ]);
 
         $this->assertFalse($form->login());
         $this->assertTrue(Yii::$app->user->isGuest);
-        $this->assertContains('Incorrect email or password', $form->errors['password'][0]);
+        $this->assertContains('Incorrect username or password', $form->errors['password'][0]);
     }
 
     public function testLoginFormEmptyPassword()
     {
         $form = new LoginForm([
-            'email' => $this->user['2-active']['email'],
+            'username' => $this->user['1-superuser']['username'],
             'password' => '',
         ]);
 
@@ -42,32 +43,32 @@ class LoginFormTest extends DbTestCase
     public function testLoginFormTooShortPassword()
     {
         $form = new LoginForm([
-            'email' => $this->user['2-active']['email'],
+            'username' => $this->user['1-superuser']['username'],
             'password' => '123',
         ]);
 
         $this->assertFalse($form->login());
         $this->assertNotEmpty($form->errors['password'][0]);
         $this->assertTrue(Yii::$app->user->isGuest);
-        $this->assertContains('Incorrect email or password', $form->errors['password'][0]);
+        $this->assertContains('Incorrect username or password', $form->errors['password'][0]);
     }
 
-    public function testLoginFormEmptyEmail()
+    public function testLoginFormEmptyUsername()
     {
         $form = new LoginForm([
-            'email' => '',
+            'username' => '',
             'password' => 'gw35hhbp',
         ]);
 
         $this->assertFalse($form->login());
-        $this->assertNotEmpty($form->errors['email'][0]);
+        $this->assertNotEmpty($form->errors['username'][0]);
         $this->assertTrue(Yii::$app->user->isGuest);
     }
 
     public function testLoginFormUserBlocked()
     {
         $form = new LoginForm([
-            'email' => $this->user['3-blocked']['email'],
+            'username' => $this->user['3-blocked']['username'],
             'password' => '123123',
         ]);
 
@@ -80,7 +81,7 @@ class LoginFormTest extends DbTestCase
     public function testLoginFormUserDeleted()
     {
         $form = new LoginForm([
-            'email' => $this->user['4-deleted']['email'],
+            'username' => $this->user['4-deleted']['username'],
             'password' => '123123',
         ]);
 
@@ -93,8 +94,8 @@ class LoginFormTest extends DbTestCase
     public function testLoginFormCorrect()
     {
         $form = new LoginForm([
-            'email' => $this->user['2-active']['email'],
-            'password' => '123123',
+            'username' => $this->user['1-superuser']['username'],
+            'password' => 'fghfgh',
         ]);
 
         $this->assertTrue($form->login());
@@ -108,6 +109,10 @@ class LoginFormTest extends DbTestCase
             'user' => [
                 'class' => UserFixture::className(),
                 'dataFile' => '@tests/codeception/fixtures/data/user.php',
+            ],
+            'profile' => [
+                'class' => UserProfileFixture::className(),
+                'dataFile' => '@tests/codeception/fixtures/data/user_profile.php',
             ],
         ];
     }

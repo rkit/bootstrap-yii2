@@ -4,28 +4,25 @@ namespace tests\codeception\unit\models\forms;
 
 use Yii;
 use yii\codeception\DbTestCase;
-use app\models\forms\ConfirmEmailForm;
 use tests\codeception\fixtures\UserFixture;
 use app\models\User;
-use Codeception\Specify;
+use app\models\forms\ConfirmEmailForm;
 
 class ConfirmEmailFormTest extends DbTestCase
 {
-    use Specify;
-
-    public function testConfirmEmailWrongToken()
+    public function testConfirmEmailFormWrongToken()
     {
         $form = new ConfirmEmailForm();
         $this->assertFalse($form->validateToken('notexistingtoken_1391882543'));
     }
 
-    public function testConfirmEmailEmptyToken()
+    public function testConfirmEmailFormEmptyToken()
     {
         $form = new ConfirmEmailForm();
         $this->assertFalse($form->validateToken(''));
     }
 
-    public function testConfirmEmailCorrect()
+    public function testConfirmEmailFormCorrect()
     {
         $user = User::findByEmail($this->user['2-active']['email']);
         $this->assertFalse($user->isConfirmed());
