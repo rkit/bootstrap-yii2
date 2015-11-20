@@ -10,6 +10,22 @@ use app\models\forms\ResetPasswordForm;
 
 class ResetPasswordFormTest extends DbTestCase
 {
+    public function testResetPasswordFormEmptyPassword()
+    {
+        $form = new ResetPasswordForm();
+        $form->password = '';
+        $this->assertTrue($form->validateToken($this->user['2-active']['password_reset_token']));
+        $this->assertFalse($form->validate());
+    }
+
+    public function testResetPasswordFormTooShortPassword()
+    {
+        $form = new ResetPasswordForm();
+        $form->password = 'qwe';
+        $this->assertTrue($form->validateToken($this->user['2-active']['password_reset_token']));
+        $this->assertFalse($form->validate());
+    }
+
     public function testResetPasswordFormWrongToken()
     {
         $form = new ResetPasswordForm();
@@ -20,14 +36,6 @@ class ResetPasswordFormTest extends DbTestCase
     {
         $form = new ResetPasswordForm();
         $this->assertFalse($form->validateToken(''));
-    }
-
-    public function testResetPasswordFormTooShortPassword()
-    {
-        $form = new ResetPasswordForm();
-        $form->password = 'qwe';
-        $this->assertTrue($form->validateToken($this->user['2-active']['password_reset_token']));
-        $this->assertFalse($form->resetPassword());
     }
 
     public function testResetPasswordFormCorrect()

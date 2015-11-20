@@ -15,17 +15,30 @@ class LoginFormTest extends DbTestCase
         parent::tearDown();
     }
 
-    public function testLoginFormWrong()
+    public function testLoginFormEmptyCredentials()
     {
         $form = new LoginForm([
-            'email' => $this->user['2-active']['email'],
+            'email' => '',
+            'password' => '',
+        ]);
+
+        $this->assertFalse($form->login());
+        $this->assertNotEmpty($form->errors['password'][0]);
+        $this->assertTrue(Yii::$app->user->isGuest);
+    }
+
+    public function testLoginFormEmptyEmail()
+    {
+        $form = new LoginForm([
+            'email' => '',
             'password' => 'gw35hhbp',
         ]);
 
         $this->assertFalse($form->login());
+        $this->assertNotEmpty($form->errors['email'][0]);
         $this->assertTrue(Yii::$app->user->isGuest);
-        $this->assertContains('Incorrect email or password', $form->errors['password'][0]);
     }
+
 
     public function testLoginFormEmptyPassword()
     {
@@ -52,16 +65,16 @@ class LoginFormTest extends DbTestCase
         $this->assertContains('Incorrect email or password', $form->errors['password'][0]);
     }
 
-    public function testLoginFormEmptyEmail()
+    public function testLoginFormWrong()
     {
         $form = new LoginForm([
-            'email' => '',
+            'email' => $this->user['2-active']['email'],
             'password' => 'gw35hhbp',
         ]);
 
         $this->assertFalse($form->login());
-        $this->assertNotEmpty($form->errors['email'][0]);
         $this->assertTrue(Yii::$app->user->isGuest);
+        $this->assertContains('Incorrect email or password', $form->errors['password'][0]);
     }
 
     public function testLoginFormUserBlocked()

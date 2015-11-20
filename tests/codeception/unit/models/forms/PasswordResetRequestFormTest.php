@@ -25,31 +25,46 @@ class PasswordResetRequestFormTest extends DbTestCase
         parent::tearDown();
     }
 
+    public function testPasswordResetRequestFormEmptyEmail()
+    {
+        $form = new PasswordResetRequestForm();
+        $form->email = '';
+        $this->assertFalse($form->validate());
+    }
+
+    public function testPasswordResetRequestFormWrongEmail()
+    {
+        $form = new PasswordResetRequestForm();
+        $form->email = 'wrong';
+        $this->assertFalse($form->validate());
+    }
+
     public function testPasswordResetRequestFormNonExistEmail()
     {
         $form = new PasswordResetRequestForm();
         $form->email = 'not-exist@example.com';
-        $this->assertFalse($form->sendEmail());
+        $this->assertFalse($form->validate());
     }
 
     public function testPasswordResetRequestFormUserBlocked()
     {
         $form = new PasswordResetRequestForm();
         $form->email = $this->user['3-blocked']['email'];
-        $this->assertFalse($form->sendEmail());
+        $this->assertFalse($form->validate());
     }
 
     public function testPasswordResetRequestFormUserDeleted()
     {
         $form = new PasswordResetRequestForm();
         $form->email = $this->user['4-deleted']['email'];
-        $this->assertFalse($form->sendEmail());
+        $this->assertFalse($form->validate());
     }
 
     public function testPasswordResetRequestFormInvalidToken()
     {
         $form = new PasswordResetRequestForm();
         $form->email = $this->user['5-wrong_password_reset_token']['email'];
+        $this->assertTrue($form->validate());
         $this->assertTrue($form->sendEmail());
     }
 
@@ -57,6 +72,7 @@ class PasswordResetRequestFormTest extends DbTestCase
     {
         $form = new PasswordResetRequestForm();
         $form->email = $this->user['2-active']['email'];
+        $this->assertTrue($form->validate());
         $this->assertTrue($form->sendEmail());
 
         $user = User::findOne(['password_reset_token' => $this->user['2-active']['password_reset_token']]);

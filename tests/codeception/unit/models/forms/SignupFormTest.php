@@ -26,30 +26,19 @@ class SignupFormTest extends DbTestCase
         parent::tearDown();
     }
 
-    public function testSignupFormTooShortPassword()
-    {
-        $form = new SignupForm([
-            'full_name' => 'Demo',
-            'email' => $this->user['2-active']['email'],
-            'password' => 'two',
-        ]);
-
-        $this->assertFalse($form->signup());
-        $this->assertFalse($form->sendEmail());
-        $this->assertNotEmpty($form->errors['password'][0]);
-    }
-
-    public function testSignupFormEmptyFullName()
+    public function testSignupFormEmptyCredentials()
     {
         $form = new SignupForm([
             'full_name' => '',
-            'email' => $this->user['2-active']['email'],
-            'password' => 'gw35hhbp',
+            'email' => '',
+            'password' => '',
         ]);
 
         $this->assertFalse($form->signup());
         $this->assertFalse($form->sendEmail());
+        $this->assertNotEmpty($form->errors['full_name'][0]);
         $this->assertNotEmpty($form->errors['email'][0]);
+        $this->assertNotEmpty($form->errors['password'][0]);
     }
 
     public function testSignupFormEmptyPassword()
@@ -65,11 +54,37 @@ class SignupFormTest extends DbTestCase
         $this->assertNotEmpty($form->errors['password'][0]);
     }
 
+    public function testSignupFormTooShortPassword()
+    {
+        $form = new SignupForm([
+            'full_name' => 'Demo',
+            'email' => $this->user['2-active']['email'],
+            'password' => 'two',
+        ]);
+
+        $this->assertFalse($form->signup());
+        $this->assertFalse($form->sendEmail());
+        $this->assertNotEmpty($form->errors['password'][0]);
+    }
+
     public function testSignupFormEmptyEmail()
     {
         $form = new SignupForm([
             'full_name' => 'Demo',
             'email' => '',
+            'password' => 'gw35hhbp',
+        ]);
+
+        $this->assertFalse($form->signup());
+        $this->assertFalse($form->sendEmail());
+        $this->assertNotEmpty($form->errors['email'][0]);
+    }
+
+    public function testSignupFormEmptyFullName()
+    {
+        $form = new SignupForm([
+            'full_name' => '',
+            'email' => $this->user['2-active']['email'],
             'password' => 'gw35hhbp',
         ]);
 

@@ -63,14 +63,10 @@ class ResetPasswordForm extends \yii\base\Model
      */
     public function resetPassword()
     {
-        if ($this->validate()) {
-            $this->user->setPassword($this->password);
-            $this->user->removePasswordResetToken();
-            $this->user->authorize(true);
+        $this->user->setPassword($this->password);
+        $this->user->removePasswordResetToken();
+        $this->user->authorize(true);
 
-            return $this->user->save(false);
-        }
-
-        return false;
+        return $this->user->save(false);
     }
 }

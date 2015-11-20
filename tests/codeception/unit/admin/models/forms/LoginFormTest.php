@@ -16,16 +16,28 @@ class LoginFormTest extends DbTestCase
         parent::tearDown();
     }
 
-    public function testLoginFormWrong()
+    public function testLoginFormEmptyCredentials()
     {
         $form = new LoginForm([
-            'username' => $this->user['1-superuser']['username'],
+            'username' => '',
+            'password' => '',
+        ]);
+
+        $this->assertFalse($form->login());
+        $this->assertNotEmpty($form->errors['username'][0]);
+        $this->assertTrue(Yii::$app->user->isGuest);
+    }
+
+    public function testLoginFormEmptyUsername()
+    {
+        $form = new LoginForm([
+            'username' => '',
             'password' => 'gw35hhbp',
         ]);
 
         $this->assertFalse($form->login());
+        $this->assertNotEmpty($form->errors['username'][0]);
         $this->assertTrue(Yii::$app->user->isGuest);
-        $this->assertContains('Incorrect username or password', $form->errors['password'][0]);
     }
 
     public function testLoginFormEmptyPassword()
@@ -53,16 +65,16 @@ class LoginFormTest extends DbTestCase
         $this->assertContains('Incorrect username or password', $form->errors['password'][0]);
     }
 
-    public function testLoginFormEmptyUsername()
+    public function testLoginFormWrong()
     {
         $form = new LoginForm([
-            'username' => '',
+            'username' => $this->user['1-superuser']['username'],
             'password' => 'gw35hhbp',
         ]);
 
         $this->assertFalse($form->login());
-        $this->assertNotEmpty($form->errors['username'][0]);
         $this->assertTrue(Yii::$app->user->isGuest);
+        $this->assertContains('Incorrect username or password', $form->errors['password'][0]);
     }
 
     public function testLoginFormUserBlocked()

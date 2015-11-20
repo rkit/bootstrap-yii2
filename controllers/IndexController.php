@@ -228,7 +228,7 @@ class IndexController extends BaseController
     {
         $model = new PasswordResetRequestForm();
 
-        if ($model->load(Yii::$app->request->post())) {
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail()) {
                 return $this->alert(
                     'success',
@@ -255,7 +255,7 @@ class IndexController extends BaseController
             return $this->alert('error', Yii::t('app', 'Invalid link for reset password'));
         }
 
-        if ($model->load(Yii::$app->request->post()) && $model->resetPassword()) {
+        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->resetPassword()) {
             return $this->alert('success', Yii::t('app', 'New password was saved'));
         }
 
