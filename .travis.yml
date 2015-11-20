@@ -22,7 +22,7 @@ before_script:
   - composer test-build
 
 script:
-  - cd tests && ../vendor/bin/codecept run unit --coverage-xml
+  - cd tests && ../vendor/bin/codecept run unit,functional --coverage-xml
 
 after_script:
   - wget https://scrutinizer-ci.com/ocular.phar
