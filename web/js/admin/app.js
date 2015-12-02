@@ -1,11 +1,9 @@
 var $ = require('jquery');
 var nprogress = require('nprogress');
-var form = require('./form');
 require('./binding');
 
 var app = {
   init: function() {
-    form.init();
     this.ajaxSetup();
   },
 

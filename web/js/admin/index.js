@@ -7,6 +7,7 @@ require('yii');
 require('yii.validation');
 require('yii.activeForm');
 require('yii.gridView');
+require('./yii.ajaxForm');
 
 // Application
 var app = require('./app');

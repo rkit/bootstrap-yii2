@@ -2,6 +2,45 @@ var $ = require('jquery');
 
 $(function() {
   /**
+   * AJAX Form
+   */
+  $('.ajax-form').yiiAjaxForm()
+  .on('ajaxFormBeforeSend', function(event, $form, $buttonSubmit) {
+    if ($buttonSubmit) {
+      $buttonSubmit.button('loading');
+    }
+  })
+  .on('ajaxFormError', function(event, $form, $buttonSubmit, jqXHR) {
+    if (jqXHR.status && jqXHR.status === 302) {
+      return true;
+    }
+    var $alert = $('<div class="form-alert callout callout-danger animated fadeInUp" />');
+    var $alertPlace = $(':submit').closest('.form-controls');
+
+    $alert.hide().html(
+      '<h4>Критическая ошибка</h4>' +
+      '<p>Извините, возникли проблемы, попробуйте позже…</p>'
+    );
+    $alertPlace.find('.form-alert').remove();
+    $alertPlace.prepend($alert);
+    $alert.fadeIn(100);
+  })
+  .on('ajaxFormComplete', function(event, $form, $buttonSubmit) {
+    if ($buttonSubmit) {
+      $buttonSubmit.button('reset');
+    }
+  })
+  .on('ajaxFormSuccess', function(event, $form, $buttonSubmit, data) {
+    if (data.redirect) {
+      document.location.href = data.redirect;
+    }
+
+    if (data.reload) {
+      location.reload(true);
+    }
+  });
+
+  /**
    * Menu toggle
    */
   $('.sidebar').on('click', 'a', function() {
