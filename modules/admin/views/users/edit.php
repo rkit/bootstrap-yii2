@@ -15,7 +15,7 @@ $this->title = Yii::t('app', 'Users');
 </ul><br>
 <?php endif ?>
 
-<?php $form = ActiveForm::begin(['options' => ['class' => 'form']]); ?>
+<?php $form = ActiveForm::begin(['options' => ['class' => 'ajax-form']]); ?>
 
   <div class="row">
     <div class="col-md-<?= $model->isNewRecord ? '12' : '8' ?>">
@@ -49,49 +49,17 @@ $this->title = Yii::t('app', 'Users');
     </div>
 
     <?php if (!$model->isNewRecord) : ?>
-    <div class="col-md-4">
-      <ul class="list-group">
-        <li class="list-group-item text-muted"><?= Yii::t('app', 'Info') ?></li>
-        <li class="list-group-item text-right">
-          <span class="pull-left"><strong><?= Yii::t('app', 'Joined') ?></strong></span>
-          <?= Yii::$app->formatter->asDateTime($model->date_create) ?>
-        </li>
-        <li class="list-group-item text-right">
-          <span class="pull-left"><strong><?= Yii::t('app', 'Last login') ?></strong></span>
-          <?= $model->date_login > 0 ? Yii::$app->formatter->asDateTime($model->date_login) : '—' ?>
-        </li>
-        <li class="list-group-item text-right">
-          <span class="pull-left"><strong><?= Yii::t('app', 'IP') ?></strong></span>
-          <?= long2ip($model->ip) ?>
-        </li>
-      </ul>
-    </div>
-
-    <?php if (count($model->providers)) : ?>
-    <div class="col-md-4">
-      <ul class="list-group">
-        <li class="list-group-item text-muted"><?= Yii::t('app', 'Social Networks') ?></li>
-        <?php foreach ($model->providers as $provider) : ?>
-        <li class="list-group-item text-right">
-          <span class="pull-left">
-            <strong><?= $provider->getTypeName() ?></strong>
-          </span>
-          <?= Html::a(Yii::t('app', 'Link to profile'), $provider->profile_url, ['target' => '_blank']) ?>
-        </li>
-        <?php endforeach?>
-      </ul>
-    </div>
-    <?php endif?>
-
-    <?php if (!$model->isConfirmed()): ?>
-    <div class="col-md-4">
-      <div class="alert alert-warning" role="alert">
-        <?= Yii::t('app', 'Account not activated') ?>
-      </div>
-    </div>
-    <?php endif?>
-
+    <?= $this->render('info', ['model' => $model]) ?>
     <?php endif?>
   </div>
 
-<?= $this->render('/shared/forms/bottom', ['model' => $model]) ?>
+  <hr>
+  <div class="form-controls">
+    <div class="form-group pull-left">
+    	<?= $this->render('/shared/forms/controls', ['model' => $model]) ?>
+    </div>
+
+    <?= $this->render('/shared/forms/model-info', ['model' => $model]) ?>
+  </div>
+
+<?php ActiveForm::end(); ?>

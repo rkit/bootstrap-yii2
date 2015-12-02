@@ -7,7 +7,7 @@ $this->title = Yii::t('app', 'Roles');
 ?>
 <?= $this->render('/shared/forms/header', ['title' => $model->description, 'model' => $model]) ?>
 
-<?php $form = ActiveForm::begin(['options' => ['class' => 'form']]); ?>
+<?php $form = ActiveForm::begin(['options' => ['class' => 'ajax-form']]); ?>
 
     <!-- name -->
   <?= $form->field($model, 'name')->textInput(['maxlength' => true])->hint(Yii::t('app', 'Only latin letters')) ?>
@@ -42,4 +42,13 @@ $this->title = Yii::t('app', 'Roles');
       ])
       ->hint(Yii::t('app', 'The role will receive all the privileges of the selected role')) ?>
 
-<?= $this->render('/shared/forms/bottom', ['model' => $model]) ?>
+  <hr>
+  <div class="form-controls">
+    <div class="form-group pull-left">
+    	<?= $this->render('/shared/forms/controls', ['model' => $model]) ?>
+    </div>
+
+    <?= $this->render('/shared/forms/model-info', ['model' => $model]) ?>
+  </div>
+
+<?php ActiveForm::end(); ?>

@@ -35,4 +35,30 @@ class Util
         $text = str_replace('"', '“', $text);
         return Html::encode(html_entity_decode(strip_tags($text)));
     }
+
+   /**
+    * Get validation errors
+    *
+    * @param Model $model the model to be validated
+    * @param mixed $attributes list of attributes that should be validated.
+    * @return array the error message array indexed by the attribute IDs.
+    */
+    public static function getValidationErrors($model, $attributes = null)
+    {
+        $result = [];
+        if ($attributes instanceof Model) {
+            // validating multiple models
+            $models = func_get_args();
+            $attributes = null;
+        } else {
+            $models = [$model];
+        }
+        /* @var $model Model */
+        foreach ($models as $model) {
+            foreach ($model->getErrors() as $attribute => $errors) {
+                $result[\yii\helpers\Html::getInputId($model, $attribute)] = $errors;
+            }
+        }
+        return $result;
+    }
 }

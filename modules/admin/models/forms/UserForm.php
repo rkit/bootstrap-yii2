@@ -18,7 +18,7 @@ class UserForm extends User
             ['username', 'required', 'when' => function ($model) {
                 return empty($model->email);
             }, 'whenClient' => "function (attribute, value) {
-                return !$('#user-email').val().length
+                return !$('#userform-email').val().length;
             }", 'message' => Yii::t('app', 'You must fill in username or email')],
 
             ['passwordNew', 'string', 'min' => 6],

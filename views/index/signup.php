@@ -11,8 +11,11 @@ $this->title = Yii::t('app', 'Signup');
   <div class="row">
     <div class="col-lg-5">
       <?php $form = ActiveForm::begin(['id' => 'form-signup']); ?>
+        <!-- full_name -->
         <?= $form->field($model, 'full_name') ?>
+        <!-- email -->
         <?= $form->field($model, 'email') ?>
+        <!-- password -->
         <?= $form->field($model, 'password')->passwordInput() ?>
         <hr>
         <div class="form-group">

@@ -98,9 +98,13 @@ class UsersController extends BaseController
                 }
 
                 Yii::$app->session->setFlash('success', Yii::t('app', 'Saved successfully'));
-                return $this->response(['redirect' => Url::toRoute(['edit', 'id' => $model->id])]);
+                if (Yii::$app->request->isAjax) {
+                    return $this->response(['redirect' => Url::toRoute(['edit', 'id' => $model->id])]);
+                }
             } else {
-                return $this->response(['errors' => $model->getErrors(), 'prefix' => 'userform-']);
+                if (Yii::$app->request->isAjax) {
+                    return $this->response(\app\helpers\Util::getValidationErrors($model));
+                }
             }
         }
 
@@ -117,9 +121,13 @@ class UsersController extends BaseController
         if (Yii::$app->request->isPost) {
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 Yii::$app->session->setFlash('success', Yii::t('app', 'Saved successfully'));
-                return $this->response(['redirect' => Url::toRoute(['profile', 'id' => $model->user_id])]);
+                if (Yii::$app->request->isAjax) {
+                    return $this->response(['redirect' => Url::toRoute(['profile', 'id' => $model->user_id])]);
+                }
             } else {
-                return $this->response(['errors' => $model->getErrors(), 'prefix' => 'user-profile-']);
+                if (Yii::$app->request->isAjax) {
+                    return $this->response(\app\helpers\Util::getValidationErrors($model));
+                }
             }
         }
 

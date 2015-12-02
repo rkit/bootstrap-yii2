@@ -9,7 +9,7 @@ $this->title = Yii::t('app', 'Regions');
 ?>
 <?= $this->render('/shared/forms/header', ['title' => $model->title, 'model' => $model]) ?>
 
-<?php $form = ActiveForm::begin(['options' => ['class' => 'form']]); ?>
+<?php $form = ActiveForm::begin(['options' => ['class' => 'ajax-form']]); ?>
 
   <!-- country_id -->
   <?= $form->field($model, 'country_id')->widget(Select2::classname(), [
@@ -37,4 +37,11 @@ $this->title = Yii::t('app', 'Regions');
   <!-- title -->
   <?= $form->field($model, 'title')->textInput() ?>
 
-<?= $this->render('/shared/forms/bottom', ['model' => $model]) ?>
+  <hr>
+  <div class="form-controls">
+    <div class="form-group pull-left">
+    	<?= $this->render('/shared/forms/controls', ['model' => $model]) ?>
+    </div>
+  </div>
+
+<?php ActiveForm::end(); ?>

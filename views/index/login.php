@@ -11,8 +11,11 @@ $this->title = Yii::t('app', 'Login');
   <div class="row">
     <div class="col-lg-5">
       <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
+        <!-- email -->
         <?= $form->field($model, 'email') ?>
+        <!-- pasword -->
         <?= $form->field($model, 'password')->passwordInput() ?>
+        <!-- rememberMe -->
         <?= $form->field($model, 'rememberMe')->checkbox() ?>
         <div class="form-group text-muted">
           <?= Html::a(Yii::t('app', 'Forgot your password?'), ['index/request-password-reset']) ?>

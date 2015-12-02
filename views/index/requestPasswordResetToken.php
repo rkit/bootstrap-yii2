@@ -13,6 +13,7 @@ $this->title = Yii::t('app', 'Request password reset');
   <div class="row">
     <div class="col-lg-5">
       <?php $form = ActiveForm::begin(['id' => 'request-password-reset-form']); ?>
+        <!-- email -->
         <?= $form->field($model, 'email') ?>
         <div class="form-group">
           <?= Html::submitButton(Yii::t('app', 'Send'), ['class' => 'btn btn-info']) ?>

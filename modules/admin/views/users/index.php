@@ -31,7 +31,7 @@ $this->title = Yii::t('app', 'Users');
               'format' => 'raw',
               'value' => function ($model) {
                   $username = $model['username'] ? $model['username'] : '(' . Yii::t('app', 'not set') . ')';
-                  return Html::a(Html::encode($username), ['edit', 'id' => $model['id']], ['data-pjax' => 0]) .
+                  return Html::a(Html::encode($username), ['edit', 'id' => $model['id']], ['data-pjax' => false]) .
                   (
                       $model['id'] === Yii::$app->user->id
                       ? ' <span class="label label-info">' . Yii::t('app', 'it`s me') . '</span>'
@@ -45,7 +45,7 @@ $this->title = Yii::t('app', 'Users');
               'format' => 'raw',
               'value' => function ($model) {
                   $email = $model['email'] ? $model['email'] : '(' . Yii::t('app', 'not set') . ')';
-                  return Html::a(Html::encode($email), ['edit', 'id' => $model['id']], ['data-pjax' => 0]);
+                  return Html::a(Html::encode($email), ['edit', 'id' => $model['id']], ['data-pjax' => false]);
               }
           ],
               // date_create
