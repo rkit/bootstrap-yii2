@@ -19,6 +19,6 @@
   "dependencies": {
     "bootstrap": "^3.3.5",
     "nprogress": "^0.1.6",
-    "yii2-ajaxform-plugin": "^0.0.1"
+    "yii2-ajaxform-plugin": "^0.0.3"
   }
 }
