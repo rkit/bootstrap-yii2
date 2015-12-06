@@ -4,40 +4,48 @@ $(function() {
   /**
    * AJAX Form
    */
-  $('.ajax-form').yiiAjaxForm()
-  .on('ajaxFormBeforeSend', function(event, $form, $buttonSubmit) {
-    if ($buttonSubmit) {
-      $buttonSubmit.button('loading');
-    }
-  })
-  .on('ajaxFormError', function(event, $form, $buttonSubmit, jqXHR) {
-    if (jqXHR.status && jqXHR.status === 302) {
-      return true;
-    }
-    var $alert = $('<div class="form-alert callout callout-danger animated fadeInUp" />');
-    var $alertPlace = $(':submit').closest('.form-controls');
+  $('.ajax-form').yiiAjaxForm({
+    beforeSend: function() {
+      var $button = $(this).data('yiiActiveForm').submitObject;
+      if ($button) {
+        $button.button('loading');
+      }
+    },
+    error: function(jqXHR) {
+      if (jqXHR.status && jqXHR.status === 302) {
+        return true;
+      }
 
-    $alert.hide().html(
-      '<h4>Критическая ошибка</h4>' +
-      '<p>Извините, возникли проблемы, попробуйте позже…</p>'
-    );
-    $alertPlace.find('.form-alert').remove();
-    $alertPlace.prepend($alert);
-    $alert.fadeIn(100);
-  })
-  .on('ajaxFormComplete', function(event, $form, $buttonSubmit) {
-    if ($buttonSubmit) {
-      $buttonSubmit.button('reset');
-    }
-  })
-  .on('ajaxFormSuccess', function(event, $form, $buttonSubmit, data) {
-    if (data.redirect) {
-      document.location.href = data.redirect;
-    }
+      var $alert = $(
+        '<div class="form-alert callout callout-danger animated fadeInUp" />'
+      ).hide().html(
+        '<h4>Критическая ошибка</h4>' +
+        '<p>Извините, возникли проблемы, попробуйте позже…</p>'
+      );
 
-    if (data.reload) {
-      location.reload(true);
-    }
+      $(this).find('.form-alert').remove();
+      $(this).data('yiiActiveForm')
+        .submitObject
+        .closest('.form-controls')
+        .prepend($alert);
+
+      $alert.fadeIn(100);
+    },
+    complete: function() {
+      var $button = $(this).data('yiiActiveForm').submitObject;
+      if ($button) {
+        $button.button('reset');
+      }
+    },
+    success: function(data) {
+      if (data.redirect) {
+        document.location.href = data.redirect;
+      } else if (data.reload) {
+        location.reload(true);
+      }
+      // show validation error messages
+      $(this).yiiActiveForm('updateMessages', data);
+    },
   });
 
   /**
