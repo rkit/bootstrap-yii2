@@ -4,7 +4,7 @@
     "keywords": ["yii2", "framework", "application template", "bootstrap"],
     "homepage": "https://github.com/rkit/bootstrap-yii2",
     "type": "project",
-    "license": "BSD-3-Clause",
+    "license": "MIT",
     "authors": [
         {
             "name": "Igor Romanov",
