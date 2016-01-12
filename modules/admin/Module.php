@@ -84,7 +84,7 @@ class Module extends \yii\base\Module
                         [
                             'title' => Yii::t('app', 'Enable'),
                             'class' => 'submit btn btn-xs btn-success',
-                            'data-pjax' => false
+                            'data-pjax' => 0
                         ]
                     );
                 } else {
@@ -94,7 +94,7 @@ class Module extends \yii\base\Module
                         [
                             'title' => Yii::t('app', 'Disable'),
                             'class' => 'submit btn btn-xs btn-warning',
-                            'data-pjax' => false
+                            'data-pjax' => 0
                         ]
                     );
                 }
@@ -107,7 +107,7 @@ class Module extends \yii\base\Module
                     [
                         'title' => Yii::t('app', 'Delete'),
                         'class' => 'confirmation submit btn btn-xs btn-danger',
-                        'data-pjax' => false,
+                        'data-pjax' => 0,
                         'data-confirmation' => Yii::t('app', 'Are you sure you want to delete this record?')
                     ]
                 );

@@ -31,7 +31,7 @@ $this->title = Yii::t('app', 'News');
               'format' => 'raw',
               'headerOptions' => ['style' => 'width: 400px'],
               'value' => function ($model) {
-                  return Html::a(Html::encode($model['title']), ['edit', 'id' => $model['id']], ['data-pjax' => false]);
+                  return Html::a(Html::encode($model['title']), ['edit', 'id' => $model['id']], ['data-pjax' => 0]);
               }
           ],
               // typeId

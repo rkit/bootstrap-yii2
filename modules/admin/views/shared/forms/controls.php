@@ -12,7 +12,7 @@ use yii\helpers\Html;
   [
       'title' => Yii::t('app', 'Delete'),
       'class' => 'btn btn-danger',
-      'data-pjax' => true,
+      'data-pjax' => 1,
       'data-method' => 'post',
       'data-confirm' => Yii::t('app', 'Are you sure you want to delete this record?')
   ]

@@ -28,7 +28,7 @@ $this->title = Yii::t('app', 'Type of news');
               'attribute' => 'title',
               'format' => 'raw',
               'value' => function ($model) {
-                  return Html::a(Html::encode($model['title']), ['edit', 'id' => $model['id']], ['data-pjax' => false]);
+                  return Html::a(Html::encode($model['title']), ['edit', 'id' => $model['id']], ['data-pjax' => 0]);
               }
           ],
               // action buttons

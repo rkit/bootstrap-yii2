@@ -28,7 +28,7 @@ $this->title = Yii::t('app', 'Roles');
               'attribute' => 'name',
               'format' => 'raw',
               'value' => function ($model) {
-                  return Html::a(Html::encode($model['name']), ['edit', 'name' => $model['name']], ['data-pjax' => false]);
+                  return Html::a(Html::encode($model['name']), ['edit', 'name' => $model['name']], ['data-pjax' => 0]);
               }
           ],
               // description
