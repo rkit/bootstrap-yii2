@@ -131,6 +131,7 @@ class News extends BaseActive
                 'class' => 'rkit\filemanager\behaviors\FileBehavior',
                 'attributes' => [
                     'text' => [
+                        'storage' => 'rkit\filemanager\storages\LocalStorage',
                         'rules' => [
                             'mimeTypes' => ['image/png', 'image/jpg', 'image/jpeg'],
                             'extensions' => ['jpg', 'jpeg', 'png'],
@@ -139,6 +140,7 @@ class News extends BaseActive
                         ]
                     ],
                     'preview' => [
+                        'storage' => 'rkit\filemanager\storages\LocalStorage',
                         'saveFilePath' => true,
                         'rules' => [
                             'imageSize' => ['minWidth' => 300, 'minHeight' => 300],
@@ -165,6 +167,8 @@ class News extends BaseActive
                         'applyPresetAfterUpload' => '*'
                     ],
                     'gallery' => [
+                        'storage' => 'rkit\filemanager\storages\LocalStorage',
+                        'multiple' => true,
                         'rules' => [
                             'imageSize' => ['minWidth' => 300, 'minHeight' => 300],
                             'mimeTypes' => ['image/png', 'image/jpg', 'image/jpeg'],

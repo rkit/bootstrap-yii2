@@ -28,5 +28,5 @@ use yii\helpers\Html;
     'items' => $items
   ]);
   ?>
-  <?= Html::hiddenInput(Html::getInputName($model, $attribute) . '[]', null, ['id' => Html::getInputId($model, $attribute)]) ?>
+  <?= Html::hiddenInput(Html::getInputName($model, $attribute) . '[0]', null, ['id' => Html::getInputId($model, $attribute)]) ?>
 </div>

@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "e8035fa5fd207212247da73c17305c58",
-    "content-hash": "4f9c656b7055ac6139cec38862a430d1",
+    "hash": "1eecc523d937f4c4255755d45caa8306",
+    "content-hash": "ce7e84761a024b3092df0cef0bdad5ec",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -839,23 +839,25 @@
         },
         {
             "name": "rkit/filemanager-yii2",
-            "version": "1.0.4",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rkit/filemanager-yii2.git",
-                "reference": "44e639a139f836d574261dab5b7f5b4e34aeb30e"
+                "reference": "fbeb8e79409dbdd9b504d03c551e745246d79209"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rkit/filemanager-yii2/zipball/44e639a139f836d574261dab5b7f5b4e34aeb30e",
-                "reference": "44e639a139f836d574261dab5b7f5b4e34aeb30e",
+                "url": "https://api.github.com/repos/rkit/filemanager-yii2/zipball/fbeb8e79409dbdd9b504d03c551e745246d79209",
+                "reference": "fbeb8e79409dbdd9b504d03c551e745246d79209",
                 "shasum": ""
             },
             "require": {
                 "yiisoft/yii2": "^2.0"
             },
             "require-dev": {
+                "cvuorinen/phpdoc-markdown-public": "^0.1.2",
                 "intervention/image": "^2.3.2",
+                "phpdocumentor/phpdocumentor": "2.*",
                 "phpunit/dbunit": "^1.4",
                 "phpunit/phpunit": "^4.8"
             },
@@ -886,7 +888,7 @@
                 "upload",
                 "yii2"
             ],
-            "time": "2015-12-12 11:40:17"
+            "time": "2016-03-14 08:29:54"
         },
         {
             "name": "rkit/settings-yii2",

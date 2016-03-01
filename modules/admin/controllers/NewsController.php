@@ -53,9 +53,8 @@ class NewsController extends BaseController
                 'modelName' => 'app\models\News',
                 'attribute' => 'text',
                 'inputName' => 'file',
-                'resultName' => 'filelink',
-                'saveAfterUpload' => true,
-                'ownerId' => 0
+                'resultFieldPath' => 'filelink',
+                'temporary' => false,
             ],
             'preview-upload' => [
                 'class'     => 'rkit\filemanager\actions\UploadAction',

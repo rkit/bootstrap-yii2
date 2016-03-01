@@ -62,6 +62,7 @@ class UserProfile extends BaseActive
                 'class' => 'rkit\filemanager\behaviors\FileBehavior',
                 'attributes' => [
                     'photo' => [
+                        'storage' => 'rkit\filemanager\storages\LocalStorage',
                         'saveFilePath' => true,
                         'rules' => [
                             'imageSize' => ['minWidth' => 300, 'minHeight' => 300],
