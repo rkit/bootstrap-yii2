@@ -30,7 +30,7 @@ $this->title = Yii::t('app', 'Users');
     </div>
     <div class="col-md-4">
       <!-- photo -->
-      <?= $this->render('/shared/files/image-input', [
+      <?= $this->render('/shared/files/image/input', [
           'form' => $form,
           'model' => $model,
           'attribute' => 'photo'

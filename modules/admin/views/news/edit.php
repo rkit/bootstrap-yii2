@@ -28,7 +28,7 @@ $this->title = Yii::t('app', 'News');
   ]) ?>
 
   <!-- preview -->
-  <?= $this->render('/shared/files/image-input', [
+  <?= $this->render('/shared/files/image/input', [
       'form' => $form,
       'model' => $model,
       'attribute' => 'preview',
@@ -51,7 +51,7 @@ $this->title = Yii::t('app', 'News');
       <div id="accordion-<?= Html::getInputId($model, 'gallery') ?>" class="panel-collapse collapse"
          role="tabpanel" aria-labelledby="headingOne">
         <div class="panel-body">
-          <?= $this->render('/shared/files/gallery-input', [
+          <?= $this->render('/shared/files/gallery/input', [
               'form' => $form, 'model' => $model, 'attribute' => 'gallery'
           ]) ?>
         </div>

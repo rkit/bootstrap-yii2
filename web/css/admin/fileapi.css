@@ -81,5 +81,7 @@
     .fileapi-files input {
       display: inline-block;
       width: 300px;
-      font-size: 13px
+      font-size: 13px;
+      box-shadow: inherit !important;
+      border-color: inherit !important;
     }

@@ -2,7 +2,7 @@
 use yii\helpers\Html;
 ?>
 <div id="<?= $selector; ?>" class="fileapi">
-  <div class="btn btn-default btn-small fileapi-fileapi-wrapper">
+  <div class="btn btn-default btn-small">
     <div class="fileapi-browse" data-fileapi="active.hide">
       <span class="glyphicon glyphicon-picture"></span>
       <span><?= Yii::t('app', 'Upload')?></span>
@@ -10,7 +10,7 @@ use yii\helpers\Html;
     </div>
   </div>
   <?php $files = $model->getFiles($attribute); $items = []; foreach ($files as $file) {
-      $content = $this->render('gallery-item', [
+      $content = $this->render('item', [
           'file' => $file,
           'model' => $model,
           'attribute' => $attribute
@@ -28,5 +28,7 @@ use yii\helpers\Html;
     'items' => $items
   ]);
   ?>
-  <?= Html::hiddenInput(Html::getInputName($model, $attribute) . '[0]', null, ['id' => Html::getInputId($model, $attribute)]) ?>
+  <?= Html::activeHiddenInput($model, $attribute.'[0]', [
+      'id' => Html::getInputId($model, $attribute)
+  ]) ?>
 </div>

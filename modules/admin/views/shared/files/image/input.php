@@ -5,28 +5,30 @@ use rkit\fileapi\Widget as FileApi;
 ?>
 <?= $form->field($model, $attribute, ['template' => "{label}\n{error}\n{input}\n{hint}"])
     ->widget(FileApi::className(), [
-        'template' => '@app/modules/admin/views/shared/files/image-template',
+        'template' => '@app/modules/admin/views/shared/files/image/template',
         'callbacks' => [
             'select' => new JsExpression('function (evt, ui) {
-               var ufile = ui.files[0],
-               $el = $(this);
-
                if (ui && ui.other.length && ui.other[0].errors) {
-                 alert("'.Yii::t('app', 'Incorrect file format').': " + ui.other[0].name);
+                 var $form = $(this).closest("form");
+                 var field = $(this).find("input:hidden:last").attr("id");
+                 var errors = ["'.Yii::t('app', 'Incorrect file format').': " + ui.other[0].name];
+                 $form.yiiActiveForm("updateAttribute", field, errors);
                }
             }'),
-            'filecomplete' => [new JsExpression('function (evt, uiEvt) {
-               if (uiEvt.result.error) {
-                 alert(uiEvt.result.error);
+            'filecomplete' => new JsExpression('function (evt, ui) {
+               var $form = $(this).closest("form");
+               var field = $(this).find("input:hidden:last").attr("id");
+               var errors = "";
+               if (ui.result.error) {
+                 errors = [ui.result.error];
                } else {
-                 $(".field-' . Html::getInputId($model, $attribute) . '").find(".help-block").empty();
-                 $(".field-' . Html::getInputId($model, $attribute) . '").removeClass("has-error");
-                 $(this).find("input[type=\"hidden\"]").val(uiEvt.result.id);
-                 $(this).find(".fileapi-preview-wrapper").html("<img src=" + uiEvt.result.path + ">");
+                 $("#" + field).val(ui.result.id);
+                 $(this).find(".fileapi-preview-wrapper").html("<img src=" + ui.result.path + ">");
                  $(this).find(".fileapi-browse-text").text("' . Yii::t('app', 'Uploaded') . '");
                }
+               $form.yiiActiveForm("updateAttribute", field, errors);
             }'),
-        ]],
+        ],
         'settings' => [
             'url' => yii\helpers\Url::toRoute([$attribute . '-upload']),
             'imageSize' => $model->getFileRules($attribute)['imageSize'],
