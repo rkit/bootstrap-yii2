@@ -44,7 +44,7 @@ class BaseController extends Controller
      * @param int|array $id primary key or WHERE condition
      * @param bool $ownerCheck
      * @return ActiveRecord
-     * @throws CHttpException
+     * @throws HttpException
      */
     public function loadModel($model, $id, $ownerCheck = false)
     {
@@ -88,21 +88,10 @@ class BaseController extends Controller
     }
 
     /**
-     * Echo and exit
-     *
-     * @param mixed $data
-     */
-    public function end($data)
-    {
-        echo $data;
-        Yii::$app->end();
-    }
-
-    /**
      * Triggers a 404 (Page Not Found) error
      *
      * @param string $msg
-     * @throws CHttpException when invoked
+     * @throws HttpException when invoked
      */
     public function pageNotFound($msg = null)
     {
@@ -113,7 +102,7 @@ class BaseController extends Controller
      * Triggers a 403 (Access Denied) error
      *
      * @param string $msg
-     * @throws CHttpException when invoked
+     * @throws HttpException when invoked
      */
     public function accessDenied($msg = null)
     {
@@ -124,7 +113,7 @@ class BaseController extends Controller
      * Triggers a 400 (Bad Request) error
      *
      * @param string $msg
-     * @throws CHttpException when invoked
+     * @throws HttpException when invoked
      */
     public function badRequest($msg = null)
     {
