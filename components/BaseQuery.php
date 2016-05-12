@@ -2,8 +2,8 @@
 
 namespace app\components;
 
-use yii\db\ActiveQuery;
 use Yii;
+use yii\db\ActiveQuery;
 
 /**
  * Base ActiveQuery

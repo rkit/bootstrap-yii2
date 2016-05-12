@@ -2,8 +2,8 @@
 
 namespace app\modules\admin;
 
-use yii\helpers\Html;
 use Yii;
+use yii\helpers\Html;
 
 class Module extends \yii\base\Module
 {

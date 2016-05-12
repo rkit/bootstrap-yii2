@@ -2,8 +2,8 @@
 
 namespace app\modules\admin\controllers\common;
 
-use yii\base\Action;
 use Yii;
+use yii\base\Action;
 
 class OperationsAction extends Action
 {

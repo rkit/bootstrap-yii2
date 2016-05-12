@@ -2,9 +2,9 @@
 
 namespace app\models;
 
-use app\components\BaseActive;
-use yii\behaviors\TimestampBehavior;
 use Yii;
+use yii\behaviors\TimestampBehavior;
+use app\components\BaseActive;
 
 /**
  * This is the model class for table "news_type".

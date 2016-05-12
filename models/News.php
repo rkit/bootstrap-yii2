@@ -2,11 +2,11 @@
 
 namespace app\models;
 
+use Yii;
+use yii\behaviors\TimestampBehavior;
 use Intervention\Image\ImageManagerStatic as Image;
 use app\components\BaseActive;
 use app\helpers\Util;
-use yii\behaviors\TimestampBehavior;
-use Yii;
 
 /**
  * This is the model class for table "news".

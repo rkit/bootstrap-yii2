@@ -2,6 +2,9 @@
 
 namespace app\controllers;
 
+use Yii;
+use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 use app\components\BaseController;
 use app\models\User;
 use app\models\UserProvider;
@@ -11,9 +14,6 @@ use app\models\forms\SignupProviderForm;
 use app\models\forms\PasswordResetRequestForm;
 use app\models\forms\ResetPasswordForm;
 use app\models\forms\ConfirmEmailForm;
-use Yii;
-use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
 
 class IndexController extends BaseController
 {

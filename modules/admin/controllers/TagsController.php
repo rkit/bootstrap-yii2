@@ -2,12 +2,12 @@
 
 namespace app\modules\admin\controllers;
 
+use Yii;
+use yii\filters\VerbFilter;
+use yii\helpers\Url;
 use app\components\BaseController;
 use app\models\Tag;
 use app\modules\admin\models\search\TagSearch;
-use yii\filters\VerbFilter;
-use yii\helpers\Url;
-use Yii;
 
 class TagsController extends BaseController
 {

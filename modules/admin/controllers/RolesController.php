@@ -2,13 +2,13 @@
 
 namespace app\modules\admin\controllers;
 
-use app\components\BaseController;
-use app\models\AuthItem;
-use app\modules\admin\models\search\AuthItemSearch;
+use Yii;
 use yii\filters\VerbFilter;
 use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
-use Yii;
+use app\components\BaseController;
+use app\models\AuthItem;
+use app\modules\admin\models\search\AuthItemSearch;
 
 class RolesController extends BaseController
 {

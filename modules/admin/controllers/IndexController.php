@@ -2,11 +2,11 @@
 
 namespace app\modules\admin\controllers;
 
-use app\components\BaseController;
-use app\modules\admin\models\forms\LoginForm;
+use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
-use Yii;
+use app\components\BaseController;
+use app\modules\admin\models\forms\LoginForm;
 
 class IndexController extends BaseController
 {

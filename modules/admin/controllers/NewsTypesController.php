@@ -2,12 +2,12 @@
 
 namespace app\modules\admin\controllers;
 
+use Yii;
+use yii\filters\VerbFilter;
+use yii\helpers\Url;
 use app\components\BaseController;
 use app\models\NewsType;
 use app\modules\admin\models\search\NewsTypeSearch;
-use yii\filters\VerbFilter;
-use yii\helpers\Url;
-use Yii;
 
 class NewsTypesController extends BaseController
 {

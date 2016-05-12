@@ -2,12 +2,12 @@
 
 namespace app\modules\admin\controllers;
 
+use Yii;
+use yii\filters\VerbFilter;
+use yii\helpers\Url;
 use app\components\BaseController;
 use app\models\Country;
 use app\modules\admin\models\search\CountrySearch;
-use yii\filters\VerbFilter;
-use yii\helpers\Url;
-use Yii;
 
 class CountriesController extends BaseController
 {

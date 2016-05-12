@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use Yii;
 use yii\base\NotSupportedException;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
@@ -9,7 +10,6 @@ use yii\behaviors\TimestampBehavior;
 use app\components\BaseActive;
 use app\models\UserProfile;
 use app\models\UserProvider;
-use Yii;
 
 /**
  * This is the model class for table "user".

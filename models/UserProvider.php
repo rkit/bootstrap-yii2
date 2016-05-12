@@ -2,8 +2,8 @@
 
 namespace app\models;
 
-use app\components\BaseActive;
 use yii\helpers\ArrayHelper;
+use app\components\BaseActive;
 
 /**
  * This is the model class for table "user_provider"

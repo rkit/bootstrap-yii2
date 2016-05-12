@@ -2,14 +2,14 @@
 
 namespace app\modules\admin\controllers;
 
+use Yii;
+use yii\filters\VerbFilter;
+use yii\helpers\Url;
 use app\components\BaseController;
 use app\models\User;
 use app\models\UserProfile;
 use app\modules\admin\models\search\UserSearch;
 use app\modules\admin\models\forms\UserForm;
-use yii\filters\VerbFilter;
-use yii\helpers\Url;
-use Yii;
 
 class UsersController extends BaseController
 {

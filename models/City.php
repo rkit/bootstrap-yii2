@@ -2,8 +2,8 @@
 
 namespace app\models;
 
-use app\components\BaseActive;
 use Yii;
+use app\components\BaseActive;
 
 /**
  * This is the model class for table "city".

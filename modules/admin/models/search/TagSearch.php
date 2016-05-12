@@ -2,10 +2,10 @@
 
 namespace app\modules\admin\models\search;
 
-use app\models\Tag;
+use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use Yii;
+use app\models\Tag;
 
 /**
  * TagSearch represents the model behind the search form about `app\models\Tag`.

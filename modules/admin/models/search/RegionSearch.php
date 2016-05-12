@@ -2,10 +2,10 @@
 
 namespace app\modules\admin\models\search;
 
-use app\models\Region;
+use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use Yii;
+use app\models\Region;
 
 /**
  * RegionSearch represents the model behind the search form about `app\models\Region`.

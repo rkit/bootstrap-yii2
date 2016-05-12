@@ -2,9 +2,9 @@
 
 namespace app\modules\admin\controllers;
 
-use app\components\BaseController;
-use yii\filters\VerbFilter;
 use Yii;
+use yii\filters\VerbFilter;
+use app\components\BaseController;
 
 class SuggestionsController extends BaseController
 {
