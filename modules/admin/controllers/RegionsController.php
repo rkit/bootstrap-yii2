@@ -19,6 +19,7 @@ class RegionsController extends BaseController
                 'actions' => [
                     'delete' => ['post'],
                     'operations' => ['post'],
+                    'autocomplete' => ['post'],
                 ],
             ],
         ];
@@ -30,6 +31,9 @@ class RegionsController extends BaseController
             'operations' => [
                 'class' => 'app\modules\admin\controllers\common\OperationsAction',
                 'modelName' => 'app\models\Region',
+                'operations' => [
+                    'delete' => [],
+                ]
             ],
             'delete' => [
                 'class' => 'app\modules\admin\controllers\common\DeleteAction',
@@ -71,5 +75,26 @@ class RegionsController extends BaseController
         }
 
         return $this->render('edit', ['model' => $model]);
+    }
+
+    public function actionAutocomplete()
+    {
+        $result = [];
+        if (($term = Yii::$app->request->post('term')) !== null) {
+            $data = Region::find()
+                ->joinWith('country')
+                ->like($term, 'region.title')
+                ->asArray()
+                ->limit(10)
+                ->all();
+
+            foreach ($data as $item) {
+                $result[] = [
+                    'text' => $item['title'],
+                    'id' => $item['region_id']
+                ];
+            }
+        }
+        return $this->response($result);
     }
 }

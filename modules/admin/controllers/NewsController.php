@@ -18,8 +18,8 @@ class NewsController extends BaseController
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'activate' => ['post'],
-                    'block' => ['post'],
+                    'publish' => ['post'],
+                    'unpublish' => ['post'],
                     'delete' => ['post'],
                     'operations' => ['post'],
                     'preview-upload' => ['post'],
@@ -35,14 +35,21 @@ class NewsController extends BaseController
             'operations' => [
                 'class' => 'app\modules\admin\controllers\common\OperationsAction',
                 'modelName' => 'app\models\News',
+                'operations' => [
+                    'delete' => [],
+                    'set-publish' => ['status' => News::STATUS_ACTIVE],
+                    'set-unpublish' => ['status' => News::STATUS_BLOCKED]
+                ]
             ],
-            'activate' => [
-                'class' => 'app\modules\admin\controllers\common\ActivateAction',
+            'set-publish' => [
+                'class' => 'app\modules\admin\controllers\common\UpdateAttributesAction',
                 'modelName' => 'app\models\News',
+                'attributes' => ['status' => News::STATUS_ACTIVE],
             ],
-            'block' => [
-                'class' => 'app\modules\admin\controllers\common\BlockAction',
+            'set-unpublish' => [
+                'class' => 'app\modules\admin\controllers\common\UpdateAttributesAction',
                 'modelName' => 'app\models\News',
+                'attributes' => ['status' => News::STATUS_BLOCKED],
             ],
             'delete' => [
                 'class' => 'app\modules\admin\controllers\common\DeleteAction',

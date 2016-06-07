@@ -17,6 +17,6 @@ $email = Html::mailto(Yii::t('app', 'contact us'), Yii::$app->settings->emailMai
   <?php endif?>
 
   <p class="text-muted">
-      <?= Yii::t('app', 'Please {email} and we will help', ['email' => $email]) ?>
+    <?= Yii::t('app', 'Please {email} and we will help', ['email' => $email]) ?>
   </p>
 </div>

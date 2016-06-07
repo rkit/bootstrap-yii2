@@ -10,8 +10,11 @@
     </div>
     <div class="fileapi-progress" data-fileapi="active.show">
       <div class="progress progress-striped">
-        <div class="fileapi-progress-bar progress-bar progress-bar-info" data-fileapi="progress"
-        role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+        <div class="fileapi-progress-bar progress-bar progress-bar-info"
+             data-fileapi="progress"
+             role="progressbar"
+             aria-valuemin="0"
+             aria-valuemax="100"></div>
       </div>
     </div>
   </div><br>

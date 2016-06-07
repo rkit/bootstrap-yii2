@@ -5,6 +5,7 @@ namespace app\modules\admin\controllers;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\helpers\Url;
+use app\helpers\Util;
 use yii\helpers\ArrayHelper;
 use app\components\BaseController;
 use app\models\AuthItem;
@@ -31,6 +32,9 @@ class RolesController extends BaseController
             'operations' => [
                 'class' => 'app\modules\admin\controllers\common\OperationsAction',
                 'modelName' => 'app\models\AuthItem',
+                'operations' => [
+                    'delete' => [],
+                ]
             ],
             'delete' => [
                 'class' => 'app\modules\admin\controllers\common\DeleteAction',
@@ -79,7 +83,7 @@ class RolesController extends BaseController
                 }
             } else {
                 if (Yii::$app->request->isAjax) {
-                    return $this->response(\app\helpers\Util::getValidationErrors($model));
+                    return $this->response(Util::collectModelErrors($model));
                 }
             }
         }

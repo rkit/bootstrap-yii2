@@ -11,6 +11,10 @@ class OperationsAction extends Action
      * @var string $modelName
      */
     public $modelName;
+    /**
+     * @var array $operations
+     */
+    public $operations;
 
     public function run()
     {
@@ -20,17 +24,17 @@ class OperationsAction extends Action
             $models = $model::findAll($ids);
             $operation = Yii::$app->request->post('operation');
 
-            foreach ($models as $model) {
-                switch ($operation) {
-                    case 'delete':
-                        $model->delete();
-                        break;
-                    case 'activate':
-                        $model->updateAttributes(['status' => $model::STATUS_ACTIVE]);
-                        break;
-                    case 'block':
-                        $model->updateAttributes(['status' => $model::STATUS_BLOCKED]);
-                        break;
+            if (isset($this->operations[$operation])) {
+                $attrubutes = $this->operations[$operation];
+                foreach ($models as $model) {
+                    switch ($operation) {
+                        case 'delete':
+                            $model->delete();
+                            break;
+                        default:
+                            $model->updateAttributes($attrubutes);
+                            break;
+                    }
                 }
             }
         }

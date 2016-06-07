@@ -30,6 +30,9 @@ class NewsTypesController extends BaseController
             'operations' => [
                 'class' => 'app\modules\admin\controllers\common\OperationsAction',
                 'modelName' => 'app\models\NewsType',
+                'operations' => [
+                    'delete' => [],
+                ]
             ],
             'delete' => [
                 'class' => 'app\modules\admin\controllers\common\DeleteAction',

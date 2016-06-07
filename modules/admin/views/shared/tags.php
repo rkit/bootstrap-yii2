@@ -13,7 +13,7 @@ use kartik\select2\Select2;
         'minimumInputLength' => 2,
         'maximumSelectionSize' => 30,
         'ajax' => [
-            'url'      => Url::toRoute('suggestions/tags'),
+            'url'      => Url::toRoute('tags/autocomplete'),
             'dataType' => 'json',
             'type'     => 'POST',
             'data'     => new JsExpression('function (term) { return {term: term}; }'),

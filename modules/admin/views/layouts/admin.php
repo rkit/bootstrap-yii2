@@ -1,9 +1,7 @@
 <?php
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
-
-$title  = ($this->title ? app\helpers\Util::clearText($this->title) . ' / ' : '');
-$title .= Yii::t('app', 'Control Panel');
+use app\helpers\Util;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
@@ -15,18 +13,18 @@ $title .= Yii::t('app', 'Control Panel');
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title><?= $title; ?></title>
+  <title><?= Util::makePageTitle($this->title, Yii::t('app', 'Control Panel')); ?></title>
   <?= Html::csrfMetaTags() ?>
   <?php $this->head() ?>
   <link href="<?= Yii::$app->controller->getCssBundle() ?>" rel="stylesheet">
 </head>
 <body>
 <?php $this->beginBody() ?>
-  <?php if(Yii::$app->controller->action->id == 'login'):?>
+  <?php if (Yii::$app->controller->action->id == 'login') :?>
   <div class="container">
     <?= $content?>
   </div>
-  <?php else:?>
+  <?php else : ?>
   <div class="container-fluid">
     <div class="row">
       <div class="sidebar">

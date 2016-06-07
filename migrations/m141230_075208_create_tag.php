@@ -13,7 +13,7 @@ class m141230_075208_create_tag extends Migration
             'title' => Schema::TYPE_STRING . " NOT NULL",
             'count' => Schema::TYPE_INTEGER . " NOT NULL DEFAULT 0",
         ], $this->tableOptions);
-        
+
         $this->createIndex('title', '{{%tag}}', 'title', true);
     }
 

@@ -17,15 +17,48 @@ $this->title = Yii::t('app', 'News');
       'dataProvider' => $dataProvider,
       'filterModel'  => $newsSearch,
       'options' => ['class' => 'gridview'],
-      'layout' => Yii::$app->getModule('admin')->defaultGridTemplate($dataProvider, ['delete', 'activate', 'block']),
+      'layout' =>
+      '<div class="panel panel-default">
+         <div class="panel-body panel-table">
+           <div class="table-responsive">{items}</div>
+         </div>
+         <div class="panel-footer">{summary}</div>
+       </div>
+       <div class="operations">
+         ' . Html::submitButton(Yii::t('app', 'delete'), [
+             'name' => 'operation',
+             'value' => 'delete',
+             'data-confirmation' => Yii::t('app', 'Are you sure you want to delete this records?'),
+             'data-loading-text' => Yii::t('app', 'Please wait…'),
+             'class' => 'submit disabled confirmation btn btn-danger btn-xs'
+         ]) . '
+         ' . Html::submitButton(Yii::t('app', 'publish'), [
+             'name' => 'operation',
+             'value' => 'set-publish',
+             'data-loading-text' => Yii::t('app', 'Please wait…'),
+             'class' => 'submit disabled btn btn-success btn-xs'
+         ]) . '
+         ' . Html::submitButton(Yii::t('app', 'unpublish'), [
+             'name' => 'operation',
+             'value' => 'set-unpublish',
+             'data-loading-text' => Yii::t('app', 'Please wait…'),
+             'class' => 'submit disabled btn btn-warning btn-xs'
+         ]) . '
+       </div>
+      {pager}
+      ',
       'tableOptions' => ['class' => 'table ' . ($dataProvider->count ? 'table-hover' : '')],
       'columns' => [
-              // checkbox
+          /**
+           * @var id
+           */
           [
               'class' => CheckboxColumn::classname(),
               'headerOptions' => ['style' => 'width: 30px']
           ],
-              // title
+          /**
+           * @var title
+           */
           [
               'attribute' => 'title',
               'format' => 'raw',
@@ -34,7 +67,9 @@ $this->title = Yii::t('app', 'News');
                   return Html::a(Html::encode($model['title']), ['edit', 'id' => $model['id']], ['data-pjax' => 0]);
               }
           ],
-              // typeId
+          /**
+           * @var type_id
+           */
           [
               'attribute' => 'type_id',
               'value' => 'type.title',
@@ -46,7 +81,9 @@ $this->title = Yii::t('app', 'News');
               )
 
           ],
-              // date_pub
+          /**
+           * @var date_pub
+           */
           [
               'attribute' => 'date_pub',
               'format' => 'datetime',
@@ -65,7 +102,9 @@ $this->title = Yii::t('app', 'News');
                   ]
               )
           ],
-              // status
+          /**
+           * @var status
+           */
           [
               'attribute' => 'status',
               'format' => 'raw',
@@ -80,12 +119,48 @@ $this->title = Yii::t('app', 'News');
                   ['class' => 'form-control', 'prompt' => Yii::t('app', 'All statuses')]
               )
           ],
-              // action buttons
+          // action buttons
           [
               'class' => 'yii\grid\ActionColumn',
               'headerOptions' => ['class' => 'text-right', 'style' => 'width: 70px'],
               'template' => '{status} {delete}',
-              'buttons' => Yii::$app->getModule('admin')->defaultGridButtons()
+              'buttons' => [
+                  'status' => function ($url, $model) {
+                      if ($model->status == $model::STATUS_BLOCKED) {
+                          return Html::a(
+                              '<span class="glyphicon glyphicon-play"></span>',
+                              ['set-publish', 'id' => $model->primaryKey],
+                              [
+                                  'title' => Yii::t('app', 'Enable'),
+                                  'class' => 'submit btn btn-xs btn-success',
+                                  'data-pjax' => 0
+                              ]
+                          );
+                      } else {
+                          return Html::a(
+                              '<span class="glyphicon glyphicon-pause"></span>',
+                              ['set-unpublish', 'id' => $model->primaryKey],
+                              [
+                                  'title' => Yii::t('app', 'Disable'),
+                                  'class' => 'submit btn btn-xs btn-warning',
+                                  'data-pjax' => 0
+                              ]
+                          );
+                      }
+                  },
+                  'delete' => function ($url, $model) {
+                      return Html::a(
+                          '<span class="glyphicon glyphicon-remove"></span>',
+                          ['delete', 'id' => $model->primaryKey],
+                          [
+                              'title' => Yii::t('app', 'Delete'),
+                              'class' => 'confirmation submit btn btn-xs btn-danger',
+                              'data-pjax' => 0,
+                              'data-confirmation' => Yii::t('app', 'Are you sure you want to delete this record?')
+                          ]
+                      );
+                  }
+              ]
           ],
       ],
   ]) ?>

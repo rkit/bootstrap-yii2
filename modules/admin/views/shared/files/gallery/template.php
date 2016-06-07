@@ -1,5 +1,8 @@
 <?php
 use yii\helpers\Html;
+
+$files = $model->getFiles($attribute);
+$items = [];
 ?>
 <div id="<?= $selector; ?>" class="fileapi">
   <div class="btn btn-default btn-small">
@@ -9,7 +12,7 @@ use yii\helpers\Html;
       <input type="file" name="<?= $inputName ?>">
     </div>
   </div>
-  <?php $files = $model->getFiles($attribute); $items = []; foreach ($files as $file) {
+  <?php foreach ($files as $file) {
       $content = $this->render('item', [
           'file' => $file,
           'model' => $model,
@@ -25,7 +28,7 @@ use yii\helpers\Html;
       'pluginOptions' => [
           'handle' => 'img'
       ],
-    'items' => $items
+      'items' => $items
   ]);
   ?>
   <?= Html::activeHiddenInput($model, $attribute.'[0]', [

@@ -5,6 +5,7 @@ namespace app\modules\admin\controllers;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\helpers\Url;
+use app\helpers\Util;
 use app\components\BaseController;
 use app\models\User;
 use app\models\UserProfile;
@@ -19,12 +20,12 @@ class UsersController extends BaseController
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'activate' => ['post'],
-                    'block' => ['post'],
+                    'set-active' => ['post'],
+                    'set-block' => ['post'],
                     'delete' => ['post'],
                     'operations' => ['post'],
-                    'preview-upload' => ['post'],
-                    'gallery-upload' => ['post'],
+                    'photo-upload' => ['post'],
+                    'autocomplete' => ['post'],
                 ],
             ],
         ];
@@ -36,14 +37,21 @@ class UsersController extends BaseController
             'operations' => [
                 'class' => 'app\modules\admin\controllers\common\OperationsAction',
                 'modelName' => 'app\models\User',
+                'operations' => [
+                    'delete' => [],
+                    'set-active' => ['status' => User::STATUS_ACTIVE],
+                    'set-block' => ['status' => User::STATUS_BLOCKED]
+                ]
             ],
-            'activate' => [
-                'class' => 'app\modules\admin\controllers\common\ActivateAction',
+            'set-active' => [
+                'class' => 'app\modules\admin\controllers\common\UpdateAttributesAction',
                 'modelName' => 'app\models\User',
+                'attributes' => ['status' => User::STATUS_ACTIVE],
             ],
-            'block' => [
-                'class' => 'app\modules\admin\controllers\common\BlockAction',
+            'set-block' => [
+                'class' => 'app\modules\admin\controllers\common\UpdateAttributesAction',
                 'modelName' => 'app\models\User',
+                'attributes' => ['status' => User::STATUS_BLOCKED],
             ],
             'delete' => [
                 'class' => 'app\modules\admin\controllers\common\DeleteAction',
@@ -103,7 +111,7 @@ class UsersController extends BaseController
                 }
             } else {
                 if (Yii::$app->request->isAjax) {
-                    return $this->response(\app\helpers\Util::getValidationErrors($model));
+                    return $this->response(Util::collectModelErrors($model));
                 }
             }
         }
@@ -126,7 +134,7 @@ class UsersController extends BaseController
                 }
             } else {
                 if (Yii::$app->request->isAjax) {
-                    return $this->response(\app\helpers\Util::getValidationErrors($model));
+                    return $this->response(Util::collectModelErrors($model));
                 }
             }
         }
@@ -134,5 +142,25 @@ class UsersController extends BaseController
         return $this->render('profile', [
             'model' => $model
         ]);
+    }
+
+    public function actionAutocomplete()
+    {
+        $result = [];
+        if (($term = Yii::$app->request->post('term')) !== null) {
+            $data = User::find()
+                ->like($term, 'username')
+                ->asArray()
+                ->limit(10)
+                ->all();
+
+            foreach ($data as $item) {
+                $result[] = [
+                    'text' => $item['username'],
+                    'id' => $item['id']
+                ];
+            }
+        }
+        return $this->response($result);
     }
 }

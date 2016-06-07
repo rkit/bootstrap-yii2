@@ -30,6 +30,9 @@ class CitiesController extends BaseController
             'operations' => [
                 'class' => 'app\modules\admin\controllers\common\OperationsAction',
                 'modelName' => 'app\models\City',
+                'operations' => [
+                    'delete' => [],
+                ]
             ],
             'delete' => [
                 'class' => 'app\modules\admin\controllers\common\DeleteAction',

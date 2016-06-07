@@ -62,4 +62,4 @@ use rkit\fileapi\Widget as FileApi;
     ])
     ->hint($model->getFileRulesDescription($attribute), [
         'class' => 'fileapi-rules'
-    ]); ?>
+    ]);

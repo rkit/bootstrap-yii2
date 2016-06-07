@@ -2,6 +2,7 @@
 
 namespace app\helpers;
 
+use Yii;
 use yii\helpers\Html;
 
 class Util
@@ -25,7 +26,7 @@ class Util
 
     /**
      * Clear text
-     * For meta tags & title page
+     * Can use for meta tags
      *
      * @param string $text
      * @return string
@@ -36,14 +37,27 @@ class Util
         return Html::encode(html_entity_decode(strip_tags($text)));
     }
 
+    /**
+     * Make page title
+     *
+     * @param string $title
+     * @param string $appendToEnd
+     * @return string
+     */
+    public static function makePageTitle($title = '', $appendToEnd = '')
+    {
+        $title = $title ? self::clearText($title) . ' / ' : '';
+        return $title . $appendToEnd;
+    }
+
    /**
-    * Get validation errors
+    * Collect model errors
     *
     * @param Model $model the model to be validated
     * @param mixed $attributes list of attributes that should be validated.
     * @return array the error message array indexed by the attribute IDs.
     */
-    public static function getValidationErrors($model, $attributes = null)
+    public static function collectModelErrors($model, $attributes = null)
     {
         $result = [];
         if ($attributes instanceof Model) {

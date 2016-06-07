@@ -27,7 +27,6 @@ class RbacController extends Controller
             'ACTION_AdminRegions' => Yii::t('app', 'Control Panel / Regions'),
             'ACTION_AdminSettings' => Yii::t('app', 'Control Panel / Settings'),
             'ACTION_AdminCountries' => Yii::t('app', 'Control Panel / Countries'),
-            'ACTION_AdminSuggestions' => Yii::t('app', 'Control Panel / Suggestions'),
         ];
 
         Yii::$app->cache->delete('rbac-permissions');

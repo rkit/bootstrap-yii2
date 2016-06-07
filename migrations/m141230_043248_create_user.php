@@ -43,7 +43,13 @@ class m141230_043248_create_user extends Migration
         ], $this->tableOptions);
 
         $this->addForeignKey(
-            'fk_user_profile', '{{%user_profile}}', 'user_id', '{{%user}}', 'id', 'CASCADE', 'CASCADE'
+            'fk_user_profile',
+            '{{%user_profile}}',
+            'user_id',
+            '{{%user}}',
+            'id',
+            'CASCADE',
+            'CASCADE'
         );
 
         //
@@ -64,7 +70,13 @@ class m141230_043248_create_user extends Migration
         $this->createIndex('user_provider', '{{%user_provider}}', 'user_id, type');
 
         $this->addForeignKey(
-            'fk_user_provider', '{{%user_provider}}', 'user_id', '{{%user}}', 'id', 'CASCADE', 'CASCADE'
+            'fk_user_provider',
+            '{{%user_provider}}',
+            'user_id',
+            '{{%user}}',
+            'id',
+            'CASCADE',
+            'CASCADE'
         );
     }
 

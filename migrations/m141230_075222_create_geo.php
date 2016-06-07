@@ -14,7 +14,7 @@ class m141230_075222_create_geo extends Migration
             'country_id' => Schema::TYPE_PK,
             'title' => Schema::TYPE_STRING . "(60) NOT NULL",
         ], $this->tableOptions);
-        
+
         //
         // Region
         //
@@ -23,13 +23,19 @@ class m141230_075222_create_geo extends Migration
             'country_id' => Schema::TYPE_INTEGER . " NOT NULL DEFAULT 0",
             'title' => Schema::TYPE_STRING . "(150) NOT NULL",
         ], $this->tableOptions);
-        
+
         $this->createIndex('country_id', '{{%region}}', 'country_id');
-        
+
         $this->addForeignKey(
-            'fk_region_country', '{{%region}}', 'country_id', '{{%country}}', 'country_id', 'CASCADE', 'CASCADE'
+            'fk_region_country',
+            '{{%region}}',
+            'country_id',
+            '{{%country}}',
+            'country_id',
+            'CASCADE',
+            'CASCADE'
         );
-        
+
         //
         // City
         //
@@ -41,17 +47,29 @@ class m141230_075222_create_geo extends Migration
             'title' => Schema::TYPE_STRING . "(150) NOT NULL",
             'area' => Schema::TYPE_STRING . "(150) NOT NULL DEFAULT ''",
         ], $this->tableOptions);
-        
+
         $this->createIndex('country_id', '{{%city}}', 'country_id');
         $this->createIndex('title', '{{%city}}', 'title');
         $this->createIndex('country_important', '{{%city}}', 'country_id, important');
-        
+
         $this->addForeignKey(
-            'fk_city_country', '{{%city}}', 'country_id', '{{%country}}', 'country_id', 'CASCADE', 'CASCADE'
+            'fk_city_country',
+            '{{%city}}',
+            'country_id',
+            '{{%country}}',
+            'country_id',
+            'CASCADE',
+            'CASCADE'
         );
-        
+
         $this->addForeignKey(
-            'fk_city_region', '{{%city}}', 'region_id', '{{%region}}', 'region_id', 'CASCADE', 'CASCADE'
+            'fk_city_region',
+            '{{%city}}',
+            'region_id',
+            '{{%region}}',
+            'region_id',
+            'CASCADE',
+            'CASCADE'
         );
     }
 

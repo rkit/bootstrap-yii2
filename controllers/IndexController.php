@@ -202,7 +202,7 @@ class IndexController extends BaseController
     public function actionConfirmAgain()
     {
         if (Yii::$app->user->identity->isConfirmed()) {
-            return $this->accessDenied();
+            Http::exception(403);
         }
 
         $model = new SignupForm();
@@ -274,7 +274,7 @@ class IndexController extends BaseController
     public function actionMaintenance()
     {
         if (!Yii::$app->catchAll) {
-            return $this->pageNotFound();
+            Http::exception(404);
         }
 
         $this->layout = 'maintenance';

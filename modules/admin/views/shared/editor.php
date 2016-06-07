@@ -6,8 +6,8 @@ use yii\helpers\Url;
         'lang' => 'ru',
         'minHeight' => 200,
         'maxHeight' => 400,
-        'pastePlainText' => true, 
-        'toolbar' => true, 
+        'pastePlainText' => true,
+        'toolbar' => true,
         'convertVideoLinks' => true,
         'convertLinksUrl' => true,
         'tabSpaces' => 1,
@@ -23,6 +23,6 @@ use yii\helpers\Url;
     ]
 ])->hint(
     'ENTER — ' . Yii::t('app', 'New paragraph') . ', ' .
-    'SHIFT + ENTER — ' . Yii::t('app', 'New line') . '<br>' . 
+    'SHIFT + ENTER — ' . Yii::t('app', 'New line') . '<br>' .
      $model->getFileRulesDescription($attribute)
-); ?>
+);

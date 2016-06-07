@@ -44,7 +44,7 @@ class BaseController extends Controller
      * @param int|array $id primary key or WHERE condition
      * @param bool $ownerCheck
      * @return ActiveRecord
-     * @throws HttpException
+     * @throws NotFoundHttpException
      */
     public function loadModel($model, $id, $ownerCheck = false)
     {
@@ -55,7 +55,7 @@ class BaseController extends Controller
         }
 
         if ($model === null || ($ownerCheck && !$model->isOwner())) {
-            return $this->pageNotFound();
+            Http::exception(404);
         }
 
         return $model;
@@ -75,7 +75,7 @@ class BaseController extends Controller
     }
 
     /**
-     * Response
+     * HTTP Response
      *
      * @param mixed $data
      * @param string $format The response format
@@ -85,38 +85,5 @@ class BaseController extends Controller
     {
         \Yii::$app->response->format = $format;
         return $data;
-    }
-
-    /**
-     * Triggers a 404 (Page Not Found) error
-     *
-     * @param string $msg
-     * @throws HttpException when invoked
-     */
-    public function pageNotFound($msg = null)
-    {
-        throw new \yii\web\HttpException(404, $msg ? $msg : Yii::t('app', 'Page not found'));
-    }
-
-    /**
-     * Triggers a 403 (Access Denied) error
-     *
-     * @param string $msg
-     * @throws HttpException when invoked
-     */
-    public function accessDenied($msg = null)
-    {
-        throw new \yii\web\HttpException(403, $msg ? $msg : Yii::t('app', 'Access Denied'));
-    }
-
-    /**
-     * Triggers a 400 (Bad Request) error
-     *
-     * @param string $msg
-     * @throws HttpException when invoked
-     */
-    public function badRequest($msg = null)
-    {
-        throw new \yii\web\HttpException(400, $msg ? $msg : Yii::t('app', 'Bad request'));
     }
 }

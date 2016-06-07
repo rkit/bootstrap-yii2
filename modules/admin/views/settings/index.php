@@ -4,7 +4,7 @@ use yii\helpers\Html;
 
 $this->title = Yii::t('app', 'Settings');
 ?>
-<?= $this->render('/shared/forms/header', ['hideButtons' => true]) ?>
+<?= $this->render('/shared/flash') ?>
 
 <?php $form = ActiveForm::begin(['options' => ['class' => 'ajax-form']]); ?>
 
@@ -21,7 +21,11 @@ $this->title = Yii::t('app', 'Settings');
   <hr>
   <div class="form-controls">
     <div class="form-group">
-    	<?= $this->render('/shared/forms/controls', ['model' => $model]) ?>
+      <?= Html::submitButton(Yii::t('app', 'Save'), [
+          'name' => 'submit',
+          'class' => 'btn btn-info',
+          'data-loading-text' => Yii::t('app', 'Please wait…')
+      ]) ?>
     </div>
   </div>
 
