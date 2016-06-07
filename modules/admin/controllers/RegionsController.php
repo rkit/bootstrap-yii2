@@ -5,6 +5,7 @@ namespace app\modules\admin\controllers;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\helpers\Url;
+use app\helpers\Util;
 use app\components\BaseController;
 use app\models\Region;
 use app\modules\admin\models\search\RegionSearch;
@@ -69,7 +70,7 @@ class RegionsController extends BaseController
                 }
             } else {
                 if (Yii::$app->request->isAjax) {
-                    return $this->response(\app\helpers\Util::getValidationErrors($model));
+                    return $this->response(Util::collectModelErrors($model));
                 }
             }
         }
