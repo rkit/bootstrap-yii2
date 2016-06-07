@@ -18,11 +18,6 @@ use app\models\forms\ConfirmEmailForm;
 class IndexController extends BaseController
 {
     /**
-     * @var array
-     */
-    private $providers = [];
-
-    /**
      * @inheritdoc
      */
     public function behaviors()

@@ -19,20 +19,16 @@ class Http
             case 400:
                 $msg = $msg ? $msg : Yii::t('app', 'Bad request');
                 throw new \yii\web\BadRequestHttpException($msg);
-                break;
             case 401:
                 $msg = $msg ? $msg : Yii::t('app', 'Access is unauthorized');
                 throw new \yii\web\UnauthorizedHttpException($msg);
-                break;
             case 403:
                 $msg = $msg ? $msg : Yii::t('app', 'Access Denied');
                 throw new \yii\web\ForbiddenHttpException($msg);
-                break;
             case 404:
             default:
                 $msg = $msg ? $msg : Yii::t('app', 'Page not found');
                 throw new \yii\web\NotFoundHttpException($msg);
-                break;
         }
     }
 }
