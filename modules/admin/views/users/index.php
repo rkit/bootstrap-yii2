@@ -1,16 +1,15 @@
 <?php
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
-use yii\helpers\Url;
 use yii\grid\CheckboxColumn;
 use yii\grid\GridView;
 use kartik\date\DatePicker;
 
 $this->title = Yii::t('app', 'Users');
 ?>
-<?= Html::a(Yii::t('app', 'Add'), Url::toRoute('edit'), ['class' => 'btn btn-default']) ?>
+<?= Html::a(Yii::t('app', 'Add'), ['edit'], ['class' => 'btn btn-default']) ?>
 
-<?= Html::beginForm(Url::toRoute('operations'), 'post') ?>
+<?= Html::beginForm(['operations'], 'post') ?>
   <?php \yii\widgets\Pjax::begin(); ?>
 
   <?= GridView::widget([
@@ -146,8 +145,15 @@ $this->title = Yii::t('app', 'Users');
               'attribute' => 'status',
               'format' => 'raw',
               'value' => function ($model) {
-                  $class = $model->status === $model::STATUS_ACTIVE ? 'success' : 'warning';
-                  return '<span class="label label-' . $class . '">' . $model->getStatusName() . '</span>';
+                  $classes = [
+                      $model::STATUS_ACTIVE => 'success',
+                      $model::STATUS_BLOCKED => 'warning',
+                      $model::STATUS_DELETED => 'danger',
+                  ];
+                  return
+                  '<span class="label label-' . $classes[$model->status ] . '">'
+                    . $model->getStatusName() .
+                  '</span>';
               },
               'filter' => Html::activeDropDownList(
                   $userSearch,

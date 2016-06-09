@@ -33,4 +33,4 @@ use kartik\select2\Select2;
             callback(data);
         }')
     ]
-])->label(Html::a(Yii::t('app', 'Tags'), Url::toRoute('/admin/tags'))) ?>
+])->label(Html::a(Yii::t('app', 'Tags'), ['/admin/tags'])) ?>

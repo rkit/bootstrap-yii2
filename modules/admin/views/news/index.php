@@ -1,16 +1,15 @@
 <?php
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
-use yii\helpers\Url;
 use yii\grid\CheckboxColumn;
 use yii\grid\GridView;
 use kartik\date\DatePicker;
 
 $this->title = Yii::t('app', 'News');
 ?>
-<?= Html::a(Yii::t('app', 'Add'), Url::toRoute('edit'), ['class' => 'btn btn-default']) ?>
+<?= Html::a(Yii::t('app', 'Add'), ['edit'], ['class' => 'btn btn-default']) ?>
 
-<?= Html::beginForm(Url::toRoute('operations'), 'post') ?>
+<?= Html::beginForm(['operations'], 'post') ?>
   <?php \yii\widgets\Pjax::begin(); ?>
 
   <?= GridView::widget([

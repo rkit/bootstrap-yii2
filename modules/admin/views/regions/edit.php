@@ -8,8 +8,8 @@ use kartik\select2\Select2;
 $this->title = Yii::t('app', 'Regions') . ' / ';
 $this->title .= !empty($model->title) ? $model->title : Yii::t('app', 'Create');
 ?>
-<?= Html::a(Yii::t('app', 'List'), Url::toRoute('index'), ['class' => 'btn btn-default']) ?>&nbsp;
-<?= Html::a(Yii::t('app', 'Add'), Url::toRoute('edit'), ['class' => 'btn btn-default']) ?><hr>
+<?= Html::a(Yii::t('app', 'List'), ['index'], ['class' => 'btn btn-default']) ?>&nbsp;
+<?= Html::a(Yii::t('app', 'Add'), ['edit'], ['class' => 'btn btn-default']) ?><hr>
 <?= $this->render('/shared/flash') ?>
 
 <?php $form = ActiveForm::begin(['options' => ['class' => 'ajax-form']]); ?>
@@ -35,7 +35,11 @@ $this->title .= !empty($model->title) ? $model->title : Yii::t('app', 'Create');
               callback(data);
           }')
       ]
-  ])->label(Html::a($model->getAttributeLabel('country_id'), Url::toRoute('/admin/countries'))) ?>
+  ])->label(
+    $model->country ?
+    Html::a($model->getAttributeLabel('country_id'), ['/admin/countries/edit', 'id' => $model->country->country_id]) :
+    Html::a($model->getAttributeLabel('country_id'), '/admin/countries')
+  ) ?>
 
   <!-- title -->
   <?= $form->field($model, 'title')->textInput() ?>

@@ -2,14 +2,13 @@
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
-use yii\helpers\Url;
 use kartik\datetime\DateTimePicker;
 
 $this->title = Yii::t('app', 'News') . ' / ';
 $this->title .= !empty($model->title) ? $model->title : Yii::t('app', 'Create');
 ?>
-<?= Html::a(Yii::t('app', 'List'), Url::toRoute('index'), ['class' => 'btn btn-default']) ?>&nbsp;
-<?= Html::a(Yii::t('app', 'Add'), Url::toRoute('edit'), ['class' => 'btn btn-default']) ?><hr>
+<?= Html::a(Yii::t('app', 'List'), ['index'], ['class' => 'btn btn-default']) ?>&nbsp;
+<?= Html::a(Yii::t('app', 'Add'), ['edit'], ['class' => 'btn btn-default']) ?><hr>
 <?= $this->render('/shared/flash') ?>
 
 <?php $form = ActiveForm::begin(['options' => ['class' => 'ajax-form']]); ?>
@@ -23,7 +22,11 @@ $this->title .= !empty($model->title) ? $model->title : Yii::t('app', 'Create');
           'class' => 'form-control',
           'prompt' => Yii::t('app', 'Select the type')
       ])
-      ->label(Html::a(Yii::t('app', 'Type'), Url::toRoute('/admin/news-types'))); ?>
+      ->label(
+        $model->type_id ?
+        Html::a($model->getAttributeLabel('type_id'), ['/admin/news-types/edit', 'id' => $model->type_id]) :
+        Html::a($model->getAttributeLabel('type_id'), '/admin/news-types')
+      ); ?>
 
   <!-- text -->
   <?= $this->render('/shared/editor', [

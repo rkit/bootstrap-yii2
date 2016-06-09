@@ -8,9 +8,9 @@ use kartik\select2\Select2;
 
 $this->title = Yii::t('app', 'Regions');
 ?>
-<?= Html::a(Yii::t('app', 'Add'), Url::toRoute('edit'), ['class' => 'btn btn-default']) ?>
+<?= Html::a(Yii::t('app', 'Add'), ['edit'], ['class' => 'btn btn-default']) ?>
 
-<?= Html::beginForm(Url::toRoute('operations'), 'post') ?>
+<?= Html::beginForm(['operations'], 'post') ?>
   <?php \yii\widgets\Pjax::begin(); ?>
 
   <?= GridView::widget([
