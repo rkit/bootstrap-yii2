@@ -100,8 +100,8 @@ class User extends BaseActive implements IdentityInterface
     public function attributeHints()
     {
         return [
-            'username' => Yii::t('app.forms', 'Only letters, numbers, symbols _ and -'),
-            'passwordNew' => Yii::t('app.forms', 'Set a new password')
+            'username' => Yii::t('app.messages', 'Only letters, numbers, symbols _ and -'),
+            'passwordNew' => Yii::t('app.messages', 'Set a new password')
         ];
     }
 

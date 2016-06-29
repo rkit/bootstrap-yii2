@@ -1,4 +1,4 @@
-<?php // @codingStandardsIgnoreFile
+<?php
 /**
  * Message translations.
  *
@@ -17,6 +17,9 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
+    'Only latin letters' => 'Только латинские буквы',
+    'Only letters, numbers, symbols _ and -' => 'Только латинские буквы, цифры, символ _ и -',
+    'Set a new password' => 'Установить новый пароль',
     'A letter for activation was sent to {email}' => 'Письмо для активации было отправлено на {email}',
     'Access Denied' => 'Доступ закрыт',
     'Access is unauthorized' => 'Требуется аутентификация',
@@ -43,6 +46,7 @@ return [
     'Please fill out your email. A link to reset password will be sent there' => 'Пожалуйста введите ваш email. Ссылка на сброс пароля будет отправлена на указанный адрес',
     'Please wait…' => 'Пожалуйста подождите…',
     'Please {email} and we will help' => 'Пожалуйста {email} и мы обязательно поможем',
+    'Saved successfully' => 'Сохранено успешно',
     'Sorry, there are works, we will be back soon…' => 'Извините, идут технические работы, мы будем доступны очень скоро',
     'There is no user with such email' => 'Пользователя с таким email не существует',
     'This email address has already been taken' => 'Данный email уже занят',
@@ -56,5 +60,4 @@ return [
     'Your account has been suspended' => 'Ваш аккаунт заблокирован',
     'Your account is activated' => 'Ваш аккаунт активирован',
     'Your account is successfully activated' => 'Ваш аккаунт успешно активирован',
-    'Saved successfully' => 'Сохранено успешно',
 ];

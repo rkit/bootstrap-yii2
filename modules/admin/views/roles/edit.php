@@ -13,7 +13,7 @@ $this->title .= !empty($model->description) ? $model->description : Yii::t('app'
 <?php $form = ActiveForm::begin(['options' => ['class' => 'ajax-form']]); ?>
 
     <!-- name -->
-  <?= $form->field($model, 'name')->textInput(['maxlength' => true])->hint(Yii::t('app.forms', 'Only latin letters')) ?>
+  <?= $form->field($model, 'name')->textInput(['maxlength' => true])->hint(Yii::t('app.messages', 'Only latin letters')) ?>
 
   <!-- description -->
   <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
