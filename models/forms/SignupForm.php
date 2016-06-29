@@ -43,7 +43,7 @@ class SignupForm extends \yii\base\Model
             ['email', 'email'],
             ['email', 'unique',
                 'targetClass' => '\app\models\User',
-                'message' => Yii::t('app', 'This email address has already been taken')
+                'message' => Yii::t('app.messages', 'This email address has already been taken')
             ],
         ];
     }
@@ -93,7 +93,7 @@ class SignupForm extends \yii\base\Model
             if ($this->user->save(false)) {
                 return Yii::$app->notify->sendMessage(
                     $this->email,
-                    Yii::t('app', 'Activate Your Account'),
+                    Yii::t('app.messages', 'Activate Your Account'),
                     'emailConfirmToken',
                     ['user' => $this->user]
                 );

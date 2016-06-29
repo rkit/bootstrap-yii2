@@ -64,7 +64,7 @@ class CountriesController extends BaseController
 
         if (Yii::$app->request->isPost) {
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                Yii::$app->session->setFlash('success', Yii::t('app', 'Saved successfully'));
+                Yii::$app->session->setFlash('success', Yii::t('app.messages', 'Saved successfully'));
                 if (Yii::$app->request->isAjax) {
                     return $this->response(['redirect' => Url::toRoute(['edit', 'id' => $model->country_id])]);
                 }

@@ -62,7 +62,7 @@ class LoginForm extends \yii\base\Model
             $user = $this->getUser();
 
             if (!$user || !$user->validatePassword($this->password)) {
-                $this->addError('password', Yii::t('app', 'Incorrect username or password'));
+                $this->addError('password', Yii::t('app.messages', 'Incorrect username or password'));
             } elseif ($user && !$user->isActive()) {
                 $this->addError('password', $user->getStatusDescription());
             }

@@ -35,7 +35,7 @@
 <?php if (!$model->isConfirmed()): ?>
 <div class="col-md-4">
 	<div class="alert alert-warning" role="alert">
-		<?= Yii::t('app', 'Account not activated') ?>
+		<?= Yii::t('app.messages', 'Account not activated') ?>
 	</div>
 </div>
 <?php endif?>

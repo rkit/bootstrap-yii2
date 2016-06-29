@@ -77,7 +77,7 @@ class RolesController extends BaseController
                     $this->setRoles($model, $roles, $permissions);
                 }
 
-                Yii::$app->session->setFlash('success', Yii::t('app', 'Saved successfully'));
+                Yii::$app->session->setFlash('success', Yii::t('app.messages', 'Saved successfully'));
                 if (Yii::$app->request->isAjax) {
                     return $this->response(['redirect' => Url::toRoute(['edit', 'name' => $model->name])]);
                 }

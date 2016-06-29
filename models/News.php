@@ -136,7 +136,7 @@ class News extends BaseActive
                             'mimeTypes' => ['image/png', 'image/jpg', 'image/jpeg'],
                             'extensions' => ['jpg', 'jpeg', 'png'],
                             'maxSize' => 1024 * 1024 * 1, // 1 MB
-                            'tooBig' => Yii::t('app', 'File size must not exceed') . ' 1Mb'
+                            'tooBig' => Yii::t('app.messages', 'File size must not exceed') . ' 1Mb'
                         ]
                     ],
                     'preview' => [
@@ -147,7 +147,7 @@ class News extends BaseActive
                             'mimeTypes' => ['image/png', 'image/jpg', 'image/jpeg'],
                             'extensions' => ['jpg', 'jpeg', 'png'],
                             'maxSize' => 1024 * 1024 * 1, // 1 MB
-                            'tooBig' => Yii::t('app', 'File size must not exceed') . ' 1Mb'
+                            'tooBig' => Yii::t('app.messages', 'File size must not exceed') . ' 1Mb'
                         ],
                         'preset' => [
                             '200x200' => function ($realPath, $publicPath, $thumbPath) {
@@ -174,7 +174,7 @@ class News extends BaseActive
                             'mimeTypes' => ['image/png', 'image/jpg', 'image/jpeg'],
                             'extensions' => ['jpg', 'jpeg', 'png'],
                             'maxSize' => 1024 * 1024 * 1, // 1 MB
-                            'tooBig' => Yii::t('app', 'File size must not exceed') . ' 1Mb'
+                            'tooBig' => Yii::t('app.messages', 'File size must not exceed') . ' 1Mb'
                         ],
                         'preset' => [
                             '80x80' => function ($realPath, $publicPath, $thumbPath) {

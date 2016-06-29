@@ -46,6 +46,20 @@ $config = [
             'datetimeFormat' => 'php:d M Y, H:i',
             'timeFormat' => 'php:H:i:s',
         ],
+        'i18n' => [
+             'translations' => [
+                 'app*' => [
+                     'class' => 'yii\i18n\PhpMessageSource',
+                     // 'basePath' => '@app/messages',
+                     // 'sourceLanguage' => 'en-US',
+                     'fileMap' => [
+                         'app' => 'app.php',
+                         'app/errors' => 'errors.php',
+                         'app/messages' => 'messages.php',
+                     ],
+                 ],
+             ],
+         ],
         'user' => [
             'class' => 'app\components\User',
             'identityClass' => 'app\models\User',

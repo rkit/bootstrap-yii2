@@ -16,7 +16,7 @@ class SettingsController extends BaseController
         if (Yii::$app->request->isPost) {
             if ($model->load(Yii::$app->request->post()) && $model->validate()) {
                 Yii::$app->settings->load($model->getAttributes());
-                Yii::$app->session->setFlash('success', Yii::t('app', 'Saved successfully'));
+                Yii::$app->session->setFlash('success', Yii::t('app.messages', 'Saved successfully'));
                 return $this->refresh();
             } else {
                 if (Yii::$app->request->isAjax) {

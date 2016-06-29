@@ -117,13 +117,13 @@ class IndexController extends BaseController
             if ($model->sendEmail()) {
                 return $this->alert(
                     'success',
-                    Yii::t('app', 'Please activate your account') . '. ' .
-                    Yii::t('app', 'A letter for activation was sent to {email}', ['email' => $model->email])
+                    Yii::t('app.messages', 'Please activate your account') . '. ' .
+                    Yii::t('app.messages', 'A letter for activation was sent to {email}', ['email' => $model->email])
                 );
             } else {
                 return $this->alert(
                     'error',
-                    Yii::t('app', 'An error occurred while sending a message to activate account')
+                    Yii::t('app.messages', 'An error occurred while sending a message to activate account')
                 );
             }
         }
@@ -157,13 +157,13 @@ class IndexController extends BaseController
             if ($model->sendEmail()) {
                 return $this->alert(
                     'success',
-                    Yii::t('app', 'Please activate your account') . '. ' .
-                    Yii::t('app', 'A letter for activation was sent to {email}', ['email' => $model->email])
+                    Yii::t('app.messages', 'Please activate your account') . '. ' .
+                    Yii::t('app.messages', 'A letter for activation was sent to {email}', ['email' => $model->email])
                 );
             } else {
                 return $this->alert(
                     'error',
-                    Yii::t('app', 'An error occurred while sending a message to activate account')
+                    Yii::t('app.messages', 'An error occurred while sending a message to activate account')
                 );
             }
         }
@@ -178,18 +178,18 @@ class IndexController extends BaseController
         $model = new ConfirmEmailForm();
 
         if (!$model->validateToken($token)) {
-            return $this->alert('error', Yii::t('app', 'Invalid link for activate account'));
+            return $this->alert('error', Yii::t('app.messages', 'Invalid link for activate account'));
         }
 
         if ($model->confirmEmail()) {
             return $this->alert(
                 'success',
-                Yii::t('app', 'Your account is successfully activated')
+                Yii::t('app.messages', 'Your account is successfully activated')
             );
         } else {
             return $this->alert(
                 'error',
-                Yii::t('app', 'An error occurred while activating account')
+                Yii::t('app.messages', 'An error occurred while activating account')
             );
         }
     }
@@ -207,14 +207,14 @@ class IndexController extends BaseController
         if ($model->sendEmail()) {
             return $this->alert(
                 'success',
-                Yii::t('app', 'A letter for activation was sent to {email}', [
+                Yii::t('app.messages', 'A letter for activation was sent to {email}', [
                     'email' => Yii::$app->user->identity->email
                 ])
             );
         } else {
             return $this->alert(
                 'error',
-                Yii::t('app', 'An error occurred while sending a message to activate account')
+                Yii::t('app.messages', 'An error occurred while sending a message to activate account')
             );
         }
     }
@@ -227,12 +227,12 @@ class IndexController extends BaseController
             if ($model->sendEmail()) {
                 return $this->alert(
                     'success',
-                    Yii::t('app', 'We\'ve sent you an email with instructions to reset your password')
+                    Yii::t('app.messages', 'We\'ve sent you an email with instructions to reset your password')
                 );
             } else {
                 return $this->alert(
                     'error',
-                    Yii::t('app', 'An error occurred while sending a message to reset your password')
+                    Yii::t('app.messages', 'An error occurred while sending a message to reset your password')
                 );
             }
         }
@@ -247,7 +247,7 @@ class IndexController extends BaseController
         $model = new ResetPasswordForm();
 
         if (!$model->validateToken($token)) {
-            return $this->alert('error', Yii::t('app', 'Invalid link for reset password'));
+            return $this->alert('error', Yii::t('app.messages', 'Invalid link for reset password'));
         }
 
         if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->resetPassword()) {

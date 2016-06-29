@@ -69,7 +69,7 @@ class UserProfile extends BaseActive
                             'mimeTypes' => ['image/png', 'image/jpg', 'image/jpeg'],
                             'extensions' => ['jpg', 'jpeg', 'png'],
                             'maxSize' => 1024 * 1024 * 1, // 1 MB
-                            'tooBig' => Yii::t('app', 'File size must not exceed') . ' 1Mb'
+                            'tooBig' => Yii::t('app.messages', 'File size must not exceed') . ' 1Mb'
                         ],
                         'preset' => [
                             '1000x1000' => function ($realPath, $publicPath, $thumbPath) {

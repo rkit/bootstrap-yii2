@@ -11,7 +11,7 @@ use rkit\fileapi\Widget as FileApi;
                if (ui && ui.other.length && ui.other[0].errors) {
                  var $form = $(this).closest("form");
                  var field = $(this).find("input:hidden:last").attr("id");
-                 var errors = ["'.Yii::t('app', 'Incorrect file format').': " + ui.other[0].name];
+                 var errors = ["'.Yii::t('app.messages', 'Incorrect file format').': " + ui.other[0].name];
                  $form.yiiActiveForm("updateAttribute", field, errors);
                }
             }'),
