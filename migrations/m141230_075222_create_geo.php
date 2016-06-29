@@ -1,4 +1,4 @@
-<?php
+<?php // @codingStandardsIgnoreFile
 
 use yii\db\Schema;
 use app\migrations\Migration;

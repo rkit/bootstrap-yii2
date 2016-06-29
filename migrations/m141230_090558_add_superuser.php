@@ -1,4 +1,4 @@
-<?php
+<?php // @codingStandardsIgnoreFile
 
 use yii\db\Schema;
 use app\models\User;
@@ -15,7 +15,7 @@ class m141230_090558_add_superuser extends Migration
         $user->status = User::STATUS_ACTIVE;
         $user->setConfirmed();
         $user->save(false);
-        
+
         $auth = Yii::$app->authManager;
         $role = $auth->createRole($user->role);
         $role->description = Yii::t('app', 'SuperUser');
@@ -25,6 +25,6 @@ class m141230_090558_add_superuser extends Migration
 
     public function safeDown()
     {
-           
+
     }
 }
