@@ -12,6 +12,20 @@ return [
         'urlManager' => [
             'showScriptName' => true,
         ],
+        'i18n' => [
+             'translations' => [
+                 'app*' => [
+                     'class' => 'yii\i18n\PhpMessageSource',
+                     // 'basePath' => '@app/messages',
+                     // 'sourceLanguage' => 'en-US',
+                     'fileMap' => [
+                         'app' => 'app.php',
+                         'app/errors' => 'errors.php',
+                         'app/messages' => 'messages.php',
+                     ],
+                 ],
+             ],
+         ],
         'fileManager' => [
             'class' => 'rkit\filemanager\FileManager',
             'uploadDirProtected' => '@app/runtime',
