@@ -45,11 +45,9 @@ class AuthItemSearch extends AuthItem
                 ]
             ],
             'pagination' => [
-                'pageSizeLimit' => [50, 100],
+                'pageSize' => 50,
             ],
         ]);
-
-        $dataProvider->getPagination()->setPageSize(Yii::$app->request->get('pageSize'), true);
 
         $query->andFilterWhere(['type' => \yii\rbac\Item::TYPE_ROLE]);
 

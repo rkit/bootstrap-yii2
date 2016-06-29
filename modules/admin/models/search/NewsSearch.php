@@ -25,7 +25,7 @@ class NewsSearch extends News
      */
     public $date_pub;
     /**
-     * @var string
+     * @var int
      */
     public $status;
 
@@ -64,11 +64,9 @@ class NewsSearch extends News
                 ]
             ],
             'pagination' => [
-                'pageSizeLimit' => [50, 100],
+                'pageSize' => 50,
             ],
         ]);
-
-        $dataProvider->getPagination()->setPageSize(Yii::$app->request->get('pageSize'), true);
 
         $dataProvider->sort->attributes['type_id'] = [
             'asc'  => ['news_type.title' => SORT_ASC],

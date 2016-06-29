@@ -57,11 +57,9 @@ class CitySearch extends City
                 ]
             ],
             'pagination' => [
-                'pageSizeLimit' => [50, 100],
+                'pageSize' => 50,
             ],
         ]);
-
-        $dataProvider->getPagination()->setPageSize(Yii::$app->request->get('pageSize'), true);
 
         if (!($this->load($params) && $this->validate())) {
             return $dataProvider;

@@ -76,7 +76,7 @@ class UserSearch extends User
                 ]
             ],
             'pagination' => [
-                'pageSizeLimit' => [50, 100],
+                'pageSize' => 50,
             ],
         ]);
 
