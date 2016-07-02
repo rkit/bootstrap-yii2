@@ -94,7 +94,7 @@ return [
     'Primary email' => 'Основной email',
     'Profile' => 'Профиль',
     'Publish' => 'Опубликовать',
-    'Published' => 'Опубликавано',
+    'Published' => 'Опубликовано',
     'Reference' => 'Ссылка на источник',
     'Region' => 'Регион',
     'Regions' => 'Регионы',
