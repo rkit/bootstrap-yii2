@@ -16,9 +16,9 @@ class m141230_081319_create_news extends Migration
             'title' => Schema::TYPE_STRING . " NOT NULL DEFAULT ''",
             'text' => "longtext",
             'preview' => Schema::TYPE_STRING . " NOT NULL DEFAULT ''",
-            'date_create' => Schema::TYPE_TIMESTAMP . " NOT NULL DEFAULT '0000-00-00 00:00:00'",
-            'date_update' => Schema::TYPE_TIMESTAMP . " NOT NULL DEFAULT '0000-00-00 00:00:00'",
-            'date_pub' => Schema::TYPE_TIMESTAMP . " NOT NULL DEFAULT '0000-00-00 00:00:00'",
+            'date_create' => Schema::TYPE_TIMESTAMP . " NULL DEFAULT NULL",
+            'date_update' => Schema::TYPE_TIMESTAMP . " NULL DEFAULT NULL",
+            'date_pub' => Schema::TYPE_TIMESTAMP . " NULL DEFAULT NULL",
             'reference' => Schema::TYPE_STRING . " NOT NULL DEFAULT ''",
             'status' => "tinyint(1) NOT NULL DEFAULT 0",
         ], $this->tableOptions);
