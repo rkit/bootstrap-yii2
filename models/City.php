@@ -41,7 +41,6 @@ class City extends BaseActive
             ['region_id', 'default', 'value' => null],
 
             ['area', 'string', 'max' => 150],
-
             ['important', 'integer'],
 
             ['title', 'string', 'max' => 150],

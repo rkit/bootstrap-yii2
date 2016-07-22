@@ -36,7 +36,9 @@ class UserProvider extends BaseActive
     public function rules()
     {
         return [
-            [['type', 'profile_id', 'profile_url', 'access_token', 'access_token_secret'], 'safe'],
+            [
+                ['type', 'profile_id', 'profile_url', 'access_token', 'access_token_secret'], 'safe'
+            ],
         ];
     }
 

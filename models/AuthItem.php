@@ -41,11 +41,12 @@ class AuthItem extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'description'], 'required'],
-
-            ['roles', 'safe'],
-
-            ['permissions', 'safe'],
+            [
+                ['name', 'description'], 'required'
+            ],
+            [
+                ['roles', 'permissions'], 'safe'
+            ],
 
             ['name', 'unique'],
             ['name', 'string', 'max' => 64],

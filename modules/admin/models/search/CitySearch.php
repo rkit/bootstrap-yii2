@@ -31,11 +31,10 @@ class CitySearch extends City
     public function rules()
     {
         return [
+            [
+                ['country_id', 'region_id'], 'integer'
+            ],
             ['title', 'string'],
-
-            ['country_id', 'integer'],
-
-            ['region_id', 'integer'],
         ];
     }
 

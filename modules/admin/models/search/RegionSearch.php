@@ -28,7 +28,6 @@ class RegionSearch extends Region
     {
         return [
             ['title', 'string'],
-
             ['country_id', 'integer'],
         ];
     }

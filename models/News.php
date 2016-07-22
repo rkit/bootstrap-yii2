@@ -50,20 +50,22 @@ class News extends BaseActive
     public function rules()
     {
         return [
-            //[['title'], 'trim'],
-            [['title', 'type_id', 'text', 'date_pub'], 'required'],
-            [['title', 'type_id', 'text', 'date_pub',
-            'preview', 'gallery', 'reference', 'status', 'tagValues'], 'safe'],
+            [
+                ['title', 'type_id', 'text', 'date_pub'], 'required'
+            ],
+            [
+                [
+                    'title', 'type_id', 'text', 'date_pub', 'preview', 'gallery',
+                    'reference', 'status', 'tagValues'
+                ], 'safe'
+            ],
 
             ['type_id', 'integer'],
             ['type_id', 'exist', 'targetClass' => NewsType::className(), 'targetAttribute' => ['type_id' => 'id']],
 
             ['title', 'string', 'max' => 255],
-
             ['text', 'string'],
-
             ['preview', 'string', 'max' => 255],
-
             ['date_pub', 'date', 'format' => 'php:Y-m-d H:i:s'],
 
             ['reference', 'url'],

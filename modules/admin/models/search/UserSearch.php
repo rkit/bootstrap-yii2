@@ -43,15 +43,11 @@ class UserSearch extends User
     public function rules()
     {
         return [
-            ['username', 'string'],
-
-            ['email', 'string'],
+            [
+                ['username', 'email', 'ip', 'role'], 'string'
+            ],
 
             ['date_create', 'date', 'format' => 'yyyy-mm-dd'],
-
-            ['ip', 'string'],
-
-            ['role', 'string'],
 
             ['status', 'integer'],
             ['status', 'in', 'range' => array_keys(User::getStatuses())],

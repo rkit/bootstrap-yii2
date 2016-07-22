@@ -36,9 +36,7 @@ class NewsSearch extends News
     {
         return [
             ['title', 'string'],
-
             ['type_id', 'integer'],
-
             ['date_pub', 'date', 'format' => 'yyyy-mm-dd'],
 
             ['status', 'integer'],

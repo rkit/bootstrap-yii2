@@ -31,9 +31,7 @@ class UserProfile extends BaseActive
     {
         return [
             ['birth_day', 'safe'],
-
             ['full_name', 'string', 'max' => 40],
-
             ['photo', 'string', 'max' => 255]
         ];
     }

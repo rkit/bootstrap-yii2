@@ -30,12 +30,12 @@ class LoginForm extends \yii\base\Model
     public function rules()
     {
         return [
-            [['email', 'password'], 'required'],
+            [
+                ['email', 'password'], 'required'
+            ],
 
             ['email', 'email'],
-
             ['rememberMe', 'boolean'],
-
             ['password', 'validatePassword'],
         ];
     }
