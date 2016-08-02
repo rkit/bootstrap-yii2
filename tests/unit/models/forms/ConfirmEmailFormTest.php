@@ -1,0 +1,47 @@
+<?php
+
+namespace app\tests\unit\models\forms;
+
+use Yii;
+use app\tests\fixtures\User as UserFixture;
+use app\models\User;
+use app\models\forms\ConfirmEmailForm;
+
+class ConfirmEmailFormTest extends \Codeception\Test\Unit
+{
+    protected function _before()
+    {
+        $this->tester->haveFixtures([
+             'user' => [
+                 'class' => UserFixture::className(),
+                 'dataFile' => codecept_data_dir() . 'user.php',
+             ],
+        ]);
+    }
+
+    public function testWrongToken()
+    {
+        $form = new ConfirmEmailForm();
+        expect_not($form->validateToken('notexistingtoken_1391882543'));
+    }
+
+    public function testEmptyToken()
+    {
+        $form = new ConfirmEmailForm();
+        expect_not($form->validateToken(''));
+    }
+
+    public function testSuccess()
+    {
+        $user = User::findByEmail('user-2@example.com');
+        expect_not($user->isConfirmed());
+
+        $form = new ConfirmEmailForm();
+        expect_that($form->validateToken($user->email_confirm_token));
+        expect_that($form->confirmEmail());
+
+        $user = User::findByEmail($user->email);
+        expect($user->email_confirm_token)->isEmpty();
+        expect_that($user->isConfirmed());
+    }
+}

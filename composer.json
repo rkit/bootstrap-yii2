@@ -37,12 +37,11 @@
         "intervention/image": "^2.3"
     },
     "require-dev": {
-        "yiisoft/yii2-codeception": "^2.0.4",
         "yiisoft/yii2-gii": "^2.0.4",
         "yiisoft/yii2-faker": "^2.0.3",
-        "codeception/codeception": "2.0.*",
-        "codeception/specify": "*",
-        "codeception/verify": "*"
+        "codeception/codeception": "^2.2.3",
+        "codeception/specify": "~0.4.3",
+        "codeception/verify": "~0.3.1"
     },
     "config": {
         "process-timeout": 1800
@@ -52,14 +51,16 @@
             "yii\\composer\\Installer::postCreateProject"
         ],
         "test-prepare": [
-            "php tests/codeception/bin/yii migrate --migrationPath=@yii/rbac/migrations/ --interactive=0",
-            "php tests/codeception/bin/yii migrate --migrationPath=@vendor/rkit/filemanager-yii2/src/migrations/ --interactive=0",
-            "php tests/codeception/bin/yii migrate --migrationPath=@vendor/rkit/settings-yii2/src/migrations/ --interactive=0",
-            "php tests/codeception/bin/yii migrate/up --interactive=0",
-            "php tests/codeception/bin/yii rbac/init"
+            "php tests/bin/yii migrate --migrationPath=@yii/rbac/migrations/ --interactive=0",
+            "php tests/bin/yii migrate --migrationPath=@vendor/rkit/filemanager-yii2/src/migrations/ --interactive=0",
+            "php tests/bin/yii migrate --migrationPath=@vendor/rkit/settings-yii2/src/migrations/ --interactive=0",
+            "php tests/bin/yii migrate/up --interactive=0",
+            "php tests/bin/yii rbac/init"
         ],
-        "test-build": "cd tests && codecept build",
-        "test": "cd tests && codecept run"
+        "test-build": "codecept build",
+        "test": "codecept run",
+        "test-coverage": "codecept run --coverage-html",
+        "test-coverage-open": "open tests/_output/coverage/index.html"
     },
     "extra": {
         "yii\\composer\\Installer::postCreateProject": {
