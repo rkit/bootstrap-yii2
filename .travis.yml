@@ -7,9 +7,6 @@ php:
 
 sudo: false
 
-before_install:
-  - pip install --user codecov
-
 install:
   - composer self-update
   - composer global require "fxp/composer-asset-plugin:~1.0"
@@ -23,11 +20,4 @@ before_script:
   - composer test-build
 
 script:
-  - cd tests && ../vendor/bin/codecept run unit,functional --coverage-xml
-
-after_script:
-  - wget https://scrutinizer-ci.com/ocular.phar
-  - php ocular.phar code-coverage:upload --format=php-clover tests/codeception/_output/coverage.xml
-
-after_success:
-  - codecov
+  - composer test
