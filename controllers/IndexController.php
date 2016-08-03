@@ -6,6 +6,7 @@ use Yii;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use app\components\BaseController;
+use app\helpers\Http;
 use app\models\User;
 use app\models\UserProvider;
 use app\models\forms\LoginForm;

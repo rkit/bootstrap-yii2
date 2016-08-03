@@ -3,7 +3,7 @@
 namespace app\modules\admin;
 
 use Yii;
-use yii\helpers\Html;
+use app\helpers\Http;
 
 class Module extends \yii\base\Module
 {
