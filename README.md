@@ -58,8 +58,11 @@ password: fghfgh
 ## Development
 
 - Enable debug mode for Yii
-  ```
+  ```apache
+  # for apache
   SetEnv APPLICATION_ENV "development"
+  # for nginx
+  fastcgi_param APPLICATION_ENV development;
   ```
 
 - Run webpack in watch mode
