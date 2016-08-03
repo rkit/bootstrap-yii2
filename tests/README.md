@@ -18,15 +18,13 @@
    composer test
    ```
 
-# Coverage
-
-1. Run coverage
+4. Run tests with coverage
 
    ```
    composer test-coverage
    ```
 
-1. Open dashboard
+5. Show coverage dashboard
 
    ```
    composer test-coverage-open
