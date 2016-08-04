@@ -5,6 +5,7 @@ namespace app\components;
 use Yii;
 use yii\web\Controller;
 use yii\helpers\ArrayHelper;
+use app\helpers\Http;
 
 /**
  * Global base controller
