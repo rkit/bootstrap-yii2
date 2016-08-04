@@ -18,13 +18,14 @@ modules:
 
 coverage:
     enabled: true
-    white_list:
+    whitelist:
        include:
            - models/*
            - controllers/*
            - components/*
            - commands/*
            - mail/*
+           - helpers/*
            - modules/admin/controllers/*
            - modules/admin/models/*
     blacklist:

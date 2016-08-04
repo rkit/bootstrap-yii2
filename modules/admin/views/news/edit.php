@@ -11,7 +11,7 @@ $this->title .= !empty($model->title) ? $model->title : Yii::t('app', 'Create');
 <?= Html::a(Yii::t('app', 'Add'), ['edit'], ['class' => 'btn btn-default']) ?><hr>
 <?= $this->render('/shared/flash') ?>
 
-<?php $form = ActiveForm::begin(['options' => ['class' => 'ajax-form']]); ?>
+<?php $form = ActiveForm::begin(['options' => ['id' => 'news-form', 'class' => 'ajax-form']]); ?>
 
   <!-- title -->
   <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>

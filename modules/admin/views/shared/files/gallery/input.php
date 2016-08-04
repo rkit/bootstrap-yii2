@@ -3,6 +3,7 @@ use yii\helpers\Html;
 use yii\web\JsExpression;
 use rkit\fileapi\Widget as FileApi;
 ?>
+<?php $model->$attribute = null;?>
 <?= $form->field($model, $attribute, ['template' => "{error}\n{input}\n{hint}"])
     ->widget(FileApi::className(), [
         'template' => '@app/modules/admin/views/shared/files/gallery/template',
