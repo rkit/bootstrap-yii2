@@ -10,5 +10,5 @@ use yii\test\ActiveFixture;
 class UserProfile extends ActiveFixture
 {
     public $modelClass = 'app\models\UserProfile';
-    public $depends = ['tests\fixtures\User'];
+    public $depends = ['app\tests\fixtures\User'];
 }

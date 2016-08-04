@@ -123,4 +123,4 @@ $items = [
      'activateParents' => true,
      'submenuTemplate' => '<ul class="nav">{items}</ul>',
      'items' => $items,
-     'options' => ['class' => 'nav sidenav']]) ?>
+     'options' => ['class' => 'nav sidenav', 'id' => 'menu']]) ?>

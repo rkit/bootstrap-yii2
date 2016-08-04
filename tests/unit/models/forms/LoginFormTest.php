@@ -124,7 +124,7 @@ class LoginFormTest extends \Codeception\Test\Unit
     public function testUserBlocked()
     {
         $form = new LoginForm([
-            'email' => 'user-blocked@example.com',
+            'email' => 'user-3@example.com',
             'password' => '123123',
         ]);
 
@@ -137,7 +137,7 @@ class LoginFormTest extends \Codeception\Test\Unit
     public function testUserDeleted()
     {
         $form = new LoginForm([
-            'email' => 'user-deleted@example.com',
+            'email' => 'user-4@example.com',
             'password' => '123123',
         ]);
 

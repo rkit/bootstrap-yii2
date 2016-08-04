@@ -6,7 +6,7 @@ $this->title = Yii::t('app', 'Settings');
 ?>
 <?= $this->render('/shared/flash') ?>
 
-<?php $form = ActiveForm::begin(['options' => ['class' => 'ajax-form']]); ?>
+<?php $form = ActiveForm::begin(['options' => ['id' => 'settings-form', 'class' => 'ajax-form']]); ?>
 
   <h2><small><?= Yii::t('app', 'Email') ?></small></h2>
   <div class="well">

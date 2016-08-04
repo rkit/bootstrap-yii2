@@ -8,6 +8,7 @@ use yii\helpers\Console;
 
 /**
  * Command for create permissions
+ * @see config/permissions.php
  */
 class RbacController extends Controller
 {
@@ -15,19 +16,7 @@ class RbacController extends Controller
 
     public function init()
     {
-        // ALL PERMISSIONS!
-        $this->permissions = [
-            'AdminModule' => Yii::t('app', 'Access to the Control Panel'),
-            // for actions
-            'ACTION_AdminNews' => Yii::t('app', 'Control Panel / News'),
-            'ACTION_AdminTags' => Yii::t('app', 'Control Panel / Tags'),
-            'ACTION_AdminRoles' => Yii::t('app', 'Control Panel / Roles'),
-            'ACTION_AdminUsers' => Yii::t('app', 'Control Panel / Users'),
-            'ACTION_AdminCities' => Yii::t('app', 'Control Panel / Cities'),
-            'ACTION_AdminRegions' => Yii::t('app', 'Control Panel / Regions'),
-            'ACTION_AdminSettings' => Yii::t('app', 'Control Panel / Settings'),
-            'ACTION_AdminCountries' => Yii::t('app', 'Control Panel / Countries'),
-        ];
+        $this->permissions = require_once __DIR__ . '/../config/permissions.php';
 
         Yii::$app->cache->delete('rbac-permissions');
     }

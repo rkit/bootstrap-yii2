@@ -12,7 +12,7 @@ $this->title .= !empty($model->title) ? $model->title : Yii::t('app', 'Create');
 <?= Html::a(Yii::t('app', 'Add'), ['edit'], ['class' => 'btn btn-default']) ?><hr>
 <?= $this->render('/shared/flash') ?>
 
-<?php $form = ActiveForm::begin(['options' => ['class' => 'ajax-form']]); ?>
+<?php $form = ActiveForm::begin(['options' => ['id' => 'regions-form', 'class' => 'ajax-form']]); ?>
 
   <!-- country_id -->
   <?= $form->field($model, 'country_id')->widget(Select2::classname(), [

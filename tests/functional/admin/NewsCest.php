@@ -2,21 +2,29 @@
 
 namespace app\tests\functional\admin;
 
+use Codeception\Util\Locator;
 use yii\helpers\Url as Url;
 use app\tests\fixtures\NewsType as NewsTypeFixture;
+use app\tests\fixtures\News as NewsFixture;
 use app\tests\fixtures\User as UserFixture;
 use app\models\User;
-use app\models\News;
 
 class NewsCest
 {
+    protected $pageTitle = 'News';
+    protected $modelClass = 'app\models\News';
+    protected $formName = 'News';
     protected $formId = '#news-form';
-    protected $lastId;
+    protected $url = '/admin/news';
 
+    // @codingStandardsIgnoreFile
     public function _before($I)
     {
-        $I->amLoggedInAs(User::findByUsername('superuser'));
         $I->haveFixtures([
+             'news' => [
+                'class' => NewsFixture::className(),
+                'dataFile' => codecept_data_dir() . 'news.php',
+             ],
              'newsType' => [
                  'class' => NewsTypeFixture::className(),
                  'dataFile' => codecept_data_dir() . 'news_type.php',
@@ -26,71 +34,256 @@ class NewsCest
                  'dataFile' => codecept_data_dir() . 'user.php',
              ],
         ]);
-        $I->amOnRoute('/admin/news');
+        $I->amLoggedInAs(User::findByUsername('superuser'));
+        $I->amOnRoute($this->url);
     }
 
-    public function openListPage($I)
+    private function create($I, $title)
     {
-        $I->see('News');
+        $I->amOnRoute($this->url . '/edit');
+        $I->submitForm($this->formId, [
+            $this->formName . '[title]' => $title,
+            $this->formName . '[type_id]' => 1,
+            $this->formName . '[text]' => 'Test',
+        ]);
+
+        $I->expectTo('see success');
+        $I->see('Saved successfully');
+        $I->seeResponseCodeIs(200);
     }
 
-    public function openCreatePage($I)
+    public function testOpenIndexPage($I)
     {
-        $I->amOnRoute('/admin/news/edit');
-        $I->see('News / Create');
+        $I->see($this->pageTitle);
+        $I->see('News-1', '//table/tbody/tr[3]');
+        $I->see('News-2', '//table/tbody/tr[2]');
+        $I->see('News-3', '//table/tbody/tr[1]');
+    }
+
+    public function testIndexSortByTitle($I)
+    {
+        $url = $I->grabAttributeFrom('//table/thead/tr/th[2]/a', 'href');
+        $I->amOnPage($url);
+        $I->seeResponseCodeIs(200);
+        $I->seeNumberOfElements('//table/tbody/tr', 3);
+        $I->see('News-1', '//table/tbody/tr[1]/td');
+
+        // change mode
+        $url = $I->grabAttributeFrom('//table/thead/tr/th[2]/a', 'href');
+        $I->amOnPage($url);
+        $I->seeResponseCodeIs(200);
+        $I->seeNumberOfElements('//table/tbody/tr', 3);
+        $I->see('News-3', '//table/tbody/tr[1]/td');
+    }
+
+    public function testIndexSortByTypeId($I)
+    {
+        $url = $I->grabAttributeFrom('//table/thead/tr/th[3]/a', 'href');
+        $I->amOnPage($url);
+        $I->seeResponseCodeIs(200);
+        $I->seeNumberOfElements('//table/tbody/tr', 3);
+        $I->see('News-1', '//table/tbody/tr[1]/td');
+
+        // change mode
+        $url = $I->grabAttributeFrom('//table/thead/tr/th[3]/a', 'href');
+        $I->amOnPage($url);
+        $I->seeResponseCodeIs(200);
+        $I->seeNumberOfElements('//table/tbody/tr', 3);
+        $I->see('News-3', '//table/tbody/tr[1]/td');
+    }
+
+    public function testIndexSortByDatePub($I)
+    {
+        $url = $I->grabAttributeFrom('//table/thead/tr/th[4]/a', 'href');
+        $I->amOnPage($url);
+        $I->seeResponseCodeIs(200);
+        $I->seeNumberOfElements('//table/tbody/tr', 3);
+        $I->see('News-1', '//table/tbody/tr[1]/td');
+
+        // change mode
+        $url = $I->grabAttributeFrom('//table/thead/tr/th[4]/a', 'href');
+        $I->amOnPage($url);
+        $I->seeResponseCodeIs(200);
+        $I->seeNumberOfElements('//table/tbody/tr', 3);
+        $I->see('News-3', '//table/tbody/tr[1]/td');
+    }
+
+    public function testIndexSortByStatus($I)
+    {
+        $url = $I->grabAttributeFrom('//table/thead/tr/th[5]/a', 'href');
+        $I->amOnPage($url);
+        $I->seeResponseCodeIs(200);
+        $I->seeNumberOfElements('//table/tbody/tr', 3);
+        $I->see('News-1', '//table/tbody/tr[1]/td');
+
+        // change mode
+        $url = $I->grabAttributeFrom('//table/thead/tr/th[5]/a', 'href');
+        $I->amOnPage($url);
+        $I->seeResponseCodeIs(200);
+        $I->seeNumberOfElements('//table/tbody/tr', 3);
+        $I->see('News-2', '//table/tbody/tr[1]/td');
+    }
+
+    public function testIndexFilterByTitle($I)
+    {
+        $I->amOnRoute($this->url . '/index', ['NewsSearch[title]' => 'News-1']);
+        $I->seeResponseCodeIs(200);
+        $I->see('News-1');
+        $I->dontSee('News-2');
+        $I->dontSee('News-3');
+    }
+
+    public function testIndexFilterByTypeId($I)
+    {
+        $I->amOnRoute($this->url . '/index', ['NewsSearch[type_id]' => 1]);
+        $I->seeResponseCodeIs(200);
+        $I->see('News-1');
+        $I->see('News-2');
+        $I->dontSee('News-3');
+
+        $I->amOnRoute($this->url . '/index', ['NewsSearch[type_id]' => 2]);
+        $I->seeResponseCodeIs(200);
+        $I->dontSee('News-1');
+        $I->see('News-3');
+        $I->dontSee('News-2');
+    }
+
+    public function testIndexFilterByDatePub($I)
+    {
+        $I->amOnRoute($this->url . '/index', ['NewsSearch[date_pub]' => '2016-01-01']);
+        $I->seeResponseCodeIs(200);
+        $I->see('News-1');
+        $I->dontSee('News-2');
+        $I->dontSee('News-3');
+
+        $I->amOnRoute($this->url . '/index', ['NewsSearch[date_pub]' => '2016-01-02']);
+        $I->seeResponseCodeIs(200);
+        $I->dontSee('News-1');
+        $I->see('News-2');
+        $I->dontSee('News-3');
+    }
+
+    public function testIndexFilterByStatus($I)
+    {
+        $I->amOnRoute($this->url . '/index', ['NewsSearch[status]' => 0]);
+        $I->seeResponseCodeIs(200);
+        $I->see('News-1');
+        $I->dontSee('News-2');
+        $I->dontSee('News-3');
+
+        $I->amOnRoute($this->url . '/index', ['NewsSearch[status]' => 1]);
+        $I->seeResponseCodeIs(200);
+        $I->dontSee('News-1');
+        $I->see('News-2');
+        $I->see('News-3');
+    }
+
+    public function testOpenCreatePage($I)
+    {
+        $I->amOnRoute($this->url . '/edit');
+        $I->see($this->pageTitle . ' / Create');
     }
 
     public function testCreateWithEmptyFields($I)
     {
-        $I->amOnRoute('/admin/news/edit');
+        $I->amOnRoute($this->url . '/edit');
         $I->submitForm($this->formId, []);
         $I->expectTo('see validations errors');
         $I->see('Title cannot be blank', '.help-block');
-        $I->see('Type cannot be blank', '.help-block');
-        $I->see('Text cannot be blank', '.help-block');
     }
 
     public function testCreate($I)
     {
-        $I->amOnRoute('/admin/news/edit');
-        $I->submitForm($this->formId, [
-            'News[title]' => 'Test' . time(),
-            'News[type_id]' => 1,
-            'News[text]' => 'Test',
-        ]);
-        $I->expectTo('see success');
-        $I->see('Saved successfully');
-        $I->seeResponseCodeIs(200);
+        $this->create($I, 'News-4');
 
-        $this->lastId = $I->grabFromCurrentUrl('/id=(\d+)/');
-        $news = News::findOne($this->lastId);
-
-        $I->amOnRoute('/admin/news');
-        $I->see($news->title);
+        $I->amOnRoute($this->url);
+        $I->see('News-4');
     }
 
     public function testUpdate($I)
     {
-        $news = News::findOne($this->lastId);
-
-        $I->click($news->title);
+        $I->click('News-1');
         $I->submitForm($this->formId, [
-            'News[title]' => $news->title . '_UPD',
-            'News[type_id]' => 1,
-            'News[text]' => 'Test',
+            $this->formName . '[title]' =>  'News-1_UPD',
         ]);
         $I->expectTo('see success');
         $I->see('Saved successfully');
 
-        $I->amOnRoute('/admin/news');
-        $I->see($news->title . '_UPD');
+        $I->amOnRoute($this->url);
+        $I->see('News-1_UPD');
+    }
+
+    public function testPublish($I)
+    {
+        $element = '//table/tbody/tr[3]/td';
+        $I->see('Not published', $element);
+
+        $url = $I->grabAttributeFrom(Locator::elementAt('//table/tbody/tr[3]/td/a', -2), 'href');
+        $I->sendAjaxPostRequest($url);
+        $I->seeResponseCodeIs(200);
+
+        $I->amOnRoute($this->url);
+        $I->dontSee('Not published', $element);
+        $I->see('Published', $element);
+    }
+
+    public function testUnpublish($I)
+    {
+        $element = '//table/tbody/tr[1]/td';
+        $I->dontSee('Not published', $element);
+        $url = $I->grabAttributeFrom(Locator::elementAt('//table/tbody/tr[1]/td/a', -2), 'href');
+        $I->sendAjaxPostRequest($url);
+        $I->seeResponseCodeIs(200);
+
+        $I->amOnRoute($this->url);
+        $I->see('Not published', $element);
+    }
+
+    public function testPublishAll($I)
+    {
+        $I->checkOption('//table/tbody/tr[1]/td/input');
+        $I->checkOption('//table/tbody/tr[2]/td/input');
+        $I->checkOption('//table/tbody/tr[3]/td/input');
+        $I->click('publish');
+
+        $I->amOnRoute($this->url);
+        $I->seeNumberOfElements('//table/tbody/tr', 3);
+        $I->dontSee('Not published', 'tbody');
+    }
+
+    public function testUnpublishAll($I)
+    {
+        $I->checkOption('//table/tbody/tr[1]/td/input');
+        $I->checkOption('//table/tbody/tr[2]/td/input');
+        $I->checkOption('//table/tbody/tr[3]/td/input');
+        $I->click('unpublish');
+
+        $I->amOnRoute($this->url);
+        $I->seeNumberOfElements('//table/tbody/tr', 3);
+        $I->see('Not published', 'tbody');
     }
 
     public function testDelete($I)
     {
-        $news = News::findOne($this->lastId);
+        $url = $I->grabAttributeFrom(Locator::elementAt('//table/tbody/tr[1]/td/a', -1), 'href');
+        $I->sendAjaxPostRequest($url);
+        $I->seeResponseCodeIs(200);
 
-        $I->sendAjaxPostRequest(Url::toRoute(['/admin/news/delete', 'id' => $this->lastId]));
-        $I->dontSee($news->title);
+        $I->amOnRoute($this->url);
+        $I->seeNumberOfElements('//table/tbody/tr', 2);
+        $I->dontSee('News-3');
+    }
+
+    public function testDeleteAll($I)
+    {
+        $I->checkOption('//table/tbody/tr[1]/td/input');
+        $I->checkOption('//table/tbody/tr[2]/td/input');
+        $I->checkOption('//table/tbody/tr[3]/td/input');
+        $I->click('delete');
+        $I->seeResponseCodeIs(200);
+
+        $I->amOnRoute($this->url);
+        $I->seeNumberOfElements('//table/tbody/tr', 1);
+        $I->see('No results found');
     }
 }

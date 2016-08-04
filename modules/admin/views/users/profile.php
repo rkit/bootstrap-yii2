@@ -16,7 +16,7 @@ $this->title .= !empty($title) ? $title : Yii::t('app', 'Create');
   <li class="active"><?= Html::a(Yii::t('app', 'Profile'), ['profile', 'id' => $model->user_id]) ?></li>
 </ul><br>
 
-<?php $form = ActiveForm::begin(['options' => ['class' => 'ajax-form']]); ?>
+<?php $form = ActiveForm::begin(['options' => ['id' => 'profile-form', 'class' => 'ajax-form']]); ?>
 
   <div class="row">
     <div class="col-md-8">

@@ -64,8 +64,11 @@ class NewsTypesController extends BaseController
         if (Yii::$app->request->isPost) {
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 Yii::$app->session->setFlash('success', Yii::t('app.messages', 'Saved successfully'));
+                $urlToModel = Url::toRoute(['edit', 'id' => $model->id]);
                 if (Yii::$app->request->isAjax) {
-                    return $this->response(['redirect' => Url::toRoute(['edit', 'id' => $model->id])]);
+                    return $this->response(['redirect' => $urlToModel]);
+                } else {
+                    return $this->redirect($urlToModel);
                 }
             } else {
                 if (Yii::$app->request->isAjax) {

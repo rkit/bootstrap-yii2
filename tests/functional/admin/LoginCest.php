@@ -4,16 +4,32 @@ namespace app\tests\functional\admin;
 
 use yii\web\ForbiddenHttpException;
 use app\tests\fixtures\User as UserFixture;
+use app\tests\fixtures\AuthItem as AuthItemFixture;
+use app\tests\fixtures\AuthItemChild as AuthItemChildFixture;
+use app\tests\fixtures\AuthAssignment as  AuthAssignmentFixture;
 use app\models\User;
 
 class LoginCest
 {
     protected $formId = '#login-form';
 
+    // @codingStandardsIgnoreFile
     public function _before($I)
     {
         $I->amOnRoute('/admin');
         $I->haveFixtures([
+             'authItem' => [
+                 'class' => AuthItemFixture::className(),
+                 'dataFile' => codecept_data_dir() . 'auth_item.php',
+             ],
+             'authAssignment' => [
+                 'class' => AuthAssignmentFixture::className(),
+                 'dataFile' => codecept_data_dir() . 'auth_assignment.php',
+             ],
+             'authItemChild' => [
+                 'class' => AuthItemChildFixture::className(),
+                 'dataFile' => codecept_data_dir() . 'auth_item_child.php',
+             ],
              'user' => [
                  'class' => UserFixture::className(),
                  'dataFile' => codecept_data_dir() . 'user.php',
@@ -68,7 +84,7 @@ class LoginCest
     public function testBlockedUser($I)
     {
         $I->submitForm($this->formId, [
-            'LoginForm[username]' => 'user-blocked',
+            'LoginForm[username]' => 'user-3',
             'LoginForm[password]' => '123123',
         ]);
         $I->expectTo('see validations errors');
@@ -79,7 +95,7 @@ class LoginCest
     public function testDeletedUser($I)
     {
         $I->submitForm($this->formId, [
-            'LoginForm[username]' => 'user-deleted',
+            'LoginForm[username]' => 'user-4',
             'LoginForm[password]' => '123123',
         ]);
         $I->expectTo('see validations errors');
@@ -118,6 +134,24 @@ class LoginCest
         $I->expectTo('see validations errors');
         $I->see('Incorrect username or password', '.help-block-error');
         $I->dontSee('logout');
+    }
+
+    public function testSuccessForEditorNews($I)
+    {
+        $I->submitForm($this->formId, [
+            'LoginForm[username]' => 'user-5',
+            'LoginForm[password]' => '123123',
+        ]);
+
+        $I->amOnRoute('/admin/news');
+        $I->seeResponseCodeIs(200);
+
+        $I->amOnRoute('/admin/users');
+        $I->seeResponseCodeIs(403);
+
+        $I->amOnRoute('/admin');
+        $I->see('News', '#menu');
+        $I->seeNumberOfElements('#menu li', 1);
     }
 
     public function testSuccess($I)

@@ -18,7 +18,7 @@ $this->title .= !empty($title) ? $title : Yii::t('app', 'Create');
 </ul><br>
 <?php endif ?>
 
-<?php $form = ActiveForm::begin(['options' => ['class' => 'ajax-form']]); ?>
+<?php $form = ActiveForm::begin(['options' => ['id' => 'users-form', 'class' => 'ajax-form']]); ?>
 
   <div class="row">
     <div class="col-md-<?= $model->isNewRecord ? '12' : '8' ?>">

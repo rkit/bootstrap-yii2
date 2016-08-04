@@ -9,6 +9,7 @@ class SignupCest
     protected $formId = '#form-signup';
     protected $formName = 'SignupForm';
 
+    // @codingStandardsIgnoreFile
     public function _before($I)
     {
         $I->amOnRoute('/index/signup');

@@ -10,7 +10,7 @@ $this->title .= !empty($model->description) ? $model->description : Yii::t('app'
 <?= Html::a(Yii::t('app', 'Add'), ['edit'], ['class' => 'btn btn-default']) ?><hr>
 <?= $this->render('/shared/flash') ?>
 
-<?php $form = ActiveForm::begin(['options' => ['class' => 'ajax-form']]); ?>
+<?php $form = ActiveForm::begin(['options' => ['id' => 'roles-form', 'class' => 'ajax-form']]); ?>
 
     <!-- name -->
   <?= $form->field($model, 'name')->textInput(['maxlength' => true])->hint(Yii::t('app.messages', 'Only latin letters')) ?>

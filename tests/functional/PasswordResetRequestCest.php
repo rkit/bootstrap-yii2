@@ -8,6 +8,7 @@ class PasswordResetRequestCest
 {
     protected $formId = '#request-password-reset-form';
 
+    // @codingStandardsIgnoreFile
     public function _before($I)
     {
         $I->amOnRoute('/index/request-password-reset');
@@ -50,7 +51,7 @@ class PasswordResetRequestCest
     public function testBlockedUser($I)
     {
         $I->submitForm($this->formId, [
-            'PasswordResetRequestForm[email]' => 'user-blocked@example.com',
+            'PasswordResetRequestForm[email]' => 'user-3@example.com',
         ]);
         $I->see('There is no user with such email', '.help-block-error');
     }
@@ -58,7 +59,7 @@ class PasswordResetRequestCest
     public function testDeletedUser($I)
     {
         $I->submitForm($this->formId, [
-            'PasswordResetRequestForm[email]' => 'user-deleted@example.com',
+            'PasswordResetRequestForm[email]' => 'user-4@example.com',
         ]);
         $I->see('There is no user with such email', '.help-block-error');
     }

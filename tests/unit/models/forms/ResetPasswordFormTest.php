@@ -21,7 +21,7 @@ class ResetPasswordFormTest extends \Codeception\Test\Unit
 
     public function testEmptyPassword()
     {
-        $userFixture = $this->tester->grabFixture('user', 2);
+        $userFixture = $this->tester->grabFixture('user', 1);
 
         $form = new ResetPasswordForm();
         $form->password = '';
@@ -31,7 +31,7 @@ class ResetPasswordFormTest extends \Codeception\Test\Unit
 
     public function testTooShortPassword()
     {
-        $userFixture = $this->tester->grabFixture('user', 2);
+        $userFixture = $this->tester->grabFixture('user', 1);
 
         $form = new ResetPasswordForm();
         $form->password = 'qwe';
@@ -53,7 +53,7 @@ class ResetPasswordFormTest extends \Codeception\Test\Unit
 
     public function testSuccess()
     {
-        $userFixture = $this->tester->grabFixture('user', 2);
+        $userFixture = $this->tester->grabFixture('user', 1);
 
         $form = new ResetPasswordForm();
         $form->password = 'password-new';

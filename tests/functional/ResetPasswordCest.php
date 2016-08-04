@@ -9,6 +9,7 @@ class ResetPasswordCest
 {
     protected $formId = '#reset-password-form';
 
+    // @codingStandardsIgnoreFile
     public function _before($I)
     {
         $I->haveFixtures([

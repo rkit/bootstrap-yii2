@@ -56,6 +56,7 @@ $this->title = Yii::t('app', 'Roles');
            */
           [
               'attribute' => 'description',
+              'enableSorting' => false,
           ],
           // action buttons
           [

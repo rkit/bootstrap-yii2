@@ -8,6 +8,7 @@ class LoginCest
 {
     protected $formId = '#login-form';
 
+    // @codingStandardsIgnoreFile
     public function _before($I)
     {
         $I->amOnRoute('/index/login');
@@ -66,7 +67,7 @@ class LoginCest
     public function testBlockedUser($I)
     {
         $I->submitForm($this->formId, [
-            'LoginForm[email]' => 'user-blocked@example.com',
+            'LoginForm[email]' => 'user-3@example.com',
             'LoginForm[password]' => '123123',
         ]);
         $I->expectTo('see validations errors');
@@ -77,7 +78,7 @@ class LoginCest
     public function testDeletedUser($I)
     {
         $I->submitForm($this->formId, [
-            'LoginForm[email]' => 'user-deleted@example.com',
+            'LoginForm[email]' => 'user-4@example.com',
             'LoginForm[password]' => '123123',
         ]);
         $I->expectTo('see validations errors');

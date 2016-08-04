@@ -46,14 +46,14 @@ class PasswordResetRequestFormTest extends \Codeception\Test\Unit
     public function testUserBlocked()
     {
         $form = new PasswordResetRequestForm();
-        $form->email = 'user-blocked@example.com';
+        $form->email = 'user-3@example.com';
         expect_not($form->validate());
     }
 
     public function testUserDeleted()
     {
         $form = new PasswordResetRequestForm();
-        $form->email = 'user-deleted@example.com';
+        $form->email = 'user-4@example.com';
         expect_not($form->validate());
     }
 
@@ -67,7 +67,7 @@ class PasswordResetRequestFormTest extends \Codeception\Test\Unit
 
     public function testSuccess()
     {
-        $userFixture = $this->tester->grabFixture('user', 2);
+        $userFixture = $this->tester->grabFixture('user', 1);
 
         $form = new PasswordResetRequestForm();
         $form->email = 'user-2@example.com';
