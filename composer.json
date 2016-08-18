@@ -39,7 +39,7 @@
     "require-dev": {
         "yiisoft/yii2-gii": "^2.0.4",
         "yiisoft/yii2-faker": "^2.0.3",
-        "codeception/codeception": "^2.2.3",
+        "codeception/codeception": "^2.2.4",
         "codeception/specify": "~0.4.3",
         "codeception/verify": "~0.3.1"
     },

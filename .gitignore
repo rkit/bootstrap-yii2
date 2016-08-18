@@ -2,7 +2,6 @@
 Thumbs.db
 *.log
 
-/@webroot
 /vendor
 node_modules
 tests/_output/*
