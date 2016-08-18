@@ -142,6 +142,8 @@ class LoginCest
             'LoginForm[username]' => 'user-5',
             'LoginForm[password]' => '123123',
         ]);
+        $I->see('Exit');
+        $I->see('Welcome! / Control Panel');
 
         $I->amOnRoute('/admin/news');
         $I->seeResponseCodeIs(200);
