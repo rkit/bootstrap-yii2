@@ -136,26 +136,6 @@ class LoginCest
         $I->dontSee('logout');
     }
 
-    public function testSuccessForEditorNews($I)
-    {
-        $I->submitForm($this->formId, [
-            'LoginForm[username]' => 'user-5',
-            'LoginForm[password]' => '123123',
-        ]);
-        $I->see('Exit');
-        $I->see('Welcome! / Control Panel');
-
-        $I->amOnRoute('/admin/news');
-        $I->seeResponseCodeIs(200);
-
-        $I->amOnRoute('/admin/users');
-        $I->seeResponseCodeIs(403);
-
-        $I->amOnRoute('/admin');
-        $I->see('News', '#menu');
-        $I->seeNumberOfElements('#menu li', 1);
-    }
-
     public function testSuccess($I)
     {
         $I->submitForm($this->formId, [
