@@ -3,7 +3,6 @@
 namespace app\models;
 
 use Yii;
-use app\components\BaseActive;
 use Intervention\Image\ImageManagerStatic as Image;
 
 /**
@@ -14,7 +13,7 @@ use Intervention\Image\ImageManagerStatic as Image;
  * @property string $photo
  * @property string $birth_day
  */
-class UserProfile extends BaseActive
+class UserProfile extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
@@ -30,9 +29,13 @@ class UserProfile extends BaseActive
     public function rules()
     {
         return [
-            ['birth_day', 'safe'],
+            [
+                ['birth_day', 'photo'], 'safe',
+            ],
+
+            ['birth_day', 'date', 'format' => 'php:Y-m-d'],
+
             ['full_name', 'string', 'max' => 40],
-            ['photo', 'string', 'max' => 255]
         ];
     }
 

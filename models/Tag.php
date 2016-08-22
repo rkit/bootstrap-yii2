@@ -3,7 +3,7 @@
 namespace app\models;
 
 use Yii;
-use app\components\BaseActive;
+use app\models\query\TagQuery;
 
 /**
  * This is the model class for table "tag".
@@ -13,7 +13,7 @@ use app\components\BaseActive;
  * @property string $title
  * @property integer $count
  */
-class Tag extends BaseActive
+class Tag extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
@@ -66,6 +66,26 @@ class Tag extends BaseActive
             return true;
         }
 
-        return false;
+        return false; // @codeCoverageIgnore
+    }
+
+    /**
+     * @inheritdoc
+     * @return TagQuery
+     */
+    public static function find()
+    {
+        return new TagQuery(get_called_class());
+    }
+
+    /**
+     * Check access
+     *
+     * @return bool
+     */
+    public function checkAccess()
+    {
+        $isSuperUser = !Yii::$app->getUser()->getIsGuest() && Yii::$app->getUser()->getIdentity()->isSuperUser();
+        return $isSuperUser || Yii::$app->getUser()->id === $this->user_id;
     }
 }

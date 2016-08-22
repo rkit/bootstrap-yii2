@@ -3,7 +3,6 @@
 namespace app\models;
 
 use Yii;
-use app\components\BaseActive;
 
 /**
  * This is the model class for table "city".
@@ -18,7 +17,7 @@ use app\components\BaseActive;
  * @property Country $country
  * @property Region $region
  */
-class City extends BaseActive
+class City extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
@@ -77,19 +76,5 @@ class City extends BaseActive
     public function getRegion()
     {
         return $this->hasOne(Region::className(), ['region_id' => 'region_id']);
-    }
-
-    /**
-     * Return: City, Region, Country
-     *
-     * @return string
-     */
-    public function getFullLocation()
-    {
-        $full  = $this->title;
-        $full .= $this->region ? ', '.$this->region->title : '';
-        $full .= $this->country ? ', '.$this->country->title : '';
-
-        return $full;
     }
 }

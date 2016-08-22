@@ -53,7 +53,7 @@ class IndexController extends BaseController
     {
         if (!Yii::$app->user->can('AdminModule')) {
             Http::exception(403);
-        }
+        } // @codeCoverageIgnore
 
         return $this->render('index');
     }

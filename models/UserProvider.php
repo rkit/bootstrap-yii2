@@ -3,7 +3,6 @@
 namespace app\models;
 
 use yii\helpers\ArrayHelper;
-use app\components\BaseActive;
 
 /**
  * This is the model class for table "user_provider"
@@ -16,7 +15,7 @@ use app\components\BaseActive;
  * @property string $access_token
  * @property string $access_token_secret
  */
-class UserProvider extends BaseActive
+class UserProvider extends \yii\db\ActiveRecord
 {
     const TYPE_TWITTER   = 1;
     const TYPE_FACEBOOK  = 2;

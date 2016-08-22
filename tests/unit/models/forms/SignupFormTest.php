@@ -9,6 +9,7 @@ use app\models\User;
 
 class SignupFormTest extends \Codeception\Test\Unit
 {
+    // @codingStandardsIgnoreFile
     protected function _before()
     {
         Yii::$app->settings->set('emailMain', 'editor@mail.com');

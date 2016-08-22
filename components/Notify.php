@@ -46,12 +46,6 @@ class Notify extends \yii\base\Component
             $message->setSubject($subject);
         }
 
-        $status = $message->send();
-
-        if (!$status) {
-            Yii::error('Failed to send email: `' . $message->getSubject() . '` for `' . $to . '`');
-        }
-
-        return $status;
+        return $message->send();
     }
 }

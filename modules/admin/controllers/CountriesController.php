@@ -86,7 +86,7 @@ class CountriesController extends BaseController
         $result = [];
         if (($term = Yii::$app->request->post('term')) !== null) {
             $data = Country::find()
-                ->like($term, 'title')
+                ->like('title', $term)
                 ->asArray()
                 ->limit(10)
                 ->all();

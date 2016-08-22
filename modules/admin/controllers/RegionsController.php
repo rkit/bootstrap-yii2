@@ -87,7 +87,7 @@ class RegionsController extends BaseController
         if (($term = Yii::$app->request->post('term')) !== null) {
             $data = Region::find()
                 ->joinWith('country')
-                ->like($term, 'region.title')
+                ->like('region.title', $term)
                 ->asArray()
                 ->limit(10)
                 ->all();

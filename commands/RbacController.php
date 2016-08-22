@@ -16,7 +16,7 @@ class RbacController extends Controller
 
     public function init()
     {
-        $this->permissions = require_once __DIR__ . '/../config/permissions.php';
+        $this->permissions = require __DIR__ . '/../config/permissions.php';
 
         Yii::$app->cache->delete('rbac-permissions');
     }

@@ -9,6 +9,7 @@ use app\models\forms\ConfirmEmailForm;
 
 class ConfirmEmailFormTest extends \Codeception\Test\Unit
 {
+    // @codingStandardsIgnoreFile
     protected function _before()
     {
         $this->tester->haveFixtures([

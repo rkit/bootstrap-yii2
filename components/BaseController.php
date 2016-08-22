@@ -43,21 +43,17 @@ class BaseController extends Controller
      *
      * @param ActiveRecord $model
      * @param int|array $id primary key or WHERE condition
-     * @param bool $ownerCheck
+     * @param callable $checkAccess
      * @return ActiveRecord
      * @throws NotFoundHttpException
      */
-    public function loadModel($model, $id, $ownerCheck = false)
+    public function loadModel($model, $id, $checkAccess = null)
     {
-        if (is_array($id)) {
-            $model = $model::find()->where($id)->one();
-        } else {
-            $model = $model::findOne($id);
-        }
+        $model = $model::findOne($id);
 
-        if ($model === null || ($ownerCheck && !$model->isOwner())) {
+        if ($model === null || ($checkAccess !== null && !$model->$checkAccess())) {
             Http::exception(404);
-        }
+        } // @codeCoverageIgnore
 
         return $model;
     }

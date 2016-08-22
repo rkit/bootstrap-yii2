@@ -1,3 +1,6 @@
+<?php
+use yii\helpers\Html;
+?>
 <div class="col-md-4">
 	<ul class="list-group">
 		<li class="list-group-item text-muted"><?= Yii::t('app', 'Info') ?></li>

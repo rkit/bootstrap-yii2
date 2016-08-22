@@ -155,7 +155,7 @@ class UsersController extends BaseController
         $result = [];
         if (($term = Yii::$app->request->post('term')) !== null) {
             $data = User::find()
-                ->like($term, 'username')
+                ->like('username', $term)
                 ->asArray()
                 ->limit(10)
                 ->all();

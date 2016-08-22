@@ -38,17 +38,25 @@ class RegionsCest
         $I->amOnRoute($this->url);
     }
 
-    private function create($I, $title)
+    private function create($I, $title, $isAjax = false)
     {
         $I->amOnRoute($this->url . '/edit');
-        $I->submitForm($this->formId, [
+
+        $data = [
             $this->formName . '[title]' => $title,
             $this->formName . '[country_id]' => 1,
-        ]);
+        ];
 
-        $I->expectTo('see success');
-        $I->see('Saved successfully');
-        $I->seeResponseCodeIs(200);
+        if ($isAjax) {
+            $I->sendAjaxPostRequest(Url::toRoute($this->url . '/edit'), $data);
+            $I->seeResponseCodeIs(200);
+            $I->seeResponseContains('redirect');
+        } else {
+            $I->submitForm($this->formId, $data);
+            $I->seeResponseCodeIs(200);
+            $I->expectTo('see success');
+            $I->see('Saved successfully');
+        }
     }
 
     public function testOpenIndexPage($I)
@@ -121,6 +129,15 @@ class RegionsCest
         $I->submitForm($this->formId, []);
         $I->expectTo('see validations errors');
         $I->see('Title cannot be blank', '.help-block');
+        $I->see('Country cannot be blank', '.help-block');
+    }
+
+    public function testCreateWithEmptyFieldsViaAjax($I)
+    {
+        $I->sendAjaxPostRequest(Url::toRoute($this->url . '/edit'), [$this->formName . '[title]' => '']);
+        $I->seeResponseCodeIs(200);
+        $I->seeResponseContains('Title cannot be blank');
+        $I->seeResponseContains('Country cannot be blank');
     }
 
     public function testCreate($I)
@@ -129,6 +146,14 @@ class RegionsCest
 
         $I->amOnRoute($this->url);
         $I->see('Region-4');
+    }
+
+    public function testCreateViaAjax($I)
+    {
+        $this->create($I, 'Region-5', true);
+
+        $I->amOnRoute($this->url);
+        $I->see('Region-5');
     }
 
     public function testUpdate($I)
@@ -151,6 +176,16 @@ class RegionsCest
         $I->seeResponseCodeIs(200);
 
         $I->amOnRoute($this->url);
+        $I->seeNumberOfElements('//table/tbody/tr', 2);
+        $I->dontSee('Region-1');
+    }
+
+	public function testDeleteAndReload($I)
+    {
+        $url = $I->grabAttributeFrom(Locator::elementAt('//table/tbody/tr[1]/td/a', -1), 'href');
+        $I->sendAjaxPostRequest($url . '&reload=1');
+        $I->seeResponseCodeIs(302);
+        $I->amOnPage($I->grabHttpHeader('X-Redirect'));
         $I->seeNumberOfElements('//table/tbody/tr', 2);
         $I->dontSee('Region-1');
     }

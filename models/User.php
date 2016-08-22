@@ -7,9 +7,9 @@ use yii\base\NotSupportedException;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
 use yii\behaviors\TimestampBehavior;
-use app\components\BaseActive;
 use app\models\UserProfile;
 use app\models\UserProvider;
+use app\models\query\UserQuery;
 
 /**
  * This is the model class for table "user".
@@ -29,7 +29,7 @@ use app\models\UserProvider;
  * @property string $role
  * @property integer $status
  */
-class User extends BaseActive implements IdentityInterface
+class User extends \yii\db\ActiveRecord implements IdentityInterface
 {
     const STATUS_DELETED = 0;
     const STATUS_ACTIVE  = 1;
@@ -166,6 +166,15 @@ class User extends BaseActive implements IdentityInterface
 
     /**
      * @inheritdoc
+     * @return UserQuery
+     */
+    public static function find()
+    {
+        return new UserQuery(get_called_class());
+    }
+
+    /**
+     * @inheritdoc
      */
     public function beforeSave($insert)
     {
@@ -188,7 +197,7 @@ class User extends BaseActive implements IdentityInterface
             return true;
         } // @codeCoverageIgnore
 
-        return false;
+        return false; // @codeCoverageIgnore
     }
 
     /**

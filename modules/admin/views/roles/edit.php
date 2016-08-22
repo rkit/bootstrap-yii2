@@ -60,8 +60,6 @@ $this->title .= !empty($model->description) ? $model->description : Yii::t('app'
           [
               'title' => Yii::t('app', 'Delete'),
               'class' => 'btn btn-danger',
-              'data-pjax' => 1,
-              'data-method' => 'post',
               'data-confirm' => Yii::t('app.messages', 'Are you sure you want to delete this record?')
           ]
       ); ?>

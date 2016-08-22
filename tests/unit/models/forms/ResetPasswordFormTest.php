@@ -9,6 +9,7 @@ use app\models\forms\ResetPasswordForm;
 
 class ResetPasswordFormTest extends \Codeception\Test\Unit
 {
+    // @codingStandardsIgnoreFile
     protected function _before()
     {
         $this->tester->haveFixtures([

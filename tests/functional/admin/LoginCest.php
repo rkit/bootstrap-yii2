@@ -3,6 +3,7 @@
 namespace app\tests\functional\admin;
 
 use yii\web\ForbiddenHttpException;
+use yii\helpers\Url;
 use app\tests\fixtures\User as UserFixture;
 use app\tests\fixtures\AuthItem as AuthItemFixture;
 use app\tests\fixtures\AuthItemChild as AuthItemChildFixture;
@@ -146,6 +147,19 @@ class LoginCest
         $I->see('Welcome! / Control Panel');
         $I->dontSee('login');
         $I->dontSeeElement($this->formId);
+    }
+
+    public function testLogout($I)
+    {
+        $I->submitForm($this->formId, [
+            'LoginForm[username]' => 'superuser',
+            'LoginForm[password]' => 'fghfgh',
+        ]);
+        $I->sendAjaxPostRequest(Url::toRoute('/admin/index/logout'));
+        $I->seeResponseCodeIs(302);
+
+        $I->amOnRoute('/admin');
+        $I->seeElement($this->formId);
     }
 
     public function testEnterToPageIndexWithNoPermission($I)

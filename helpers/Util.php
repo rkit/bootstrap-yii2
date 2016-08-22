@@ -57,17 +57,11 @@ class Util
     * @param mixed $attributes list of attributes that should be validated.
     * @return array the error message array indexed by the attribute IDs.
     */
-    public static function collectModelErrors($model, $attributes = null)
+    public static function collectModelErrors($model)
     {
         $result = [];
-        if ($attributes instanceof Model) {
-            // validating multiple models
-            $models = func_get_args();
-            $attributes = null;
-        } else {
-            $models = [$model];
-        }
         /* @var $model Model */
+        $models = [$model];
         foreach ($models as $model) {
             foreach ($model->getErrors() as $attribute => $errors) {
                 $result[\yii\helpers\Html::getInputId($model, $attribute)] = $errors;

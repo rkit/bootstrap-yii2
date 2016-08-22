@@ -80,8 +80,8 @@ return [
          ],
          'fileManager' => [
              'class' => 'rkit\filemanager\FileManager',
-             'uploadDirProtected' => '@app/runtime',
-             'uploadDirUnprotected' => '@app/web',
+             'uploadDirProtected' => '@app/tests/_tmp/files/protected',
+             'uploadDirUnprotected' => '@app/tests/_tmp/files/unprotected',
              'publicPath' => 'uploads',
              'ownerTypes' => [
                  'news.text' => 1,

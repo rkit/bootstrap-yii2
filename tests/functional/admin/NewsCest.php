@@ -3,7 +3,7 @@
 namespace app\tests\functional\admin;
 
 use Codeception\Util\Locator;
-use yii\helpers\Url as Url;
+use yii\helpers\Url;
 use app\tests\fixtures\NewsType as NewsTypeFixture;
 use app\tests\fixtures\News as NewsFixture;
 use app\tests\fixtures\User as UserFixture;
@@ -38,18 +38,27 @@ class NewsCest
         $I->amOnRoute($this->url);
     }
 
-    private function create($I, $title)
+    private function create($I, $title, $isAjax = false)
     {
         $I->amOnRoute($this->url . '/edit');
-        $I->submitForm($this->formId, [
+
+        $data = [
             $this->formName . '[title]' => $title,
             $this->formName . '[type_id]' => 1,
             $this->formName . '[text]' => 'Test',
-        ]);
+            $this->formName . '[date_pub]' => '2016-08-18 10:10:21',
+        ];
 
-        $I->expectTo('see success');
-        $I->see('Saved successfully');
-        $I->seeResponseCodeIs(200);
+        if ($isAjax) {
+            $I->sendAjaxPostRequest(Url::toRoute($this->url . '/edit'), $data);
+            $I->seeResponseCodeIs(200);
+            $I->seeResponseContains('redirect');
+        } else {
+            $I->submitForm($this->formId, $data);
+            $I->seeResponseCodeIs(200);
+            $I->expectTo('see success');
+            $I->see('Saved successfully');
+        }
     }
 
     public function testOpenIndexPage($I)
@@ -192,12 +201,27 @@ class NewsCest
         $I->see('Title cannot be blank', '.help-block');
     }
 
+    public function testCreateWithEmptyFieldsViaAjax($I)
+    {
+        $I->sendAjaxPostRequest(Url::toRoute($this->url . '/edit'), [$this->formName . '[title]' => '']);
+        $I->seeResponseCodeIs(200);
+        $I->seeResponseContains('Title cannot be blank');
+    }
+
     public function testCreate($I)
     {
         $this->create($I, 'News-4');
 
         $I->amOnRoute($this->url);
         $I->see('News-4');
+    }
+
+    public function testCreateViaAjax($I)
+    {
+        $this->create($I, 'News-5', true);
+
+        $I->amOnRoute($this->url);
+        $I->see('News-5');
     }
 
     public function testUpdate($I)
@@ -270,6 +294,16 @@ class NewsCest
         $I->seeResponseCodeIs(200);
 
         $I->amOnRoute($this->url);
+        $I->seeNumberOfElements('//table/tbody/tr', 2);
+        $I->dontSee('News-3');
+    }
+
+    public function testDeleteAndReload($I)
+    {
+        $url = $I->grabAttributeFrom(Locator::elementAt('//table/tbody/tr[1]/td/a', -1), 'href');
+        $I->sendAjaxPostRequest($url . '&reload=1');
+        $I->seeResponseCodeIs(302);
+        $I->amOnPage($I->grabHttpHeader('X-Redirect'));
         $I->seeNumberOfElements('//table/tbody/tr', 2);
         $I->dontSee('News-3');
     }

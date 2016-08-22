@@ -4,7 +4,7 @@ namespace app\tests\functional\admin;
 
 use Yii;
 use Codeception\Util\Locator;
-use yii\helpers\Url as Url;
+use yii\helpers\Url;
 use app\tests\fixtures\AuthItem as AuthItemFixture;
 use app\tests\fixtures\AuthItemChild as AuthItemChildFixture;
 use app\tests\fixtures\AuthAssignment as  AuthAssignmentFixture;
@@ -49,17 +49,25 @@ class UsersCest
         $I->amOnRoute($this->url);
     }
 
-    private function create($I, $username)
+    private function create($I, $username, $isAjax = false)
     {
         $I->amOnRoute($this->url . '/edit');
-        $I->submitForm($this->formId, [
+
+        $data = [
             $this->formName . '[username]' => $username,
             $this->formName . '[passwordNew]' => 'test_password',
-        ]);
+        ];
 
-        $I->expectTo('see success');
-        $I->see('Saved successfully');
-        $I->seeResponseCodeIs(200);
+        if ($isAjax) {
+            $I->sendAjaxPostRequest(Url::toRoute($this->url . '/edit'), $data);
+            $I->seeResponseCodeIs(200);
+            $I->seeResponseContains('redirect');
+        } else {
+            $I->submitForm($this->formId, $data);
+            $I->seeResponseCodeIs(200);
+            $I->expectTo('see success');
+            $I->see('Saved successfully');
+        }
     }
 
     public function testOpenIndexPage($I)
@@ -231,12 +239,27 @@ class UsersCest
         $I->see('You must fill in username or email', '.help-block');
     }
 
+    public function testCreateWithEmptyFieldsViaAjax($I)
+    {
+        $I->sendAjaxPostRequest(Url::toRoute($this->url . '/edit'), [$this->formName . '[username]' => '']);
+        $I->seeResponseCodeIs(200);
+        $I->seeResponseContains('You must fill in username or email');
+    }
+
     public function testCreate($I)
     {
         $this->create($I, 'user-10');
 
         $I->amOnRoute($this->url);
         $I->see('user-10');
+    }
+
+    public function testCreateViaAjax($I)
+    {
+        $this->create($I, 'user-11', true);
+
+        $I->amOnRoute($this->url);
+        $I->see('user-11');
     }
 
     public function testUpdate($I)
@@ -252,6 +275,17 @@ class UsersCest
         $I->see('user-2_UPD');
     }
 
+    public function testUpdateProfileWithWrongBirthDay($I)
+    {
+        $I->click('user-2');
+        $I->click('Profile');
+        $I->submitForm('#profile-form', [
+            'UserProfile[birth_day]' => 'test',
+        ]);
+        $I->expectTo('see validations errors');
+        $I->see('The format of Birth Day is invalid', '.help-block');
+    }
+
     public function testUpdateProfile($I)
     {
         $I->click('user-2');
@@ -263,6 +297,24 @@ class UsersCest
         $I->see('Saved successfully');
 
         $I->seeInField('UserProfile[full_name]', 'Profile-2_UPD');
+    }
+
+    public function testUpdateProfileViaAjax($I)
+    {
+        $I->sendAjaxPostRequest(Url::toRoute(['/admin/users/profile', 'id' => 2]), [
+            'UserProfile[full_name]' =>  'Profile-2_UPD',
+        ]);
+        $I->seeResponseCodeIs(200);
+        $I->seeResponseContains('redirect');
+    }
+
+    public function testUpdateProfileWithWrongBirthDayViaAjax($I)
+    {
+        $I->sendAjaxPostRequest(Url::toRoute(['/admin/users/profile', 'id' => 2]), [
+            'UserProfile[birth_day]' => 'test',
+        ]);
+        $I->seeResponseCodeIs(200);
+        $I->seeResponseContains('The format of Birth Day is invalid');
     }
 
     public function testAssignRoleAndLogin($I)
@@ -351,6 +403,16 @@ class UsersCest
         $I->seeResponseCodeIs(200);
 
         $I->amOnRoute($this->url);
+        $I->seeNumberOfElements('//table/tbody/tr', 5);
+        $I->dontSee('user-5');
+    }
+
+    public function testDeleteAndReload($I)
+    {
+        $url = $I->grabAttributeFrom(Locator::elementAt('//table/tbody/tr[2]/td/a', -1), 'href');
+        $I->sendAjaxPostRequest($url . '&reload=1');
+        $I->seeResponseCodeIs(302);
+        $I->amOnPage($I->grabHttpHeader('X-Redirect'));
         $I->seeNumberOfElements('//table/tbody/tr', 5);
         $I->dontSee('user-5');
     }

@@ -3,7 +3,7 @@
 namespace app\tests\functional\admin;
 
 use Codeception\Util\Locator;
-use yii\helpers\Url as Url;
+use yii\helpers\Url;
 use app\tests\fixtures\AuthItem as AuthItemFixture;
 use app\tests\fixtures\User as UserFixture;
 use app\models\User;
@@ -33,18 +33,29 @@ class RolesCest
         $I->amOnRoute($this->url);
     }
 
-    private function create($I, $name, $permissions)
+    private function create($I, $name, $permissions, $roles, $isAjax = false)
     {
         $I->amOnRoute($this->url . '/edit');
-        $I->submitForm($this->formId, [
+
+        $data = [
             $this->formName . '[name]' => $name,
             $this->formName . '[description]' => 'Test',
             $this->formName . '[permissions]' => $permissions,
-        ]);
+            $this->formName . '[roles]' => $roles,
+        ];
 
-        $I->expectTo('see success');
-        $I->see('Saved successfully');
-        $I->seeResponseCodeIs(200);
+        if ($isAjax) {
+            $I->sendAjaxPostRequest(Url::toRoute($this->url . '/edit'), $data);
+            $I->seeResponseCodeIs(200);
+            $I->seeResponseContains('redirect');
+            $response = json_decode($I->grabResponse());
+            $I->amOnRoute($response->redirect);
+        } else {
+            $I->submitForm($this->formId, $data);
+            $I->seeResponseCodeIs(200);
+            $I->expectTo('see success');
+            $I->see('Saved successfully');
+        }
     }
 
     public function testOpenIndexPage($I)
@@ -97,14 +108,42 @@ class RolesCest
         $I->see('Description cannot be blank', '.help-block');
     }
 
+    public function testCreateWithEmptyFieldsViaAjax($I)
+    {
+        $I->sendAjaxPostRequest(Url::toRoute($this->url . '/edit'), [$this->formName . '[name]' => '']);
+        $I->seeResponseCodeIs(200);
+        $I->seeResponseContains('Name cannot be blank');
+        $I->seeResponseContains('Description cannot be blank');
+    }
+
     public function testCreate($I)
     {
-        $this->create($I, 'EditorUsers', ['ACTION_AdminUsers']);
+        $this->create($I, 'EditorUsers', ['ACTION_AdminUsers'], []);
         $I->seeInField('AuthItem[name]', 'EditorUsers');
         $I->seeInField('AuthItem[permissions][]', 'ACTION_AdminUsers');
+        $I->seeInField('AuthItem[roles][]', '');
 
         $I->amOnRoute($this->url);
         $I->see('EditorUsers');
+    }
+
+    public function testCreateWithExtendRole($I)
+    {
+        $this->create($I, 'EditorUsersAndNews', ['ACTION_AdminUsers'], ['EditorNews']);
+        $I->seeInField('AuthItem[name]', 'EditorUsersAndNews');
+        $I->seeInField('AuthItem[permissions][]', 'ACTION_AdminUsers');
+        $I->seeInField('AuthItem[roles][]', 'EditorNews');
+
+        $I->amOnRoute($this->url);
+        $I->see('EditorUsersAndNews');
+    }
+
+    public function testCreateViaAjax($I)
+    {
+        $this->create($I, 'EditorUsersAjax', ['ACTION_AdminUsers'], [], true);
+
+        $I->amOnRoute($this->url);
+        $I->see('EditorUsersAjax');
     }
 
     public function testUpdate($I)
@@ -127,6 +166,16 @@ class RolesCest
         $I->seeResponseCodeIs(200);
 
         $I->amOnRoute($this->url);
+        $I->seeNumberOfElements('//table/tbody/tr', 3);
+        $I->dontSee('Role3');
+    }
+
+    public function testDeleteAndReload($I)
+    {
+        $url = $I->grabAttributeFrom(Locator::elementAt('//table/tbody/tr[3]/td/a', -1), 'href');
+        $I->sendAjaxPostRequest($url . '&reload=1');
+        $I->seeResponseCodeIs(302);
+        $I->amOnPage($I->grabHttpHeader('X-Redirect'));
         $I->seeNumberOfElements('//table/tbody/tr', 3);
         $I->dontSee('Role3');
     }

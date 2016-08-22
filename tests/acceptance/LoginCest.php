@@ -2,7 +2,7 @@
 
 namespace app\tests\acceptance;
 
-use yii\helpers\Url as Url;
+use yii\helpers\Url;
 
 class LoginCest
 {

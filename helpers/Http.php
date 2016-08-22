@@ -29,6 +29,6 @@ class Http
             default:
                 $msg = $msg ? $msg : Yii::t('app.messages', 'Page not found');
                 throw new \yii\web\NotFoundHttpException($msg);
-        }
+        } // @codeCoverageIgnore
     }
 }

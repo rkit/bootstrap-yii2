@@ -9,6 +9,7 @@ use app\models\forms\PasswordResetRequestForm;
 
 class PasswordResetRequestFormTest extends \Codeception\Test\Unit
 {
+    // @codingStandardsIgnoreFile
     protected function _before()
     {
         Yii::$app->settings->set('emailMain', 'editor@mail.com');
@@ -27,6 +28,7 @@ class PasswordResetRequestFormTest extends \Codeception\Test\Unit
         $form = new PasswordResetRequestForm();
         $form->email = '';
         expect_not($form->validate());
+        expect_not($form->sendEmail());
     }
 
     public function testWrongEmail()
@@ -34,6 +36,7 @@ class PasswordResetRequestFormTest extends \Codeception\Test\Unit
         $form = new PasswordResetRequestForm();
         $form->email = 'test_email';
         expect_not($form->validate());
+        expect_not($form->sendEmail());
     }
 
     public function testNonExistEmail()
@@ -41,6 +44,7 @@ class PasswordResetRequestFormTest extends \Codeception\Test\Unit
         $form = new PasswordResetRequestForm();
         $form->email = 'test@test.com';
         expect_not($form->validate());
+        expect_not($form->sendEmail());
     }
 
     public function testUserBlocked()

@@ -69,6 +69,7 @@ class AuthItem extends \yii\db\ActiveRecord
 
     /**
      * @inheritdoc
+     * @codeCoverageIgnore
      */
     public function events()
     {

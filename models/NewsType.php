@@ -4,7 +4,6 @@ namespace app\models;
 
 use Yii;
 use yii\behaviors\TimestampBehavior;
-use app\components\BaseActive;
 
 /**
  * This is the model class for table "news_type".
@@ -12,7 +11,7 @@ use app\components\BaseActive;
  * @property integer $id
  * @property string $title
  */
-class NewsType extends BaseActive
+class NewsType extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc

@@ -8,6 +8,7 @@ use app\modules\admin\models\forms\LoginForm;
 
 class LoginFormTest extends \Codeception\Test\Unit
 {
+    // @codingStandardsIgnoreFile
     protected function _before()
     {
         $this->tester->haveFixtures([
@@ -18,6 +19,7 @@ class LoginFormTest extends \Codeception\Test\Unit
         ]);
     }
 
+    // @codingStandardsIgnoreFile
     protected function _after()
     {
         Yii::$app->user->logout();

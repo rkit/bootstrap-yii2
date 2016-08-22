@@ -3,7 +3,7 @@
 namespace app\tests\functional\admin;
 
 use Codeception\Util\Locator;
-use yii\helpers\Url as Url;
+use yii\helpers\Url;
 use app\tests\fixtures\Country as CountryFixture;
 use app\tests\fixtures\User as UserFixture;
 use app\models\User;
@@ -33,16 +33,24 @@ class CountriesCest
         $I->amOnRoute($this->url);
     }
 
-    private function create($I, $title)
+    private function create($I, $title, $isAjax = false)
     {
         $I->amOnRoute($this->url . '/edit');
-        $I->submitForm($this->formId, [
-            $this->formName . '[title]' => $title,
-        ]);
 
-        $I->expectTo('see success');
-        $I->see('Saved successfully');
-        $I->seeResponseCodeIs(200);
+        $data = [
+            $this->formName . '[title]' => $title,
+        ];
+
+        if ($isAjax) {
+            $I->sendAjaxPostRequest(Url::toRoute($this->url . '/edit'), $data);
+            $I->seeResponseCodeIs(200);
+            $I->seeResponseContains('redirect');
+        } else {
+            $I->submitForm($this->formId, $data);
+            $I->seeResponseCodeIs(200);
+            $I->expectTo('see success');
+            $I->see('Saved successfully');
+        }
     }
 
     public function testOpenIndexPage($I)
@@ -92,12 +100,27 @@ class CountriesCest
         $I->see('Title cannot be blank', '.help-block');
     }
 
+    public function testCreateWithEmptyFieldsViaAjax($I)
+    {
+        $I->sendAjaxPostRequest(Url::toRoute($this->url . '/edit'), [$this->formName . '[title]' => '']);
+        $I->seeResponseCodeIs(200);
+        $I->seeResponseContains('Title cannot be blank');
+    }
+
     public function testCreate($I)
     {
         $this->create($I, 'Country-4');
 
         $I->amOnRoute($this->url);
         $I->see('Country-4');
+    }
+
+    public function testCreateViaAjax($I)
+    {
+        $this->create($I, 'Country-5', true);
+
+        $I->amOnRoute($this->url);
+        $I->see('Country-5');
     }
 
     public function testUpdate($I)
@@ -120,6 +143,16 @@ class CountriesCest
         $I->seeResponseCodeIs(200);
 
         $I->amOnRoute($this->url);
+        $I->seeNumberOfElements('//table/tbody/tr', 2);
+        $I->dontSee('Country-1');
+    }
+
+    public function testDeleteAndReload($I)
+    {
+        $url = $I->grabAttributeFrom(Locator::elementAt('//table/tbody/tr[1]/td/a', -1), 'href');
+        $I->sendAjaxPostRequest($url . '&reload=1');
+        $I->seeResponseCodeIs(302);
+        $I->amOnPage($I->grabHttpHeader('X-Redirect'));
         $I->seeNumberOfElements('//table/tbody/tr', 2);
         $I->dontSee('Country-1');
     }

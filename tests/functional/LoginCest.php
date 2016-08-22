@@ -3,6 +3,7 @@
 namespace app\tests\functional;
 
 use app\tests\fixtures\User as UserFixture;
+use app\models\User;
 
 class LoginCest
 {
@@ -140,6 +141,26 @@ class LoginCest
         $I->see('Logout');
         $I->dontSee('login');
         $I->dontSeeElement($this->formId);
+    }
+
+    public function testSuccessAndDisableAccount($I)
+    {
+        $I->submitForm($this->formId, [
+            'LoginForm[email]' => 'user-2@example.com',
+            'LoginForm[password]' => '123123',
+        ]);
+        $I->amOnRoute('/');
+        $I->see('Logout');
+        $I->dontSee('login');
+        $I->dontSeeElement($this->formId);
+
+        $user = User::findByUsername('user-2');
+        $user->status = User::STATUS_BLOCKED;
+        $user->save();
+
+        $I->amOnRoute('/');
+        $I->dontSee('Logout');
+        $I->see('login');
     }
 
     public function testInternalSuccess($I)

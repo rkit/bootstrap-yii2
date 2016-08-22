@@ -5,8 +5,8 @@ namespace app\models;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use Intervention\Image\ImageManagerStatic as Image;
-use app\components\BaseActive;
 use app\helpers\Util;
+use app\models\query\NewsQuery;
 
 /**
  * This is the model class for table "news".
@@ -22,7 +22,7 @@ use app\helpers\Util;
  * @property string $reference
  * @property integer $status
  */
-class News extends BaseActive
+class News extends \yii\db\ActiveRecord
 {
     const STATUS_BLOCKED = 0;
     const STATUS_ACTIVE  = 1;
@@ -65,7 +65,6 @@ class News extends BaseActive
 
             ['title', 'string', 'max' => 255],
             ['text', 'string'],
-            ['preview', 'string', 'max' => 255],
             ['date_pub', 'date', 'format' => 'php:Y-m-d H:i:s'],
 
             ['reference', 'url'],
@@ -212,7 +211,16 @@ class News extends BaseActive
             return true;
         }
 
-        return false;
+        return false; // @codeCoverageIgnore
+    }
+
+    /**
+     * @inheritdoc
+     * @return NewsQuery
+     */
+    public static function find()
+    {
+        return new NewsQuery(get_called_class());
     }
 
     /**
@@ -237,6 +245,26 @@ class News extends BaseActive
     {
         $statuses = $this->getStatuses();
         return isset($statuses[$this->status]) ? $statuses[$this->status] : '';
+    }
+
+    /**
+     * Is it blocked?
+     *
+     * @param bool
+     */
+    public function isBlocked()
+    {
+        return $this->status == self::STATUS_BLOCKED;
+    }
+
+    /**
+     * Is it active?
+     *
+     * @param bool
+     */
+    public function isActive()
+    {
+        return $this->status == self::STATUS_ACTIVE;
     }
 
     /**

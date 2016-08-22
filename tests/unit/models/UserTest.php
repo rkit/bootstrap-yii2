@@ -10,6 +10,7 @@ use app\models\AuthItem;
 
 class UserTest extends \Codeception\Test\Unit
 {
+    // @codingStandardsIgnoreFile
     protected function _before()
     {
         User::deleteAll(['username' => 'test']);

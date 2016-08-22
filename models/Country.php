@@ -3,7 +3,7 @@
 namespace app\models;
 
 use Yii;
-use app\components\BaseActive;
+use app\models\query\CountryQuery;
 
 /**
  * This is the model class for table "country".
@@ -14,7 +14,7 @@ use app\components\BaseActive;
  * @property City[] $city
  * @property Region[] $regions
  */
-class Country extends BaseActive
+class Country extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
@@ -48,18 +48,11 @@ class Country extends BaseActive
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @inheritdoc
+     * @return CountryQuery
      */
-    public function getCity()
+    public static function find()
     {
-        return $this->hasMany(City::className(), ['country_id' => 'country_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getRegion()
-    {
-        return $this->hasMany(Region::className(), ['country_id' => 'country_id']);
+        return new CountryQuery(get_called_class());
     }
 }

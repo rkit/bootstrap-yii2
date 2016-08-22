@@ -86,7 +86,7 @@ class TagsController extends BaseController
         $result = [];
         if (($term = Yii::$app->request->post('term')) !== null) {
             $data = Tag::find()
-                ->like($term, 'title')
+                ->like('title', $term)
                 ->asArray()
                 ->limit(10)
                 ->all();
