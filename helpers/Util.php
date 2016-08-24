@@ -2,7 +2,6 @@
 
 namespace app\helpers;
 
-use Yii;
 use yii\helpers\Html;
 use yii\helpers\FileHelper;
 use yii\web\UploadedFile;
@@ -56,7 +55,6 @@ class Util
     * Collect model errors
     *
     * @param Model $model the model to be validated
-    * @param mixed $attributes list of attributes that should be validated.
     * @return array the error message array indexed by the attribute IDs.
     */
     public static function collectModelErrors($model)
@@ -66,7 +64,7 @@ class Util
         $models = [$model];
         foreach ($models as $model) {
             foreach ($model->getErrors() as $attribute => $errors) {
-                $result[\yii\helpers\Html::getInputId($model, $attribute)] = $errors;
+                $result[Html::getInputId($model, $attribute)] = $errors;
             }
         }
         return $result;
