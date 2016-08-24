@@ -11,7 +11,6 @@ use app\models\User;
 class TagsCest
 {
     protected $pageTitle = 'Tags';
-    protected $modelClass = 'app\models\Tag';
     protected $formName = 'Tag';
     protected $formId = '#tags-form';
     protected $url = '/admin/tags';

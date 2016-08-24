@@ -12,7 +12,6 @@ use app\models\User;
 class NewsCest
 {
     protected $pageTitle = 'News';
-    protected $modelClass = 'app\models\News';
     protected $formName = 'News';
     protected $formId = '#news-form';
     protected $url = '/admin/news';

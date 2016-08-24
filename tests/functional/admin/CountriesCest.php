@@ -11,7 +11,6 @@ use app\models\User;
 class CountriesCest
 {
     protected $pageTitle = 'Countries';
-    protected $modelClass = 'app\models\Country';
     protected $formName = 'Country';
     protected $formId = '#countries-form';
     protected $url = '/admin/countries';

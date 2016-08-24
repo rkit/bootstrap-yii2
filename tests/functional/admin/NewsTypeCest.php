@@ -11,7 +11,6 @@ use app\models\User;
 class NewsTypeCest
 {
     protected $pageTitle = 'Type of news';
-    protected $modelClass = 'app\models\NewsType';
     protected $formName = 'NewsType';
     protected $formId = '#news-type-form';
     protected $url = '/admin/news-types';

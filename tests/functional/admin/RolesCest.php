@@ -11,7 +11,6 @@ use app\models\User;
 class RolesCest
 {
     protected $pageTitle = 'Roles';
-    protected $modelClass = 'app\models\AuthItem';
     protected $formName = 'AuthItem';
     protected $formId = '#roles-form';
     protected $url = '/admin/roles';

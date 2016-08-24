@@ -12,7 +12,6 @@ use app\models\User;
 class RegionsCest
 {
     protected $pageTitle = 'Regions';
-    protected $modelClass = 'app\models\Region';
     protected $formName = 'Region';
     protected $formId = '#regions-form';
     protected $url = '/admin/regions';

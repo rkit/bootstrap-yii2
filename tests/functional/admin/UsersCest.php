@@ -15,7 +15,6 @@ use app\models\User;
 class UsersCest
 {
     protected $pageTitle = 'Users';
-    protected $modelClass = 'app\models\User';
     protected $formName = 'UserForm';
     protected $formId = '#users-form';
     protected $url = '/admin/users';

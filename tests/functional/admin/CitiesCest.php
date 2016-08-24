@@ -13,7 +13,6 @@ use app\models\User;
 class CitiesCest
 {
     protected $pageTitle = 'Cities';
-    protected $modelClass = 'app\models\City';
     protected $formName = 'City';
     protected $formId = '#cities-form';
     protected $url = '/admin/cities';
