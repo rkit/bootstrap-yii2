@@ -12,6 +12,7 @@ use app\models\User;
 
 class LoginCest
 {
+    protected $formName = 'LoginForm';
     protected $formId = '#login-form';
 
     // @codingStandardsIgnoreFile
@@ -54,7 +55,7 @@ class LoginCest
     public function testEmptyUsername($I)
     {
         $I->submitForm($this->formId, [
-            'LoginForm[password]' => 'test_password'
+            $this->formName . '[password]' => 'test_password'
         ]);
         $I->expectTo('see validations errors');
         $I->see('Username cannot be blank', '.help-block-error');
@@ -64,7 +65,7 @@ class LoginCest
     public function testEmptyPassword($I)
     {
         $I->submitForm($this->formId, [
-            'LoginForm[username]' => 'test_username'
+            $this->formName . '[username]' => 'test_username'
         ]);
         $I->expectTo('see validations errors');
         $I->see('Password cannot be blank', '.help-block-error');
@@ -74,8 +75,8 @@ class LoginCest
     public function testTooShortPassword($I)
     {
         $I->submitForm($this->formId, [
-            'LoginForm[username]' => 'test_username',
-            'LoginForm[password]' => 'test',
+            $this->formName . '[username]' => 'test_username',
+            $this->formName . '[password]' => 'test',
         ]);
         $I->expectTo('see validations errors');
         $I->see('Incorrect username or password', '.help-block-error');
@@ -85,8 +86,8 @@ class LoginCest
     public function testBlockedUser($I)
     {
         $I->submitForm($this->formId, [
-            'LoginForm[username]' => 'user-3',
-            'LoginForm[password]' => '123123',
+            $this->formName . '[username]' => 'user-3',
+            $this->formName . '[password]' => '123123',
         ]);
         $I->expectTo('see validations errors');
         $I->see('Your account has been suspended', '.help-block-error');
@@ -96,8 +97,8 @@ class LoginCest
     public function testDeletedUser($I)
     {
         $I->submitForm($this->formId, [
-            'LoginForm[username]' => 'user-4',
-            'LoginForm[password]' => '123123',
+            $this->formName . '[username]' => 'user-4',
+            $this->formName . '[password]' => '123123',
         ]);
         $I->expectTo('see validations errors');
         $I->see('Your account has been deleted', '.help-block-error');
@@ -107,8 +108,8 @@ class LoginCest
     public function testWrongFields($I)
     {
         $I->submitForm($this->formId, [
-            'LoginForm[username]' => 'test@test.com',
-            'LoginForm[password]' => 'testpassword',
+            $this->formName . '[username]' => 'test@test.com',
+            $this->formName . '[password]' => 'testpassword',
         ]);
         $I->expectTo('see validations errors');
         $I->see('Incorrect username or password', '.help-block-error');
@@ -118,8 +119,8 @@ class LoginCest
     public function testWrongUsername($I)
     {
         $I->submitForm($this->formId, [
-            'LoginForm[username]' => 'test_username',
-            'LoginForm[password]' => 'fghfgh',
+            $this->formName . '[username]' => 'test_username',
+            $this->formName . '[password]' => 'fghfgh',
         ]);
         $I->expectTo('see validations errors');
         $I->see('Incorrect username or password', '.help-block-error');
@@ -129,8 +130,8 @@ class LoginCest
     public function testWrongPassword($I)
     {
         $I->submitForm($this->formId, [
-            'LoginForm[username]' => 'superuser',
-            'LoginForm[password]' => 'test_password',
+            $this->formName . '[username]' => 'superuser',
+            $this->formName . '[password]' => 'test_password',
         ]);
         $I->expectTo('see validations errors');
         $I->see('Incorrect username or password', '.help-block-error');
@@ -140,8 +141,8 @@ class LoginCest
     public function testSuccess($I)
     {
         $I->submitForm($this->formId, [
-            'LoginForm[username]' => 'superuser',
-            'LoginForm[password]' => 'fghfgh',
+            $this->formName . '[username]' => 'superuser',
+            $this->formName . '[password]' => 'fghfgh',
         ]);
         $I->see('Exit');
         $I->see('Welcome! / Control Panel');
@@ -152,8 +153,8 @@ class LoginCest
     public function testLogout($I)
     {
         $I->submitForm($this->formId, [
-            'LoginForm[username]' => 'superuser',
-            'LoginForm[password]' => 'fghfgh',
+            $this->formName . '[username]' => 'superuser',
+            $this->formName . '[password]' => 'fghfgh',
         ]);
         $I->sendAjaxPostRequest(Url::toRoute('/admin/index/logout'));
         $I->seeResponseCodeIs(302);

@@ -6,8 +6,8 @@ use app\tests\fixtures\User as UserFixture;
 
 class SignupCest
 {
-    protected $formId = '#form-signup';
     protected $formName = 'SignupForm';
+    protected $formId = '#form-signup';
 
     // @codingStandardsIgnoreFile
     public function _before($I)
@@ -39,9 +39,9 @@ class SignupCest
     public function testEmptyEmail($I)
     {
         $I->submitForm($this->formId, [
-            'SignupForm[full_name]' => 'Test',
-            'SignupForm[email]' => '',
-            'SignupForm[password]' => 'fghfgh',
+            $this->formName . '[full_name]' => 'Test',
+            $this->formName . '[email]' => '',
+            $this->formName . '[password]' => 'fghfgh',
         ]);
         $I->expectTo('see validations errors');
         $I->see('Email cannot be blank', '.help-block-error');
@@ -51,9 +51,9 @@ class SignupCest
     public function testWrongFormatEmail($I)
     {
         $I->submitForm($this->formId, [
-            'SignupForm[full_name]' => 'Test',
-            'SignupForm[email]' => 'test_email',
-            'SignupForm[password]' => 'test_password',
+            $this->formName . '[full_name]' => 'Test',
+            $this->formName . '[email]' => 'test_email',
+            $this->formName . '[password]' => 'test_password',
         ]);
         $I->expectTo('see validations errors');
         $I->see('Email is not a valid email address', '.help-block-error');
@@ -63,9 +63,9 @@ class SignupCest
     public function testEmptyPassword($I)
     {
         $I->submitForm($this->formId, [
-            'SignupForm[full_name]' => 'Test',
-            'SignupForm[email]' => 'test@test.com',
-            'SignupForm[password]' => '',
+            $this->formName . '[full_name]' => 'Test',
+            $this->formName . '[email]' => 'test@test.com',
+            $this->formName . '[password]' => '',
         ]);
         $I->expectTo('see validations errors');
         $I->see('Password cannot be blank', '.help-block-error');
@@ -75,9 +75,9 @@ class SignupCest
     public function testEmptyName($I)
     {
         $I->submitForm($this->formId, [
-            'SignupForm[full_name]' => '',
-            'SignupForm[email]' => 'test@test.com',
-            'SignupForm[password]' => 'fghfgh',
+            $this->formName . '[full_name]' => '',
+            $this->formName . '[email]' => 'test@test.com',
+            $this->formName . '[password]' => 'fghfgh',
         ]);
         $I->expectTo('see validations errors');
         $I->see('Full Name cannot be blank', '.help-block-error');
@@ -87,9 +87,9 @@ class SignupCest
     public function testTooShortPassword($I)
     {
         $I->submitForm($this->formId, [
-            'SignupForm[full_name]' => 'Test',
-            'SignupForm[email]' => 'test@test.com',
-            'SignupForm[password]' => 'fgh',
+            $this->formName . '[full_name]' => 'Test',
+            $this->formName . '[email]' => 'test@test.com',
+            $this->formName . '[password]' => 'fgh',
         ]);
         $I->expectTo('see validations errors');
         $I->see('Password should contain at least', '.help-block-error');
@@ -99,9 +99,9 @@ class SignupCest
     public function testExistEmail($I)
     {
         $I->submitForm($this->formId, [
-            'SignupForm[full_name]' => 'Test',
-            'SignupForm[email]' => 'user-2@example.com',
-            'SignupForm[password]' => 'fghfgh',
+            $this->formName . '[full_name]' => 'Test',
+            $this->formName . '[email]' => 'user-2@example.com',
+            $this->formName . '[password]' => 'fghfgh',
         ]);
         $I->expectTo('see validations errors');
         $I->see('This email address has already been taken', '.help-block-error');
@@ -111,9 +111,9 @@ class SignupCest
     public function testSuccess($I)
     {
         $I->submitForm($this->formId, [
-            'SignupForm[full_name]' => 'Test',
-            'SignupForm[email]' => 'test@test.com',
-            'SignupForm[password]' => 'fghfgh',
+            $this->formName . '[full_name]' => 'Test',
+            $this->formName . '[email]' => 'test@test.com',
+            $this->formName . '[password]' => 'fghfgh',
         ]);
         $I->amOnRoute('/');
         $I->see('Activate Your Account');

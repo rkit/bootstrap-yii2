@@ -7,6 +7,7 @@ use app\models\User;
 
 class ResetPasswordCest
 {
+    protected $formName = 'ResetPasswordForm';
     protected $formId = '#reset-password-form';
 
     // @codingStandardsIgnoreFile
@@ -37,7 +38,7 @@ class ResetPasswordCest
     public function testTooShortPassword($I)
     {
         $I->submitForm($this->formId, [
-            'ResetPasswordForm[password]' => 'test',
+            $this->formName . '[password]' => 'test',
         ]);
         $I->see('Password should contain at least', '.help-block-error');
     }
@@ -45,7 +46,7 @@ class ResetPasswordCest
     public function testSuccess($I)
     {
         $I->submitForm($this->formId, [
-            'ResetPasswordForm[password]' => 'fghfgh',
+            $this->formName . '[password]' => 'fghfgh',
         ]);
         $I->see('New password was saved');
     }

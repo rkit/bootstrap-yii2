@@ -7,6 +7,7 @@ use app\models\User;
 
 class LoginCest
 {
+    protected $formName = 'LoginForm';
     protected $formId = '#login-form';
 
     // @codingStandardsIgnoreFile
@@ -37,7 +38,7 @@ class LoginCest
     public function testEmptyEmail($I)
     {
         $I->submitForm($this->formId, [
-            'LoginForm[password]' => 'test_password'
+            $this->formName . '[password]' => 'test_password'
         ]);
         $I->expectTo('see validations errors');
         $I->see('Email cannot be blank', '.help-block-error');
@@ -47,7 +48,7 @@ class LoginCest
     public function testEmptyPassword($I)
     {
         $I->submitForm($this->formId, [
-            'LoginForm[email]' => 'test@test.com'
+            $this->formName . '[email]' => 'test@test.com'
         ]);
         $I->expectTo('see validations errors');
         $I->see('Password cannot be blank', '.help-block-error');
@@ -57,8 +58,8 @@ class LoginCest
     public function testTooShortPassword($I)
     {
         $I->submitForm($this->formId, [
-            'LoginForm[email]' => 'test@test.com',
-            'LoginForm[password]' => 'test',
+            $this->formName . '[email]' => 'test@test.com',
+            $this->formName . '[password]' => 'test',
         ]);
         $I->expectTo('see validations errors');
         $I->see('Incorrect email or password', '.help-block-error');
@@ -68,8 +69,8 @@ class LoginCest
     public function testBlockedUser($I)
     {
         $I->submitForm($this->formId, [
-            'LoginForm[email]' => 'user-3@example.com',
-            'LoginForm[password]' => '123123',
+            $this->formName . '[email]' => 'user-3@example.com',
+            $this->formName . '[password]' => '123123',
         ]);
         $I->expectTo('see validations errors');
         $I->see('Your account has been suspended', '.help-block-error');
@@ -79,8 +80,8 @@ class LoginCest
     public function testDeletedUser($I)
     {
         $I->submitForm($this->formId, [
-            'LoginForm[email]' => 'user-4@example.com',
-            'LoginForm[password]' => '123123',
+            $this->formName . '[email]' => 'user-4@example.com',
+            $this->formName . '[password]' => '123123',
         ]);
         $I->expectTo('see validations errors');
         $I->see('Your account has been deleted', '.help-block-error');
@@ -90,8 +91,8 @@ class LoginCest
     public function testWrongFields($I)
     {
         $I->submitForm($this->formId, [
-            'LoginForm[email]' => 'test@test.com',
-            'LoginForm[password]' => 'test_password',
+            $this->formName . '[email]' => 'test@test.com',
+            $this->formName . '[password]' => 'test_password',
         ]);
         $I->expectTo('see validations errors');
         $I->see('Incorrect email or password', '.help-block-error');
@@ -101,8 +102,8 @@ class LoginCest
     public function testWrongEmail($I)
     {
         $I->submitForm($this->formId, [
-            'LoginForm[email]' => 'test@test.com',
-            'LoginForm[password]' => '123123',
+            $this->formName . '[email]' => 'test@test.com',
+            $this->formName . '[password]' => '123123',
         ]);
         $I->expectTo('see validations errors');
         $I->see('Incorrect email or password', '.help-block-error');
@@ -112,8 +113,8 @@ class LoginCest
     public function testWrongPassword($I)
     {
         $I->submitForm($this->formId, [
-            'LoginForm[email]' => 'user-2@example.com',
-            'LoginForm[password]' => 'test_password',
+            $this->formName . '[email]' => 'user-2@example.com',
+            $this->formName . '[password]' => 'test_password',
         ]);
         $I->expectTo('see validations errors');
         $I->see('Incorrect email or password', '.help-block-error');
@@ -123,8 +124,8 @@ class LoginCest
     public function testWrongFormatEmail($I)
     {
         $I->submitForm($this->formId, [
-            'LoginForm[email]' => 'test_email',
-            'LoginForm[password]' => 'test_password',
+            $this->formName . '[email]' => 'test_email',
+            $this->formName . '[password]' => 'test_password',
         ]);
         $I->expectTo('see validations errors');
         $I->see('Email is not a valid email address', '.help-block-error');
@@ -134,8 +135,8 @@ class LoginCest
     public function testSuccess($I)
     {
         $I->submitForm($this->formId, [
-            'LoginForm[email]' => 'user-2@example.com',
-            'LoginForm[password]' => '123123',
+            $this->formName . '[email]' => 'user-2@example.com',
+            $this->formName . '[password]' => '123123',
         ]);
         $I->amOnRoute('/');
         $I->see('Logout');
@@ -146,8 +147,8 @@ class LoginCest
     public function testSuccessAndDisableAccount($I)
     {
         $I->submitForm($this->formId, [
-            'LoginForm[email]' => 'user-2@example.com',
-            'LoginForm[password]' => '123123',
+            $this->formName . '[email]' => 'user-2@example.com',
+            $this->formName . '[password]' => '123123',
         ]);
         $I->amOnRoute('/');
         $I->see('Logout');

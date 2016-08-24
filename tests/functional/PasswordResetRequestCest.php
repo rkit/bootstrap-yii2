@@ -6,6 +6,7 @@ use app\tests\fixtures\User as UserFixture;
 
 class PasswordResetRequestCest
 {
+    protected $formName = 'PasswordResetRequestForm';
     protected $formId = '#request-password-reset-form';
 
     // @codingStandardsIgnoreFile
@@ -35,7 +36,7 @@ class PasswordResetRequestCest
     public function testWrongEmail($I)
     {
         $I->submitForm($this->formId, [
-            'PasswordResetRequestForm[email]' => 'test_email',
+            $this->formName . '[email]' => 'test_email',
         ]);
         $I->see('Email is not a valid email address', '.help-block-error');
     }
@@ -43,7 +44,7 @@ class PasswordResetRequestCest
     public function testNonExistEmail($I)
     {
         $I->submitForm($this->formId, [
-            'PasswordResetRequestForm[email]' => 'test@test.com',
+            $this->formName . '[email]' => 'test@test.com',
         ]);
         $I->see('There is no user with such email', '.help-block-error');
     }
@@ -51,7 +52,7 @@ class PasswordResetRequestCest
     public function testBlockedUser($I)
     {
         $I->submitForm($this->formId, [
-            'PasswordResetRequestForm[email]' => 'user-3@example.com',
+            $this->formName . '[email]' => 'user-3@example.com',
         ]);
         $I->see('There is no user with such email', '.help-block-error');
     }
@@ -59,7 +60,7 @@ class PasswordResetRequestCest
     public function testDeletedUser($I)
     {
         $I->submitForm($this->formId, [
-            'PasswordResetRequestForm[email]' => 'user-4@example.com',
+            $this->formName . '[email]' => 'user-4@example.com',
         ]);
         $I->see('There is no user with such email', '.help-block-error');
     }
@@ -67,7 +68,7 @@ class PasswordResetRequestCest
     public function testSuccess($I)
     {
         $I->submitForm($this->formId, [
-            'PasswordResetRequestForm[email]' => 'user-2@example.com',
+            $this->formName . '[email]' => 'user-2@example.com',
         ]);
         $I->see('We\'ve sent you an email with instructions to reset your password');
     }
