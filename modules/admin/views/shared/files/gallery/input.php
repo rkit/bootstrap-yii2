@@ -1,5 +1,4 @@
 <?php
-use yii\helpers\Html;
 use yii\web\JsExpression;
 use rkit\fileapi\Widget as FileApi;
 ?>
