@@ -26,7 +26,7 @@ use yii\helpers\Html;
 		<?php foreach ($model->providers as $provider) : ?>
 		<li class="list-group-item text-right">
 			<span class="pull-left">
-				<strong><?= $provider->getTypeName() ?></strong>
+				<strong><?= ucfirst($provider->getTypeName()) ?></strong>
 			</span>
 			<?= Html::a(Yii::t('app', 'Link to profile'), $provider->profile_url, ['target' => '_blank']) ?>
 		</li>

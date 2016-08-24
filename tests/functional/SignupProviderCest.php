@@ -1,0 +1,178 @@
+<?php
+
+namespace app\tests\functional;
+
+use Yii;
+use Codeception\Util\Stub;
+use yii\authclient\OAuthToken;
+use yii\authclient\clients\VKontakte;
+use yii\authclient\clients\Facebook;
+use yii\authclient\clients\Twitter;
+use app\tests\fixtures\User as UserFixture;
+use app\controllers\IndexController;
+use app\models\User;
+use app\models\UserProvider;
+
+class SignupProviderCest
+{
+    protected $formName = 'SignupProviderForm';
+    protected $formId = '#form-signup';
+
+    // @codingStandardsIgnoreFile
+    public function _before($I)
+    {
+        $I->haveFixtures([
+             'user' => [
+                 'class' => UserFixture::className(),
+                 'dataFile' => codecept_data_dir() . 'user.php',
+             ],
+        ]);
+    }
+
+    private function getClientClass($type)
+    {
+        switch ($type) {
+            case 'vkontakte':
+                $clientClass = VKontakte::className();
+                break;
+            case 'twitter':
+                $clientClass = Twitter::className();
+                break;
+            case 'facebook':
+                $clientClass = Facebook::className();
+                break;
+        }
+        return $clientClass;
+    }
+
+    private function getClientAttributes($type)
+    {
+        return require Yii::getAlias('@tests/_data/social/' . $type . '/attributes.php');
+    }
+
+    private function getClientParamsToken($type)
+    {
+        return require Yii::getAlias('@tests/_data/social/' . $type . '/tokens.php');
+    }
+
+    private function getProvider($type)
+    {
+        return Stub::make(
+            $this->getClientClass($type),
+            [
+                'getId' => $type,
+                'getUserAttributes' => function () use ($type) {
+                    return $this->getClientAttributes($type);
+                },
+                'getAccessToken' => function () use ($type) {
+                    return Stub::make(
+                        OAuthToken::className(),
+                        [
+                            'getParams' => function () use ($type) {
+                                return $this->getClientParamsToken($type);
+                            },
+                        ]
+                    );
+                },
+            ]
+        );
+    }
+
+    private function signup($I, $type, $email)
+    {
+        $controller = new IndexController('test', 'default');
+        $controller->successCallback($this->getProvider($type));
+
+        $I->amOnRoute('/index/signup-provider');
+        $I->see('To complete the registration enter your email address');
+        $I->submitForm($this->formId, [
+            $this->formName . '[email]' => $email,
+        ]);
+    }
+
+    public function testEmptyEmail($I)
+    {
+        $this->signup($I, 'vkontakte', '');
+        $I->expectTo('see validations errors');
+        $I->see('Email cannot be blank', '.help-block-error');
+    }
+
+    public function testWrongFormatEmail($I)
+    {
+        $this->signup($I, 'vkontakte', 'test_email');
+        $I->see('Email is not a valid email address', '.help-block-error');
+    }
+
+    public function testSignupVkontakte($I)
+    {
+        $this->signup($I, 'vkontakte', 'test@test.com');
+
+        $I->amOnRoute('/');
+        $I->see('Activate Your Account');
+        $I->dontSee('signup');
+        $I->dontSeeElement($this->formId);
+    }
+
+    public function testLoginAfterSignupVkontakte($I)
+    {
+        $this->signup($I, 'vkontakte', 'test@test.com');
+
+        $I->amOnRoute('/');
+        $I->see('Activate Your Account');
+        $I->dontSee('signup');
+        $I->dontSeeElement($this->formId);
+
+        Yii::$app->user->logout();
+
+        $controller = new IndexController('test', 'default');
+        $controller->successCallback($this->getProvider('vkontakte'));
+
+        $I->amOnRoute('/index/signup-provider');
+        $I->dontSee('To complete the registration enter your email address');
+        $I->see('Logout');
+    }
+
+    public function testLoginAfterSignupVkontakteAndBlocked($I)
+    {
+        $this->signup($I, 'vkontakte', 'test@test.com');
+
+        $I->amOnRoute('/');
+        $I->see('Activate Your Account');
+        $I->dontSee('signup');
+        $I->dontSeeElement($this->formId);
+
+        $user = User::findByEmail('test@test.com');
+        $user->status = User::STATUS_BLOCKED;
+        $user->save();
+
+        Yii::$app->user->logout();
+
+        $controller = new IndexController('test', 'default');
+        $controller->successCallback($this->getProvider('vkontakte'));
+
+        $I->amOnRoute('/index/signup-provider');
+        $I->see('Your account has been suspended');
+    }
+
+    public function testSignupTwitter($I)
+    {
+        $this->signup($I, 'twitter', 'test@test.com');
+
+        $I->amOnRoute('/');
+        $I->see('Activate Your Account');
+        $I->dontSee('signup');
+        $I->dontSeeElement($this->formId);
+    }
+
+    public function testSignupFacebook($I)
+    {
+        $controller = new IndexController('test', 'default');
+        $controller->successCallback($this->getProvider('facebook'));
+
+        $I->amOnRoute('/index/signup-provider');
+        $I->amOnRoute('/');
+        $I->dontSee('Activate Your Account');
+        $I->dontSee('signup');
+        $I->dontSeeElement($this->formId);
+    }
+}

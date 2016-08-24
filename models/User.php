@@ -581,20 +581,20 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
      * Update provider
      *
      * @param array $provider
-     * @return bool
+     * @return void
      */
     public function updateProvider($provider)
     {
-        $userProvider = $this->getProviders()->where(['user_id' => $this->id, 'type' => $provider['type']])->one();
+        $userProvider = $this->getProviders()->where([
+            'user_id' => $this->id,
+            'type' => $provider['type']
+        ])->one();
 
         if ($userProvider) {
             $userProvider->load($provider, '');
             $this->populateRelation('providers', [$userProvider]);
-
-            return $this->save();
+            $this->save();
         }
-
-        return false;
     }
 
     /**

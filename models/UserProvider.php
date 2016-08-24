@@ -44,33 +44,27 @@ class UserProvider extends \yii\db\ActiveRecord
     /**
      * Get types
      *
-     * @param string $type
-     * @return array|int
+     * @return array
      */
-    public static function getTypes($type = null)
+    public static function getTypes()
     {
-        $types = [
+        return [
             self::TYPE_TWITTER => 'twitter',
             self::TYPE_FACEBOOK => 'facebook',
             self::TYPE_VKONTAKTE => 'vkontakte',
         ];
-
-        if ($type) {
-            return array_flip($types)[$type];
-        }
-
-        return $types;
     }
 
     /**
-     * Get type by name
+     * Get type by id
      *
-     * @param string $name
-     * @param int
+     * @return string $name
+     * @return int
      */
     public static function getTypeByName($name)
     {
-        return array_flip(self::getTypes())[$name];
+        $types = array_flip(self::getTypes());
+        return isset($types[$name]) ? $types[$name] : false;
     }
 
     /**
@@ -80,8 +74,8 @@ class UserProvider extends \yii\db\ActiveRecord
      */
     public function getTypeName()
     {
-        $types = $this->getTypes();
-        return isset($types[$this->type]) ? ucfirst($types[$this->type]) : '';
+        $types = self::getTypes();
+        return isset($types[$this->type]) ? $types[$this->type] : false;
     }
 
     /**
@@ -93,18 +87,21 @@ class UserProvider extends \yii\db\ActiveRecord
      */
     public static function parseProvider($type, $data)
     {
+        $provider = [];
         switch ($type) {
             case self::TYPE_FACEBOOK:
-                return self::parseProviderFacebook($data);
+                $provider = self::parseProviderFacebook($data);
+                break;
 
             case self::TYPE_VKONTAKTE:
-                return self::parseProviderVkontakte($data);
+                $provider = self::parseProviderVkontakte($data);
+                break;
 
             case self::TYPE_TWITTER:
-                return self::parseProviderTwitter($data);
+                $provider = self::parseProviderTwitter($data);
+                break;
         }
-
-        return [];
+        return $provider;
     }
 
     /**
@@ -116,18 +113,21 @@ class UserProvider extends \yii\db\ActiveRecord
      */
     public static function parseProfile($type, $data)
     {
+        $profile = [];
         switch ($type) {
             case self::TYPE_FACEBOOK:
-                return self::parseProfileFacebook($data);
+                $profile = self::parseProfileFacebook($data);
+                break;
 
             case self::TYPE_VKONTAKTE:
-                return self::parseProfileVkontakte($data);
+                $profile = self::parseProfileVkontakte($data);
+                break;
 
             case self::TYPE_TWITTER:
-                return self::parseProfileTwitter($data);
+                $profile = self::parseProfileTwitter($data);
+                break;
         }
-
-        return [];
+        return $profile;
     }
 
     /**

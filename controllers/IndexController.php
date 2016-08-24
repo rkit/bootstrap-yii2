@@ -69,6 +69,7 @@ class IndexController extends BaseController
     public function successCallback($provider)
     {
         Yii::$app->session['provider'] = null;
+        Yii::$app->session['blocked'] = false;
 
         $type = UserProvider::getTypeByName($provider->id);
         $profile = $provider->getUserAttributes();
@@ -80,11 +81,13 @@ class IndexController extends BaseController
         ];
 
         if ($user = User::findByProvider($type, $profile['id'])) {
-            if (!$user->isActive()) {
-                return $this->alert('error', $user->getStatusDescription());
+            if ($user->isActive()) {
+                $user->updateProvider(UserProvider::parseProvider($type, $data));
+                $user->authorize(true);
+            } else {
+                Yii::$app->session['blocked'] = true;
+                Yii::$app->session['message'] = $user->getStatusDescription();
             }
-            $user->updateProvider(UserProvider::parseProvider($type, $data));
-            $user->authorize(true);
         } else {
             Yii::$app->session['provider'] = $data;
         }
@@ -136,15 +139,15 @@ class IndexController extends BaseController
 
     public function actionSignupProvider()
     {
-        if (!Yii::$app->user->isGuest) {
+        if (Yii::$app->session['blocked']) {
+            return $this->alert('error', Yii::$app->session['message']);
+        }
+
+        if (!Yii::$app->user->isGuest || Yii::$app->session['provider'] === null) {
             return $this->goHome();
         }
 
         $model = new SignupProviderForm(Yii::$app->session['provider']);
-
-        if (!$model->getUser()->isNewRecord && !$model->getUser()->isActive()) {
-            return $this->alert('error', $model->getUser()->getStatusDescription());
-        }
 
         if ($model->isVerified()) {
             if ($model->signup(false)) {
