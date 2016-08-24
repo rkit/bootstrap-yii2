@@ -4,6 +4,8 @@ namespace app\models\forms;
 
 use Yii;
 use yii\helpers\ArrayHelper;
+use yii\base\DynamicModel;
+use app\helpers\Util;
 use app\models\User;
 use app\models\UserProfile;
 use app\models\UserProvider;
@@ -144,9 +146,15 @@ class SignupProviderForm extends \yii\base\Model
      */
     private function savePhoto($profile, $photo)
     {
-        $file = Yii::$app->fileManager->create($photo, $this->user->id, $profile->getFileOwnerType('photo'), true);
-        if ($file) {
-            $profile->updateAttributes(['photo' => $file->path()]);
+        $file = Util::makeUploadedFile('file', $photo);
+
+        $model = new DynamicModel(compact('file'));
+        $model->addRule('file', 'image', $profile->getFileRules('photo', true))->validate();
+
+        if (!$model->hasErrors()) {
+            $file = $profile->createFile('photo', $file->tempName, 'photo', true);
+            $profile->photo = $file->id;
+            $profile->save();
         }
     }
 
