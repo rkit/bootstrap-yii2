@@ -23,7 +23,7 @@
         "yiisoft/yii2-jui": "^2.0.4",
         "yiisoft/yii2-authclient": "^2.0.4",
 
-        "rkit/filemanager-yii2": "^2.0.0",
+        "rkit/filemanager-yii2": "^2.0.4",
         "rkit/settings-yii2": "^1.0.0",
         "rkit/fileapi-widget-yii2": "^1.0.0",
         "creocoder/yii2-taggable": "^2.0",
