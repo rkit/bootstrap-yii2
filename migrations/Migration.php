@@ -1,4 +1,4 @@
-<?php // @codingStandardsIgnoreFile
+<?php 
 
 namespace app\migrations;
 

@@ -1,4 +1,4 @@
-<?php // @codingStandardsIgnoreFile
+<?php 
 use yii\helpers\Html;
 
 $resetLink = Yii::$app->urlManager->createAbsoluteUrl(['/confirm-email', 'token' => $user->email_confirm_token]);
