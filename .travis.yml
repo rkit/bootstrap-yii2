@@ -7,6 +7,9 @@ php:
 
 sudo: false
 
+before_install:
+  - pip install --user codecov
+
 install:
   - composer self-update
   - composer global require "fxp/composer-asset-plugin:~1.0"
@@ -21,3 +24,6 @@ before_script:
 
 script:
   - composer test
+
+after_success:
+  - codecov
