@@ -243,7 +243,7 @@ class News extends \yii\db\ActiveRecord
      */
     public function getStatusName()
     {
-        $statuses = $this->getStatuses();
+        $statuses = self::getStatuses();
         return isset($statuses[$this->status]) ? $statuses[$this->status] : '';
     }
 
