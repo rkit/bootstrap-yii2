@@ -32,7 +32,6 @@ class SignupFormTest extends \Codeception\Test\Unit
         ]);
 
         expect_not($form->signup());
-        expect_not($form->sendEmail());
         expect($form->getFirstError('full_name'))->notEmpty();
         expect($form->getFirstError('email'))->notEmpty();
         expect($form->getFirstError('password'))->notEmpty();
@@ -47,7 +46,6 @@ class SignupFormTest extends \Codeception\Test\Unit
         ]);
 
         expect_not($form->signup());
-        expect_not($form->sendEmail());
         expect($form->getFirstError('password'))->notEmpty();
     }
 
@@ -60,7 +58,6 @@ class SignupFormTest extends \Codeception\Test\Unit
         ]);
 
         expect_not($form->signup());
-        expect_not($form->sendEmail());
         expect($form->getFirstError('password'))->notEmpty();
     }
 
@@ -73,7 +70,6 @@ class SignupFormTest extends \Codeception\Test\Unit
         ]);
 
         expect_not($form->signup());
-        expect_not($form->sendEmail());
         expect($form->getFirstError('email'))->notEmpty();
     }
 
@@ -86,7 +82,6 @@ class SignupFormTest extends \Codeception\Test\Unit
         ]);
 
         expect_not($form->signup());
-        expect_not($form->sendEmail());
         expect($form->getFirstError('full_name'))->notEmpty();
     }
 
@@ -99,7 +94,6 @@ class SignupFormTest extends \Codeception\Test\Unit
         ]);
 
         expect_not($form->signup());
-        expect_not($form->sendEmail());
         expect($form->getFirstError('email'))->notEmpty();
     }
 

@@ -59,7 +59,7 @@ class SignupForm extends \yii\base\Model
     /**
      * Signs user up
      *
-     * @return \app\models\User|bool
+     * @return \app\models\User
      */
     public function signup()
     {
@@ -85,21 +85,19 @@ class SignupForm extends \yii\base\Model
      */
     public function sendEmail()
     {
-        if ($this->user) {
-            if (!User::isTokenValid($this->user->email_confirm_token)) {
-                $this->user->generateEmailConfirmToken();
-            }
+        if (!User::isTokenValid($this->user->email_confirm_token)) {
+            $this->user->generateEmailConfirmToken();
+            $this->user->updateAttributes([
+                'email_confirm_token' => $this->user->email_confirm_token,
+                'date_confirm' => $this->user->date_confirm,
+            ]);
+        }
 
-            if ($this->user->save(false)) {
-                return Yii::$app->notify->sendMessage(
-                    $this->email,
-                    Yii::t('app.messages', 'Activate Your Account'),
-                    'emailConfirmToken',
-                    ['user' => $this->user]
-                );
-            } // @codeCoverageIgnore
-        } // @codeCoverageIgnore
-
-        return false;
+        return Yii::$app->notify->sendMessage(
+            $this->email,
+            Yii::t('app.messages', 'Activate Your Account'),
+            'emailConfirmToken',
+            ['user' => $this->user]
+        );
     }
 }
