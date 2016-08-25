@@ -23,7 +23,7 @@ use rkit\fileapi\Widget as FileApi;
 
                 if (ui && ui.other.length && ui.other[0].errors) {
                   var errors = ui.other.map(function(v) {
-                    return v.name + ": '.Yii::t('app.messages', 'Incorrect file format').'";
+                    return v.name + ": '.Yii::t('app.validators', 'Incorrect file format').'";
                   });
 
                   if ($(".field-" + field).hasClass("has-error")) {

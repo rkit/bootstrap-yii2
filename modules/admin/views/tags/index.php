@@ -25,8 +25,8 @@ $this->title = Yii::t('app', 'Tags');
          ' . Html::submitButton(Yii::t('app', 'delete'), [
              'name' => 'operation',
              'value' => 'delete',
-             'data-confirmation' => Yii::t('app.messages', 'Are you sure you want to delete this records?'),
-             'data-loading-text' => Yii::t('app.messages', 'Please wait…'),
+             'data-confirmation' => Yii::t('app', 'Are you sure you want to delete this records?'),
+             'data-loading-text' => Yii::t('app', 'Please wait…'),
              'class' => 'submit disabled confirmation btn btn-danger btn-xs'
          ]) . '
        </div>
@@ -72,7 +72,7 @@ $this->title = Yii::t('app', 'Tags');
                               'title' => Yii::t('app', 'Delete'),
                               'class' => 'confirmation submit btn btn-xs btn-danger',
                               'data-pjax' => 0,
-                              'data-confirmation' => Yii::t('app.messages', 'Are you sure you want to delete this record?')
+                              'data-confirmation' => Yii::t('app', 'Are you sure you want to delete this record?')
                           ]
                       );
                   }

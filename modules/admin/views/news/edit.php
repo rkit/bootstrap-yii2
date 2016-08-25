@@ -90,7 +90,7 @@ $this->title .= !empty($model->title) ? $model->title : Yii::t('app', 'Create');
       <?= Html::submitButton(Yii::t('app', 'Save'), [
           'name' => 'submit',
           'class' => 'btn btn-info',
-          'data-loading-text' => Yii::t('app.messages', 'Please wait…')
+          'data-loading-text' => Yii::t('app', 'Please wait…')
       ]) ?>
       <?php if ($model->primaryKey) : ?>
       <?= Html::a(
@@ -99,7 +99,7 @@ $this->title .= !empty($model->title) ? $model->title : Yii::t('app', 'Create');
           [
               'title' => Yii::t('app', 'Delete'),
               'class' => 'btn btn-danger',
-              'data-confirm' => Yii::t('app.messages', 'Are you sure you want to delete this record?')
+              'data-confirm' => Yii::t('app', 'Are you sure you want to delete this record?')
           ]
       ); ?>
       <?php endif?>

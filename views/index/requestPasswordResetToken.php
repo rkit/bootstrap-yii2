@@ -8,7 +8,7 @@ $this->title = Yii::t('app', 'Request password reset');
   <p class="lead"><?= Html::encode($this->title) ?></p>
   <hr>
 
-  <p><?= Yii::t('app.messages', 'Please fill out your email. A link to reset password will be sent there') ?>.</p>
+  <p><?= Yii::t('app', 'Please fill out your email. A link to reset password will be sent there') ?>.</p>
 
   <div class="row">
     <div class="col-lg-5">

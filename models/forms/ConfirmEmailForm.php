@@ -62,7 +62,7 @@ class ConfirmEmailForm extends \yii\base\Model
 
         return Yii::$app->notify->sendMessage(
             $user->email,
-            Yii::t('app.messages', 'Activate Your Account'),
+            Yii::t('app', 'Activate Your Account'),
             'emailConfirmToken',
             ['user' => $user]
         );

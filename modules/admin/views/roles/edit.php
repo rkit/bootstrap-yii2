@@ -13,14 +13,14 @@ $this->title .= !empty($model->description) ? $model->description : Yii::t('app'
 <?php $form = ActiveForm::begin(['options' => ['id' => 'roles-form', 'class' => 'ajax-form']]); ?>
 
     <!-- name -->
-  <?= $form->field($model, 'name')->textInput(['maxlength' => true])->hint(Yii::t('app.messages', 'Only latin letters')) ?>
+  <?= $form->field($model, 'name')->textInput(['maxlength' => true])->hint(Yii::t('app.validators', 'Only latin letters')) ?>
 
   <!-- description -->
   <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
 
   <?php if ($model->isSuperUser()):?>
   <div class="alert alert-warning" role="alert">
-      <?= Yii::t('app.messages', 'This role has all privileges by default, it can not be deleted') ?>
+      <?= Yii::t('app', 'This role has all privileges by default, it can not be deleted') ?>
   </div>
   <?php endif?>
 
@@ -51,7 +51,7 @@ $this->title .= !empty($model->description) ? $model->description : Yii::t('app'
       <?= Html::submitButton(Yii::t('app', 'Save'), [
           'name' => 'submit',
           'class' => 'btn btn-info',
-          'data-loading-text' => Yii::t('app.messages', 'Please wait…')
+          'data-loading-text' => Yii::t('app', 'Please wait…')
       ]) ?>
       <?php if ($model->primaryKey) : ?>
       <?= Html::a(
@@ -60,7 +60,7 @@ $this->title .= !empty($model->description) ? $model->description : Yii::t('app'
           [
               'title' => Yii::t('app', 'Delete'),
               'class' => 'btn btn-danger',
-              'data-confirm' => Yii::t('app.messages', 'Are you sure you want to delete this record?')
+              'data-confirm' => Yii::t('app', 'Are you sure you want to delete this record?')
           ]
       ); ?>
       <?php endif?>

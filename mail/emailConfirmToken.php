@@ -5,6 +5,6 @@ $resetLink = Yii::$app->urlManager->createAbsoluteUrl(['/confirm-email', 'token'
 ?>
 
 <?= Yii::t('app', 'Hello') ?>,
-<?= Yii::t('app.messages', 'Follow the link below to activate your account') ?>:
+<?= Yii::t('app', 'Follow the link below to activate your account') ?>:
 
 <?= Html::a(Html::encode($resetLink), $resetLink) ?>

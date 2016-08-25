@@ -100,8 +100,8 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     public function attributeHints()
     {
         return [
-            'username' => Yii::t('app.messages', 'Only letters, numbers, symbols _ and -'),
-            'passwordNew' => Yii::t('app.messages', 'Set a new password')
+            'username' => Yii::t('app.validators', 'Only letters, numbers, symbols _ and -'),
+            'passwordNew' => Yii::t('app.validators', 'Set a new password')
         ];
     }
 
@@ -317,11 +317,11 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     public function getStatusDescription()
     {
         if ($this->status == self::STATUS_BLOCKED) {
-            return Yii::t('app.messages', 'Your account has been suspended');
+            return Yii::t('app', 'Your account has been suspended');
         } elseif ($this->status == self::STATUS_DELETED) {
-            return Yii::t('app.messages', 'Your account has been deleted');
+            return Yii::t('app', 'Your account has been deleted');
         } else {
-            return Yii::t('app.messages', 'Your account is activated');
+            return Yii::t('app', 'Your account is activated');
         }
     }
 

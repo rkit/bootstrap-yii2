@@ -24,7 +24,7 @@ $this->title = Yii::t('app', 'Settings');
       <?= Html::submitButton(Yii::t('app', 'Save'), [
           'name' => 'submit',
           'class' => 'btn btn-info',
-          'data-loading-text' => Yii::t('app.messages', 'Please wait…')
+          'data-loading-text' => Yii::t('app', 'Please wait…')
       ]) ?>
     </div>
   </div>
