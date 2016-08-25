@@ -43,6 +43,18 @@ class ResetPasswordCest
         $I->see('Password should contain at least', '.help-block-error');
     }
 
+    public function testEmptyToken($I)
+    {
+        $I->amOnRoute('/index/reset-password', ['token' => '']);
+        $I->see('Invalid link for reset password');
+    }
+
+    public function testWrongToken($I)
+    {
+        $I->amOnRoute('/index/reset-password', ['token' => 'test']);
+        $I->see('Invalid link for reset password');
+    }
+
     public function testSuccess($I)
     {
         $I->submitForm($this->formId, [
