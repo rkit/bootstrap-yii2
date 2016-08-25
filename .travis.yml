@@ -23,11 +23,11 @@ before_script:
   - composer test-build
 
 script:
-  - vendor/codeception/codeception/codecept run --coverage --coverage-xml
+  - vendor/bin/codecept run --report --coverage-xml
 
 after_script:
   - wget https://scrutinizer-ci.com/ocular.phar
-  - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
+  - php ocular.phar code-coverage:upload --format=php-clover tests/_output/coverage.xml
 
 after_success:
   - codecov
