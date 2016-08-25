@@ -2,6 +2,7 @@
 
 namespace app\tests\functional;
 
+use yii\helpers\Url;
 use app\tests\fixtures\User as UserFixture;
 use app\models\User;
 
@@ -144,6 +145,16 @@ class LoginCest
         $I->dontSeeElement($this->formId);
     }
 
+    public function testSuccessAndGoToLoginPage($I)
+    {
+        $I->submitForm($this->formId, [
+            $this->formName . '[email]' => 'user-2@example.com',
+            $this->formName . '[password]' => '123123',
+        ]);
+        $I->amOnRoute('/index/login');
+        $I->dontSee($this->formId);
+    }
+
     public function testSuccessAndDisableAccount($I)
     {
         $I->submitForm($this->formId, [
@@ -162,6 +173,15 @@ class LoginCest
         $I->amOnRoute('/');
         $I->dontSee('Logout');
         $I->see('login');
+    }
+
+    public function testLogout($I)
+    {
+        $I->amLoggedInAs(1);
+        $I->sendAjaxPostRequest(Url::toRoute('/index/logout'));
+
+        $I->amOnRoute('/');
+        $I->dontSee('Logout');
     }
 
     public function testInternalSuccess($I)
