@@ -5,7 +5,7 @@ use yii\helpers\Html;
 <div class="alert alert-warning" role="alert">
   <?= Yii::t('app.messages', 'To complete the registration process, you must activate your account') ?><br>
   <?= Yii::t('app.messages', 'We sent you a letter on {email}', ['email' => Yii::$app->user->identity->email]) ?><br>
-  <?= Html::a(Yii::t('app', 'Send again'), '/confirm-again') ?>
+  <?= Html::a(Yii::t('app', 'Send again'), '/confirm-request') ?>
 </div>
 <?php endif?>
 
