@@ -2,6 +2,7 @@
 
 namespace app\tests\functional;
 
+use yii\helpers\Url;
 use app\tests\fixtures\User as UserFixture;
 
 class SignupCest
@@ -121,10 +122,41 @@ class SignupCest
         $I->dontSeeElement($this->formId);
     }
 
-    public function testInternalSuccess($I)
+    public function testConfirmRequest($I)
     {
-        $I->amLoggedInAs(1);
-        $I->amOnRoute('/');
-        $I->see('Logout');
+        $I->amLoggedInAs(2);
+        $I->amOnRoute('/index/confirm-request');
+        $I->see('A letter for activation was sent to');
+
+        // re send
+        $I->amOnRoute('/index/confirm-request');
+        $I->see('A letter for activation was sent to');
+    }
+
+    public function testConfirmEmailEmptyToken($I)
+    {
+        $I->amOnRoute('/index/confirm-email', ['token' => '']);
+        $I->see('Invalid link for activate account');
+    }
+
+    public function testConfirmEmailWrongToken($I)
+    {
+        $I->amOnRoute('/index/confirm-email', ['token' => 'qwe']);
+        $I->see('Invalid link for activate account');
+    }
+
+    public function testConfirmEmailSuccess($I)
+    {
+        $I->submitForm($this->formId, [
+            $this->formName . '[full_name]' => 'Test',
+            $this->formName . '[email]' => 'test@test.com',
+            $this->formName . '[password]' => 'fghfgh',
+        ]);
+        $user = $I->grabRecord('app\models\User', ['email' => 'test@test.com']);
+        $I->amOnRoute('/index/confirm-email', ['token' => $user->email_confirm_token]);
+        $I->see('Your account is successfully activated');
+
+        $I->amOnRoute('/index/confirm-request');
+        $I->seeResponseCodeIs(403);
     }
 }

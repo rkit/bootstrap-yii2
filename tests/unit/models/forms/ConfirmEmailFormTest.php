@@ -34,7 +34,7 @@ class ConfirmEmailFormTest extends \Codeception\Test\Unit
 
     public function testSuccess()
     {
-        $user = User::findByEmail('user-2@example.com');
+        $user = User::findByEmail('superuser@example.com');
         expect_not($user->isConfirmed());
 
         $form = new ConfirmEmailForm();

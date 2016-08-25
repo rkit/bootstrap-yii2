@@ -34,7 +34,7 @@ class IndexController extends BaseController
                         'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['logout'],
+                        'actions' => ['logout', 'confirm-request'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -149,11 +149,9 @@ class IndexController extends BaseController
 
         $model = new SignupProviderForm(Yii::$app->session['provider']);
 
-        if ($model->isVerified()) {
-            if ($model->signup(false)) {
-                Yii::$app->session['provider'] = null;
-                return $this->goHome();
-            }
+        if ($model->isVerified() && $model->signup(false)) {
+            Yii::$app->session['provider'] = null;
+            return $this->goHome();
         }
 
         if ($model->load(Yii::$app->request->post()) && $model->signup()) {
@@ -177,6 +175,30 @@ class IndexController extends BaseController
         ]);
     }
 
+    public function actionConfirmRequest()
+    {
+        $user = Yii::$app->user->identity;
+        if ($user->isConfirmed()) {
+            Http::exception(403);
+        } // @codeCoverageIgnore
+
+        $model = new ConfirmEmailForm();
+
+        if ($model->sendEmail($user)) {
+            return $this->alert(
+                'success',
+                Yii::t('app.messages', 'A letter for activation was sent to {email}', [
+                    'email' => $user->email
+                ])
+            );
+        } else {
+            return $this->alert(
+                'error',
+                Yii::t('app.messages', 'An error occurred while sending a message to activate account')
+            );
+        }
+    }
+
     public function actionConfirmEmail($token)
     {
         $model = new ConfirmEmailForm();
@@ -194,31 +216,6 @@ class IndexController extends BaseController
             return $this->alert(
                 'error',
                 Yii::t('app.messages', 'An error occurred while activating account')
-            );
-        }
-    }
-
-    public function actionConfirmAgain()
-    {
-        if (Yii::$app->user->identity->isConfirmed()) {
-            Http::exception(403);
-        }
-
-        $model = new SignupForm();
-        $model->user = Yii::$app->user->identity;
-        $model->email = Yii::$app->user->identity->email;
-
-        if ($model->sendEmail()) {
-            return $this->alert(
-                'success',
-                Yii::t('app.messages', 'A letter for activation was sent to {email}', [
-                    'email' => Yii::$app->user->identity->email
-                ])
-            );
-        } else {
-            return $this->alert(
-                'error',
-                Yii::t('app.messages', 'An error occurred while sending a message to activate account')
             );
         }
     }
@@ -274,7 +271,7 @@ class IndexController extends BaseController
     {
         if (!Yii::$app->catchAll) {
             Http::exception(404);
-        }
+        } // @codeCoverageIgnore
 
         $this->layout = 'maintenance';
         return $this->render('maintenance');

@@ -23,7 +23,7 @@ class SignupForm extends \yii\base\Model
     /**
      * @var \app\models\User
      */
-    public $user;
+    private $user;
 
     /**
      * @inheritdoc

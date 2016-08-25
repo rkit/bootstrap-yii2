@@ -26,7 +26,7 @@ return [
         // password: 123123
         'password' => '$2y$13$2c0xt9QwWVq1yBUPmWl3ZeD/poVF8cyrwWrX87suGrYyRbP47Y1Mq',
         'password_reset_token' => 'bPDnNGI85L4va3dYJ_0xoz-Kw7NtzloS_' . time(),
-        'email_confirm_token' => 'b7QKA1EkFe0cNoUJ7hIwDPDtdQtrQ7JY_' . time(),
+        'email_confirm_token' => 'b7QKA1EkFe0cNoUJ7hIwDPDtdQtrQ7JY_1471109451',
         'date_create' => '2015-01-02 12:02:00',
         'date_update' => '2015-01-02 12:02:00',
         'ip' => '2130706432',
