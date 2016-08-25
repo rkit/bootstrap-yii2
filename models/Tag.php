@@ -85,7 +85,8 @@ class Tag extends \yii\db\ActiveRecord
      */
     public function checkAccess()
     {
-        $isSuperUser = !Yii::$app->getUser()->getIsGuest() && Yii::$app->getUser()->getIdentity()->isSuperUser();
-        return $isSuperUser || Yii::$app->getUser()->id === $this->user_id;
+        $user = Yii::$app->getUser();
+        $isSuperUser = !$user->getIsGuest() && $user->getIdentity()->isSuperUser();
+        return $isSuperUser || $user->id === $this->user_id;
     }
 }
