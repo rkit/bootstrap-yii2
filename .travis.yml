@@ -23,7 +23,7 @@ before_script:
   - composer test-build
 
 script:
-  - composer test
+  - vendor/codeception/codeception/codecept run --coverage --coverage-xml
 
 after_script:
   - wget https://scrutinizer-ci.com/ocular.phar
