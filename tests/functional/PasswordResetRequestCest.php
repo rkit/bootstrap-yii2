@@ -2,6 +2,7 @@
 
 namespace app\tests\functional;
 
+use Yii;
 use app\tests\fixtures\User as UserFixture;
 
 class PasswordResetRequestCest
@@ -65,8 +66,21 @@ class PasswordResetRequestCest
         $I->see('There is no user with such email', '.help-block-error');
     }
 
+    public function testFailEmail($I)
+    {
+        Yii::$app->settings->emailMain = null;
+
+        $I->submitForm($this->formId, [
+            $this->formName . '[email]' => 'user-2@example.com',
+        ]);
+
+        $I->see('An error occurred while sending a message to reset your password');
+    }
+
     public function testSuccess($I)
     {
+        Yii::$app->settings->emailMain = 'admin@test.com';
+
         $I->submitForm($this->formId, [
             $this->formName . '[email]' => 'user-2@example.com',
         ]);
