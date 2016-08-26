@@ -4,7 +4,6 @@ namespace app\tests\unit\models;
 
 use Yii;
 use app\tests\fixtures\User as UserFixture;
-use app\tests\fixtures\AuthItem as AuthItemFixture;
 use app\models\User;
 use app\models\AuthItem;
 
@@ -13,7 +12,13 @@ class UserTest extends \Codeception\Test\Unit
     // @codingStandardsIgnoreFile
     protected function _before()
     {
-        User::deleteAll(['username' => 'test']);
+        $this->tester->haveFixtures([
+             'user' => [
+                 'class' => UserFixture::className(),
+                 'dataFile' => codecept_data_dir() . 'user.php',
+             ],
+        ]);
+
     }
 
     protected function createUser()
