@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "cd791d6b859a40df8b043134b4e2fad9",
-    "content-hash": "9c280f54153bd7caaa0993dfdad5119e",
+    "hash": "c34baad0d7ee51192c66dcfae1ca0469",
+    "content-hash": "a83c914db3c6d45f60bf9e64b0d09ce2",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -885,16 +885,16 @@
         },
         {
             "name": "rkit/settings-yii2",
-            "version": "1.0.2",
+            "version": "1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rkit/settings-yii2.git",
-                "reference": "67b9eb3c5e6a0acfd7aa4352435c3475ecb7b33b"
+                "reference": "e8bfa71110206322799a58da25421e0210b16ec5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rkit/settings-yii2/zipball/67b9eb3c5e6a0acfd7aa4352435c3475ecb7b33b",
-                "reference": "67b9eb3c5e6a0acfd7aa4352435c3475ecb7b33b",
+                "url": "https://api.github.com/repos/rkit/settings-yii2/zipball/e8bfa71110206322799a58da25421e0210b16ec5",
+                "reference": "e8bfa71110206322799a58da25421e0210b16ec5",
                 "shasum": ""
             },
             "require": {
@@ -928,7 +928,7 @@
                 "options",
                 "yii2"
             ],
-            "time": "2016-08-07 11:15:42"
+            "time": "2016-08-26 08:21:15"
         },
         {
             "name": "rubaxa/fileapi",
