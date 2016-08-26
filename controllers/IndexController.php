@@ -239,11 +239,6 @@ class IndexController extends BaseController
                 'success',
                 Yii::t('app.messages', 'Your account is successfully activated')
             );
-        } else {
-            Yii::$app->session->setFlash(
-                'error',
-                Yii::t('app.messages', 'An error occurred while activating account')
-            );
         }
         return $this->goHome();
     }
