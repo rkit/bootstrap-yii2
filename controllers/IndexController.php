@@ -66,31 +66,13 @@ class IndexController extends BaseController
         ];
     }
 
-    public function successCallback($provider)
+    public function successCallback($client)
     {
-        Yii::$app->session['provider'] = null;
-        Yii::$app->session['blocked'] = false;
-
-        $type = UserProvider::getTypeByName($provider->id);
-        $profile = $provider->getUserAttributes();
-        $token = $provider->getAccessToken()->getParams();
-        $data = [
-            'type' => $type,
-            'profile' => $profile,
-            'token' => $token
+        Yii::$app->session['provider'] = [
+            'type' => UserProvider::getTypeByName($client->id),
+            'profile' => $client->getUserAttributes(),
+            'token' => $client->getAccessToken()->getParams(),
         ];
-
-        if ($user = User::findByProvider($type, $profile['id'])) {
-            if ($user->isActive()) {
-                $user->updateProvider(UserProvider::parseProvider($type, $data));
-                $user->authorize(true);
-            } else {
-                Yii::$app->session['blocked'] = true;
-                Yii::$app->session['message'] = $user->getStatusDescription();
-            }
-        } else {
-            Yii::$app->session['provider'] = $data;
-        }
     }
 
     public function actionIndex()
@@ -150,30 +132,37 @@ class IndexController extends BaseController
 
     public function actionSignupProvider()
     {
-        $isBlocked = Yii::$app->session['blocked'];
-        $message = Yii::$app->session['message'];
-        $provider = Yii::$app->session['provider'];
-
-        if ($isBlocked) {
-            Yii::$app->session->setFlash('error', $message);
-            return $this->goHome();
-        }
-
+        $session = Yii::$app->session;
+        $provider = $session['provider'];
         if (!Yii::$app->user->isGuest || $provider === null) {
             return $this->goHome();
         }
 
         $model = new SignupProviderForm($provider);
 
-        if ($model->isVerified() && $model->signup(false)) {
-            Yii::$app->session['provider'] = null;
+        // check exist user and provider
+        if ($user = User::findByProvider($provider['type'], $provider['profile']['id'])) {
+            $session['provider'] = null;
+            if ($user->isActive()) {
+                $user->updateProvider($model->parseProvider());
+                $user->authorize(true);
+                return $this->goHome();
+            } else {
+                $session->setFlash('error', $user->getStatusDescription());
+                return $this->goHome();
+            }
+        }
+
+        $model->prepareUser();
+
+        if ($model->isVerifiedEmail() && $model->signup(false)) {
+            $session['provider'] = null;
             return $this->goHome();
         }
 
         if ($model->load(Yii::$app->request->post()) && $model->signup()) {
-            Yii::$app->session['provider'] = null;
             if ($model->sendEmail()) {
-                Yii::$app->session->setFlash(
+                $session->setFlash(
                     'success',
                     Yii::t(
                         'app.messages',
@@ -186,7 +175,7 @@ class IndexController extends BaseController
                     )
                 );
             } else {
-                Yii::$app->session->setFlash(
+                $session->setFlash(
                     'error',
                     Yii::t(
                         'app.messages',
@@ -194,6 +183,7 @@ class IndexController extends BaseController
                     )
                 );
             }
+            $session['provider'] = null;
             return $this->goHome();
         }
 

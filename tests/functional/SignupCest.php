@@ -2,6 +2,7 @@
 
 namespace app\tests\functional;
 
+use Yii;
 use yii\helpers\Url;
 use app\tests\fixtures\User as UserFixture;
 
@@ -109,6 +110,19 @@ class SignupCest
         $I->dontSee('logout');
     }
 
+    public function testFailEmail($I)
+    {
+        Yii::$app->settings->emailMain = null;
+
+        $I->submitForm($this->formId, [
+            $this->formName . '[full_name]' => 'Test',
+            $this->formName . '[email]' => 'test@test.com',
+            $this->formName . '[password]' => 'fghfgh',
+        ]);
+
+        $I->see('An error occurred while sending a message to activate account');
+    }
+
     public function testSuccess($I)
     {
         $I->submitForm($this->formId, [
@@ -120,17 +134,6 @@ class SignupCest
         $I->see('Activate Your Account');
         $I->dontSee('signup');
         $I->dontSeeElement($this->formId);
-    }
-
-    public function testConfirmRequest($I)
-    {
-        $I->amLoggedInAs(2);
-        $I->amOnRoute('/index/confirm-request');
-        $I->see('A letter for activation was sent to');
-
-        // re send
-        $I->amOnRoute('/index/confirm-request');
-        $I->see('A letter for activation was sent to');
     }
 
     public function testConfirmEmailEmptyToken($I)
@@ -145,7 +148,29 @@ class SignupCest
         $I->see('Invalid link for activate account');
     }
 
-    public function testConfirmEmailSuccess($I)
+    public function testConfirmRequestFailEmail($I)
+    {
+        $I->amLoggedInAs(2);
+        Yii::$app->settings->emailMain = null;
+
+        $I->amOnRoute('/index/confirm-request');
+        $I->see('An error occurred while sending a message to activate account');
+    }
+
+    public function testConfirmRequest($I)
+    {
+        $I->amLoggedInAs(2);
+        Yii::$app->settings->emailMain = 'admin@test.com';
+
+        $I->amOnRoute('/index/confirm-request');
+        $I->see('A letter for activation was sent to');
+
+        // re send
+        $I->amOnRoute('/index/confirm-request');
+        $I->see('A letter for activation was sent to');
+    }
+
+    public function testSignupAndConfirm($I)
     {
         $I->submitForm($this->formId, [
             $this->formName . '[full_name]' => 'Test',

@@ -90,6 +90,13 @@ class SignupProviderCest
         ]);
     }
 
+    public function testSignUpLogged($I)
+    {
+        $I->amLoggedInAs(1);
+        $I->amOnRoute('/index/signup-provider');
+        $I->dontSee($this->formId);
+    }
+
     public function testEmptyEmail($I)
     {
         $this->signup($I, 'vkontakte', '');
@@ -103,8 +110,18 @@ class SignupProviderCest
         $I->see('Email is not a valid email address', '.help-block-error');
     }
 
+    public function testFailEmail($I)
+    {
+        Yii::$app->settings->emailMain = null;
+
+        $this->signup($I, 'vkontakte', 'test@test.com');
+        $I->see('An error occurred while sending a message to activate account');
+    }
+
     public function testSignupVkontakte($I)
     {
+        Yii::$app->settings->emailMain = 'admin@test.com';
+
         $this->signup($I, 'vkontakte', 'test@test.com');
 
         $I->amOnRoute('/');
