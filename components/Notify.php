@@ -34,10 +34,11 @@ class Notify extends \yii\base\Component
     {
         $message = \Yii::$app->getMailer()->compose($view, $params);
 
-        if (strlen($this->params->emailMain) && strlen($this->params->emailName)) {
-            $message->setFrom([$this->params->emailMain => $this->params->emailName]);
+        if (!strlen($this->params->emailMain) || !strlen($this->params->emailName)) {
+            return false;
         }
 
+        $message->setFrom([$this->params->emailMain => $this->params->emailName]);
         $message->setTo($to);
 
         if (strlen($this->params->emailPrefix)) {
