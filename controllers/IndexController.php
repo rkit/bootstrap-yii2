@@ -121,13 +121,23 @@ class IndexController extends BaseController
             if ($model->sendEmail()) {
                 Yii::$app->session->setFlash(
                     'success',
-                    Yii::t('app.messages', 'Please activate your account') . '. ' .
-                    Yii::t('app.messages', 'A letter for activation was sent to {email}', ['email' => $model->email])
+                    Yii::t(
+                        'app.messages',
+                        'Please activate your account'
+                    ) . '. ' .
+                    Yii::t(
+                        'app.messages',
+                        'A letter for activation was sent to {email}',
+                        ['email' => $model->email]
+                    )
                 );
             } else {
                 Yii::$app->session->setFlash(
                     'error',
-                    Yii::t('app.messages', 'An error occurred while sending a message to activate account')
+                    Yii::t(
+                        'app.messages',
+                        'An error occurred while sending a message to activate account'
+                    )
                 );
             }
             return $this->goHome();
@@ -140,16 +150,20 @@ class IndexController extends BaseController
 
     public function actionSignupProvider()
     {
-        if (Yii::$app->session['blocked']) {
-            Yii::$app->session->setFlash('error', Yii::$app->session['message']);
+        $isBlocked = Yii::$app->session['blocked'];
+        $message = Yii::$app->session['message'];
+        $provider = Yii::$app->session['provider'];
+
+        if ($isBlocked) {
+            Yii::$app->session->setFlash('error', $message);
             return $this->goHome();
         }
 
-        if (!Yii::$app->user->isGuest || Yii::$app->session['provider'] === null) {
+        if (!Yii::$app->user->isGuest || $provider === null) {
             return $this->goHome();
         }
 
-        $model = new SignupProviderForm(Yii::$app->session['provider']);
+        $model = new SignupProviderForm($provider);
 
         if ($model->isVerified() && $model->signup(false)) {
             Yii::$app->session['provider'] = null;
@@ -161,13 +175,23 @@ class IndexController extends BaseController
             if ($model->sendEmail()) {
                 Yii::$app->session->setFlash(
                     'success',
-                    Yii::t('app.messages', 'Please activate your account') . '. ' .
-                    Yii::t('app.messages', 'A letter for activation was sent to {email}', ['email' => $model->email])
+                    Yii::t(
+                        'app.messages',
+                        'Please activate your account'
+                    ) . '. ' .
+                    Yii::t(
+                        'app.messages',
+                        'A letter for activation was sent to {email}',
+                        ['email' => $model->email]
+                    )
                 );
             } else {
                 Yii::$app->session->setFlash(
                     'error',
-                    Yii::t('app.messages', 'An error occurred while sending a message to activate account')
+                    Yii::t(
+                        'app.messages',
+                        'An error occurred while sending a message to activate account'
+                    )
                 );
             }
             return $this->goHome();
@@ -190,14 +214,19 @@ class IndexController extends BaseController
         if ($model->sendEmail($user)) {
             Yii::$app->session->setFlash(
                 'success',
-                Yii::t('app.messages', 'A letter for activation was sent to {email}', [
-                    'email' => $user->email
-                ])
+                Yii::t(
+                    'app.messages',
+                    'A letter for activation was sent to {email}',
+                    ['email' => $user->email]
+                )
             );
         } else {
             Yii::$app->session->setFlash(
                 'error',
-                Yii::t('app.messages', 'An error occurred while sending a message to activate account')
+                Yii::t(
+                    'app.messages',
+                    'An error occurred while sending a message to activate account'
+                )
             );
         }
         return $this->goHome();
@@ -237,12 +266,18 @@ class IndexController extends BaseController
             if ($model->sendEmail()) {
                 Yii::$app->session->setFlash(
                     'success',
-                    Yii::t('app.messages', 'We\'ve sent you an email with instructions to reset your password')
+                    Yii::t(
+                        'app.messages',
+                        'We\'ve sent you an email with instructions to reset your password'
+                    )
                 );
             } else {
                 Yii::$app->session->setFlash(
                     'error',
-                    Yii::t('app.messages', 'An error occurred while sending a message to reset your password')
+                    Yii::t(
+                        'app.messages',
+                        'An error occurred while sending a message to reset your password'
+                    )
                 );
             }
             return $this->goHome();
@@ -265,7 +300,10 @@ class IndexController extends BaseController
             return $this->goHome();
         }
 
-        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->resetPassword()) {
+        if ($model->load(Yii::$app->request->post()) &&
+            $model->validate() &&
+            $model->resetPassword()
+        ) {
             Yii::$app->session->setFlash(
                 'success',
                 Yii::t('app', 'New password was saved')
