@@ -79,6 +79,7 @@ class PasswordResetRequestCest
 
     public function testSuccess($I)
     {
+        Yii::$app->settings->emailName = 'admin';
         Yii::$app->settings->emailMain = 'admin@test.com';
 
         $I->submitForm($this->formId, [

@@ -120,6 +120,7 @@ class SignupProviderCest
 
     public function testSignupVkontakte($I)
     {
+        Yii::$app->settings->emailName = 'admin';
         Yii::$app->settings->emailMain = 'admin@test.com';
 
         $this->signup($I, 'vkontakte', 'test@test.com');
@@ -128,6 +129,15 @@ class SignupProviderCest
         $I->see('Activate Your Account');
         $I->dontSee('signup');
         $I->dontSeeElement($this->formId);
+
+        $user = $I->grabRecord('app\models\User', ['email' => 'test@test.com']);
+        $I->assertEquals('1980-09-20', $user->profile->birth_day);
+        $I->assertEquals('Test Tester', $user->profile->full_name);
+        $I->assertNotEmpty($user->profile->photo);
+        $I->assertEquals(UserProvider::TYPE_VKONTAKTE, $user->providers[0]->type);
+        $I->assertEquals(100, $user->providers[0]->profile_id);
+        $I->assertEquals('https://vk.com/id100', $user->providers[0]->profile_url);
+        $I->assertEquals('test1', $user->providers[0]->access_token);
     }
 
     public function testLoginAfterSignupVkontakte($I)
@@ -179,6 +189,15 @@ class SignupProviderCest
         $I->see('Activate Your Account');
         $I->dontSee('signup');
         $I->dontSeeElement($this->formId);
+
+        $user = $I->grabRecord('app\models\User', ['email' => 'test@test.com']);
+        $I->assertEquals('Test Tester', $user->profile->full_name);
+        $I->assertNotEmpty($user->profile->photo);
+        $I->assertEquals(UserProvider::TYPE_TWITTER, $user->providers[0]->type);
+        $I->assertEquals(200, $user->providers[0]->profile_id);
+        $I->assertEquals('https://twitter.com/test', $user->providers[0]->profile_url);
+        $I->assertEquals('test1', $user->providers[0]->access_token);
+        $I->assertEquals('test2', $user->providers[0]->access_token_secret);
     }
 
     public function testSignupFacebook($I)
@@ -191,5 +210,13 @@ class SignupProviderCest
         $I->dontSee('Activate Your Account');
         $I->dontSee('signup');
         $I->dontSeeElement($this->formId);
+
+        $user = $I->grabRecord('app\models\User', ['email' => 'test@test.com']);
+        $I->assertEquals('Test Tester', $user->profile->full_name);
+        $I->assertEquals(UserProvider::TYPE_FACEBOOK, $user->providers[0]->type);
+        $I->assertEquals(300, $user->providers[0]->profile_id);
+        $I->assertEquals('https://www.facebook.com/300', $user->providers[0]->profile_url);
+        $I->assertEquals('test1', $user->providers[0]->access_token);
+        $I->assertEmpty($user->profile->photo);
     }
 }

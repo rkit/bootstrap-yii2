@@ -11,6 +11,7 @@ class_name: FunctionalTester
 modules:
     enabled:
       - Filesystem
+      - Asserts
       - Yii2
       - REST:
           depends: Yii2

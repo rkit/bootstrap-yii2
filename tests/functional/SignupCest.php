@@ -160,6 +160,7 @@ class SignupCest
     public function testConfirmRequest($I)
     {
         $I->amLoggedInAs(2);
+        Yii::$app->settings->emailName = 'admin';
         Yii::$app->settings->emailMain = 'admin@test.com';
 
         $I->amOnRoute('/index/confirm-request');
