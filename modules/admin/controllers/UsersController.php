@@ -95,15 +95,7 @@ class UsersController extends BaseController
             }
 
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                $auth = Yii::$app->authManager;
-                $auth->revokeAll($model->id);
-
-                if (!empty($model->role)) {
-                    $role = $auth->getRole($model->role);
-                    if ($role) {
-                        $auth->assign($role, $model->id);
-                    }
-                }
+                $this->assignRole($model);
 
                 Yii::$app->session->setFlash('success', Yii::t('app.messages', 'Saved successfully'));
                 $urlToModel = Url::toRoute(['edit', 'id' => $model->id]);
@@ -164,5 +156,18 @@ class UsersController extends BaseController
             }
         }
         return $this->response($result);
+    }
+
+    private function assignRole($model)
+    {
+        $auth = Yii::$app->authManager;
+        $auth->revokeAll($model->id);
+
+        if (!empty($model->role)) {
+            $role = $auth->getRole($model->role);
+            if ($role) {
+                $auth->assign($role, $model->id);
+            }
+        }
     }
 }
