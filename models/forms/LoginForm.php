@@ -53,9 +53,6 @@ class LoginForm extends \yii\base\Model
     /**
      * Validates the password
      * This method serves as the inline validation for password
-     *
-     * @param string $attribute The attribute currently being validated
-     * @param array $params The additional name-value pairs given in the rule
      */
     public function validatePassword()
     {
