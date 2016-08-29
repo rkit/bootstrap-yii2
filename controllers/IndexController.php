@@ -140,10 +140,12 @@ class IndexController extends BaseController
         $model = new SignupProviderForm($provider);
 
         // check exist user and provider
-        if ($user = User::findByProvider($provider['type'], $provider['profile']['id'])) {
+        if ($provider = UserProvider::findByProvider($provider['type'], $provider['profile']['id'])) {
+            $user = $provider->user;
             $session['provider'] = null;
             if ($user->isActive()) {
-                $user->updateProvider($model->parseProvider());
+                $provider->setAttributes($model->parseProvider());
+                $provider->save();
                 $user->authorize(true);
                 return $this->goHome();
             }

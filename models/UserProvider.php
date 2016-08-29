@@ -3,6 +3,7 @@
 namespace app\models;
 
 use yii\helpers\ArrayHelper;
+use app\models\User;
 
 /**
  * This is the model class for table "user_provider"
@@ -42,6 +43,14 @@ class UserProvider extends \yii\db\ActiveRecord
     }
 
     /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
+
+    /**
      * Get types
      *
      * @return array
@@ -76,5 +85,17 @@ class UserProvider extends \yii\db\ActiveRecord
     {
         $types = self::getTypes();
         return isset($types[$this->type]) ? $types[$this->type] : false;
+    }
+
+    /**
+     * Finds by type of provider
+     *
+     * @param int $type
+     * @param int $profileId
+     * @return app\models\UserProvider|null
+     */
+    public static function findByProvider($type, $profileId)
+    {
+        return static::findOne(['type' => $type, 'profile_id' => $profileId]);
     }
 }

@@ -139,7 +139,6 @@ class SignupProviderForm extends \yii\base\Model
                 $profile = $this->parseProfileTwitter();
                 break;
         }
-        $profile['type'] = $this->provider['type'];
         return $profile;
     }
 
@@ -271,10 +270,10 @@ class SignupProviderForm extends \yii\base\Model
         if ($this->validate($checkExistEmail ? null : [])) {
             if ($this->user->isNewRecord) {
                 $this->user->email = $this->email;
-                $this->user->addProfile($this->parseProfile());
+                $this->user->setProfile($this->parseProfile());
                 $photo = $this->user->profile->photo;
             }
-            $this->user->addProvider($this->parseProvider());
+            $this->user->setProviders($this->parseProvider());
 
             if ($this->user->save()) {
                 if (isset($photo) && !empty($photo)) {

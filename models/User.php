@@ -149,11 +149,27 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     }
 
     /**
+     * @param array $attributes
+     */
+    public function setProfile($attributes = [])
+    {
+        return $this->populateRelation('profile', new UserProfile($attributes));
+    }
+
+    /**
      * @return \yii\db\ActiveQuery
      */
     public function getProviders()
     {
         return $this->hasMany(UserProvider::className(), ['user_id' => 'id']);
+    }
+
+    /**
+     * @param array $attributes
+     */
+    public function setProviders($attributes = [])
+    {
+        return $this->populateRelation('providers', [new UserProvider($attributes)]);
     }
 
     /**
@@ -186,7 +202,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
                 }
 
                 if ($this->profile === null) {
-                    $this->populateRelation('profile', new UserProfile());
+                    $this->setProfile();
                 }
             }
 
@@ -531,69 +547,6 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     public static function findByEmail($email)
     {
         return static::findOne(['email' => $email]);
-    }
-
-    /**
-     * Finds user by type of provider and profile of provider
-     *
-     * @param int $type
-     * @param int $profileId
-     * @return app\models\User|null
-     */
-    public static function findByProvider($type, $profileId)
-    {
-        $provider = UserProvider::find()->where([
-            'type'  => $type,
-            'profile_id' => $profileId
-        ])->one();
-
-        return $provider ? static::findOne($provider->user_id) : null;
-    }
-
-    /**
-     * Add profile
-     *
-     * @param array $profile
-     * @return void
-     */
-    public function addProfile($profile)
-    {
-        $userProfile = new UserProfile();
-        $userProfile->load($profile, '');
-        $this->populateRelation('profile', $userProfile);
-    }
-
-    /**
-     * Add provider
-     *
-     * @param array $provider
-     * @return void
-     */
-    public function addProvider($provider)
-    {
-        $userProvider = new UserProvider();
-        $userProvider->load($provider, '');
-        $this->populateRelation('providers', [$userProvider]);
-    }
-
-    /**
-     * Update provider
-     *
-     * @param array $provider
-     * @return void
-     */
-    public function updateProvider($provider)
-    {
-        $userProvider = $this->getProviders()->where([
-            'user_id' => $this->id,
-            'type' => $provider['type']
-        ])->one();
-
-        if ($userProvider) {
-            $userProvider->load($provider, '');
-            $this->populateRelation('providers', [$userProvider]);
-            $this->save();
-        }
     }
 
     /**
