@@ -26,10 +26,10 @@ class IndexController extends BaseController
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout', 'signup', 'auth'],
+                'only' => ['logout', 'signup', 'signup-provider', 'auth', 'confirm-request'],
                 'rules' => [
                     [
-                        'actions' => ['signup', 'auth'],
+                        'actions' => ['signup', 'signup-provider', 'auth'],
                         'allow' => true,
                         'roles' => ['?'],
                     ],
@@ -133,7 +133,7 @@ class IndexController extends BaseController
     {
         $session = Yii::$app->session;
         $provider = $session['provider'];
-        if (!Yii::$app->user->isGuest || $provider === null) {
+        if ($provider === null) {
             return $this->goHome();
         }
 
