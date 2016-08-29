@@ -19,8 +19,7 @@ class DeleteAction extends Action
 
         if ($reload) {
             return $this->controller->redirect(\yii\helpers\Url::to(['index']));
-        } else {
-            return $this->controller->response(true);
         }
+        return $this->controller->response(true);
     }
 }

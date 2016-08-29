@@ -20,10 +20,9 @@ class MaintenanceController extends Controller
             unlink($file);
             $this->stdout("Done\n", Console::FG_GREEN);
             return true;
-        } else {
-            $this->stdout("Application is NOT in maintenance mode.\n", Console::FG_YELLOW);
-            return false;
         }
+        $this->stdout("Application is NOT in maintenance mode.\n", Console::FG_YELLOW);
+        return false;
     }
 
     public function actionOn()
@@ -35,10 +34,9 @@ class MaintenanceController extends Controller
             file_put_contents($file, time());
             $this->stdout("Done\n", Console::FG_GREEN);
             return true;
-        } else {
-            $this->stdout("Application is already in maintenance mode.\n", Console::FG_YELLOW);
-            return false;
         }
+        $this->stdout("Application is already in maintenance mode.\n", Console::FG_YELLOW);
+        return false;
     }
 
     /**

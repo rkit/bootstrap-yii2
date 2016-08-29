@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 use yii\db\Schema;
 use app\models\User;

@@ -58,7 +58,7 @@ class LoginForm extends \yii\base\Model
      * @param string $attribute The attribute currently being validated.
      * @param array $params The additional name-value pairs given in the rule.
      */
-    public function validatePassword($attribute, $params)
+    public function validatePassword()
     {
         if (!$this->hasErrors()) {
             $user = $this->getUser();
@@ -79,9 +79,8 @@ class LoginForm extends \yii\base\Model
     {
         if ($this->validate()) {
             return $this->getUser()->authorize($this->rememberMe);
-        } else {
-            return false;
         }
+        return false;
     }
 
     /**

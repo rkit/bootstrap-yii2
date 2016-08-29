@@ -34,9 +34,8 @@ class Module extends \yii\base\Module
             $action->controller->jsBundle = 'admin.js';
 
             return $this->checkAccess($action);
-        } else {
-            return false;
         }
+        return false;
     }
 
     public function checkAccess($action)

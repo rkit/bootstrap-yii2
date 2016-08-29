@@ -89,11 +89,10 @@ class IndexController extends BaseController
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();
-        } else {
-            return $this->render('login', [
-                'model' => $model,
-            ]);
         }
+        return $this->render('login', [
+            'model' => $model,
+        ]);
     }
 
     public function actionSignup()
@@ -113,15 +112,15 @@ class IndexController extends BaseController
                         ['email' => $model->email]
                     )
                 );
-            } else {
-                Yii::$app->session->setFlash(
-                    'error',
-                    Yii::t(
-                        'app.messages',
-                        'An error occurred while sending a message to activate account'
-                    )
-                );
+                return $this->goHome();
             }
+            Yii::$app->session->setFlash(
+                'error',
+                Yii::t(
+                    'app.messages',
+                    'An error occurred while sending a message to activate account'
+                )
+            );
             return $this->goHome();
         }
 
@@ -147,10 +146,9 @@ class IndexController extends BaseController
                 $user->updateProvider($model->parseProvider());
                 $user->authorize(true);
                 return $this->goHome();
-            } else {
-                $session->setFlash('error', $user->getStatusDescription());
-                return $this->goHome();
             }
+            $session->setFlash('error', $user->getStatusDescription());
+            return $this->goHome();
         }
 
         $model->prepareUser();
@@ -161,6 +159,7 @@ class IndexController extends BaseController
         }
 
         if ($model->load(Yii::$app->request->post()) && $model->signup()) {
+            $session['provider'] = null;
             if ($model->sendEmail()) {
                 $session->setFlash(
                     'success',
@@ -174,16 +173,15 @@ class IndexController extends BaseController
                         ['email' => $model->email]
                     )
                 );
-            } else {
-                $session->setFlash(
-                    'error',
-                    Yii::t(
-                        'app.messages',
-                        'An error occurred while sending a message to activate account'
-                    )
-                );
+                return $this->goHome();
             }
-            $session['provider'] = null;
+            $session->setFlash(
+                'error',
+                Yii::t(
+                    'app.messages',
+                    'An error occurred while sending a message to activate account'
+                )
+            );
             return $this->goHome();
         }
 
@@ -210,15 +208,15 @@ class IndexController extends BaseController
                     ['email' => $user->email]
                 )
             );
-        } else {
-            Yii::$app->session->setFlash(
-                'error',
-                Yii::t(
-                    'app.messages',
-                    'An error occurred while sending a message to activate account'
-                )
-            );
+            return $this->goHome();
         }
+        Yii::$app->session->setFlash(
+            'error',
+            Yii::t(
+                'app.messages',
+                'An error occurred while sending a message to activate account'
+            )
+        );
         return $this->goHome();
     }
 
@@ -256,15 +254,15 @@ class IndexController extends BaseController
                         'We\'ve sent you an email with instructions to reset your password'
                     )
                 );
-            } else {
-                Yii::$app->session->setFlash(
-                    'error',
-                    Yii::t(
-                        'app.messages',
-                        'An error occurred while sending a message to reset your password'
-                    )
-                );
+                return $this->goHome();
             }
+            Yii::$app->session->setFlash(
+                'error',
+                Yii::t(
+                    'app.messages',
+                    'An error occurred while sending a message to reset your password'
+                )
+            );
             return $this->goHome();
         }
 

@@ -68,13 +68,11 @@ class TagsController extends BaseController
                 $urlToModel = Url::toRoute(['edit', 'id' => $model->id]);
                 if (Yii::$app->request->isAjax) {
                     return $this->response(['redirect' => $urlToModel]);
-                } else {
-                    return $this->redirect($urlToModel);
                 }
-            } else {
-                if (Yii::$app->request->isAjax) {
-                    return $this->response(Util::collectModelErrors($model));
-                }
+                return $this->redirect($urlToModel);
+            }
+            if (Yii::$app->request->isAjax) {
+                return $this->response(Util::collectModelErrors($model));
             }
         }
 

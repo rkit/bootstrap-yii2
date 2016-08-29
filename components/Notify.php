@@ -29,6 +29,7 @@ class Notify extends \yii\base\Component
      * @param string $view
      * @param array $params
      * @return bool
+     * @SuppressWarnings(PHPMD.ElseExpression)
      */
     public function sendMessage($to, $subject, $view, $params = [])
     {

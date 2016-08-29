@@ -72,7 +72,7 @@ class UserProfile extends \yii\db\ActiveRecord
                             'tooBig' => Yii::t('app.validators', 'File size must not exceed') . ' 1Mb'
                         ],
                         'preset' => [
-                            '1000x1000' => function ($realPath, $publicPath, $thumbPath) {
+                            '1000x1000' => function ($realPath, $publicPath) {
                                 Image::make($realPath . $publicPath)
                                     ->resize(1000, 1000, function ($constraint) {
                                         $constraint->aspectRatio();

@@ -18,10 +18,9 @@ class SettingsController extends BaseController
                 Yii::$app->settings->load($model->getAttributes());
                 Yii::$app->session->setFlash('success', Yii::t('app.messages', 'Saved successfully'));
                 return $this->refresh();
-            } else {
-                if (Yii::$app->request->isAjax) {
-                    return $this->response(Util::collectModelErrors($model));
-                }
+            }
+            if (Yii::$app->request->isAjax) {
+                return $this->response(Util::collectModelErrors($model));
             }
         }
 

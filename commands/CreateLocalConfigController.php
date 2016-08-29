@@ -18,8 +18,7 @@ class CreateLocalConfigController extends Controller
             Yii::getAlias('@app') . '/config/local/' . $name
         )) {
             $this->stdout("Created successfully!\n", Console::FG_GREEN);
-        } else { // @codeCoverageIgnore
-            $this->stdout("Could not create\n", Console::FG_RED); // @codeCoverageIgnore
-        } // @codeCoverageIgnore
+        }
+        $this->stdout("Could not create\n", Console::FG_RED); // @codeCoverageIgnore
     }
 }

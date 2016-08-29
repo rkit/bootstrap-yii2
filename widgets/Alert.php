@@ -28,7 +28,7 @@ namespace app\widgets;
  */
 class Alert extends \yii\bootstrap\Widget
 {
-    /** 
+    /**
      * @var string
      */
     public $template = null;
@@ -45,12 +45,12 @@ class Alert extends \yii\bootstrap\Widget
         'info'    => 'alert-info',
         'warning' => 'alert-warning'
     ];
-    
+
     /**
      * @var array the options for rendering the close button tag.
      */
     public $closeButton = [];
-    
+
     public function init()
     {
         parent::init();
