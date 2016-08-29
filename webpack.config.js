@@ -1,5 +1,4 @@
 var path = require('path');
-var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var BowerWebpackPlugin = require('bower-webpack-plugin');
 var ManifestPlugin = require('webpack-manifest-plugin');
@@ -48,10 +47,6 @@ module.exports = {
       manifestFiles: ['bower.json', '.bower.json'],
       includes: /.*/,
       excludes: /.*\.less$/,
-    }),
-    new webpack.ProvidePlugin({
-      $: 'jquery',
-      jQuery: 'jquery',
     }),
     new ExtractTextPlugin('[name].[contenthash].css'),
     new ManifestPlugin(),
