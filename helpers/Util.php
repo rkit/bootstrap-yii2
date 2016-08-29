@@ -73,23 +73,21 @@ class Util
     /**
      * Create manually UploadedFile instance by file path
      *
-     * @param string $name the original name of the file being uploaded
      * @param string $file file path
      * @return UploadedFile
      */
-    public static function makeUploadedFile($name, $file)
+    public static function makeUploadedFile($file)
     {
         $tmpFile = tempnam(sys_get_temp_dir(), 'app');
         file_put_contents($tmpFile, file_get_contents($file));
 
-        $_FILES[$name] = [
-            'name' => pathinfo($file, PATHINFO_BASENAME),
-            'tmp_name' => $tmpFile,
-            'type' => FileHelper::getMimeType($tmpFile),
-            'size' => filesize($tmpFile),
-            'error' => 0,
-        ];
+        $uploadedFile = new UploadedFile();
+        $uploadedFile->name = pathinfo($file, PATHINFO_BASENAME);
+        $uploadedFile->tempName = $tmpFile;
+        $uploadedFile->type = FileHelper::getMimeType($tmpFile);
+        $uploadedFile->size = filesize($tmpFile);
+        $uploadedFile->error = 0;
 
-        return UploadedFile::getInstanceByName($name);
+        return $uploadedFile;
     }
 }

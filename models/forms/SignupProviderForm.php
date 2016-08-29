@@ -248,7 +248,7 @@ class SignupProviderForm extends \yii\base\Model
      */
     private function savePhoto($profile, $photo)
     {
-        $file = Util::makeUploadedFile('file', $photo);
+        $file = Util::makeUploadedFile($photo);
 
         $model = new DynamicModel(compact('file'));
         $model->addRule('file', 'image', $profile->getFileRules('photo', true))->validate();
