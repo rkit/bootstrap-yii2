@@ -19,7 +19,7 @@ class SignupForm extends \yii\base\Model
     /**
      * @var string
      */
-    public $full_name;
+    public $fullName;
     /**
      * @var \app\models\User
      */
@@ -31,8 +31,8 @@ class SignupForm extends \yii\base\Model
     public function rules()
     {
         return [
-            ['full_name', 'required'],
-            ['full_name', 'string', 'max' => 40],
+            ['fullName', 'required'],
+            ['fullName', 'string', 'max' => 40],
 
             ['password', 'required'],
             ['password', 'string', 'min' => 6],
@@ -53,7 +53,7 @@ class SignupForm extends \yii\base\Model
      */
     public function attributeLabels()
     {
-        return array_merge((new User())->attributeLabels(), ['full_name' => Yii::t('app', 'Full Name')]);
+        return array_merge((new User())->attributeLabels(), ['fullName' => Yii::t('app', 'Full Name')]);
     }
 
     /**
@@ -67,7 +67,7 @@ class SignupForm extends \yii\base\Model
             $this->user = new User();
             $this->user->email = $this->email;
             $this->user->setPassword($this->password);
-            $this->user->addProfile(['full_name' => $this->full_name]);
+            $this->user->addProfile(['fullName' => $this->fullName]);
             if ($this->user->save()) {
                 if ($this->user->authorize(true)) {
                     return $this->user;

@@ -83,7 +83,7 @@ $this->title = Yii::t('app', 'Users');
               }
           ],
           /**
-           * @var date_create
+           * @var dateCreate
            */
           [
               'attribute' => 'date_create',
@@ -92,7 +92,7 @@ $this->title = Yii::t('app', 'Users');
               'filter' => DatePicker::widget(
                   [
                       'model' => $userSearch,
-                      'attribute' => 'date_create',
+                      'attribute' => 'dateCreate',
                       'pluginOptions' => [
                       	'autoclose' => true,
                       	'format' => 'yyyy-mm-dd',

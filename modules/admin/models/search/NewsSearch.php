@@ -19,11 +19,11 @@ class NewsSearch extends News
     /**
      * @var int
      */
-    public $type_id;
+    public $typeId;
     /**
      * @var timestamp
      */
-    public $date_pub;
+    public $datePub;
     /**
      * @var int
      */
@@ -36,8 +36,8 @@ class NewsSearch extends News
     {
         return [
             ['title', 'string'],
-            ['type_id', 'integer'],
-            ['date_pub', 'date', 'format' => 'yyyy-mm-dd'],
+            ['typeId', 'integer'],
+            ['datePub', 'date', 'format' => 'yyyy-mm-dd'],
 
             ['status', 'integer'],
             ['status', 'in', 'range' => array_keys(News::getStatuses())],
@@ -66,7 +66,7 @@ class NewsSearch extends News
             ],
         ]);
 
-        $dataProvider->sort->attributes['type_id'] = [
+        $dataProvider->sort->attributes['typeId'] = [
             'asc'  => ['news_type.title' => SORT_ASC],
             'desc' => ['news_type.title' => SORT_DESC],
         ];
@@ -76,9 +76,9 @@ class NewsSearch extends News
         }
 
         $query->andFilterWhere([
-            'type_id' => $this->type_id,
+            'type_id' => $this->typeId,
             'status' => $this->status,
-            'DATE(date_pub)' => $this->date_pub
+            'DATE(date_pub)' => $this->datePub
         ]);
 
         $query->andFilterWhere(['like', 'news.title', $this->title]);

@@ -23,7 +23,7 @@ class UserSearch extends User
     /**
      * @var timestamp
      */
-    public $date_create;
+    public $dateCreate;
     /**
      * @var string
      */
@@ -47,7 +47,7 @@ class UserSearch extends User
                 ['username', 'email', 'ip', 'role'], 'string'
             ],
 
-            ['date_create', 'date', 'format' => 'yyyy-mm-dd'],
+            ['dateCreate', 'date', 'format' => 'yyyy-mm-dd'],
 
             ['status', 'integer'],
             ['status', 'in', 'range' => array_keys(User::getStatuses())],
@@ -86,7 +86,7 @@ class UserSearch extends User
             'ip' => !empty($this->ip) ? ip2long($this->ip) : null,
             'status' => $this->status,
             'role' => $this->role,
-            'DATE(date_create)' => $this->date_create
+            'DATE(date_create)' => $this->dateCreate
         ]);
 
         $query->andFilterWhere(['like', 'user.username', $this->username]);

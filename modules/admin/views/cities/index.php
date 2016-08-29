@@ -55,7 +55,7 @@ $this->title = Yii::t('app', 'Cities');
               }
           ],
           /**
-           * @var country_id
+           * @var country
            */
           [
               'attribute' => 'country_id',
@@ -63,7 +63,7 @@ $this->title = Yii::t('app', 'Cities');
               'headerOptions' => ['style' => 'width: 200px'],
               'filter' => Select2::widget([
                   'model' => $citySearch,
-                  'attribute' => 'country_id',
+                  'attribute' => 'countryId',
                   'options' => ['placeholder' => ' '],
                   'pluginOptions' => [
                       'width' => '100%',
@@ -86,7 +86,7 @@ $this->title = Yii::t('app', 'Cities');
               ])
           ],
           /**
-           * @var region_id
+           * @var region
            */
           [
               'attribute' => 'region_id',
@@ -94,7 +94,7 @@ $this->title = Yii::t('app', 'Cities');
               'headerOptions' => ['style' => 'width: 200px'],
               'filter' => Select2::widget([
                   'model' => $citySearch,
-                  'attribute' => 'region_id',
+                  'attribute' => 'regionId',
                   'options' => ['placeholder' => ' '],
                   'pluginOptions' => [
                       'width' => '100%',

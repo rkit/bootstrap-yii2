@@ -11,8 +11,8 @@ $this->title = Yii::t('app', 'Signup');
   <div class="row">
     <div class="col-lg-5">
       <?php $form = ActiveForm::begin(['id' => 'form-signup']); ?>
-        <!-- full_name -->
-        <?= $form->field($model, 'full_name') ?>
+        <!-- fullName -->
+        <?= $form->field($model, 'fullName') ?>
         <!-- email -->
         <?= $form->field($model, 'email') ?>
         <!-- password -->

@@ -55,14 +55,14 @@ $this->title = Yii::t('app', 'Regions');
               }
           ],
           /**
-           * @var country_id
+           * @var country
            */
           [
               'attribute' => 'country_id',
               'value' => 'country.title',
               'filter' => Select2::widget([
                   'model' => $regionSearch,
-                  'attribute' => 'country_id',
+                  'attribute' => 'countryId',
                   'options' => ['placeholder' => ' '],
                   'pluginOptions' => [
                       'width' => '100%',
