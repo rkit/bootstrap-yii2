@@ -41,7 +41,7 @@ class SignupCest
     public function testEmptyEmail($I)
     {
         $I->submitForm($this->formId, [
-            $this->formName . '[full_name]' => 'Test',
+            $this->formName . '[fullName]' => 'Test',
             $this->formName . '[email]' => '',
             $this->formName . '[password]' => 'fghfgh',
         ]);
@@ -53,7 +53,7 @@ class SignupCest
     public function testWrongFormatEmail($I)
     {
         $I->submitForm($this->formId, [
-            $this->formName . '[full_name]' => 'Test',
+            $this->formName . '[fullName]' => 'Test',
             $this->formName . '[email]' => 'test_email',
             $this->formName . '[password]' => 'test_password',
         ]);
@@ -65,7 +65,7 @@ class SignupCest
     public function testEmptyPassword($I)
     {
         $I->submitForm($this->formId, [
-            $this->formName . '[full_name]' => 'Test',
+            $this->formName . '[fullName]' => 'Test',
             $this->formName . '[email]' => 'test@test.com',
             $this->formName . '[password]' => '',
         ]);
@@ -77,7 +77,7 @@ class SignupCest
     public function testEmptyName($I)
     {
         $I->submitForm($this->formId, [
-            $this->formName . '[full_name]' => '',
+            $this->formName . '[fullName]' => '',
             $this->formName . '[email]' => 'test@test.com',
             $this->formName . '[password]' => 'fghfgh',
         ]);
@@ -89,7 +89,7 @@ class SignupCest
     public function testTooShortPassword($I)
     {
         $I->submitForm($this->formId, [
-            $this->formName . '[full_name]' => 'Test',
+            $this->formName . '[fullName]' => 'Test',
             $this->formName . '[email]' => 'test@test.com',
             $this->formName . '[password]' => 'fgh',
         ]);
@@ -101,7 +101,7 @@ class SignupCest
     public function testExistEmail($I)
     {
         $I->submitForm($this->formId, [
-            $this->formName . '[full_name]' => 'Test',
+            $this->formName . '[fullName]' => 'Test',
             $this->formName . '[email]' => 'user-2@example.com',
             $this->formName . '[password]' => 'fghfgh',
         ]);
@@ -115,7 +115,7 @@ class SignupCest
         Yii::$app->settings->emailMain = null;
 
         $I->submitForm($this->formId, [
-            $this->formName . '[full_name]' => 'Test',
+            $this->formName . '[fullName]' => 'Test',
             $this->formName . '[email]' => 'test@test.com',
             $this->formName . '[password]' => 'fghfgh',
         ]);
@@ -126,7 +126,7 @@ class SignupCest
     public function testSuccess($I)
     {
         $I->submitForm($this->formId, [
-            $this->formName . '[full_name]' => 'Test',
+            $this->formName . '[fullName]' => 'Test',
             $this->formName . '[email]' => 'test@test.com',
             $this->formName . '[password]' => 'fghfgh',
         ]);
@@ -174,7 +174,7 @@ class SignupCest
     public function testSignupAndConfirm($I)
     {
         $I->submitForm($this->formId, [
-            $this->formName . '[full_name]' => 'Test',
+            $this->formName . '[fullName]' => 'Test',
             $this->formName . '[email]' => 'test@test.com',
             $this->formName . '[password]' => 'fghfgh',
         ]);

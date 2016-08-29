@@ -67,7 +67,7 @@ class SignupForm extends \yii\base\Model
             $this->user = new User();
             $this->user->email = $this->email;
             $this->user->setPassword($this->password);
-            $this->user->addProfile(['fullName' => $this->fullName]);
+            $this->user->addProfile(['full_name' => $this->fullName]);
             if ($this->user->save()) {
                 if ($this->user->authorize(true)) {
                     return $this->user;

@@ -26,13 +26,13 @@ class SignupFormTest extends \Codeception\Test\Unit
     public function testEmptyFields()
     {
         $form = new SignupForm([
-            'full_name' => '',
+            'fullName' => '',
             'email' => '',
             'password' => '',
         ]);
 
         expect_not($form->signup());
-        expect($form->getFirstError('full_name'))->notEmpty();
+        expect($form->getFirstError('fullName'))->notEmpty();
         expect($form->getFirstError('email'))->notEmpty();
         expect($form->getFirstError('password'))->notEmpty();
     }
@@ -40,7 +40,7 @@ class SignupFormTest extends \Codeception\Test\Unit
     public function testEmptyPassword()
     {
         $form = new SignupForm([
-            'full_name' => 'Test',
+            'fullName' => 'Test',
             'email' => 'test@test.com',
             'password' => '',
         ]);
@@ -52,7 +52,7 @@ class SignupFormTest extends \Codeception\Test\Unit
     public function testTooShortPassword()
     {
         $form = new SignupForm([
-            'full_name' => 'Test',
+            'fullName' => 'Test',
             'email' => 'test@test.com',
             'password' => 'test',
         ]);
@@ -64,7 +64,7 @@ class SignupFormTest extends \Codeception\Test\Unit
     public function testEmptyEmail()
     {
         $form = new SignupForm([
-            'full_name' => 'Test',
+            'fullName' => 'Test',
             'email' => '',
             'password' => 'test_password',
         ]);
@@ -76,19 +76,19 @@ class SignupFormTest extends \Codeception\Test\Unit
     public function testEmptyFullName()
     {
         $form = new SignupForm([
-            'full_name' => '',
+            'fullName' => '',
             'email' => 'test@test.com',
             'password' => 'test_password',
         ]);
 
         expect_not($form->signup());
-        expect($form->getFirstError('full_name'))->notEmpty();
+        expect($form->getFirstError('fullName'))->notEmpty();
     }
 
     public function testExist()
     {
         $form = new SignupForm([
-            'full_name' => 'Test',
+            'fullName' => 'Test',
             'email' => 'user-2@example.com',
             'password' => 'test_password',
         ]);
@@ -100,7 +100,7 @@ class SignupFormTest extends \Codeception\Test\Unit
     public function testSuccess()
     {
         $form = new SignupForm([
-            'full_name' => 'Test',
+            'fullName' => 'Test',
             'email' => 'test@test.com',
             'password' => 'test_password',
         ]);
