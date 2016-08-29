@@ -320,9 +320,8 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             return Yii::t('app', 'Your account has been suspended');
         } elseif ($this->status == self::STATUS_DELETED) {
             return Yii::t('app', 'Your account has been deleted');
-        } else {
-            return Yii::t('app', 'Your account is activated');
         }
+        return Yii::t('app', 'Your account is activated');
     }
 
     /**
