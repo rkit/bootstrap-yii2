@@ -97,6 +97,12 @@ class SignupProviderCest
         $I->dontSee($this->formId);
     }
 
+    public function testSignUpWithoutProvider($I)
+    {
+        $I->amOnRoute('/index/signup-provider');
+        $I->dontSee($this->formId);
+    }
+
     public function testEmptyEmail($I)
     {
         $this->signup($I, 'vkontakte', '');
