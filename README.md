@@ -21,7 +21,6 @@ Screenshots:
 ## Installation
 
 1. Create project
-
    ```
    composer global require "fxp/composer-asset-plugin:~1.0"
    composer create-project --prefer-dist --stability=dev rkit/bootstrap-yii2
@@ -33,7 +32,6 @@ Screenshots:
    ```
 
 3. Create a new database and local config
-
    ```
    php yii create-local-config/init
    ```
