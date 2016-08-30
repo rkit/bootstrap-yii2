@@ -57,6 +57,10 @@ username: editor
 password: fghfgh
 ```
 
+## Configuring Server
+
+Set document root to be `/path/to/source/web`
+
 ## Development
 
 - Enable debug mode for Yii
@@ -76,3 +80,9 @@ password: fghfgh
   ```
   npm run build
   ```
+
+## Coding Standard
+
+- PHP Code Sniffer — [phpcs.xml](./phpcs.xml)
+- PHP Mess Detector — [ruleset.xml](./ruleset.xml)
+- ESLint — [.eslintrc](./.eslintrc)
