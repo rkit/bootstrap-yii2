@@ -81,6 +81,10 @@ Set document root to be `/path/to/source/web`
   npm run build
   ```
 
+## Tests
+
+[See docs](/tests)
+
 ## Coding Standard
 
 - PHP Code Sniffer — [phpcs.xml](./phpcs.xml)
