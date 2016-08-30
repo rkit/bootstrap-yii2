@@ -91,11 +91,11 @@ Build for production
 npm run build
 ```
 
-## Tests
+### Tests
 
 [See docs](/tests/#tests)
 
-## Coding Standard
+### Coding Standard
 
 - PHP Code Sniffer — [phpcs.xml](./phpcs.xml)
 - PHP Mess Detector — [ruleset.xml](./ruleset.xml)
