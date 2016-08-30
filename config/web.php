@@ -33,7 +33,7 @@ $config = [
                 'logout' => 'index/logout',
                 'reset-password' => 'index/reset-password',
                 'confirm-email' => 'index/confirm-email',
-                'confirm-again' => 'index/confirm-again'
+                'confirm-request' => 'index/confirm-request'
             ]
         ],
         'cache' => [
