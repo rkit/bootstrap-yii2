@@ -83,7 +83,7 @@ Set document root to be `/path/to/source/web`
 
 ## Tests
 
-[See docs](/tests)
+[See docs](/tests/#tests)
 
 ## Coding Standard
 
