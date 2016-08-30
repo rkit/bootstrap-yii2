@@ -65,35 +65,31 @@ Set document root to be `/path/to/source/web`
 
 ### Debug mode
 
-Apache Configuration
-
+- Apache Configuration
 ```apache
 SetEnv APPLICATION_ENV "development"
 ```
 
-Nginx Configuration
-
+- Nginx Configuration
 ```nginx
 fastcgi_param APPLICATION_ENV development;
 ```
 
 ### Assets
 
-Watch mode (debug)
-
+- Watch mode (debug)
 ```
 npm run watch
 ```
 
-Build for production
-
+- Build for production
 ```
 npm run build
 ```
 
 ## Tests
 
-[See docs](/tests/#tests)
+- [See docs](/tests/#tests)
 
 ## Coding Standard
 
