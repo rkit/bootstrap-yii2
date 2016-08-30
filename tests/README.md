@@ -12,19 +12,19 @@
    composer test-build
    ```
 
-## Run
+## Commands
 
-- Tests
+- Run tests
   ```
   composer test
   ```
 
-- Tests with coverage
+- Run tests with coverage
   ```
   composer test-coverage
   ```
 
-- Coverage dashboard
+- Show coverage dashboard
   ```
   composer test-coverage-open
   ```
