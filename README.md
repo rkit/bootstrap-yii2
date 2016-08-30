@@ -63,23 +63,33 @@ Set document root to be `/path/to/source/web`
 
 ## Development
 
-- Enable debug mode for Yii
-  ```apache
-  # for apache
-  SetEnv APPLICATION_ENV "development"
-  # for nginx
-  fastcgi_param APPLICATION_ENV development;
-  ```
+### Debug mode
 
-- Run webpack in watch mode
-  ```
-  npm run watch
-  ```
+Apache Configuration
 
-- Run webpack for build
-  ```
-  npm run build
-  ```
+```apache
+SetEnv APPLICATION_ENV "development"
+```
+
+Nginx Configuration
+
+```nginx
+fastcgi_param APPLICATION_ENV development;
+```
+
+### Assets
+
+Watch mode (debug)
+
+```
+npm run watch
+```
+
+Build for production
+
+```
+npm run build
+```
 
 ## Tests
 
