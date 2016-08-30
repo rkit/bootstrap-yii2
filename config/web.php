@@ -113,6 +113,8 @@ $config = [
                     'class' => 'yii\authclient\clients\Facebook',
                     'clientId' => '',
                     'clientSecret' => '',
+                    'scope' => 'email,public_profile',
+                    'attributeNames' => ['name', 'email', 'picture', 'link', 'verified'],
                 ],
             ],
         ]
