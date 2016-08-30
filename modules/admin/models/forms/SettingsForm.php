@@ -4,13 +4,7 @@ namespace app\modules\admin\models\forms;
 
 use Yii;
 
-/**
- * This is the model class for component "Settings".
- *
- * @property string $key
- * @property string $value
- */
-class Settings extends \yii\base\Model
+class SettingsForm extends \yii\base\Model
 {
     /**
      * @var string

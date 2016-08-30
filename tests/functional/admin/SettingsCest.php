@@ -10,7 +10,7 @@ use app\models\User;
 class SettingsCest
 {
     protected $pageTitle = 'Settings';
-    protected $formName = 'Settings';
+    protected $formName = 'SettingsForm';
     protected $formId = '#settings-form';
     protected $url = '/admin/settings';
     protected $lastId;

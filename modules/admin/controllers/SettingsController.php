@@ -5,13 +5,13 @@ namespace app\modules\admin\controllers;
 use Yii;
 use app\helpers\Util;
 use app\components\BaseController;
-use app\modules\admin\models\forms\Settings;
+use app\modules\admin\models\forms\SettingsForm;
 
 class SettingsController extends BaseController
 {
     public function actionIndex()
     {
-        $model = new Settings();
+        $model = new SettingsForm();
 
         if (Yii::$app->request->isPost) {
             if ($model->load(Yii::$app->request->post()) && $model->validate()) {
