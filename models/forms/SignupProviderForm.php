@@ -150,10 +150,11 @@ class SignupProviderForm extends \yii\base\Model
     private function parseProviderFacebook()
     {
         $profile = $this->provider['profile'];
+        $token = $this->provider['token'];
         return [
-            'profile_id' => $profile['id'],
-            'profile_url' => $profile['link'],
-            'access_token' => $this->provider['token']['access_token'],
+            'profile_id' => ArrayHelper::getValue($profile, 'id'),
+            'profile_url' => ArrayHelper::getValue($profile, 'link'),
+            'access_token' => ArrayHelper::getValue($token, 'access_token'),
             'access_token_secret' => ''
         ];
     }
@@ -166,10 +167,11 @@ class SignupProviderForm extends \yii\base\Model
     private function parseProviderVkontakte()
     {
         $profile = $this->provider['profile'];
+        $token = $this->provider['token'];
         return [
-            'profile_id' => $profile['id'],
-            'profile_url' => 'https://vk.com/id' . $profile['id'],
-            'access_token' => $this->provider['token']['access_token'],
+            'profile_id' => ArrayHelper::getValue($profile, 'id'),
+            'profile_url' => 'https://vk.com/id' . ArrayHelper::getValue($profile, 'id'),
+            'access_token' => ArrayHelper::getValue($token, 'access_token'),
             'access_token_secret' => ''
         ];
     }
@@ -182,11 +184,12 @@ class SignupProviderForm extends \yii\base\Model
     private function parseProviderTwitter()
     {
         $profile = $this->provider['profile'];
+        $token = $this->provider['token'];
         return [
-            'profile_id' => $profile['id'],
-            'profile_url' => 'https://twitter.com/' . $profile['screen_name'],
-            'access_token' => $this->provider['token']['oauth_token'],
-            'access_token_secret' => $this->provider['token']['oauth_token_secret']
+            'profile_id' => ArrayHelper::getValue($profile, 'id'),
+            'profile_url' => 'https://twitter.com/' . ArrayHelper::getValue($profile, 'screen_name'),
+            'access_token' => ArrayHelper::getValue($token, 'oauth_token'),
+            'access_token_secret' => ArrayHelper::getValue($token, 'oauth_token_secret')
         ];
     }
 
@@ -199,7 +202,7 @@ class SignupProviderForm extends \yii\base\Model
     {
         $profile = $this->provider['profile'];
         return [
-            'full_name' => trim($profile['name']),
+            'full_name' => trim(ArrayHelper::getValue($profile, 'name')),
             'birth_day' => '—',
             'photo' => ArrayHelper::getValue($profile, 'picture.data.url', '')
         ];
@@ -213,13 +216,13 @@ class SignupProviderForm extends \yii\base\Model
     private function parseProfileVkontakte()
     {
         $profile = $this->provider['profile'];
+        $firstName = ArrayHelper::getValue($profile, 'first_name');
+        $lastName = ArrayHelper::getValue($profile, 'last_name');
+        $birthDay = date_create_from_format('d.m.Y', ArrayHelper::getValue($profile, 'bdate'));
         return [
-            'full_name' => trim($profile['first_name'] . ' ' . $profile['last_name']),
-            'birth_day' => date_format(
-                date_create_from_format('d.m.Y', $profile['bdate']),
-                'Y-m-d'
-            ),
-            'photo' => str_replace('_50', '_400', $profile['photo'])
+            'full_name' => trim($firstName . ' ' . $lastName),
+            'birth_day' => date_format($birthDay, 'Y-m-d'),
+            'photo' => str_replace('_50', '_400', ArrayHelper::getValue($profile, 'photo'))
         ];
     }
 
@@ -232,9 +235,10 @@ class SignupProviderForm extends \yii\base\Model
     private function parseProfileTwitter()
     {
         $profile = $this->provider['profile'];
+        $photo = ArrayHelper::getValue($profile, 'profile_image_url');
         return [
             'full_name' => $profile['name'],
-            'photo' => str_replace('_normal', '_400x400', $profile['profile_image_url'])
+            'photo' => str_replace('_normal', '_400x400', $photo)
         ];
     }
 

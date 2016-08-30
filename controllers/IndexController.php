@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\helpers\ArrayHelper;
 use app\components\BaseController;
 use app\helpers\Http;
 use app\models\UserProvider;
@@ -139,7 +140,9 @@ class IndexController extends BaseController
         $model = new SignupProviderForm($provider);
 
         // check exist user and provider
-        if ($provider = UserProvider::findByProvider($provider['type'], $provider['profile']['id'])) {
+        $id = ArrayHelper::getValue($provider, 'profile.id');
+        $type = $provider['type'];
+        if ($provider = UserProvider::findByProvider($type, $id)) {
             $user = $provider->user;
             $session['provider'] = null;
             if ($user->isActive()) {
