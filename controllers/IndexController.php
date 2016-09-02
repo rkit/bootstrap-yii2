@@ -26,15 +26,30 @@ class IndexController extends BaseController
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout', 'signup', 'signup-provider', 'auth', 'confirm-request'],
+                'only' => [
+                    'auth',
+                    'logout',
+                    'signup',
+                    'signup-provider',
+                    'confirm-request',
+                    'request-password-reset',
+                ],
                 'rules' => [
                     [
-                        'actions' => ['signup', 'signup-provider', 'auth'],
+                        'actions' => [
+                            'auth',
+                            'signup',
+                            'signup-provider',
+                            'request-password-reset',
+                        ],
                         'allow' => true,
                         'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['logout', 'confirm-request'],
+                        'actions' => [
+                            'logout',
+                            'confirm-request'
+                        ],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
