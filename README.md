@@ -92,5 +92,5 @@ Set document root to be `/path/to/source/web`
 ### Coding Standard
 
 - PHP Code Sniffer — [phpcs.xml](./phpcs.xml)
-- PHP Mess Detector — [ruleset.xml](./ruleset.xml)
+- PHP Mess Detector — [phpmd.xml](./phpmd.xml)
 - ESLint — [.eslintrc](./.eslintrc)
