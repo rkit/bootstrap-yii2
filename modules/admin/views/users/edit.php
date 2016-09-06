@@ -29,7 +29,7 @@ $this->title .= !empty($title) ? $title : Yii::t('app', 'Create');
               'class' => 'form-control',
               'prompt' => Yii::t('app', 'No role')
           ])
-          ->label(Html::a(Yii::t('app', 'Role'), '/admin/roles')); ?>
+          ->label(Html::a(Yii::t('app', 'Role'), ['/admin/roles'])); ?>
 
       <!-- username -->
       <?= $form->field($model, 'username')->textInput(['maxlength' => true]) ?>

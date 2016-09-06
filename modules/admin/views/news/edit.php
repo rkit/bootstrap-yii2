@@ -25,7 +25,7 @@ $this->title .= !empty($model->title) ? $model->title : Yii::t('app', 'Create');
       ->label(
         $model->type_id ?
         Html::a($model->getAttributeLabel('type_id'), ['/admin/news-types/edit', 'id' => $model->type_id]) :
-        Html::a($model->getAttributeLabel('type_id'), '/admin/news-types')
+        Html::a($model->getAttributeLabel('type_id'), ['/admin/news-types'])
       ); ?>
 
   <!-- text -->

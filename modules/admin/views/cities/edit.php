@@ -39,7 +39,7 @@ $this->title .= !empty($model->title) ? $model->title : Yii::t('app', 'Create');
   ->label(
     $model->country ?
     Html::a($model->getAttributeLabel('country_id'), ['/admin/countries/edit', 'id' => $model->country->country_id]) :
-    Html::a($model->getAttributeLabel('country_id'), '/admin/countries')
+    Html::a($model->getAttributeLabel('country_id'), ['/admin/countries'])
   ) ?>
 
   <!-- region_id -->
@@ -67,7 +67,7 @@ $this->title .= !empty($model->title) ? $model->title : Yii::t('app', 'Create');
   ->label(
     $model->region ?
     Html::a($model->getAttributeLabel('region_id'), ['/admin/regions/edit', 'id' => $model->region->region_id]) :
-    Html::a($model->getAttributeLabel('region_id'), '/admin/regions')
+    Html::a($model->getAttributeLabel('region_id'), ['/admin/regions'])
   ) ?>
 
   <!-- area -->

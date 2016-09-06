@@ -38,7 +38,7 @@ $this->title .= !empty($model->title) ? $model->title : Yii::t('app', 'Create');
   ])->label(
     $model->country ?
     Html::a($model->getAttributeLabel('country_id'), ['/admin/countries/edit', 'id' => $model->country->country_id]) :
-    Html::a($model->getAttributeLabel('country_id'), '/admin/countries')
+    Html::a($model->getAttributeLabel('country_id'), ['/admin/countries'])
   ) ?>
 
   <!-- title -->
