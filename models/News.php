@@ -65,7 +65,11 @@ class News extends \yii\db\ActiveRecord
 
             ['title', 'string', 'max' => 255],
             ['text', 'string'],
-            ['date_pub', 'date', 'format' => 'php:Y-m-d H:i:s'],
+
+            ['date_pub', 'date', 'format' => 'php:Y-m-d H:i:s',
+                'timestampAttribute' => 'date_pub',
+                'timestampAttributeFormat' => 'php:Y-m-d H:i:s'
+            ],
 
             ['reference', 'url'],
             ['reference', 'string', 'max' => 255],
@@ -205,7 +209,6 @@ class News extends \yii\db\ActiveRecord
     public function beforeSave($insert)
     {
         if (parent::beforeSave($insert)) {
-            $this->date_pub = Util::convertTz($this->date_pub, Yii::$app->params['mainTimeZone'], 'UTC');
             $this->setTagValues($this->tagValues);
 
             return true;
