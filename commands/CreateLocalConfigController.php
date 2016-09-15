@@ -17,7 +17,10 @@ class CreateLocalConfigController extends Controller
      */
     public $path;
 
-    public function options()
+    /**
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
+    public function options($actionId = '')
     {
         return ['path'];
     }
@@ -29,8 +32,12 @@ class CreateLocalConfigController extends Controller
                 throw new InvalidConfigException('`path` should be specified');
             }
         }
+        return true;
     }
 
+    /**
+     * @SuppressWarnings(PHPMD.ElseExpression)
+     */
     public function actionInit()
     {
         $source = Yii::getAlias('@app/config/config.local');
@@ -38,8 +45,9 @@ class CreateLocalConfigController extends Controller
 
         if (!file_exists($dist)) {
             copy($source, $dist);
-            return $this->stdout("Created successfully!\n", Console::FG_GREEN);
+            $this->stdout("Created successfully!\n", Console::FG_GREEN);
+        } else {
+            $this->stdout("Config file is exist!\n", Console::FG_RED); // @codeCoverageIgnore
         }
-        return $this->stdout("Config file is exist!\n", Console::FG_RED); // @codeCoverageIgnore
     }
 }
