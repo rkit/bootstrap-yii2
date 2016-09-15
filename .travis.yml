@@ -18,7 +18,7 @@ install:
 before_script:
   - chmod -R a+w runtime
   - mysql -e 'create database bootstrap_yii2_tests;'
-  - php yii create-local-config/init
+  - php yii create-local-config/init --path=@app/config/local/config.php
   - composer test-prepare
   - composer test-build
 

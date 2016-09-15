@@ -33,7 +33,7 @@ Screenshots:
 
 3. Create a new database and local config
    ```
-   php yii create-local-config/init
+   php yii create-local-config/init --path=@app/config/local/config.php
    ```
    > config will be created in *config/local/config.php*
 
@@ -46,7 +46,7 @@ Screenshots:
    php yii migrate --migrationPath=@vendor/rkit/filemanager-yii2/src/migrations/ --interactive=0
    php yii migrate --migrationPath=@vendor/rkit/settings-yii2/src/migrations/ --interactive=0
    php yii migrate/up --interactive=0
-   php yii rbac/init
+   php yii rbac/init --path=@app/config/permissions.php
    ```
 
 Access to the Control Panel
