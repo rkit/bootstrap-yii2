@@ -7,14 +7,51 @@ use app\commands\RbacController;
 
 class RbacTest extends \Codeception\Test\Unit
 {
-    public function testInit()
+    /**
+     * @expectedException Exception
+     * @expectedExceptionMessage `path` should be specified
+     */
+    public function testWithoutPath()
     {
         $command = new RbacController('test', 'test');
+        $command->beforeAction('test');
         $command->actionInit();
     }
 
-    public function testCheckDeletePermission()
+    public function testCountOptions()
     {
+        $command = new RbacController('test', 'test');
+        expect_that(is_array($command->options()));
+        expect(count($command->options()))->equals(1);
+    }
+
+    public function testLoad()
+    {
+        $config = Yii::getAlias('@app/tests/_data/permissions.php');
+
+        $command = new RbacController('test', 'test');
+        $command->path = $config;
+        $command->beforeAction('test');
+        $command->actionInit();
+
+        $auth = Yii::$app->authManager;
+
+        $permissions = $auth->getPermissions();
+        $permissionsInConfig = require $config;
+        $permissionsInDb = [];
+
+        foreach ($permissions as $permission) {
+            $permissionsInDb[$permission->name] = $permission->description;
+        }
+
+        expect(count($permissionsInDb))->equals(10);
+        expect($permissionsInDb)->equals($permissionsInConfig);
+    }
+
+    public function testCheckFakePermission()
+    {
+        $config = Yii::getAlias('@app/tests/_data/permissions.php');
+
         $auth = Yii::$app->authManager;
         $permission = $auth->createPermission('test');
         $auth->add($permission);
@@ -22,6 +59,8 @@ class RbacTest extends \Codeception\Test\Unit
         expect_that($auth->getPermission('test'));
 
         $command = new RbacController('test', 'test');
+        $command->path = $config;
+        $command->beforeAction('test');
         $command->actionInit();
 
         expect_not($auth->getPermission('test'));

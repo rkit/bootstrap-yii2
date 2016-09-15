@@ -3,6 +3,7 @@
 namespace app\commands;
 
 use Yii;
+use yii\base\InvalidConfigException;
 use yii\console\Controller;
 use yii\helpers\Console;
 
@@ -12,36 +13,81 @@ use yii\helpers\Console;
  */
 class RbacController extends Controller
 {
-    private $permissions = [];
+    /**
+     * @var authManager
+     */
+    private $auth;
+    /**
+     * @var string
+     */
+    public $path;
+
+    public function options()
+    {
+        return ['path'];
+    }
+
+    public function beforeAction($action)
+    {
+        if (parent::beforeAction($action)) {
+            if (empty($this->path)) {
+                throw new InvalidConfigException('`path` should be specified');
+            }
+        }
+        return true;
+    }
 
     public function init()
     {
-        $this->permissions = require __DIR__ . '/../config/permissions.php';
-
+        $this->auth = Yii::$app->authManager;
         Yii::$app->cache->delete('rbac-permissions');
     }
 
     public function actionInit()
     {
-        $auth = Yii::$app->authManager;
+        $currentPermissions = $this->auth->getPermissions();
+        $newPermissions = require Yii::getAlias($this->path);
 
-        $currentPermissions = $auth->getPermissions();
+        $this->cleanUnusedPermissions($currentPermissions, $newPermissions);
+        $this->updatePermissions($currentPermissions, $newPermissions);
 
+        $this->stdout("Done!\n", Console::FG_GREEN);
+    }
+
+    private function cleanUnusedPermissions($currentPermissions, $newPermissions)
+    {
         foreach ($currentPermissions as $currentPermission) {
-            if (!isset($this->permissions[$currentPermission->name])) {
-                $auth->remove($currentPermission);
+            if (!isset($newPermissions[$currentPermission->name])) {
+                $this->auth->remove($currentPermission);
             }
         }
+    }
 
-        foreach ($this->permissions as $name => $description) {
+    private function updatePermissions($currentPermissions, $newPermissions)
+    {
+        foreach ($newPermissions as $name => $description) {
             $isNew = !isset($currentPermissions[$name]);
-
-            $permission = $isNew ? $auth->createPermission($name) : $auth->getPermission($name);
-            $permission->description = $description;
-
-            $isNew ? $auth->add($permission) : $auth->update($name, $permission);
+            if ($isNew) {
+                $this->add($name, $description);
+                continue;
+            }
+            $this->update($name, $description);
         }
+    }
 
-        $this->stdout("RBAC updated\n", Console::FG_GREEN);
+    private function add($name, $description)
+    {
+        $permission = $this->auth->createPermission($name);
+        $permission->description = $description;
+        $this->auth->add($permission);
+        $this->stdout("Added: $name\n", Console::FG_GREEN);
+    }
+
+    private function update($name, $description)
+    {
+        $permission = $this->auth->getPermission($name);
+        $permission->description = $description;
+        $this->auth->update($name, $permission);
+        $this->stdout("Updated: $name\n", Console::FG_GREEN);
     }
 }
