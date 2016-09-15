@@ -3,6 +3,7 @@
 namespace app\commands;
 
 use Yii;
+use yii\base\InvalidConfigException;
 use yii\console\Controller;
 use yii\helpers\Console;
 
@@ -11,14 +12,34 @@ use yii\helpers\Console;
  */
 class CreateLocalConfigController extends Controller
 {
-    public function actionInit($name = 'config.php')
+    /**
+     * @var string
+     */
+    public $path;
+
+    public function options()
     {
-        if (copy(
-            Yii::getAlias('@app') . '/config/config.local',
-            Yii::getAlias('@app') . '/config/local/' . $name
-        )) {
-            $this->stdout("Created successfully!\n", Console::FG_GREEN);
+        return ['path'];
+    }
+
+    public function beforeAction($action)
+    {
+        if (parent::beforeAction($action)) {
+            if (empty($this->path)) {
+                throw new InvalidConfigException('`path` should be specified');
+            }
         }
-        $this->stdout("Could not create\n", Console::FG_RED); // @codeCoverageIgnore
+    }
+
+    public function actionInit()
+    {
+        $source = Yii::getAlias('@app/config/config.local');
+        $dist = Yii::getAlias($this->path);
+
+        if (!file_exists($dist)) {
+            copy($source, $dist);
+            return $this->stdout("Created successfully!\n", Console::FG_GREEN);
+        }
+        return $this->stdout("Config file is exist!\n", Console::FG_RED); // @codeCoverageIgnore
     }
 }
