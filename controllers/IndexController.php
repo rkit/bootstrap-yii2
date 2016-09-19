@@ -5,10 +5,9 @@ namespace app\controllers;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
-use yii\helpers\ArrayHelper;
 use app\components\BaseController;
+use app\components\auth\AuthHandler;
 use app\helpers\Http;
-use app\models\UserProvider;
 use app\models\forms\LoginForm;
 use app\models\forms\SignupForm;
 use app\models\forms\SignupProviderForm;
@@ -83,11 +82,7 @@ class IndexController extends BaseController
 
     public function successCallback($client)
     {
-        Yii::$app->session['provider'] = [
-            'type' => UserProvider::getTypeByName($client->id),
-            'profile' => $client->getUserAttributes(),
-            'token' => $client->getAccessToken()->getParams(),
-        ];
+        Yii::$app->session['authClient'] = $client;
     }
 
     public function actionIndex()
@@ -147,22 +142,19 @@ class IndexController extends BaseController
     public function actionSignupProvider()
     {
         $session = Yii::$app->session;
-        $provider = $session['provider'];
-        if ($provider === null) {
+        $authClient = $session['authClient'];
+
+        if ($authClient === null) {
             return $this->goHome();
         }
 
-        $model = new SignupProviderForm($provider);
+        $authHandler = (new AuthHandler($authClient))->handle();
 
-        // check exist user and provider
-        $id = ArrayHelper::getValue($provider, 'profile.id');
-        $type = $provider['type'];
-        if ($provider = UserProvider::findByProvider($type, $id)) {
-            $user = $provider->user;
-            $session['provider'] = null;
+        $user = $authHandler->getUser();
+
+        if ($authHandler->isExist()) {
+            $session['authClient'] = null;
             if ($user->isActive()) {
-                $provider->setAttributes($model->parseProvider());
-                $provider->save();
                 $user->authorize(true);
                 return $this->goHome();
             }
@@ -170,15 +162,18 @@ class IndexController extends BaseController
             return $this->goHome();
         }
 
-        $model->prepareUser();
+        $model = new SignupProviderForm($user);
+        $model->email = $authHandler->getEmail();
 
-        if ($model->isVerifiedEmail() && $model->signup(false)) {
-            $session['provider'] = null;
+        if ($authHandler->isVerified() && $model->signup(false)) {
+            $user->setConfirmed();
+            $user->save();
+            $session['authClient'] = null;
             return $this->goHome();
         }
 
         if ($model->load(Yii::$app->request->post()) && $model->signup()) {
-            $session['provider'] = null;
+            $session['authClient'] = null;
             if ($model->sendEmail()) {
                 $session->setFlash(
                     'success',
