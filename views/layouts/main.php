@@ -1,8 +1,8 @@
 <?php
 use yii\helpers\Html;
-use app\helpers\Util;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
+use app\helpers\Page;
 
 ?>
 <?php $this->beginPage() ?>
@@ -12,7 +12,7 @@ use yii\bootstrap\NavBar;
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title><?= Util::makePageTitle($this->title, Yii::$app->name); ?></title>
+  <?= Page::title($this->title, Yii::$app->name); ?>
   <?= Html::csrfMetaTags()?>
   <?php $this->head() ?>
   <link href="<?= Yii::$app->controller->getCssBundle() ?>" rel="stylesheet">

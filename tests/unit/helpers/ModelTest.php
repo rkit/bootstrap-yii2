@@ -2,18 +2,17 @@
 
 namespace app\tests\unit\helpers;
 
-use Yii;
-use app\helpers\Util;
+use app\helpers\Model;
 use app\models\News;
 
-class UtilTest extends \Codeception\Test\Unit
+class ModelTest extends \Codeception\Test\Unit
 {
     public function testCollectModelErrors()
     {
         $model = new News();
         $model->save();
 
-        $errors = Util::collectModelErrors($model);
+        $errors = Model::collectErrors($model);
 
         expect_that(count($errors) === 4);
         expect($errors['news-title'])->notEmpty();

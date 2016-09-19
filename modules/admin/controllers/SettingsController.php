@@ -3,7 +3,7 @@
 namespace app\modules\admin\controllers;
 
 use Yii;
-use app\helpers\Util;
+use app\helpers\Model;
 use app\components\BaseController;
 use app\modules\admin\models\forms\SettingsForm;
 
@@ -20,7 +20,7 @@ class SettingsController extends BaseController
                 return $this->refresh();
             }
             if (Yii::$app->request->isAjax) {
-                return $this->response(Util::collectModelErrors($model));
+                return $this->response(Model::collectErrors($model));
             }
         }
 

@@ -2,7 +2,6 @@
 
 namespace app\tests\unit\helpers;
 
-use Yii;
 use app\helpers\Http;
 
 class HttpTest extends \Codeception\Test\Unit

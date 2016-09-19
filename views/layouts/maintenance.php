@@ -1,8 +1,7 @@
 <?php
 use yii\helpers\Html;
+use app\helpers\Page;
 
-$title  = ($this->title ? app\helpers\Util::clearText($this->title) . ' / ' : '');
-$title .= Yii::$app->name;
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -11,7 +10,7 @@ $title .= Yii::$app->name;
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title><?= $title; ?></title>
+  <?= Page::title($this->title, Yii::$app->name); ?>
   <?= Html::csrfMetaTags()?>
   <?php $this->head() ?>
 </head>

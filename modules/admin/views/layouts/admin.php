@@ -1,7 +1,7 @@
 <?php
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
-use app\helpers\Util;
+use app\helpers\Page;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
@@ -13,7 +13,7 @@ use app\helpers\Util;
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title><?= Util::makePageTitle($this->title, Yii::t('app', 'Control Panel')); ?></title>
+  <?= Page::title($this->title, Yii::t('app', 'Control Panel')); ?>
   <?= Html::csrfMetaTags() ?>
   <?php $this->head() ?>
   <link href="<?= Yii::$app->controller->getCssBundle() ?>" rel="stylesheet">

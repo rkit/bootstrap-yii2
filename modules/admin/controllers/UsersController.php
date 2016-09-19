@@ -5,7 +5,7 @@ namespace app\modules\admin\controllers;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\helpers\Url;
-use app\helpers\Util;
+use app\helpers\Model;
 use app\components\BaseController;
 use app\models\User;
 use app\models\UserProfile;
@@ -105,7 +105,7 @@ class UsersController extends BaseController
                 return $this->redirect($urlToModel);
             }
             if (Yii::$app->request->isAjax) {
-                return $this->response(Util::collectModelErrors($model));
+                return $this->response(Model::collectErrors($model));
             }
         }
 
@@ -129,7 +129,7 @@ class UsersController extends BaseController
                 return $this->redirect($urlToModel);
             }
             if (Yii::$app->request->isAjax) {
-                return $this->response(Util::collectModelErrors($model));
+                return $this->response(Model::collectErrors($model));
             }
         }
 
