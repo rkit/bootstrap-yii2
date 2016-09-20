@@ -2,7 +2,6 @@
 
 namespace app\models\query;
 
-use Yii;
 use yii\db\ActiveQuery;
 use app\models\News;
 
