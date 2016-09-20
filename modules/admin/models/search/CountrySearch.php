@@ -13,11 +13,6 @@ use app\models\Country;
 class CountrySearch extends Country
 {
     /**
-     * @var string
-     */
-    public $title;
-
-    /**
      * @inheritdoc
      */
     public function rules()

@@ -147,7 +147,7 @@ class CitiesCest
 
     public function testIndexFilterByCountryId($I)
     {
-        $I->amOnRoute($this->url . '/index', ['CitySearch[countryId]' => 1]);
+        $I->amOnRoute($this->url . '/index', ['CitySearch[country_id]' => 1]);
         $I->seeResponseCodeIs(200);
         $I->see('City-1');
         $I->dontSee('City-2');
@@ -156,7 +156,7 @@ class CitiesCest
 
     public function testIndexFilterByRegionId($I)
     {
-        $I->amOnRoute($this->url . '/index', ['CitySearch[regionId]' => 1]);
+        $I->amOnRoute($this->url . '/index', ['CitySearch[region_id]' => 1]);
         $I->seeResponseCodeIs(200);
         $I->see('City-1');
         $I->dontSee('City-2');

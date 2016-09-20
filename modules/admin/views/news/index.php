@@ -74,7 +74,7 @@ $this->title = Yii::t('app', 'News');
               'value' => 'type.title',
               'filter' => Html::activeDropDownList(
                   $newsSearch,
-                  'typeId',
+                  'type_id',
                   ArrayHelper::map($types, 'id', 'title'),
                   ['class' => 'form-control', 'prompt' => Yii::t('app', 'All types')]
               )
@@ -90,7 +90,7 @@ $this->title = Yii::t('app', 'News');
               'filter' => DatePicker::widget(
                   [
                       'model' => $newsSearch,
-                      'attribute' => 'datePub',
+                      'attribute' => 'date_pub',
                       'pluginOptions' => [
                       	'autoclose' => true,
                       	'format' => 'yyyy-mm-dd',

@@ -109,7 +109,7 @@ class RegionsCest
 
     public function testIndexFilterByCountryId($I)
     {
-        $I->amOnRoute($this->url . '/index', ['RegionSearch[countryId]' => 1]);
+        $I->amOnRoute($this->url . '/index', ['RegionSearch[country_id]' => 1]);
         $I->seeResponseCodeIs(200);
         $I->see('Region-1');
         $I->dontSee('Region-2');

@@ -13,26 +13,13 @@ use app\models\City;
 class CitySearch extends City
 {
     /**
-     * @var string
-     */
-    public $title;
-    /**
-     * @var int
-     */
-    public $countryId;
-    /**
-     * @var int
-     */
-    public $regionId;
-
-    /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
             [
-                ['countryId', 'regionId'], 'integer'
+                ['country_id', 'region_id'], 'integer'
             ],
             ['title', 'string'],
         ];
@@ -65,8 +52,8 @@ class CitySearch extends City
         }
 
         $query->andFilterWhere([
-            'country_id' => $this->countryId,
-            'region_id' => $this->regionId
+            'country_id' => $this->country_id,
+            'region_id' => $this->region_id
         ]);
 
         $query->andFilterWhere(['like', 'title', $this->title]);

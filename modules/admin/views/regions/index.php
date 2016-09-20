@@ -62,7 +62,7 @@ $this->title = Yii::t('app', 'Regions');
               'value' => 'country.title',
               'filter' => Select2::widget([
                   'model' => $regionSearch,
-                  'attribute' => 'countryId',
+                  'attribute' => 'country_id',
                   'options' => ['placeholder' => ' '],
                   'pluginOptions' => [
                       'width' => '100%',

@@ -63,7 +63,7 @@ $this->title = Yii::t('app', 'Cities');
               'headerOptions' => ['style' => 'width: 200px'],
               'filter' => Select2::widget([
                   'model' => $citySearch,
-                  'attribute' => 'countryId',
+                  'attribute' => 'country_id',
                   'options' => ['placeholder' => ' '],
                   'pluginOptions' => [
                       'width' => '100%',
@@ -94,7 +94,7 @@ $this->title = Yii::t('app', 'Cities');
               'headerOptions' => ['style' => 'width: 200px'],
               'filter' => Select2::widget([
                   'model' => $citySearch,
-                  'attribute' => 'regionId',
+                  'attribute' => 'region_id',
                   'options' => ['placeholder' => ' '],
                   'pluginOptions' => [
                       'width' => '100%',

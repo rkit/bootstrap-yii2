@@ -13,11 +13,6 @@ use app\models\AuthItem;
 class AuthItemSearch extends AuthItem
 {
     /**
-     * @var string
-     */
-    public $name;
-
-    /**
      * @inheritdoc
      */
     public function rules()

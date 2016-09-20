@@ -13,31 +13,14 @@ use app\models\News;
 class NewsSearch extends News
 {
     /**
-     * @var string
-     */
-    public $title;
-    /**
-     * @var int
-     */
-    public $typeId;
-    /**
-     * @var timestamp
-     */
-    public $datePub;
-    /**
-     * @var int
-     */
-    public $status;
-
-    /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
             ['title', 'string'],
-            ['typeId', 'integer'],
-            ['datePub', 'date', 'format' => 'yyyy-mm-dd'],
+            ['type_id', 'integer'],
+            ['date_pub', 'date', 'format' => 'yyyy-mm-dd'],
 
             ['status', 'integer'],
             ['status', 'in', 'range' => array_keys(News::getStatuses())],
@@ -66,7 +49,7 @@ class NewsSearch extends News
             ],
         ]);
 
-        $dataProvider->sort->attributes['typeId'] = [
+        $dataProvider->sort->attributes['type_id'] = [
             'asc'  => ['news_type.title' => SORT_ASC],
             'desc' => ['news_type.title' => SORT_DESC],
         ];
@@ -76,9 +59,9 @@ class NewsSearch extends News
         }
 
         $query->andFilterWhere([
-            'type_id' => $this->typeId,
+            'type_id' => $this->type_id,
             'status' => $this->status,
-            'DATE(date_pub)' => $this->datePub
+            'DATE(date_pub)' => $this->date_pub
         ]);
 
         $query->andFilterWhere(['like', 'news.title', $this->title]);

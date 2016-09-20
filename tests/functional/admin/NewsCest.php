@@ -143,13 +143,13 @@ class NewsCest
 
     public function testIndexFilterByTypeId($I)
     {
-        $I->amOnRoute($this->url . '/index', ['NewsSearch[typeId]' => 1]);
+        $I->amOnRoute($this->url . '/index', ['NewsSearch[type_id]' => 1]);
         $I->seeResponseCodeIs(200);
         $I->see('News-1');
         $I->see('News-2');
         $I->dontSee('News-3');
 
-        $I->amOnRoute($this->url . '/index', ['NewsSearch[typeId]' => 2]);
+        $I->amOnRoute($this->url . '/index', ['NewsSearch[type_id]' => 2]);
         $I->seeResponseCodeIs(200);
         $I->dontSee('News-1');
         $I->see('News-3');
@@ -158,13 +158,13 @@ class NewsCest
 
     public function testIndexFilterByDatePub($I)
     {
-        $I->amOnRoute($this->url . '/index', ['NewsSearch[datePub]' => '2016-01-01']);
+        $I->amOnRoute($this->url . '/index', ['NewsSearch[date_pub]' => '2016-01-01']);
         $I->seeResponseCodeIs(200);
         $I->see('News-1');
         $I->dontSee('News-2');
         $I->dontSee('News-3');
 
-        $I->amOnRoute($this->url . '/index', ['NewsSearch[datePub]' => '2016-01-02']);
+        $I->amOnRoute($this->url . '/index', ['NewsSearch[date_pub]' => '2016-01-02']);
         $I->seeResponseCodeIs(200);
         $I->dontSee('News-1');
         $I->see('News-2');

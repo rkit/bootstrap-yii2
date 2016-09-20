@@ -13,22 +13,13 @@ use app\models\Region;
 class RegionSearch extends Region
 {
     /**
-     * @var string
-     */
-    public $title;
-    /**
-     * @var int
-     */
-    public $countryId;
-
-    /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
             ['title', 'string'],
-            ['countryId', 'integer'],
+            ['country_id', 'integer'],
         ];
     }
 
@@ -59,7 +50,7 @@ class RegionSearch extends Region
         }
 
         $query->andFilterWhere([
-            'country_id' => $this->countryId,
+            'country_id' => $this->country_id,
         ]);
 
         $query->andFilterWhere(['like', 'title', $this->title]);

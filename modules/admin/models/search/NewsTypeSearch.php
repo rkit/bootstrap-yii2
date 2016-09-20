@@ -13,11 +13,6 @@ use app\models\NewsType;
 class NewsTypeSearch extends NewsType
 {
     /**
-     * @var string
-     */
-    public $title;
-
-    /**
      * @inheritdoc
      */
     public function rules()

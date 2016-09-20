@@ -13,11 +13,6 @@ use app\models\Tag;
 class TagSearch extends Tag
 {
     /**
-     * @var string
-     */
-    public $title;
-
-    /**
      * @inheritdoc
      */
     public function rules()

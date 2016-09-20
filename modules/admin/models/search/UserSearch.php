@@ -13,31 +13,6 @@ use app\models\User;
 class UserSearch extends User
 {
     /**
-     * @var string
-     */
-    public $username;
-    /**
-     * @var string
-     */
-    public $email;
-    /**
-     * @var timestamp
-     */
-    public $dateCreate;
-    /**
-     * @var string
-     */
-    public $ip;
-    /**
-     * @var string
-     */
-    public $role;
-    /**
-     * @var int
-     */
-    public $status;
-
-    /**
      * @inheritdoc
      */
     public function rules()
@@ -47,7 +22,7 @@ class UserSearch extends User
                 ['username', 'email', 'ip', 'role'], 'string'
             ],
 
-            ['dateCreate', 'date', 'format' => 'yyyy-mm-dd'],
+            ['date_create', 'date', 'format' => 'yyyy-mm-dd'],
 
             ['status', 'integer'],
             ['status', 'in', 'range' => array_keys(User::getStatuses())],
@@ -86,7 +61,7 @@ class UserSearch extends User
             'ip' => !empty($this->ip) ? ip2long($this->ip) : null,
             'status' => $this->status,
             'role' => $this->role,
-            'DATE(date_create)' => $this->dateCreate
+            'DATE(date_create)' => $this->date_create
         ]);
 
         $query->andFilterWhere(['like', 'user.username', $this->username]);

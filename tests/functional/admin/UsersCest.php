@@ -194,7 +194,7 @@ class UsersCest
 
     public function testIndexFilterByDateCreate($I)
     {
-        $I->amOnRoute($this->url . '/index', ['UserSearch[dateCreate]' => '2015-01-02']);
+        $I->amOnRoute($this->url . '/index', ['UserSearch[date_create]' => '2015-01-02']);
         $I->seeResponseCodeIs(200);
         $I->seeNumberOfElements('//table/tbody/tr', 1);
         $I->see('user-2');
