@@ -11,5 +11,5 @@ return [
     'ACTION_AdminRegions' => Yii::t('app', 'Control Panel / Regions'),
     'ACTION_AdminSettings' => Yii::t('app', 'Control Panel / Settings'),
     'ACTION_AdminCountries' => Yii::t('app', 'Control Panel / Countries'),
-    'ACTION_AdminTest' => Yii::t('app', 'Control Panel / Test'),
+    'ACTION_AdminTest' => 'Control Panel / Test',
 ];

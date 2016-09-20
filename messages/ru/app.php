@@ -17,12 +17,11 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Activate Your Account' => 'Активируйте ваш аккаунт',
-    'Registration' => 'Регистрация',
     'Access Denied' => 'Доступ закрыт',
     'Access is unauthorized' => 'Требуется аутентификация',
     'Access to the Control Panel' => 'Доступ к панели управления',
     'Account not activated' => 'Аккаунт не активирован',
+    'Activate Your Account' => 'Активируйте ваш аккаунт',
     'Active' => 'Активен',
     'Add' => 'Добавить',
     'All notifications for users go to this address' => 'Все уведомления для пользователей идут с этого адреса',
@@ -114,6 +113,7 @@ return [
     'Reference' => 'Ссылка на источник',
     'Region' => 'Регион',
     'Regions' => 'Регионы',
+    'Registration' => 'Регистрация',
     'Remember me' => 'Запомнить меня',
     'Request password reset' => 'Запрос на сброс пароля',
     'Reset password' => 'Сброс пароля',

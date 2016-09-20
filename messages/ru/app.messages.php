@@ -18,7 +18,6 @@
  */
 return [
     'A letter for activation was sent to {email}' => 'Письмо для активации было отправлено на {email}',
-    'An error occurred while activating account' => 'Произошла ошибка при активации аккаунта',
     'An error occurred while sending a message to activate account' => 'Произошла ошибка при отправки письма для активации аккаунта',
     'An error occurred while sending a message to reset your password' => 'Произошла ошибка при отправки письма для сброса пароля',
     'Invalid link for activate account' => 'Неверная ссылка для активации аккаунта',
