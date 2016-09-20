@@ -18,6 +18,9 @@ class SignupProviderForm extends \yii\base\Model
      */
     private $user = null;
 
+    /**
+     * @param User $user
+     */
     public function __construct($user)
     {
         $this->user = $user;

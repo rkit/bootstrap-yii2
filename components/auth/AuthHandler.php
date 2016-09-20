@@ -2,7 +2,6 @@
 
 namespace app\components\auth;
 
-use Yii;
 use yii\authclient\ClientInterface;
 use yii\helpers\ArrayHelper;
 use app\models\User;
@@ -96,7 +95,6 @@ class AuthHandler
     /**
      * Find user by provider
      *
-     * @param string $token password reset token
      * @return app\models\User|null
      */
     private function findUserByProvider()
@@ -170,6 +168,8 @@ class AuthHandler
     /**
      * Prepare provider attributes for facebook
      *
+     * @param array $profile
+     * @param array $token
      * @return array
      */
     private function parseProviderFacebook($profile, $token)
@@ -185,6 +185,8 @@ class AuthHandler
     /**
      * Prepare provider attributes for vkontakte
      *
+     * @param array $profile
+     * @param array $token
      * @return array
      */
     private function parseProviderVkontakte($profile, $token)
@@ -200,6 +202,8 @@ class AuthHandler
     /**
      * Prepare provider attributes for twitter
      *
+     * @param array $profile
+     * @param array $token
      * @return array
      */
     private function parseProviderTwitter($profile, $token)
@@ -215,6 +219,7 @@ class AuthHandler
     /**
      * Prepare profile attributes for facebook
      *
+     * @param array $profile
      * @return array
      */
     private function parseProfileFacebook($profile)
@@ -229,6 +234,7 @@ class AuthHandler
     /**
      * Prepare profile attributes for vkontakte
      *
+     * @param array $profile
      * @return array
      */
     private function parseProfileVkontakte($profile)
@@ -246,7 +252,7 @@ class AuthHandler
     /**
      * Prepare profile attributes for twitter
      *
-     * @param array $data Data from social network
+     * @param array $profile
      * @return array
      */
     private function parseProfileTwitter($profile)
