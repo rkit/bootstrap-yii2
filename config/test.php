@@ -80,15 +80,11 @@ return [
          ],
          'fileManager' => [
              'class' => 'rkit\filemanager\FileManager',
-             'uploadDirProtected' => '@app/tests/_tmp/files/protected',
-             'uploadDirUnprotected' => '@app/tests/_tmp/files/unprotected',
-             'publicPath' => 'uploads',
-             'ownerTypes' => [
-                 'news.text' => 1,
-                 'news.preview' => 2,
-                 'news.gallery' => 3,
-                 'user_profile.photo' => 4,
-             ]
+             // 'sessionName' => 'filemanager.uploads',
+         ],
+         'localFs' => [
+             'class' => 'creocoder\flysystem\LocalFilesystem',
+             'path' => '@app/tests/_tmp/files/uploads',
          ],
     ],
     'params' => $params,

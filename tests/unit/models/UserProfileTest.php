@@ -41,7 +41,7 @@ class UserProfileTest extends \Codeception\Test\Unit
         $model->photo = $file->id;
         expect_that($model->save());
 
-        $thumb = $model->thumb('photo', '1000x1000', null, true);
+        $thumb = $model->thumbPath('photo', '1000x1000');
         expect($thumb)->contains('1000x1000');
         // because original was replaced
         expect_not(file_exists($thumb));

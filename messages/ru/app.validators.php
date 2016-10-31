@@ -17,6 +17,15 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
+    'File types' => 'Типы файлов',
+    'Image size' => 'Размер картинки',
+    'Max. file size' => 'Макc. размер файла',
+    'Max. height' => 'Макc. высота',
+    'Max. size of image' => 'Макc. размер картинки',
+    'Max. width' => 'Макc. ширина',
+    'Min. height' => 'Мин. высота',
+    'Min. size of image' => 'Мин. размер картинки',
+    'Min. width' => 'Мин. ширина',
     'File size must not exceed' => 'Размер файла не должен превышать',
     'Incorrect email or password' => 'Неверный email или пароль',
     'Incorrect file format' => 'Неверный формат файла',

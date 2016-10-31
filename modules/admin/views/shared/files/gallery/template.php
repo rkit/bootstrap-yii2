@@ -1,7 +1,7 @@
 <?php
 use yii\helpers\Html;
 
-$files = $model->getFiles($attribute);
+$files = $model->allFiles($attribute);
 $items = [];
 ?>
 <div id="<?= $selector; ?>" class="fileapi">
@@ -31,7 +31,7 @@ $items = [];
       'items' => $items
   ]);
   ?>
-  <?= Html::activeHiddenInput($model, $attribute.'[0]', [
+  <?= Html::activeHiddenInput($model, $attribute.'[]', [
       'id' => Html::getInputId($model, $attribute)
   ]) ?>
 </div>

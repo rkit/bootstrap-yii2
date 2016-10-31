@@ -1,5 +1,6 @@
 <?php
 use yii\helpers\Url;
+use app\modules\admin\helpers\FileRulesDescription;
 ?>
 <?= $form->field($model, $attribute)->widget(\vova07\imperavi\Widget::className(), [
     'settings' => [
@@ -19,10 +20,17 @@ use yii\helpers\Url;
             'fullscreen',
         ],
         'imageUpload' => Url::to($imageUploadUrl),
-        'imageUploadErrorCallback' => new yii\web\JsExpression('function(data) { alert(data.error); }')
+        'imageUploadCallback' => new yii\web\JsExpression('function(data) {
+            var $form = $(".field-news-text").closest("form");
+            $form.yiiActiveForm("updateAttribute", "news-text", "");
+        }'),
+        'imageUploadErrorCallback' => new yii\web\JsExpression('function(data) {
+            var $form = $(".field-news-text").closest("form");
+            $form.yiiActiveForm("updateAttribute", "news-text", [data.error]);
+        }')
     ]
 ])->hint(
     'ENTER — ' . Yii::t('app', 'New paragraph') . ', ' .
     'SHIFT + ENTER — ' . Yii::t('app', 'New line') . '<br>' .
-     $model->getFileRulesDescription($attribute)
+    FileRulesDescription::toText($model->fileRules($attribute))
 );

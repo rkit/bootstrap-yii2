@@ -3,7 +3,7 @@
 namespace app\models;
 
 use Yii;
-use Intervention\Image\ImageManagerStatic as Image;
+use app\models\File;
 
 /**
  * This is the model class for table "user_profile".
@@ -15,6 +15,12 @@ use Intervention\Image\ImageManagerStatic as Image;
  */
 class UserProfile extends \yii\db\ActiveRecord
 {
+    public function __construct($config = [])
+    {
+        $this->attachBehavior('fileManager', require __DIR__ . '/behaviors/user-profile/filemanager.php');
+        parent::__construct($config);
+    }
+
     /**
      * @inheritdoc
      */
@@ -53,46 +59,17 @@ class UserProfile extends \yii\db\ActiveRecord
     }
 
     /**
-     * @inheritdoc
-     */
-    public function behaviors()
-    {
-        return [
-            [
-                'class' => 'rkit\filemanager\behaviors\FileBehavior',
-                'attributes' => [
-                    'photo' => [
-                        'storage' => 'rkit\filemanager\storages\LocalStorage',
-                        'saveFilePath' => true,
-                        'rules' => [
-                            'imageSize' => ['minWidth' => 300, 'minHeight' => 300],
-                            'mimeTypes' => ['image/png', 'image/jpg', 'image/jpeg'],
-                            'extensions' => ['jpg', 'jpeg', 'png'],
-                            'maxSize' => 1024 * 1024 * 1, // 1 MB
-                            'tooBig' => Yii::t('app.validators', 'File size must not exceed') . ' 1Mb'
-                        ],
-                        'preset' => [
-                            '1000x1000' => function ($realPath, $publicPath) {
-                                Image::make($realPath . $publicPath)
-                                    ->resize(1000, 1000, function ($constraint) {
-                                        $constraint->aspectRatio();
-                                        $constraint->upsize();
-                                    })
-                                    ->save(null, 100);
-                            },
-                        ],
-                        'applyPresetAfterUpload' => ['1000x1000']
-                    ],
-                ]
-            ]
-        ];
-    }
-
-    /**
      * @return \yii\db\ActiveQuery
      */
     public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
+
+    public function getFiles($callable = null)
+    {
+        return $this
+            ->hasMany(File::className(), ['id' => 'file_id'])
+            ->viaTable('user_profiles_files', ['user_id' => 'user_id'], $callable);
     }
 }

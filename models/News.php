@@ -4,8 +4,7 @@ namespace app\models;
 
 use Yii;
 use yii\behaviors\TimestampBehavior;
-use Intervention\Image\ImageManagerStatic as Image;
-use app\helpers\Util;
+use app\models\File;
 use app\models\query\NewsQuery;
 
 /**
@@ -35,6 +34,16 @@ class News extends \yii\db\ActiveRecord
      * @var array
      */
     public $gallery;
+    /**
+     * @var array
+     */
+    public $galleryTitles;
+
+    public function __construct($config = [])
+    {
+        $this->attachBehavior('fileManager', require __DIR__ . '/behaviors/news/filemanager.php');
+        parent::__construct($config);
+    }
 
     /**
      * @inheritdoc
@@ -55,7 +64,7 @@ class News extends \yii\db\ActiveRecord
             ],
             [
                 [
-                    'title', 'type_id', 'text', 'date_pub', 'preview', 'gallery',
+                    'title', 'type_id', 'text', 'date_pub', 'preview', 'gallery', 'galleryTitles',
                     'reference', 'status', 'tagValues'
                 ], 'safe'
             ],
@@ -131,66 +140,6 @@ class News extends \yii\db\ActiveRecord
                  'tagValueAttribute' => 'title',
                  'tagFrequencyAttribute' => 'count',
             ],
-
-            [
-                'class' => 'rkit\filemanager\behaviors\FileBehavior',
-                'attributes' => [
-                    'text' => [
-                        'storage' => 'rkit\filemanager\storages\LocalStorage',
-                        'rules' => [
-                            'mimeTypes' => ['image/png', 'image/jpg', 'image/jpeg'],
-                            'extensions' => ['jpg', 'jpeg', 'png'],
-                            'maxSize' => 1024 * 1024 * 1, // 1 MB
-                            'tooBig' => Yii::t('app.validators', 'File size must not exceed') . ' 1Mb'
-                        ]
-                    ],
-                    'preview' => [
-                        'storage' => 'rkit\filemanager\storages\LocalStorage',
-                        'saveFilePath' => true,
-                        'rules' => [
-                            'imageSize' => ['minWidth' => 300, 'minHeight' => 300],
-                            'mimeTypes' => ['image/png', 'image/jpg', 'image/jpeg'],
-                            'extensions' => ['jpg', 'jpeg', 'png'],
-                            'maxSize' => 1024 * 1024 * 1, // 1 MB
-                            'tooBig' => Yii::t('app.validators', 'File size must not exceed') . ' 1Mb'
-                        ],
-                        'preset' => [
-                            '200x200' => function ($realPath, $publicPath, $thumbPath) {
-                                Image::make($realPath . $publicPath)
-                                    ->fit(200, 200)
-                                    ->save($realPath . $thumbPath, 100);
-                            },
-                            '1000x1000' => function ($realPath, $publicPath, $thumbPath) {
-                                Image::make($realPath . $publicPath)
-                                    ->resize(1000, 1000, function ($constraint) {
-                                        $constraint->aspectRatio();
-                                        $constraint->upsize();
-                                    })
-                                    ->save(null, 100);
-                            },
-                        ],
-                        'applyPresetAfterUpload' => '*'
-                    ],
-                    'gallery' => [
-                        'storage' => 'rkit\filemanager\storages\LocalStorage',
-                        'multiple' => true,
-                        'rules' => [
-                            'imageSize' => ['minWidth' => 300, 'minHeight' => 300],
-                            'mimeTypes' => ['image/png', 'image/jpg', 'image/jpeg'],
-                            'extensions' => ['jpg', 'jpeg', 'png'],
-                            'maxSize' => 1024 * 1024 * 1, // 1 MB
-                            'tooBig' => Yii::t('app.validators', 'File size must not exceed') . ' 1Mb'
-                        ],
-                        'preset' => [
-                            '80x80' => function ($realPath, $publicPath, $thumbPath) {
-                                Image::make($realPath . $publicPath)
-                                    ->fit(80, 80)
-                                    ->save($realPath . $thumbPath, 100);
-                            },
-                        ],
-                    ]
-                ]
-            ]
         ];
     }
 
@@ -287,6 +236,13 @@ class News extends \yii\db\ActiveRecord
     {
         return $this->owner
             ->hasMany(Tag::className(), ['id' => 'tag_id'])
-            ->viaTable('{{%news_tag_assn}}', ['news_id' => 'id']);
+            ->viaTable('{{%news_tags}}', ['news_id' => 'id']);
+    }
+
+    public function getFiles($callable = null)
+    {
+        return $this
+            ->hasMany(File::className(), ['id' => 'file_id'])
+            ->viaTable('news_files', ['news_id' => 'id'], $callable);
     }
 }

@@ -58,25 +58,22 @@ class NewsController extends BaseController
             ],
             'text-upload' => [
                 'class' => 'rkit\filemanager\actions\UploadAction',
-                'modelName' => 'app\models\News',
+                'modelClass' => 'app\models\News',
                 'attribute' => 'text',
                 'inputName' => 'file',
                 'resultFieldPath' => 'filelink',
-                'temporary' => false,
             ],
             'preview-upload' => [
                 'class'     => 'rkit\filemanager\actions\UploadAction',
-                'modelName' => 'app\models\News',
+                'modelClass' => 'app\models\News',
                 'attribute' => 'preview',
                 'inputName' => 'file',
             ],
             'gallery-upload' => [
                 'class'     => 'rkit\filemanager\actions\UploadAction',
-                'modelName' => 'app\models\News',
+                'modelClass' => 'app\models\News',
                 'attribute' => 'gallery',
                 'inputName' => 'file',
-                'multiple'  => true,
-                'template'  => Yii::getAlias('@app/modules/admin/views/shared/files/gallery/item.php'),
             ],
         ];
     }

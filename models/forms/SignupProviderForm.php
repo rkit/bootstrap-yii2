@@ -62,10 +62,9 @@ class SignupProviderForm extends \yii\base\Model
     {
         $file = Upload::makeUploadedFile($photo);
         $model = new DynamicModel(compact('file'));
-        $model->addRule('file', 'image', $profile->getFileRules('photo', true))->validate();
+        $model->addRule('file', 'image', $profile->fileRules('photo', true))->validate();
         if (!$model->hasErrors()) {
-            $file = $profile->createFile('photo', $file->tempName, 'photo', true);
-            $profile->photo = $file->id;
+            $profile->createFile('photo', $file->tempName, 'photo');
         }
     }
 

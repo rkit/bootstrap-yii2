@@ -1,6 +1,7 @@
 <?php
 use yii\web\JsExpression;
 use rkit\fileapi\Widget as FileApi;
+use app\modules\admin\helpers\FileRulesDescription;
 ?>
 <?php $model->$attribute = null;?>
 <?= $form->field($model, $attribute, ['template' => "{error}\n{input}\n{hint}"])
@@ -55,11 +56,12 @@ use rkit\fileapi\Widget as FileApi;
         ],
         'settings' => [
             'url' => yii\helpers\Url::toRoute([$attribute . '-upload']),
-            'imageSize' => $model->getFileRules($attribute)['imageSize'],
+            'imageSize' => $model->fileRules($attribute)['imageSize'],
+            'accept' => implode(',', $model->fileRules($attribute)['mimeTypes']),
             'multiple' => true,
             'duplicate' => true
         ]
     ])
-    ->hint($model->getFileRulesDescription($attribute), [
+    ->hint(FileRulesDescription::toText($model->fileRules($attribute)), [
         'class' => 'fileapi-rules'
     ]);

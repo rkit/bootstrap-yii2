@@ -59,10 +59,9 @@ class UsersController extends BaseController
             ],
             'photo-upload' => [
                 'class'     => 'rkit\filemanager\actions\UploadAction',
-                'modelName' => 'app\models\UserProfile',
+                'modelClass' => 'app\models\UserProfile',
                 'attribute' => 'photo',
                 'inputName' => 'file',
-                'type'      => 'image',
             ],
         ];
     }

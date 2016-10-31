@@ -23,7 +23,7 @@
         "yiisoft/yii2-jui": "^2.0.4",
         "yiisoft/yii2-authclient": "^2.1.0",
 
-        "rkit/filemanager-yii2": "^2.0.4",
+        "rkit/filemanager-yii2": "^3.0.0",
         "rkit/settings-yii2": "^1.0.3",
         "rkit/fileapi-widget-yii2": "^1.0.0",
         "creocoder/yii2-taggable": "^2.0",
@@ -34,7 +34,8 @@
         "vova07/yii2-imperavi-widget": "^1.2.2",
         "bower-asset/bootstrap": "^3.3.4",
         "yiisoft/yii2-debug": "^2.0.4",
-        "intervention/image": "^2.3"
+        "intervention/image": "^2.3",
+        "creocoder/yii2-flysystem": "^0.8.1"
     },
     "require-dev": {
         "yiisoft/yii2-gii": "^2.0.4",
@@ -52,7 +53,6 @@
         ],
         "test-prepare": [
             "php tests/bin/yii migrate --migrationPath=@yii/rbac/migrations/ --interactive=0",
-            "php tests/bin/yii migrate --migrationPath=@vendor/rkit/filemanager-yii2/src/migrations/ --interactive=0",
             "php tests/bin/yii migrate --migrationPath=@vendor/rkit/settings-yii2/src/migrations/ --interactive=0",
             "php tests/bin/yii migrate/up --interactive=0",
             "php tests/bin/yii rbac/init --path=@app/config/permissions.php"

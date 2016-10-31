@@ -1,7 +1,8 @@
 <?php
 
-/* Translations
--------------------------------------------------- */
+/**
+ * Translations
+ */
 
 $config['components']['i18n'] = [
     'translations' => [
@@ -18,20 +19,22 @@ $config['components']['i18n'] = [
     ],
  ];
 
-/* File Manager
--------------------------------------------------- */
+/**
+ * FileManager
+ */
 
 $config['components']['fileManager'] = [
     'class' => 'rkit\filemanager\FileManager',
-    'uploadDirProtected' => '@app/runtime',
-    'uploadDirUnprotected' => '@app/web',
-    'publicPath' => 'uploads',
-    'ownerTypes' => [
-        'news.text' => 1,
-        'news.preview' => 2,
-        'news.gallery' => 3,
-        'user_profile.photo' => 4,
-    ]
+    // 'sessionName' => 'filemanager.uploads',
+];
+
+/**
+ * FlySystem
+ */
+
+$config['components']['localFs'] = [
+    'class' => 'creocoder\flysystem\LocalFilesystem',
+    'path' => '@webroot/uploads',
 ];
 
 return $config;

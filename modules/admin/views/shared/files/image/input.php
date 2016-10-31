@@ -1,15 +1,25 @@
 <?php
 use yii\web\JsExpression;
 use rkit\fileapi\Widget as FileApi;
+use app\modules\admin\helpers\FileRulesDescription;
 ?>
 <?= $form->field($model, $attribute, ['template' => "{label}\n{error}\n{input}\n{hint}"])
     ->widget(FileApi::className(), [
         'template' => '@app/modules/admin/views/shared/files/image/template',
         'callbacks' => [
             'select' => new JsExpression('function (evt, ui) {
+               var $form = $(this).closest("form");
+               var field = $(this).find("input:hidden:last").attr("id");
+
+               if (!$form.yiiActiveForm("find", field)) {
+                 $form.yiiActiveForm("add", {
+                   "id": field,
+                   "container": ".field-" + field,
+                   "input": "#" + field,
+                   "encodeError": false,
+                 });
+               }
                if (ui && ui.other.length && ui.other[0].errors) {
-                 var $form = $(this).closest("form");
-                 var field = $(this).find("input:hidden:last").attr("id");
                  var errors = ["'.Yii::t('app.validators', 'Incorrect file format').': " + ui.other[0].name];
                  $form.yiiActiveForm("updateAttribute", field, errors);
                }
@@ -30,11 +40,11 @@ use rkit\fileapi\Widget as FileApi;
         ],
         'settings' => [
             'url' => yii\helpers\Url::toRoute([$attribute . '-upload']),
-            'imageSize' => $model->getFileRules($attribute)['imageSize'],
-            'accept' => implode(',', $model->getFileRules($attribute)['mimeTypes']),
+            'imageSize' => $model->fileRules($attribute)['imageSize'],
+            'accept' => implode(',', $model->fileRules($attribute)['mimeTypes']),
             'duplicate' => true
         ]
     ])
-    ->hint($model->getFileRulesDescription($attribute), [
+    ->hint(FileRulesDescription::toText($model->fileRules($attribute)), [
         'class' => 'fileapi-rules'
     ]);

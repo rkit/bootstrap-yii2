@@ -35,17 +35,17 @@ class NewsTest extends \Codeception\Test\Unit
     {
         $model = News::findOne(1);
 
-        $file = $model->createFile('preview', Yii::getAlias('@tests/_tmp/files/300x300.png'), '300x300', false);
+        $file = $model->createFile('preview', Yii::getAlias('@tests/_tmp/files/300x300.png'));
         expect_that($file);
 
         $model->preview = $file->id;
         expect_that($model->save());
 
-        $thumb = $model->thumb('preview', '200x200', null, true);
+        $thumb = $model->thumbPath('preview', '200x200');
         expect($thumb)->contains('200x200');
         expect_that(file_exists($thumb));
 
-        $thumb = $model->thumb('preview', '1000x1000', null, true);
+        $thumb = $model->thumbPath('preview', '1000x1000');
         expect($thumb)->contains('1000x1000');
         // because original was replaced
         expect_not(file_exists($thumb));
@@ -61,7 +61,7 @@ class NewsTest extends \Codeception\Test\Unit
         $model->gallery = [$file->id => '500x500'];
         expect_that($model->save());
 
-        $thumb = $model->thumb('gallery', '80x80', $file->getStorage()->path(), true);
+        $thumb = $model->thumbPath('gallery', '80x80', $file);
         expect($thumb)->contains('80x80');
         expect_that(file_exists($thumb));
     }
