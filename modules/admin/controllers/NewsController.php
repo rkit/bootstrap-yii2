@@ -35,7 +35,7 @@ class NewsController extends BaseController
         return [
             'operations' => [
                 'class' => 'app\modules\admin\controllers\common\OperationsAction',
-                'modelName' => 'app\models\News',
+                'modelClass' => 'app\models\News',
                 'operations' => [
                     'delete' => [],
                     'set-publish' => ['status' => News::STATUS_ACTIVE],
@@ -44,17 +44,17 @@ class NewsController extends BaseController
             ],
             'set-publish' => [
                 'class' => 'app\modules\admin\controllers\common\UpdateAttributesAction',
-                'modelName' => 'app\models\News',
+                'modelClass' => 'app\models\News',
                 'attributes' => ['status' => News::STATUS_ACTIVE],
             ],
             'set-unpublish' => [
                 'class' => 'app\modules\admin\controllers\common\UpdateAttributesAction',
-                'modelName' => 'app\models\News',
+                'modelClass' => 'app\models\News',
                 'attributes' => ['status' => News::STATUS_BLOCKED],
             ],
             'delete' => [
                 'class' => 'app\modules\admin\controllers\common\DeleteAction',
-                'modelName' => 'app\models\News',
+                'modelClass' => 'app\models\News',
             ],
             'text-upload' => [
                 'class' => 'rkit\filemanager\actions\UploadAction',

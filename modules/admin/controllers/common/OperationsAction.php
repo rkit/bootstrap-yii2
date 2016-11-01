@@ -8,9 +8,9 @@ use yii\base\Action;
 class OperationsAction extends Action
 {
     /**
-     * @var string $modelName
+     * @var string $modelClass
      */
-    public $modelName;
+    public $modelClass;
     /**
      * @var array $operations
      */
@@ -18,7 +18,7 @@ class OperationsAction extends Action
 
     public function run()
     {
-        $model = new $this->modelName();
+        $model = new $this->modelClass;
 
         if (($ids = Yii::$app->request->post('selection')) !== null) {
             $models = $model::findAll($ids);

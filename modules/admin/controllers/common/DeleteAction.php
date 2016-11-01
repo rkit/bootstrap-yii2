@@ -7,14 +7,13 @@ use yii\base\Action;
 class DeleteAction extends Action
 {
     /**
-     * @var string $modelName
+     * @var string $modelClass
      */
-    public $modelName;
+    public $modelClass;
 
     public function run($id, $reload = false)
     {
-        $model = new $this->modelName();
-
+        $model = new $this->modelClass;
         $this->controller->loadModel($model, $id)->delete();
 
         if ($reload) {

@@ -31,14 +31,14 @@ class RegionsController extends BaseController
         return [
             'operations' => [
                 'class' => 'app\modules\admin\controllers\common\OperationsAction',
-                'modelName' => 'app\models\Region',
+                'modelClass' => 'app\models\Region',
                 'operations' => [
                     'delete' => [],
                 ]
             ],
             'delete' => [
                 'class' => 'app\modules\admin\controllers\common\DeleteAction',
-                'modelName' => 'app\models\Region',
+                'modelClass' => 'app\models\Region',
             ],
         ];
     }

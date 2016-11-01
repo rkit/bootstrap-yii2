@@ -36,7 +36,7 @@ class UsersController extends BaseController
         return [
             'operations' => [
                 'class' => 'app\modules\admin\controllers\common\OperationsAction',
-                'modelName' => 'app\models\User',
+                'modelClass' => 'app\models\User',
                 'operations' => [
                     'delete' => [],
                     'set-active' => ['status' => User::STATUS_ACTIVE],
@@ -45,17 +45,17 @@ class UsersController extends BaseController
             ],
             'set-active' => [
                 'class' => 'app\modules\admin\controllers\common\UpdateAttributesAction',
-                'modelName' => 'app\models\User',
+                'modelClass' => 'app\models\User',
                 'attributes' => ['status' => User::STATUS_ACTIVE],
             ],
             'set-block' => [
                 'class' => 'app\modules\admin\controllers\common\UpdateAttributesAction',
-                'modelName' => 'app\models\User',
+                'modelClass' => 'app\models\User',
                 'attributes' => ['status' => User::STATUS_BLOCKED],
             ],
             'delete' => [
                 'class' => 'app\modules\admin\controllers\common\DeleteAction',
-                'modelName' => 'app\models\User',
+                'modelClass' => 'app\models\User',
             ],
             'photo-upload' => [
                 'class'     => 'rkit\filemanager\actions\UploadAction',

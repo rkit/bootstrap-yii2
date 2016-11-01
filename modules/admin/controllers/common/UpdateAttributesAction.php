@@ -7,9 +7,9 @@ use yii\base\Action;
 class UpdateAttributesAction extends Action
 {
     /**
-     * @var string $modelName
+     * @var string $modelClass
      */
-    public $modelName;
+    public $modelClass;
     /**
      * @var array $attributes
      */
@@ -17,9 +17,9 @@ class UpdateAttributesAction extends Action
 
     public function run($id)
     {
-        $model = new $this->modelName();
-
+        $model = new $this->modelClass;
         $model = $this->controller->loadModel($model, $id);
+
         $model->updateAttributes($this->attributes);
 
         return $this->controller->response(true);

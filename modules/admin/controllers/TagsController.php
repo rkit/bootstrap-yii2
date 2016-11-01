@@ -31,14 +31,14 @@ class TagsController extends BaseController
         return [
             'operations' => [
                 'class' => 'app\modules\admin\controllers\common\OperationsAction',
-                'modelName' => 'app\models\Tag',
+                'modelClass' => 'app\models\Tag',
                 'operations' => [
                     'delete' => [],
                 ]
             ],
             'delete' => [
                 'class' => 'app\modules\admin\controllers\common\DeleteAction',
-                'modelName' => 'app\models\Tag',
+                'modelClass' => 'app\models\Tag',
             ],
         ];
     }

@@ -31,14 +31,14 @@ class RolesController extends BaseController
         return [
             'operations' => [
                 'class' => 'app\modules\admin\controllers\common\OperationsAction',
-                'modelName' => 'app\models\AuthItem',
+                'modelClass' => 'app\models\AuthItem',
                 'operations' => [
                     'delete' => [],
                 ]
             ],
             'delete' => [
                 'class' => 'app\modules\admin\controllers\common\DeleteAction',
-                'modelName' => 'app\models\AuthItem',
+                'modelClass' => 'app\models\AuthItem',
             ],
         ];
     }
