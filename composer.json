@@ -55,7 +55,7 @@
             "php tests/bin/yii migrate --migrationPath=@yii/rbac/migrations/ --interactive=0",
             "php tests/bin/yii migrate --migrationPath=@vendor/rkit/settings-yii2/src/migrations/ --interactive=0",
             "php tests/bin/yii migrate/up --interactive=0",
-            "php tests/bin/yii rbac/init --path=@app/config/permissions.php"
+            "php tests/bin/yii rbac/init --path=@app/config/rbac/permissions.php"
         ],
         "test-build": "codecept build",
         "test": "codecept run",

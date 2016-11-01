@@ -46,7 +46,7 @@ Screenshots:
    php yii migrate --migrationPath=@vendor/rkit/filemanager-yii2/src/migrations/ --interactive=0
    php yii migrate --migrationPath=@vendor/rkit/settings-yii2/src/migrations/ --interactive=0
    php yii migrate/up --interactive=0
-   php yii rbac/init --path=@app/config/permissions.php
+   php yii rbac/init --path=@app/config/rbac/permissions.php
    ```
 
 Access to the Control Panel

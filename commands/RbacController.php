@@ -9,7 +9,7 @@ use yii\helpers\Console;
 
 /**
  * Command for create permissions
- * @see config/permissions.php
+ * @see config/rbac/permissions.php
  */
 class RbacController extends Controller
 {
