@@ -2,12 +2,14 @@
 
 namespace app\tests\functional\admin;
 
+use Yii;
 use Codeception\Util\Locator;
 use yii\helpers\Url;
 use app\tests\fixtures\NewsType as NewsTypeFixture;
 use app\tests\fixtures\News as NewsFixture;
 use app\tests\fixtures\User as UserFixture;
 use app\models\User;
+use app\models\News;
 
 class NewsCest
 {
@@ -234,6 +236,42 @@ class NewsCest
 
         $I->amOnRoute($this->url);
         $I->see('News-1_UPD');
+    }
+
+    public function testAddPreview($I)
+    {
+        $model = new News();
+        $file = $model->createFile('preview', Yii::getAlias('@tests/_tmp/files/300x300.png'));
+
+        $I->click('News-1');
+        $I->submitForm($this->formId, [
+            $this->formName . '[preview]' =>  $file->id,
+        ]);
+        $I->expectTo('see success');
+        $I->see('Saved successfully');
+
+        $I->amOnRoute($this->url);
+        $I->click('News-1');
+
+        $I->seeInField('News[preview]', $model->fileUrl('preview', $file));
+    }
+
+    public function testAddGallery($I)
+    {
+        $model = new News();
+        $file = $model->createFile('gallery', Yii::getAlias('@tests/_tmp/files/300x300.png'));
+
+        $I->click('News-1');
+        $I->submitForm($this->formId, [
+            $this->formName . '[gallery]' => $file->id,
+        ]);
+        $I->expectTo('see success');
+        $I->see('Saved successfully');
+
+        $I->amOnRoute($this->url);
+        $I->click('News-1');
+
+        $I->seeInField('News[gallery][]', $file->id);
     }
 
     public function testPublish($I)

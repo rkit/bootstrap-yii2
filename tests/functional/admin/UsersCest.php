@@ -11,6 +11,7 @@ use app\tests\fixtures\AuthAssignment as  AuthAssignmentFixture;
 use app\tests\fixtures\UserProfile as UserProfileFixture;
 use app\tests\fixtures\User as UserFixture;
 use app\models\User;
+use app\models\UserProfile;
 
 class UsersCest
 {
@@ -296,6 +297,22 @@ class UsersCest
         $I->see('Saved successfully');
 
         $I->seeInField('UserProfile[full_name]', 'Profile-2_UPD');
+    }
+
+    public function testAddPhotoToProfile($I)
+    {
+        $model = new UserProfile();
+        $file = $model->createFile('photo', Yii::getAlias('@tests/_tmp/files/300x300.png'));
+
+        $I->click('user-2');
+        $I->click('Profile');
+        $I->submitForm('#profile-form', [
+            'UserProfile[photo]' => $file->id,
+        ]);
+        $I->expectTo('see success');
+        $I->see('Saved successfully');
+
+        $I->seeInField('UserProfile[photo]', $model->fileUrl('photo', $file));
     }
 
     public function testUpdateProfileViaAjax($I)

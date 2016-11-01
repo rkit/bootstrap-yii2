@@ -34,8 +34,8 @@ class CreateLocalConfigTest extends \Codeception\Test\Unit
         $command->beforeAction('test');
         $command->actionInit();
 
-        expect(file_exists($config))->true();
+        expect_file($config)->exists();
         unlink($config);
-        expect(file_exists($config))->false();
+        expect_file($config)->notExists();
     }
 }
