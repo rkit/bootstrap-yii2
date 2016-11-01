@@ -1,13 +1,14 @@
 <?php
 
+/**
+ * Config for Test Application
+ */
+
 $local = require __DIR__ . '/local/config.php';
 $local['components']['db']['dsn'] .= '_tests';
 
 $params = require __DIR__ . '/params.php';
 
-/**
- * Application configuration shared by all test types
- */
 return [
     'id' => 'tests',
     'basePath' => dirname(__DIR__),

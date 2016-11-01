@@ -1,6 +1,8 @@
 <?php
 
-Yii::setAlias('@tests', dirname(__DIR__) . '/tests');
+/**
+ * Config for Console Application
+ */
 
 $params = require(__DIR__ . '/params.php');
 

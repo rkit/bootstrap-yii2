@@ -3,8 +3,9 @@
 $profiling  = true;
 $allowedIPs = ['127.0.0.1'];
 
-/* Db
--------------------------------------------------- */
+/**
+ * Db
+ */
 
 $config['components']['db'] = [
     'class'                 => 'yii\db\Connection',
@@ -16,8 +17,9 @@ $config['components']['db'] = [
     'enableSchemaCache'     => YII_ENV_DEV ? false : true
 ];
 
-/* Gii & Profiling
--------------------------------------------------- */
+/**
+ * Gii & Profiling
+ */
 
 if (YII_ENV_DEV) {
     $config['bootstrap'][] = 'gii';

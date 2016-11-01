@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Config for Web Application
+ */
+
 $params = require(__DIR__ . '/params.php');
 
 $config = [
@@ -137,8 +141,9 @@ $config = [
 require_once __DIR__ . '/common.php';
 require_once __DIR__ . '/local/config.php';
 
-/* Maintenance mode
--------------------------------------------------- */
+/**
+ * Maintenance mode
+ */
 
 if (file_exists($config['basePath'] . '/runtime/maintenance')) {
     if (!in_array($_SERVER['REMOTE_ADDR'], $allowedIPs)) {

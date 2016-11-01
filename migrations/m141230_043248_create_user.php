@@ -7,9 +7,9 @@ class m141230_043248_create_user extends Migration
 {
     public function up()
     {
-        //
-        // User
-        //
+        /**
+         * User
+         */
         $this->createTable('{{%user}}', [
             'id' => Schema::TYPE_PK,
             'username' => Schema::TYPE_STRING . "(40) DEFAULT NULL",
@@ -32,9 +32,9 @@ class m141230_043248_create_user extends Migration
         $this->createIndex('role', '{{%user}}', 'role');
         $this->createIndex('status', '{{%user}}', 'status');
 
-        //
-        // Profile
-        //
+        /**
+         * Profile
+         */
         $this->createTable('{{%user_profile}}', [
             'user_id' => Schema::TYPE_PK,
             'full_name' => Schema::TYPE_STRING . "(40) NOT NULL DEFAULT ''",

@@ -7,17 +7,17 @@ class m141230_075222_create_geo extends Migration
 {
     public function safeUp()
     {
-        //
-        // Country
-        //
+        /**
+         * Country
+         */
         $this->createTable('{{%country}}', [
             'country_id' => Schema::TYPE_PK,
             'title' => Schema::TYPE_STRING . "(60) NOT NULL",
         ], $this->tableOptions);
 
-        //
-        // Region
-        //
+        /**
+         * Region
+         */
         $this->createTable('{{%region}}', [
             'region_id' => Schema::TYPE_PK,
             'country_id' => Schema::TYPE_INTEGER . " NOT NULL DEFAULT 0",
@@ -36,9 +36,9 @@ class m141230_075222_create_geo extends Migration
             'CASCADE'
         );
 
-        //
-        // City
-        //
+        /**
+         * City
+         */
         $this->createTable('{{%city}}', [
             'city_id' => Schema::TYPE_PK,
             'country_id' => Schema::TYPE_INTEGER . " NOT NULL DEFAULT 0",
