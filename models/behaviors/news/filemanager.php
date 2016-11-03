@@ -10,13 +10,17 @@ return [
         'preview' => [
             'storage' => 'localFs',
             'baseUrl' => '@web/uploads',
+            'type' => 'image',
+            'relation' => 'files',
+            'saveFilePathInAttribute' => true,
             'templatePath' => function ($file) {
                 $date = new \DateTime(is_object($file->date_create) ? null : $file->date_create);
                 return '/' . $date->format('Ym') . '/' . $file->id . '/' . $file->name;
             },
-            'type' => 'image',
-            'onCreateFile' => function ($title, $path) {
-                $file = new File(['path' => $path, 'title' => $title]);
+            'createFile' => function ($path, $name) {
+                $file = new File();
+                $file->title = $name;
+                $file->generateName(pathinfo($name, PATHINFO_EXTENSION));
                 $file->save();
                 return $file;
             },
@@ -25,11 +29,9 @@ return [
                     'type' => 1,
                 ];
             },
-            'relation' => 'files',
             'relationQuery' => function ($query) {
                 return $query->andWhere(['type' => 1]);
             },
-            'saveFilePathInAttribute' => true,
             'rules' => [
                 'imageSize' => ['minWidth' => 300, 'minHeight' => 300],
                 'mimeTypes' => ['image/png', 'image/jpg', 'image/jpeg'],
@@ -58,23 +60,28 @@ return [
         'gallery' => [
             'storage' => 'localFs',
             'baseUrl' => '@web/uploads',
+            'type' => 'image',
+            'multiple' => true,
+            'template' => '@app/modules/admin/views/shared/files/gallery/item.php',
+            'relation' => 'files',
             'templatePath' => function ($file) {
                 $date = new \DateTime(is_object($file->date_create) ? null : $file->date_create);
                 return '/' . $date->format('Ym') . '/' . $file->id . '/' . $file->name;
             },
-            'type' => 'image',
-            'onCreateFile' => function ($title, $path) {
-                $file = new File(['path' => $path, 'title' => $title]);
+            'createFile' => function ($path, $name) {
+                $file = new File();
+                $file->title = $name;
+                $file->generateName(pathinfo($name, PATHINFO_EXTENSION));
                 $file->save();
                 return $file;
             },
-            'onUpdateFile' => function ($file) {
+            'updateFile' => function ($file) {
                 if (is_array($this->galleryTitles)) {
                     $file->title = ArrayHelper::getValue($this->galleryTitles, $file->id, $file->title);
                 }
                 return $file;
             },
-            'extraFields' => function ($model, $attribute, $file, $fields) {
+            'extraFields' => function ($file, $fields) {
                 $position = 0;
                 if (is_array($this->galleryTitles)) {
                     $position = array_search($file->id, array_keys($this->galleryTitles));
@@ -85,12 +92,9 @@ return [
                     'position' => $position,
                 ];
             },
-            'relation' => 'files',
             'relationQuery' => function ($query) {
                 return $query->andWhere(['type' => 2]);
             },
-            'multiple' => true,
-            'template' => '@app/modules/admin/views/shared/files/gallery/item.php',
             'rules' => [
                 'imageSize' => ['minWidth' => 300, 'minHeight' => 300],
                 'mimeTypes' => ['image/png', 'image/jpg', 'image/jpeg'],
@@ -110,13 +114,16 @@ return [
         'text' => [
             'storage' => 'localFs',
             'baseUrl' => '@web/uploads',
+            'type' => 'image',
+            'relation' => 'files',
             'templatePath' => function ($file) {
                 $date = new \DateTime(is_object($file->date_create) ? null : $file->date_create);
                 return '/' . $date->format('Ym') . '/' . $file->id . '/' . $file->name;
             },
-            'type' => 'image',
-            'onCreateFile' => function ($title, $path) {
-                $file = new File(['path' => $path, 'title' => $title]);
+            'createFile' => function ($path, $name) {
+                $file = new File();
+                $file->title = $name;
+                $file->generateName(pathinfo($name, PATHINFO_EXTENSION));
                 $file->save();
                 return $file;
             },
@@ -125,7 +132,6 @@ return [
                     'type' => 3,
                 ];
             },
-            'relation' => 'files',
             'relationQuery' => function ($query) {
                 return $query->andWhere(['type' => 3]);
             },

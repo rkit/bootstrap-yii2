@@ -10,18 +10,20 @@ return [
         'photo' => [
             'storage' => 'localFs',
             'baseUrl' => '@web/uploads',
+            'type' => 'image',
+            'relation' => 'files',
+            'saveFilePathInAttribute' => true,
             'templatePath' => function ($file) {
                 $date = new \DateTime(is_object($file->date_create) ? null : $file->date_create);
                 return '/' . $date->format('Ym') . '/' . $file->id . '/' . $file->name;
             },
-            'type' => 'image',
-            'onCreateFile' => function ($title, $path) {
-                $file = new File(['path' => $path, 'title' => $title]);
+            'createFile' => function ($path, $name) {
+                $file = new File();
+                $file->title = $name;
+                $file->generateName(pathinfo($name, PATHINFO_EXTENSION));
                 $file->save();
                 return $file;
             },
-            'relation' => 'files',
-            'saveFilePathInAttribute' => true,
             'rules' => [
                 'imageSize' => ['minWidth' => 300, 'minHeight' => 300],
                 'mimeTypes' => ['image/png', 'image/jpg', 'image/jpeg'],

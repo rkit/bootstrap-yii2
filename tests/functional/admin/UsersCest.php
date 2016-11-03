@@ -302,7 +302,7 @@ class UsersCest
     public function testAddPhotoToProfile($I)
     {
         $model = new UserProfile();
-        $file = $model->createFile('photo', Yii::getAlias('@tests/_tmp/files/300x300.png'));
+        $file = $model->createFile('photo', Yii::getAlias('@tests/_tmp/files/300x300.png'), '300x300.png');
 
         $I->click('user-2');
         $I->click('Profile');
