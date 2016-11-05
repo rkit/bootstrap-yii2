@@ -7,13 +7,18 @@ php:
 
 sudo: false
 
+# cache vendor dirs
+cache:
+  directories:
+    - $HOME/.composer/cache
+
 before_install:
   - pip install --user codecov
 
 install:
-  - composer self-update
-  - composer global require "fxp/composer-asset-plugin:~1.0"
-  - composer install
+  - travis_retry composer self-update && composer --version
+  - travis_retry composer global require "fxp/composer-asset-plugin:~1.1.1"
+  - travis_retry composer update --dev --prefer-dist --no-interaction
 
 before_script:
   - chmod -R a+w runtime
@@ -23,7 +28,7 @@ before_script:
   - composer test-build
 
 script:
-  - vendor/bin/codecept run --report --coverage-xml
+  - composer exec codecept run -- --report --coverage-xml
 
 after_script:
   - wget https://scrutinizer-ci.com/ocular.phar
