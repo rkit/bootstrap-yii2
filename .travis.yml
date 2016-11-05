@@ -1,13 +1,11 @@
 language: php
 
 php:
-  - 5.5
   - 5.6
   - 7.0
 
 sudo: false
 
-# cache vendor dirs
 cache:
   directories:
     - $HOME/.composer/cache
@@ -16,9 +14,9 @@ before_install:
   - pip install --user codecov
 
 install:
-  - travis_retry composer self-update && composer --version
-  - travis_retry composer global require "fxp/composer-asset-plugin:~1.1.1"
-  - travis_retry composer install
+  - composer self-update && composer --version
+  - composer global require "fxp/composer-asset-plugin:~1.1.1"
+  - composer install
 
 before_script:
   - chmod -R a+w runtime

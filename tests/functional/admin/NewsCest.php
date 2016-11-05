@@ -241,7 +241,7 @@ class NewsCest
     public function testAddPreview($I)
     {
         $model = new News();
-        $file = $model->createFile('preview', Yii::getAlias('@tests/_tmp/files/300x300.png'), '300x300.png');
+        $file = $model->createFile('preview', Yii::getAlias('@tests/_data/files/300x300.png'), '300x300.png');
 
         $I->click('News-1');
         $I->submitForm($this->formId, [
@@ -259,7 +259,7 @@ class NewsCest
     public function testAddGallery($I)
     {
         $model = new News();
-        $file = $model->createFile('gallery', Yii::getAlias('@tests/_tmp/files/300x300.png'), '300x300.png');
+        $file = $model->createFile('gallery', Yii::getAlias('@tests/_data/files/300x300.png'), '300x300.png');
 
         $I->click('News-1');
         $I->submitForm($this->formId, [
