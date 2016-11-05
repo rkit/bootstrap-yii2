@@ -51,6 +51,15 @@
         "post-create-project-cmd": [
             "yii\\composer\\Installer::postCreateProject"
         ],
+        "install-app": [
+            "php yii migrate --migrationPath=@yii/log/migrations/ --interactive=0",
+            "php yii migrate --migrationPath=@yii/rbac/migrations/ --interactive=0",
+            "php yii migrate --migrationPath=@vendor/rkit/settings-yii2/src/migrations/ --interactive=0",
+            "php yii migrate/up --interactive=0",
+            "php yii rbac/init --path=@app/config/rbac/permissions.php",
+            "npm install",
+            "npm run build"
+        ],
         "test-prepare": [
             "php tests/bin/yii migrate --migrationPath=@yii/rbac/migrations/ --interactive=0",
             "php tests/bin/yii migrate --migrationPath=@vendor/rkit/settings-yii2/src/migrations/ --interactive=0",
