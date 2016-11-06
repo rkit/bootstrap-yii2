@@ -1,7 +1,7 @@
 <?php
 
 /**
- * AFTER CHANGES YOU MUST RUN THE FOLLOWING `php yii rbac/init`
+ * AFTER CHANGES YOU MUST RUN THE FOLLOWING `php yii rbac/up`
  */
 
 return [

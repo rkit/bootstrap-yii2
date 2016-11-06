@@ -56,7 +56,7 @@
             "php yii migrate --migrationPath=@yii/rbac/migrations/ --interactive=0",
             "php yii migrate --migrationPath=@vendor/rkit/settings-yii2/src/migrations/ --interactive=0",
             "php yii migrate/up --interactive=0",
-            "php yii rbac/init --path=@app/config/rbac/permissions.php",
+            "php yii rbac/up --path=@app/config/rbac/permissions.php",
             "npm install",
             "npm run build"
         ],
@@ -64,7 +64,7 @@
             "php tests/bin/yii migrate --migrationPath=@yii/rbac/migrations/ --interactive=0",
             "php tests/bin/yii migrate --migrationPath=@vendor/rkit/settings-yii2/src/migrations/ --interactive=0",
             "php tests/bin/yii migrate/up --interactive=0",
-            "php tests/bin/yii rbac/init --path=@app/config/rbac/permissions.php"
+            "php tests/bin/yii rbac/up --path=@app/config/rbac/permissions.php"
         ],
         "test-build": "codecept build",
         "test": "codecept run",

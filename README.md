@@ -20,26 +20,25 @@ Screenshots:
 
 ## Installation
 
-1. Create project
+1. Creating a project
    ```
    composer global require "fxp/composer-asset-plugin:~1.0"
    composer create-project --prefer-dist --stability=dev rkit/bootstrap-yii2
    cd bootstrap-yii2
    ```
 
-2. Check requirements
+2. Checking requirements
    ```
    php requirements.php
    ```
 
-3. Create a new database and local config
+3. Creating a new database and local config
    ```
-   php yii create-local-config/init --path=@app/config/local/config.php
+   php yii create-local-config --path=@app/config/local/config.php
    ```
-   > config will be created in *config/local/config.php*  
-   > fill in the database settings
+   > filling in the database settings in the *config/local/config.php*
 
-4. Run
+4. Installing
    ```
    composer install-app
    ```
@@ -52,7 +51,7 @@ password: fghfgh
 
 ## Configuring Server
 
-Set document root to be `/path/to/source/web`
+The application requires the document root to be set to the `web` directory.
 
 ## Development
 

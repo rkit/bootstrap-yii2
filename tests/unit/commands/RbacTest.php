@@ -15,7 +15,7 @@ class RbacTest extends \Codeception\Test\Unit
     {
         $command = new RbacController('test', 'test');
         $command->beforeAction('test');
-        $command->actionInit();
+        $command->actionUp();
     }
 
     public function testCountOptions()
@@ -32,7 +32,7 @@ class RbacTest extends \Codeception\Test\Unit
         $command = new RbacController('test', 'test');
         $command->path = $config;
         $command->beforeAction('test');
-        $command->actionInit();
+        $command->actionUp();
 
         $auth = Yii::$app->authManager;
 
@@ -61,7 +61,7 @@ class RbacTest extends \Codeception\Test\Unit
         $command = new RbacController('test', 'test');
         $command->path = $config;
         $command->beforeAction('test');
-        $command->actionInit();
+        $command->actionUp();
 
         expect_not($auth->getPermission('test'));
     }

@@ -46,7 +46,7 @@ class RbacController extends Controller
         Yii::$app->cache->delete('rbac-permissions');
     }
 
-    public function actionInit()
+    public function actionUp()
     {
         $currentPermissions = $this->auth->getPermissions();
         $newPermissions = require Yii::getAlias($this->path);

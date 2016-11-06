@@ -38,7 +38,7 @@ class CreateLocalConfigController extends Controller
     /**
      * @SuppressWarnings(PHPMD.ElseExpression)
      */
-    public function actionInit()
+    public function actionIndex()
     {
         $source = Yii::getAlias('@app/config/config.local');
         $dist = Yii::getAlias($this->path);

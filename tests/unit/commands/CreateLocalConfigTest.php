@@ -15,7 +15,7 @@ class CreateLocalConfigTest extends \Codeception\Test\Unit
     {
         $command = new CreateLocalConfigController('test', 'test');
         $command->beforeAction('test');
-        $command->actionInit();
+        $command->actionIndex();
     }
 
     public function testCountOptions()
@@ -32,7 +32,7 @@ class CreateLocalConfigTest extends \Codeception\Test\Unit
         $command = new CreateLocalConfigController('test', 'test');
         $command->path = $config;
         $command->beforeAction('test');
-        $command->actionInit();
+        $command->actionIndex();
 
         expect_file($config)->exists();
         unlink($config);
