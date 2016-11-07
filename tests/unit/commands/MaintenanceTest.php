@@ -2,7 +2,6 @@
 
 namespace app\tests\unit\commands;
 
-use Yii;
 use app\commands\MaintenanceController;
 
 class MaintenanceTest extends \Codeception\Test\Unit

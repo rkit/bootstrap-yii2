@@ -21,11 +21,11 @@ class CountriesCest
         $I->haveFixtures([
              'country' => [
                  'class' => CountryFixture::className(),
-                 'dataFile' => codecept_data_dir() . 'country.php',
+                 'dataFile' => codecept_data_dir() . 'models/country.php',
              ],
              'user' => [
                  'class' => UserFixture::className(),
-                 'dataFile' => codecept_data_dir() . 'user.php',
+                 'dataFile' => codecept_data_dir() . 'models/user.php',
              ],
         ]);
         $I->amLoggedInAs(User::findByUsername('superuser'));

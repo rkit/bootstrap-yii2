@@ -2,7 +2,6 @@
 
 namespace app\tests\unit\models\query;
 
-use Yii;
 use app\tests\fixtures\Country as CountryFixture;
 use app\models\Country;
 
@@ -14,7 +13,7 @@ class CountryQueryTest extends \Codeception\Test\Unit
         $this->tester->haveFixtures([
              'country' => [
                  'class' => CountryFixture::className(),
-                 'dataFile' => codecept_data_dir() . 'country.php',
+                 'dataFile' => codecept_data_dir() . 'models/country.php',
              ],
         ]);
     }

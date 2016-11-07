@@ -2,7 +2,6 @@
 
 namespace app\tests\unit\models\query;
 
-use Yii;
 use app\tests\fixtures\Tag as TagFixture;
 use app\models\Tag;
 
@@ -14,7 +13,7 @@ class TagQueryTest extends \Codeception\Test\Unit
         $this->tester->haveFixtures([
              'tag' => [
                  'class' => TagFixture::className(),
-                 'dataFile' => codecept_data_dir() . 'tag.php',
+                 'dataFile' => codecept_data_dir() . 'models/tag.php',
              ],
         ]);
     }

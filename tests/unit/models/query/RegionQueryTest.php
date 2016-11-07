@@ -2,7 +2,6 @@
 
 namespace app\tests\unit\models\query;
 
-use Yii;
 use app\tests\fixtures\Region as RegionFixture;
 use app\models\Region;
 
@@ -14,7 +13,7 @@ class RegionQueryTest extends \Codeception\Test\Unit
         $this->tester->haveFixtures([
              'region' => [
                  'class' => RegionFixture::className(),
-                 'dataFile' => codecept_data_dir() . 'region.php',
+                 'dataFile' => codecept_data_dir() . 'models/region.php',
              ],
         ]);
     }

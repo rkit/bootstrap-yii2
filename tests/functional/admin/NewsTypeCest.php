@@ -21,11 +21,11 @@ class NewsTypeCest
         $I->haveFixtures([
              'newsType' => [
                  'class' => NewsTypeFixture::className(),
-                 'dataFile' => codecept_data_dir() . 'news_type.php',
+                 'dataFile' => codecept_data_dir() . 'models/news_type.php',
              ],
              'user' => [
                  'class' => UserFixture::className(),
-                 'dataFile' => codecept_data_dir() . 'user.php',
+                 'dataFile' => codecept_data_dir() . 'models/user.php',
              ],
         ]);
         $I->amLoggedInAs(User::findByUsername('superuser'));

@@ -21,11 +21,11 @@ class TagsCest
         $I->haveFixtures([
              'tag' => [
                  'class' => TagFixture::className(),
-                 'dataFile' => codecept_data_dir() . 'tag.php',
+                 'dataFile' => codecept_data_dir() . 'models/tag.php',
              ],
              'user' => [
                  'class' => UserFixture::className(),
-                 'dataFile' => codecept_data_dir() . 'user.php',
+                 'dataFile' => codecept_data_dir() . 'models/user.php',
              ],
         ]);
         $I->amLoggedInAs(User::findByUsername('superuser'));

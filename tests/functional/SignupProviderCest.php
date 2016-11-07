@@ -24,7 +24,7 @@ class SignupProviderCest
         $I->haveFixtures([
              'user' => [
                  'class' => UserFixture::className(),
-                 'dataFile' => codecept_data_dir() . 'user.php',
+                 'dataFile' => codecept_data_dir() . 'models/user.php',
              ],
         ]);
     }

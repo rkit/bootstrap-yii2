@@ -21,11 +21,11 @@ class RolesCest
         $I->haveFixtures([
              'authItem' => [
                  'class' => AuthItemFixture::className(),
-                 'dataFile' => codecept_data_dir() . 'auth_item.php',
+                 'dataFile' => codecept_data_dir() . 'models/auth_item.php',
              ],
              'user' => [
                  'class' => UserFixture::className(),
-                 'dataFile' => codecept_data_dir() . 'user.php',
+                 'dataFile' => codecept_data_dir() . 'models/user.php',
              ],
         ]);
         $I->amLoggedInAs(User::findByUsername('superuser'));

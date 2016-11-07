@@ -27,7 +27,7 @@ class RbacTest extends \Codeception\Test\Unit
 
     public function testLoad()
     {
-        $config = Yii::getAlias('@app/tests/_data/permissions.php');
+        $config = Yii::getAlias('@app/tests/_data/rbac/permissions.php');
 
         $command = new RbacController('test', 'test');
         $command->path = $config;
@@ -50,7 +50,7 @@ class RbacTest extends \Codeception\Test\Unit
 
     public function testCheckFakePermission()
     {
-        $config = Yii::getAlias('@app/tests/_data/permissions.php');
+        $config = Yii::getAlias('@app/tests/_data/rbac/permissions.php');
 
         $auth = Yii::$app->authManager;
         $permission = $auth->createPermission('test');

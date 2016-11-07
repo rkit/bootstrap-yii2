@@ -2,7 +2,7 @@
 
 use \app\models\User;
 
-$permissions = require __DIR__ . '/../../config/rbac/permissions.php';
+$permissions = require __DIR__ . '/../../../config/rbac/permissions.php';
 $items = [];
 
 foreach ($permissions as $name => $description) {

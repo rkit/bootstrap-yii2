@@ -2,7 +2,6 @@
 
 namespace app\tests\unit\models\query;
 
-use Yii;
 use app\tests\fixtures\News as NewsFixture;
 use app\models\News;
 
@@ -14,7 +13,7 @@ class NewsQueryTest extends \Codeception\Test\Unit
         $this->tester->haveFixtures([
              'news' => [
                  'class' => NewsFixture::className(),
-                 'dataFile' => codecept_data_dir() . 'news.php',
+                 'dataFile' => codecept_data_dir() . 'models/news.php',
              ],
         ]);
     }

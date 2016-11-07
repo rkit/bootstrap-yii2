@@ -23,19 +23,19 @@ class CitiesCest
         $I->haveFixtures([
              'country' => [
                  'class' => CountryFixture::className(),
-                 'dataFile' => codecept_data_dir() . 'country.php',
+                 'dataFile' => codecept_data_dir() . 'models/country.php',
              ],
              'region' => [
                  'class' => RegionFixture::className(),
-                 'dataFile' => codecept_data_dir() . 'region.php',
+                 'dataFile' => codecept_data_dir() . 'models/region.php',
              ],
              'city' => [
                  'class' => CityFixture::className(),
-                 'dataFile' => codecept_data_dir() . 'city.php',
+                 'dataFile' => codecept_data_dir() . 'models/city.php',
              ],
              'user' => [
                  'class' => UserFixture::className(),
-                 'dataFile' => codecept_data_dir() . 'user.php',
+                 'dataFile' => codecept_data_dir() . 'models/user.php',
              ],
         ]);
         $I->amLoggedInAs(User::findByUsername('superuser'));

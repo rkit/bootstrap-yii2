@@ -2,7 +2,6 @@
 
 namespace app\tests\functional\admin;
 
-use Yii;
 use Codeception\Util\Locator;
 use yii\helpers\Url;
 use app\tests\fixtures\AuthItem as AuthItemFixture;
@@ -11,7 +10,6 @@ use app\tests\fixtures\AuthAssignment as  AuthAssignmentFixture;
 use app\tests\fixtures\UserProfile as UserProfileFixture;
 use app\tests\fixtures\User as UserFixture;
 use app\models\User;
-use app\models\UserProfile;
 
 class UsersCest
 {
@@ -26,23 +24,23 @@ class UsersCest
         $I->haveFixtures([
              'authItem' => [
                  'class' => AuthItemFixture::className(),
-                 'dataFile' => codecept_data_dir() . 'auth_item.php',
+                 'dataFile' => codecept_data_dir() . 'models/auth_item.php',
              ],
              'authAssignment' => [
                  'class' => AuthAssignmentFixture::className(),
-                 'dataFile' => codecept_data_dir() . 'auth_assignment.php',
+                 'dataFile' => codecept_data_dir() . 'models/auth_assignment.php',
              ],
              'authItemChild' => [
                  'class' => AuthItemChildFixture::className(),
-                 'dataFile' => codecept_data_dir() . 'auth_item_child.php',
+                 'dataFile' => codecept_data_dir() . 'models/auth_item_child.php',
              ],
              'profile' => [
                  'class' => UserProfileFixture::className(),
-                 'dataFile' => codecept_data_dir() . 'user_profile.php',
+                 'dataFile' => codecept_data_dir() . 'models/user_profile.php',
              ],
              'user' => [
                  'class' => UserFixture::className(),
-                 'dataFile' => codecept_data_dir() . 'user.php',
+                 'dataFile' => codecept_data_dir() . 'models/user.php',
              ],
         ]);
         $I->amLoggedInAs(User::findByUsername('superuser'));
@@ -273,64 +271,6 @@ class UsersCest
 
         $I->amOnRoute($this->url);
         $I->see('user-2_UPD');
-    }
-
-    public function testUpdateProfileWithWrongBirthDay($I)
-    {
-        $I->click('user-2');
-        $I->click('Profile');
-        $I->submitForm('#profile-form', [
-            'UserProfile[birth_day]' => 'test',
-        ]);
-        $I->expectTo('see validations errors');
-        $I->see('The format of Birth Day is invalid', '.help-block');
-    }
-
-    public function testUpdateProfile($I)
-    {
-        $I->click('user-2');
-        $I->click('Profile');
-        $I->submitForm('#profile-form', [
-            'UserProfile[full_name]' =>  'Profile-2_UPD',
-        ]);
-        $I->expectTo('see success');
-        $I->see('Saved successfully');
-
-        $I->seeInField('UserProfile[full_name]', 'Profile-2_UPD');
-    }
-
-    public function testAddPhotoToProfile($I)
-    {
-        $model = new UserProfile();
-        $file = $model->createFile('photo', Yii::getAlias('@tests/_data/files/300x300.png'), '300x300.png');
-
-        $I->click('user-2');
-        $I->click('Profile');
-        $I->submitForm('#profile-form', [
-            'UserProfile[photo]' => $file->id,
-        ]);
-        $I->expectTo('see success');
-        $I->see('Saved successfully');
-
-        $I->seeInField('UserProfile[photo]', $model->fileUrl('photo', $file));
-    }
-
-    public function testUpdateProfileViaAjax($I)
-    {
-        $I->sendAjaxPostRequest(Url::toRoute(['/admin/users/profile', 'id' => 2]), [
-            'UserProfile[full_name]' =>  'Profile-2_UPD',
-        ]);
-        $I->seeResponseCodeIs(200);
-        $I->seeResponseContains('redirect');
-    }
-
-    public function testUpdateProfileWithWrongBirthDayViaAjax($I)
-    {
-        $I->sendAjaxPostRequest(Url::toRoute(['/admin/users/profile', 'id' => 2]), [
-            'UserProfile[birth_day]' => 'test',
-        ]);
-        $I->seeResponseCodeIs(200);
-        $I->seeResponseContains('The format of Birth Day is invalid');
     }
 
     public function testAssignRoleAndLogin($I)

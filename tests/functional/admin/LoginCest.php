@@ -22,19 +22,19 @@ class LoginCest
         $I->haveFixtures([
              'authItem' => [
                  'class' => AuthItemFixture::className(),
-                 'dataFile' => codecept_data_dir() . 'auth_item.php',
+                 'dataFile' => codecept_data_dir() . 'models/auth_item.php',
              ],
              'authAssignment' => [
                  'class' => AuthAssignmentFixture::className(),
-                 'dataFile' => codecept_data_dir() . 'auth_assignment.php',
+                 'dataFile' => codecept_data_dir() . 'models/auth_assignment.php',
              ],
              'authItemChild' => [
                  'class' => AuthItemChildFixture::className(),
-                 'dataFile' => codecept_data_dir() . 'auth_item_child.php',
+                 'dataFile' => codecept_data_dir() . 'models/auth_item_child.php',
              ],
              'user' => [
                  'class' => UserFixture::className(),
-                 'dataFile' => codecept_data_dir() . 'user.php',
+                 'dataFile' => codecept_data_dir() . 'models/user.php',
              ],
         ]);
     }

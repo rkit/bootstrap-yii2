@@ -15,7 +15,7 @@ class UserTest extends \Codeception\Test\Unit
         $this->tester->haveFixtures([
              'user' => [
                  'class' => UserFixture::className(),
-                 'dataFile' => codecept_data_dir() . 'user.php',
+                 'dataFile' => codecept_data_dir() . 'models/user.php',
              ],
         ]);
 
@@ -94,19 +94,6 @@ class UserTest extends \Codeception\Test\Unit
 
         expect_that($user->save());
         expect_that($user->validatePassword('test_new_password'));
-    }
-
-    public function testFillProfile()
-    {
-        $user = $this->createUser();
-        $user->profile->full_name = 'Test';
-        $user->profile->birth_day = '2001-01-02';
-        expect_that($user->save());
-
-        $user = User::findByEmail($user->email);
-        expect($user)->isInstanceOf('app\models\User');
-        expect($user->profile->full_name)->equals('Test');
-        expect($user->profile->birth_day)->equals('2001-01-02');
     }
 
     public function testAssignRole()

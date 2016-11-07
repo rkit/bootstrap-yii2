@@ -29,3 +29,4 @@ coverage:
            - helpers/*
            - modules/admin/controllers/*
            - modules/admin/models/*
+           - modules/admin/helpers/*
