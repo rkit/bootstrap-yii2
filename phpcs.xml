@@ -2,11 +2,8 @@
 <ruleset name="PSR-MOD">
     <description>Based on PSR-2</description>
 
-    <exclude-pattern>*/vendor/*</exclude-pattern>
-    <exclude-pattern>*/mail/*</exclude-pattern>
     <exclude-pattern>*/views/*</exclude-pattern>
-    <exclude-pattern>*/migrations/*</exclude-pattern>
-    <exclude-pattern>*/messages/*</exclude-pattern>
+    <exclude-pattern>*/mail/*</exclude-pattern>
 
     <rule ref="PSR2">
         <exclude name="PSR1.Classes.ClassDeclaration"/>
@@ -19,6 +16,11 @@
             <property name="lineLimit" value="120"/>
             <property name="absoluteLineLimit" value="120"/>
         </properties>
+        <exclude-pattern>*/messages/*</exclude-pattern>
+    </rule>
+
+    <rule ref="Squiz.Classes.ValidClassName.NotCamelCaps">
+        <exclude-pattern>*/migrations/*</exclude-pattern>
     </rule>
 
 </ruleset>
