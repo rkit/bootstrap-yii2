@@ -94,8 +94,8 @@ $this->title = Yii::t('app', 'Users');
                       'model' => $userSearch,
                       'attribute' => 'date_create',
                       'pluginOptions' => [
-                      	'autoclose' => true,
-                      	'format' => 'yyyy-mm-dd',
+                        'autoclose' => true,
+                        'format' => 'yyyy-mm-dd',
                       ],
                       'options' => [
                           'class' => 'form-control',

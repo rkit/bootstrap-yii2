@@ -69,10 +69,10 @@ $this->title .= !empty($model->title) ? $model->title : Yii::t('app', 'Create');
   <!-- date_pub -->
   <?php $model->date_pub = Yii::$app->formatter->asDatetime($model->date_pub ?: 'now', 'php:Y-m-d H:i:s'); ?>
   <?= $form->field($model, 'date_pub')->widget(DateTimePicker::className(), [
-    	'pluginOptions' => [
-  		    'autoclose' => true,
-  		    'format' => 'yyyy-mm-dd hh:ii:ss'
-  	  ]
+      'pluginOptions' => [
+          'autoclose' => true,
+          'format' => 'yyyy-mm-dd hh:ii:ss'
+      ]
   ]) ?>
 
   <!-- tags -->

@@ -92,8 +92,8 @@ $this->title = Yii::t('app', 'News');
                       'model' => $newsSearch,
                       'attribute' => 'date_pub',
                       'pluginOptions' => [
-                      	'autoclose' => true,
-                      	'format' => 'yyyy-mm-dd',
+                        'autoclose' => true,
+                        'format' => 'yyyy-mm-dd',
                       ],
                       'options' => [
                           'class' => 'form-control',

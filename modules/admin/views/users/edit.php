@@ -46,8 +46,7 @@ $this->title .= !empty($title) ? $title : Yii::t('app', 'Create');
           ->dropDownList($model->getStatuses(), [
               'class' => 'form-control',
               'prompt' => Yii::t('app', 'Select status')
-          ]
-      ); ?>
+          ]); ?>
 
     </div>
 
