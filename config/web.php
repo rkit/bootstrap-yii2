@@ -112,28 +112,6 @@ $config = [
         'notify' => [
             'class' => 'app\components\Notify',
         ],
-        'authClientCollection' => [
-            'class' => 'yii\authclient\Collection',
-            'clients' => [
-                'vkontakte' => [
-                    'class' => 'yii\authclient\clients\VKontakte',
-                    'clientId' => '',
-                    'clientSecret' => '',
-                ],
-                'twitter' => [
-                    'class' => 'yii\authclient\clients\Twitter',
-                    'consumerKey' => '',
-                    'consumerSecret' => '',
-                ],
-                'facebook' => [
-                    'class' => 'yii\authclient\clients\Facebook',
-                    'clientId' => '',
-                    'clientSecret' => '',
-                    'scope' => 'email,public_profile',
-                    'attributeNames' => ['name', 'email', 'picture', 'link', 'verified'],
-                ],
-            ],
-        ]
     ],
     'params' => $params,
 ];
