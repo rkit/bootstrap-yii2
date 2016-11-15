@@ -1,6 +1,6 @@
 <?php
 
-namespace app\components\auth;
+namespace app\handlers;
 
 use yii\authclient\ClientInterface;
 use yii\helpers\ArrayHelper;
@@ -8,9 +8,9 @@ use app\models\User;
 use app\models\UserProvider;
 
 /**
- * AuthHandler handles successful authentication
+ * AuthProviderHandler handles successful authentication
  */
-class AuthHandler
+class AuthProviderHandler
 {
     /**
      * @var int

@@ -6,7 +6,7 @@ use Yii;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use app\components\BaseController;
-use app\components\auth\AuthHandler;
+use app\handlers\AuthProviderHandler;
 use app\helpers\Http;
 use app\models\forms\LoginForm;
 use app\models\forms\SignupForm;
@@ -148,7 +148,7 @@ class IndexController extends BaseController
             return $this->goHome();
         }
 
-        $authHandler = (new AuthHandler($authClient))->handle();
+        $authHandler = (new AuthProviderHandler($authClient))->handle();
 
         $user = $authHandler->getUser();
 
