@@ -42,8 +42,7 @@ $items = [
         'options' => ['class' => 'submenu-header'],
         'visible' =>
             array_key_exists('ACTION_AdminSettings', $permissions) ||
-            array_key_exists('ACTION_AdminRoles', $permissions) ||
-            array_key_exists('ACTION_AdminTags', $permissions),
+            array_key_exists('ACTION_AdminRoles', $permissions),
         'items' => [
             [
                 'label' => Yii::t('app', 'Main settings'),
