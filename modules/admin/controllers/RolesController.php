@@ -6,14 +6,16 @@ use Yii;
 use yii\web\Response;
 use yii\filters\VerbFilter;
 use yii\helpers\Url;
-use app\helpers\Model;
 use yii\helpers\ArrayHelper;
-use app\components\BaseController;
+use app\helpers\Model;
+use app\traits\ModelTrait;
 use app\models\AuthItem;
 use app\modules\admin\models\search\AuthItemSearch;
 
-class RolesController extends BaseController
+class RolesController extends \yii\web\Controller
 {
+    use ModelTrait;
+
     public function behaviors()
     {
         return [
@@ -64,7 +66,7 @@ class RolesController extends BaseController
         $permissions = ArrayHelper::index($auth->getPermissions(), 'name');
 
         if ($name) {
-            $model = $this->loadModel($model, $name);
+            $model = $this->findModel($model, $name);
             $model = $this->preparePermissionsToSave($model);
             $model = $this->prepareRolesToSave($model);
 

@@ -1,19 +1,13 @@
 <?php
 
-namespace app\components;
+namespace app\traits;
 
-use Yii;
-use yii\web\Controller;
-use yii\helpers\ArrayHelper;
 use app\helpers\Http;
 
-/**
- * Global base controller
- */
-class BaseController extends Controller
+trait ModelTrait
 {
     /**
-     * Load the model based on its primary key value or WHERE condition.
+     * Find the model based on its primary key value or WHERE condition.
      * If the model is not found or access denied, a 404 HTTP exception will be thrown.
      *
      * @param ActiveRecord $model
@@ -22,7 +16,7 @@ class BaseController extends Controller
      * @return ActiveRecord
      * @throws NotFoundHttpException
      */
-    public function loadModel($model, $id, $checkAccess = null)
+    public function findModel($model, $id, $checkAccess = null)
     {
         $model = $model::findOne($id);
 

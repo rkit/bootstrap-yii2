@@ -5,7 +5,6 @@ namespace app\controllers;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
-use app\components\BaseController;
 use app\handlers\AuthProviderHandler;
 use app\helpers\Http;
 use app\models\forms\LoginForm;
@@ -15,7 +14,7 @@ use app\models\forms\PasswordResetRequestForm;
 use app\models\forms\ResetPasswordForm;
 use app\models\forms\ConfirmEmailForm;
 
-class IndexController extends BaseController
+class IndexController extends \yii\web\Controller
 {
     /**
      * @inheritdoc

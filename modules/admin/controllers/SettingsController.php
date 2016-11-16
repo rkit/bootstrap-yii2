@@ -5,10 +5,9 @@ namespace app\modules\admin\controllers;
 use Yii;
 use yii\web\Response;
 use app\helpers\Model;
-use app\components\BaseController;
 use app\modules\admin\models\forms\SettingsForm;
 
-class SettingsController extends BaseController
+class SettingsController extends \yii\web\Controller
 {
     public function actionIndex()
     {

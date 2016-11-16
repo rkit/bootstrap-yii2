@@ -6,10 +6,9 @@ use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use app\helpers\Http;
-use app\components\BaseController;
 use app\modules\admin\models\forms\LoginForm;
 
-class IndexController extends BaseController
+class IndexController extends \yii\web\Controller
 {
     public function behaviors()
     {

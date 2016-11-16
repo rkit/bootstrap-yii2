@@ -7,14 +7,16 @@ use yii\filters\VerbFilter;
 use yii\helpers\Url;
 use yii\web\Response;
 use app\helpers\Model;
-use app\components\BaseController;
+use app\traits\ModelTrait;
 use app\models\User;
 use app\models\UserProfile;
 use app\modules\admin\models\search\UserSearch;
 use app\modules\admin\models\forms\UserForm;
 
-class UsersController extends BaseController
+class UsersController extends \yii\web\Controller
 {
+    use ModelTrait;
+
     public function behaviors()
     {
         return [
@@ -86,7 +88,7 @@ class UsersController extends BaseController
         $model = new UserForm();
 
         if ($id) {
-            $model = $this->loadModel($model, $id);
+            $model = $this->findModel($model, $id);
         }
 
         if (Yii::$app->request->isPost) {
@@ -119,7 +121,7 @@ class UsersController extends BaseController
 
     public function actionProfile($id)
     {
-        $model = $this->loadModel(new UserProfile(), $id);
+        $model = $this->findModel(new UserProfile(), $id);
 
         if (Yii::$app->request->isPost) {
             if ($model->load(Yii::$app->request->post()) && $model->save()) {

@@ -5,9 +5,12 @@ namespace app\modules\admin\controllers\common;
 use Yii;
 use yii\base\Action;
 use yii\web\Response;
+use app\traits\ModelTrait;
 
 class UpdateAttributesAction extends Action
 {
+    use ModelTrait;
+
     /**
      * @var string $modelClass
      */
@@ -20,7 +23,7 @@ class UpdateAttributesAction extends Action
     public function run($id)
     {
         $model = new $this->modelClass;
-        $model = $this->controller->loadModel($model, $id);
+        $model = $this->findModel($model, $id);
 
         $model->updateAttributes($this->attributes);
 
