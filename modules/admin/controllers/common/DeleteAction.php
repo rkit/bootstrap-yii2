@@ -2,7 +2,9 @@
 
 namespace app\modules\admin\controllers\common;
 
+use Yii;
 use yii\base\Action;
+use yii\web\Response;
 
 class DeleteAction extends Action
 {
@@ -19,6 +21,8 @@ class DeleteAction extends Action
         if ($reload) {
             return $this->controller->redirect(\yii\helpers\Url::to(['index']));
         }
-        return $this->controller->response(true);
+
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        return true;
     }
 }

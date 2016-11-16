@@ -3,6 +3,7 @@
 namespace app\modules\admin\controllers;
 
 use Yii;
+use yii\web\Response;
 use app\helpers\Model;
 use app\components\BaseController;
 use app\modules\admin\models\forms\SettingsForm;
@@ -20,7 +21,8 @@ class SettingsController extends BaseController
                 return $this->refresh();
             }
             if (Yii::$app->request->isAjax) {
-                return $this->response(Model::collectErrors($model));
+                Yii::$app->response->format = Response::FORMAT_JSON;
+                return Model::collectErrors($model);
             }
         }
 

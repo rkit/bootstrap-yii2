@@ -2,7 +2,9 @@
 
 namespace app\modules\admin\controllers\common;
 
+use Yii;
 use yii\base\Action;
+use yii\web\Response;
 
 class UpdateAttributesAction extends Action
 {
@@ -22,6 +24,7 @@ class UpdateAttributesAction extends Action
 
         $model->updateAttributes($this->attributes);
 
-        return $this->controller->response(true);
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        return true;
     }
 }

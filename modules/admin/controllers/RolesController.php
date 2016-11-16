@@ -3,6 +3,7 @@
 namespace app\modules\admin\controllers;
 
 use Yii;
+use yii\web\Response;
 use yii\filters\VerbFilter;
 use yii\helpers\Url;
 use app\helpers\Model;
@@ -80,12 +81,14 @@ class RolesController extends BaseController
                 Yii::$app->session->setFlash('success', Yii::t('app.messages', 'Saved successfully'));
                 $urlToModel = Url::toRoute(['edit', 'name' => $model->name]);
                 if (Yii::$app->request->isAjax) {
-                    return $this->response(['redirect' => $urlToModel]);
+                    Yii::$app->response->format = Response::FORMAT_JSON;
+                    return ['redirect' => $urlToModel];
                 }
                 return $this->redirect($urlToModel);
             }
             if (Yii::$app->request->isAjax) {
-                return $this->response(Model::collectErrors($model));
+                Yii::$app->response->format = Response::FORMAT_JSON;
+                return Model::collectErrors($model);
             }
         }
 

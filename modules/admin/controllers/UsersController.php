@@ -5,6 +5,7 @@ namespace app\modules\admin\controllers;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\helpers\Url;
+use yii\web\Response;
 use app\helpers\Model;
 use app\components\BaseController;
 use app\models\User;
@@ -99,12 +100,14 @@ class UsersController extends BaseController
                 Yii::$app->session->setFlash('success', Yii::t('app.messages', 'Saved successfully'));
                 $urlToModel = Url::toRoute(['edit', 'id' => $model->id]);
                 if (Yii::$app->request->isAjax) {
-                    return $this->response(['redirect' => $urlToModel]);
+                    Yii::$app->response->format = Response::FORMAT_JSON;
+                    return ['redirect' => $urlToModel];
                 }
                 return $this->redirect($urlToModel);
             }
             if (Yii::$app->request->isAjax) {
-                return $this->response(Model::collectErrors($model));
+                Yii::$app->response->format = Response::FORMAT_JSON;
+                return Model::collectErrors($model);
             }
         }
 
@@ -123,12 +126,14 @@ class UsersController extends BaseController
                 Yii::$app->session->setFlash('success', Yii::t('app.messages', 'Saved successfully'));
                 $urlToModel = Url::toRoute(['profile', 'id' => $model->user_id]);
                 if (Yii::$app->request->isAjax) {
-                    return $this->response(['redirect' => $urlToModel]);
+                    Yii::$app->response->format = Response::FORMAT_JSON;
+                    return ['redirect' => $urlToModel];
                 }
                 return $this->redirect($urlToModel);
             }
             if (Yii::$app->request->isAjax) {
-                return $this->response(Model::collectErrors($model));
+                Yii::$app->response->format = Response::FORMAT_JSON;
+                return Model::collectErrors($model);
             }
         }
 
@@ -154,7 +159,9 @@ class UsersController extends BaseController
                 ];
             }
         }
-        return $this->response($result);
+
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        return $result;
     }
 
     private function assignRole($model)

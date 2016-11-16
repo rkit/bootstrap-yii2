@@ -57,17 +57,4 @@ class BaseController extends Controller
 
         return $model;
     }
-
-    /**
-     * HTTP Response
-     *
-     * @param mixed $data
-     * @param string $format The response format
-     * @see http://www.yiiframework.com/doc-2.0/yii-web-response.html
-     */
-    public function response($data, $format = \yii\web\Response::FORMAT_JSON)
-    {
-        \Yii::$app->response->format = $format;
-        return $data;
-    }
 }
