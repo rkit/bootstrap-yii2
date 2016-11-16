@@ -4,7 +4,7 @@ use yii\db\Schema;
 use app\models\User;
 use app\migrations\Migration;
 
-class m141230_090558_add_superuser extends Migration
+class m161026_103039_add_superuser extends Migration
 {
     public function safeUp()
     {
