@@ -19,7 +19,6 @@ class NewsSearch extends News
     {
         return [
             ['title', 'string'],
-            ['type_id', 'integer'],
             ['date_pub', 'date', 'format' => 'yyyy-mm-dd'],
 
             ['status', 'integer'],
@@ -35,7 +34,7 @@ class NewsSearch extends News
      */
     public function search($params)
     {
-        $query = News::find()->joinWith(['type']);
+        $query = News::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -49,17 +48,11 @@ class NewsSearch extends News
             ],
         ]);
 
-        $dataProvider->sort->attributes['type_id'] = [
-            'asc'  => ['news_type.title' => SORT_ASC],
-            'desc' => ['news_type.title' => SORT_DESC],
-        ];
-
         if (!($this->load($params) && $this->validate())) {
             return $dataProvider;
         }
 
         $query->andFilterWhere([
-            'type_id' => $this->type_id,
             'status' => $this->status,
             'DATE(date_pub)' => $this->date_pub
         ]);

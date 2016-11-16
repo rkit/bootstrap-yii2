@@ -18,8 +18,6 @@ use yii\helpers\Url;
 <p class="lead">Features</p>
 <ul>
   <li>Users, Roles, Registration, Basic and social authorization</li>
-  <li>Countries, Regions, Cities</span></li>
-  <li>Tags</li>
   <li>Settings</li>
   <li><a href="https://github.com/rkit/filemanager-yii2">File Manager</a></li>
   <li><a href="https://webpack.github.io/">Webpack for assets</a></li>

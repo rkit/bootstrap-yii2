@@ -11,14 +11,12 @@ use app\models\query\NewsQuery;
  * This is the model class for table "news".
  *
  * @property integer $id
- * @property integer $type_id
  * @property string $title
  * @property string $text
  * @property string $preview
  * @property string $date_create
  * @property string $date_update
  * @property string $date_pub
- * @property string $reference
  * @property integer $status
  */
 class News extends \yii\db\ActiveRecord
@@ -26,10 +24,6 @@ class News extends \yii\db\ActiveRecord
     const STATUS_BLOCKED = 0;
     const STATUS_ACTIVE  = 1;
 
-    /**
-     * @var array
-     */
-    public $tagValues;
     /**
      * @var array
      */
@@ -60,17 +54,14 @@ class News extends \yii\db\ActiveRecord
     {
         return [
             [
-                ['title', 'type_id', 'text', 'date_pub'], 'required'
+                ['title', 'text', 'date_pub'], 'required'
             ],
             [
                 [
-                    'title', 'type_id', 'text', 'date_pub', 'preview', 'gallery', 'galleryTitles',
-                    'reference', 'status', 'tagValues'
+                    'title', 'text', 'date_pub', 'preview',
+                    'gallery', 'galleryTitles', 'status'
                 ], 'safe'
             ],
-
-            ['type_id', 'integer'],
-            ['type_id', 'exist', 'targetClass' => NewsType::className(), 'targetAttribute' => ['type_id' => 'id']],
 
             ['title', 'string', 'max' => 255],
             ['text', 'string'],
@@ -79,9 +70,6 @@ class News extends \yii\db\ActiveRecord
                 'timestampAttribute' => 'date_pub',
                 'timestampAttributeFormat' => 'php:Y-m-d H:i:s'
             ],
-
-            ['reference', 'url'],
-            ['reference', 'string', 'max' => 255],
 
             ['status', 'integer'],
             ['status', 'in', 'range' => array_keys(News::getStatuses())],
@@ -95,7 +83,6 @@ class News extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'type_id' => Yii::t('app', 'Type'),
             'title' => Yii::t('app', 'Title'),
             'text' => Yii::t('app', 'Text'),
             'preview' => Yii::t('app', 'Preview'),
@@ -103,10 +90,7 @@ class News extends \yii\db\ActiveRecord
             'date_create' => Yii::t('app', 'Date create'),
             'date_update' => Yii::t('app', 'Date update'),
             'date_pub' => Yii::t('app', 'Date publication'),
-            'reference' => Yii::t('app', 'Reference'),
             'status' => Yii::t('app', 'Status'),
-
-            'tagValues' => Yii::t('app', 'Tags'),
         ];
     }
 
@@ -132,14 +116,6 @@ class News extends \yii\db\ActiveRecord
                 'updatedAtAttribute' => 'date_update',
                 'value' => new \yii\db\Expression('NOW()'),
             ],
-
-            [
-                'class' => 'creocoder\taggable\TaggableBehavior',
-                // 'tagValuesAsArray' => false,
-                // 'tagRelation' => 'tags',
-                 'tagValueAttribute' => 'title',
-                 'tagFrequencyAttribute' => 'count',
-            ],
         ];
     }
 
@@ -150,20 +126,6 @@ class News extends \yii\db\ActiveRecord
             'update' => self::OP_ALL,
             'delete' => self::OP_ALL,
         ];
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function beforeSave($insert)
-    {
-        if (parent::beforeSave($insert)) {
-            $this->setTagValues($this->tagValues);
-
-            return true;
-        }
-
-        return false; // @codeCoverageIgnore
     }
 
     /**
@@ -217,26 +179,6 @@ class News extends \yii\db\ActiveRecord
     public function isActive()
     {
         return $this->status == self::STATUS_ACTIVE;
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getType()
-    {
-        return $this->hasOne(NewsType::className(), array('id' => 'type_id'));
-    }
-
-    /**
-     * Get tags.
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getTags()
-    {
-        return $this->owner
-            ->hasMany(Tag::className(), ['id' => 'tag_id'])
-            ->viaTable('{{%news_tags}}', ['news_id' => 'id']);
     }
 
     public function getFiles($callable = null)

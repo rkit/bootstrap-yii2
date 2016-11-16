@@ -8,7 +8,6 @@ use yii\helpers\Url;
 use app\helpers\Model;
 use app\components\BaseController;
 use app\models\News;
-use app\models\NewsType;
 use app\modules\admin\models\search\NewsSearch;
 
 class NewsController extends BaseController
@@ -88,7 +87,6 @@ class NewsController extends BaseController
             'newsSearch' => $newsSearch,
             'dataProvider' => $dataProvider,
             'statuses' => $statuses,
-            'types' => NewsType::find()->orderBy('title')->asArray()->all()
         ]);
     }
 
@@ -116,7 +114,6 @@ class NewsController extends BaseController
 
         return $this->render('edit', [
             'model' => $model,
-            'types' => NewsType::find()->orderBy('title')->asArray()->all()
         ]);
     }
 }

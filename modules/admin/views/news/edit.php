@@ -16,18 +16,6 @@ $this->title .= !empty($model->title) ? $model->title : Yii::t('app', 'Create');
   <!-- title -->
   <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
-  <!-- type_id -->
-  <?= $form->field($model, 'type_id')
-      ->dropDownList(ArrayHelper::map($types, 'id', 'title'), [
-          'class' => 'form-control',
-          'prompt' => Yii::t('app', 'Select the type')
-      ])
-      ->label(
-        $model->type_id ?
-        Html::a($model->getAttributeLabel('type_id'), ['/admin/news-types/edit', 'id' => $model->type_id]) :
-        Html::a($model->getAttributeLabel('type_id'), ['/admin/news-types'])
-      ); ?>
-
   <!-- text -->
   <?= $this->render('/shared/editor', [
       'form' => $form, 'model' => $model, 'attribute' => 'text', 'imageUploadUrl' => 'text-upload'
@@ -74,12 +62,6 @@ $this->title .= !empty($model->title) ? $model->title : Yii::t('app', 'Create');
           'format' => 'yyyy-mm-dd hh:ii:ss'
       ]
   ]) ?>
-
-  <!-- tags -->
-  <?= $this->render('/shared/tags', ['form' => $form, 'model' => $model, 'attribute' => 'tagValues']) ?>
-
-  <!-- reference -->
-  <?= $form->field($model, 'reference')->textInput(['maxlength' => true]) ?>
 
   <!-- status -->
   <?= $form->field($model, 'status')->checkbox(['label' => Yii::t('app', 'Publish')]) ?>

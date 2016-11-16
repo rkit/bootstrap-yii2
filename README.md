@@ -8,8 +8,6 @@
 ## Features
 
 - Users, Roles, Registration, Basic and social authorization
-- Countries, Regions, Cities
-- Tags
 - [Settings](https://github.com/rkit/settings-yii2)
 - [File Manager](https://github.com/rkit/filemanager-yii2)
 - [Webpack for assets](https://webpack.github.io/)

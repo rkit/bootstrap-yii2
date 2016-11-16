@@ -52,7 +52,7 @@ $this->title = Yii::t('app', 'News');
            * @var id
            */
           [
-              'class' => CheckboxColumn::classname(),
+              'class' => CheckboxColumn::className(),
               'headerOptions' => ['style' => 'width: 30px']
           ],
           /**
@@ -65,20 +65,6 @@ $this->title = Yii::t('app', 'News');
               'value' => function ($model) {
                   return Html::a(Html::encode($model['title']), ['edit', 'id' => $model['id']], ['data-pjax' => 0]);
               }
-          ],
-          /**
-           * @var type
-           */
-          [
-              'attribute' => 'type_id',
-              'value' => 'type.title',
-              'filter' => Html::activeDropDownList(
-                  $newsSearch,
-                  'type_id',
-                  ArrayHelper::map($types, 'id', 'title'),
-                  ['class' => 'form-control', 'prompt' => Yii::t('app', 'All types')]
-              )
-
           ],
           /**
            * @var date_pub
