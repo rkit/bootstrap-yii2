@@ -66,6 +66,9 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             ['email', 'unique'],
             ['email', 'default', 'value' => null],
 
+            ['role', 'string'],
+            ['role', 'exist', 'targetClass' => AuthItem::className(), 'targetAttribute' => ['role' => 'name'], 'filter' => ['type' => \yii\rbac\Item::TYPE_ROLE]],
+
             ['status', 'integer'],
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => array_keys(self::getStatuses())],
@@ -467,6 +470,15 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     }
 
     /**
+     * Generates new confirm email token
+     */
+    public function generateEmailConfirmToken()
+    {
+        $this->email_confirm_token = self::generateToken();
+        $this->date_confirm = null;
+    }
+
+    /**
      * Finds user by password reset token
      *
      * @param string $token password reset token
@@ -482,15 +494,6 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             'password_reset_token' => $token,
             'status' => self::STATUS_ACTIVE,
         ]);
-    }
-
-    /**
-     * Generates new confirm email token
-     */
-    public function generateEmailConfirmToken()
-    {
-        $this->email_confirm_token = self::generateToken();
-        $this->date_confirm = null;
     }
 
     /**
