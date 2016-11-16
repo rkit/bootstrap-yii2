@@ -1,5 +1,6 @@
 <?php
 use yii\helpers\Html;
+use yii\helpers\ArrayHelper;
 use yii\bootstrap\Nav;
 use app\helpers\Page;
 
@@ -16,7 +17,7 @@ use app\helpers\Page;
   <?= Page::title($this->title, Yii::t('app', 'Control Panel')); ?>
   <?= Html::csrfMetaTags() ?>
   <?php $this->head() ?>
-  <link href="<?= Yii::$app->controller->getCssBundle() ?>" rel="stylesheet">
+  <?= Html::cssFile('/assets/' . ArrayHelper::getValue(Yii::$app->params['assets'], 'admin.css')) ?>
 </head>
 <body>
 <?php $this->beginBody() ?>
@@ -57,7 +58,7 @@ use app\helpers\Page;
   </div>
   <?php endif?>
 
-  <script src="<?= Yii::$app->controller->getJsBundle() ?>"></script>
+  <?= Html::jsFile('/assets/' . ArrayHelper::getValue(Yii::$app->params['assets'], 'admin.js')) ?>
 <?php $this->endBody() ?>
 </body>
 </html>

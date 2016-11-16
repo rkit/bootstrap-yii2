@@ -29,9 +29,6 @@ class Module extends \yii\base\Module
     public function beforeAction($action)
     {
         if (parent::beforeAction($action)) {
-            $action->controller->cssBundle = 'admin.css';
-            $action->controller->jsBundle = 'admin.js';
-
             return $this->checkAccess($action);
         }
         return false;

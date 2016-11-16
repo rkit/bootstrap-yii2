@@ -13,31 +13,6 @@ use app\helpers\Http;
 class BaseController extends Controller
 {
     /**
-     * @var string Path to js bundle
-     */
-    public $jsBundle = 'front.js';
-    /**
-     * @var string Path to css bundle
-     */
-    public $cssBundle = 'front.css';
-
-    /**
-     * @return string Return CSS bundle
-     */
-    public function getCssBundle()
-    {
-        return '/assets/' . ArrayHelper::getValue(Yii::$app->params['assets'], $this->cssBundle);
-    }
-
-    /**
-     * @return string Return JS bundle
-     */
-    public function getJsBundle()
-    {
-        return '/assets/' . ArrayHelper::getValue(Yii::$app->params['assets'], $this->jsBundle);
-    }
-
-    /**
      * Load the model based on its primary key value or WHERE condition.
      * If the model is not found or access denied, a 404 HTTP exception will be thrown.
      *
