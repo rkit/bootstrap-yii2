@@ -11,7 +11,7 @@ class AuthItemSearchTest extends \Codeception\Test\Unit
     protected function _before()
     {
         $this->tester->haveFixtures([
-             'authItem' => AuthItemFixture::className(),
+             'authItem' => AuthItemFixture::class,
         ]);
     }
 

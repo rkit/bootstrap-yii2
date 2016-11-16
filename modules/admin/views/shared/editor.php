@@ -2,7 +2,7 @@
 use yii\helpers\Url;
 use app\modules\admin\helpers\FileRulesDescription;
 ?>
-<?= $form->field($model, $attribute)->widget(\vova07\imperavi\Widget::className(), [
+<?= $form->field($model, $attribute)->widget(\vova07\imperavi\Widget::class, [
     'settings' => [
         'lang' => 'ru',
         'minHeight' => 200,

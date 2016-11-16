@@ -11,8 +11,8 @@ class UserProfileTest extends \Codeception\Test\Unit
     protected function _before()
     {
         $this->tester->haveFixtures([
-             'user' => UserFixture::className(),
-             'profile' => UserProfileFixture::className(),
+             'user' => UserFixture::class,
+             'profile' => UserProfileFixture::class,
         ]);
     }
 

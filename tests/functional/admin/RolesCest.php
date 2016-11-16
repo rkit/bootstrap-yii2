@@ -19,8 +19,8 @@ class RolesCest
     public function _before($I)
     {
         $I->haveFixtures([
-             'authItem' => AuthItemFixture::className(),
-             'user' => UserFixture::className(),
+             'authItem' => AuthItemFixture::class,
+             'user' => UserFixture::class,
         ]);
         $I->amLoggedInAs($I->grabFixture('user', 'user-1'));
         $I->amOnRoute($this->url);

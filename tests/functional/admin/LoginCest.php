@@ -19,10 +19,10 @@ class LoginCest
     {
         $I->amOnRoute('/admin');
         $I->haveFixtures([
-             'authItem' => AuthItemFixture::className(),
-             'authAssignment' => AuthAssignmentFixture::className(),
-             'authItemChild' => AuthItemChildFixture::className(),
-             'user' => UserFixture::className(),
+             'authItem' => AuthItemFixture::class,
+             'authAssignment' => AuthAssignmentFixture::class,
+             'authItemChild' => AuthItemChildFixture::class,
+             'user' => UserFixture::class,
         ]);
     }
 

@@ -24,7 +24,7 @@ class IndexController extends BaseController
     {
         return [
             'access' => [
-                'class' => AccessControl::className(),
+                'class' => AccessControl::class,
                 'only' => [
                     'auth',
                     'logout',
@@ -55,7 +55,7 @@ class IndexController extends BaseController
                 ],
             ],
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'logout' => ['post'],
                 ],

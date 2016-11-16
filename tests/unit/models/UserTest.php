@@ -18,11 +18,11 @@ class UserTest extends \Codeception\Test\Unit
     protected function _before()
     {
         $this->tester->haveFixtures([
-             'authItem' => AuthItemFixture::className(),
-             'authAssignment' => AuthAssignmentFixture::className(),
-             'user' => UserFixture::className(),
-             'profile' => UserProfileFixture::className(),
-             'provider' => UserProviderFixture::className(),
+             'authItem' => AuthItemFixture::class,
+             'authAssignment' => AuthAssignmentFixture::class,
+             'user' => UserFixture::class,
+             'profile' => UserProfileFixture::class,
+             'provider' => UserProviderFixture::class,
         ]);
     }
 

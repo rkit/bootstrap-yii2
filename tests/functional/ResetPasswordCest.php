@@ -13,7 +13,7 @@ class ResetPasswordCest
     public function _before($I)
     {
         $I->haveFixtures([
-             'user' => UserFixture::className(),
+             'user' => UserFixture::class,
         ]);
         $user = $I->grabFixture('user', 'user-2');
         $I->amOnRoute('/index/reset-password', ['token' => $user->password_reset_token]);

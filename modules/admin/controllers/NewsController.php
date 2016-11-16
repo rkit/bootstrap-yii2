@@ -17,7 +17,7 @@ class NewsController extends BaseController
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'publish' => ['post'],
                     'unpublish' => ['post'],

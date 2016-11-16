@@ -19,7 +19,7 @@ class UsersController extends BaseController
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'set-active' => ['post'],
                     'set-block' => ['post'],

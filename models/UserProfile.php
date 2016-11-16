@@ -63,13 +63,13 @@ class UserProfile extends \yii\db\ActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(User::className(), ['id' => 'user_id']);
+        return $this->hasOne(User::class, ['id' => 'user_id']);
     }
 
     public function getFiles($callable = null)
     {
         return $this
-            ->hasMany(File::className(), ['id' => 'file_id'])
+            ->hasMany(File::class, ['id' => 'file_id'])
             ->viaTable('user_profiles_files', ['user_id' => 'user_id'], $callable);
     }
 }

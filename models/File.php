@@ -36,7 +36,7 @@ class File extends \yii\db\ActiveRecord
     {
         return [
             [
-                'class' => TimestampBehavior::className(),
+                'class' => TimestampBehavior::class,
                 'createdAtAttribute' => 'date_create',
                 'updatedAtAttribute' => 'date_update',
                 'value' => new \yii\db\Expression('NOW()'),

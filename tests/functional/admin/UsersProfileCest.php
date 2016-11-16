@@ -22,11 +22,11 @@ class UsersProfileCest
     public function _before($I)
     {
         $I->haveFixtures([
-             'authItem' => AuthItemFixture::className(),
-             'authAssignment' => AuthAssignmentFixture::className(),
-             'authItemChild' => AuthItemChildFixture::className(),
-             'profile' => UserProfileFixture::className(),
-             'user' => UserFixture::className(),
+             'authItem' => AuthItemFixture::class,
+             'authAssignment' => AuthAssignmentFixture::class,
+             'authItemChild' => AuthItemChildFixture::class,
+             'profile' => UserProfileFixture::class,
+             'user' => UserFixture::class,
         ]);
         $I->amLoggedInAs($I->grabFixture('user', 'user-1'));
         $I->amOnRoute($this->url);

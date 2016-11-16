@@ -16,7 +16,7 @@ class LoginCest
     {
         $I->amOnRoute('/index/login');
         $I->haveFixtures([
-             'user' => UserFixture::className(),
+             'user' => UserFixture::class,
         ]);
     }
 

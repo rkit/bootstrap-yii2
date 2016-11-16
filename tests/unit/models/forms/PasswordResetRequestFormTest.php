@@ -16,7 +16,7 @@ class PasswordResetRequestFormTest extends \Codeception\Test\Unit
         Yii::$app->settings->set('emailName', 'Editor');
 
         $this->tester->haveFixtures([
-             'user' => UserFixture::className(),
+             'user' => UserFixture::class,
         ]);
     }
 

@@ -11,7 +11,7 @@ class UserQueryTest extends \Codeception\Test\Unit
     protected function _before()
     {
         $this->tester->haveFixtures([
-             'user' => UserFixture::className(),
+             'user' => UserFixture::class,
         ]);
     }
 

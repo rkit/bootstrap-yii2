@@ -67,7 +67,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             ['email', 'default', 'value' => null],
 
             ['role', 'string'],
-            ['role', 'exist', 'targetClass' => AuthItem::className(), 'targetAttribute' => ['role' => 'name'], 'filter' => ['type' => \yii\rbac\Item::TYPE_ROLE]],
+            ['role', 'exist', 'targetClass' => AuthItem::class, 'targetAttribute' => ['role' => 'name'], 'filter' => ['type' => \yii\rbac\Item::TYPE_ROLE]],
 
             ['status', 'integer'],
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
@@ -115,7 +115,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     {
         return [
             [
-                'class' => TimestampBehavior::className(),
+                'class' => TimestampBehavior::class,
                 'createdAtAttribute' => 'date_create',
                 'updatedAtAttribute' => 'date_update',
                 'value' => new \yii\db\Expression('NOW()'),
@@ -148,7 +148,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
      */
     public function getProfile()
     {
-        return $this->hasOne(UserProfile::className(), ['user_id' => 'id']);
+        return $this->hasOne(UserProfile::class, ['user_id' => 'id']);
     }
 
     /**
@@ -164,7 +164,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
      */
     public function getProviders()
     {
-        return $this->hasMany(UserProvider::className(), ['user_id' => 'id']);
+        return $this->hasMany(UserProvider::class, ['user_id' => 'id']);
     }
 
     /**
@@ -180,7 +180,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
      */
     public function getRoles()
     {
-        return $this->hasOne(AuthItem::className(), ['name' => 'role']);
+        return $this->hasOne(AuthItem::class, ['name' => 'role']);
     }
 
     /**

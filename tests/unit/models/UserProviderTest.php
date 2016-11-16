@@ -12,8 +12,8 @@ class UserProviderTest extends \Codeception\Test\Unit
     protected function _before()
     {
         $this->tester->haveFixtures([
-             'user' => UserFixture::className(),
-             'provider' => UserProviderFixture::className(),
+             'user' => UserFixture::class,
+             'provider' => UserProviderFixture::class,
         ]);
     }
 

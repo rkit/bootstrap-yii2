@@ -5,7 +5,7 @@ use app\modules\admin\helpers\FileRulesDescription;
 ?>
 <?php $model->$attribute = null;?>
 <?= $form->field($model, $attribute, ['template' => "{error}\n{input}\n{hint}"])
-    ->widget(FileApi::className(), [
+    ->widget(FileApi::class, [
         'template' => '@app/modules/admin/views/shared/files/gallery/template',
         'preview' => false,
         'callbacks' => [

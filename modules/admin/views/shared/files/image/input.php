@@ -4,7 +4,7 @@ use rkit\fileapi\Widget as FileApi;
 use app\modules\admin\helpers\FileRulesDescription;
 ?>
 <?= $form->field($model, $attribute, ['template' => "{label}\n{error}\n{input}\n{hint}"])
-    ->widget(FileApi::className(), [
+    ->widget(FileApi::class, [
         'template' => '@app/modules/admin/views/shared/files/image/template',
         'callbacks' => [
             'select' => new JsExpression('function (evt, ui) {

@@ -22,7 +22,7 @@ class SignupProviderCest
     public function _before($I)
     {
         $I->haveFixtures([
-             'user' => UserFixture::className(),
+             'user' => UserFixture::class,
         ]);
     }
 
@@ -30,13 +30,13 @@ class SignupProviderCest
     {
         switch ($type) {
             case 'vkontakte':
-                $clientClass = VKontakte::className();
+                $clientClass = VKontakte::class;
                 break;
             case 'twitter':
-                $clientClass = Twitter::className();
+                $clientClass = Twitter::class;
                 break;
             case 'facebook':
-                $clientClass = Facebook::className();
+                $clientClass = Facebook::class;
                 break;
         }
         return $clientClass;
@@ -63,7 +63,7 @@ class SignupProviderCest
                 },
                 'getAccessToken' => function () use ($type) {
                     return Stub::make(
-                        OAuthToken::className(),
+                        OAuthToken::class,
                         [
                             'getParams' => function () use ($type) {
                                 return $this->getClientParamsToken($type);

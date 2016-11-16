@@ -18,7 +18,7 @@ class SettingsCest
     public function _before($I)
     {
         $I->haveFixtures([
-             'user' => UserFixture::className(),
+             'user' => UserFixture::class,
         ]);
         $I->amLoggedInAs($I->grabFixture('user', 'user-1'));
         $I->amOnRoute($this->url);

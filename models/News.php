@@ -111,7 +111,7 @@ class News extends \yii\db\ActiveRecord
     {
         return [
             [
-                'class' => TimestampBehavior::className(),
+                'class' => TimestampBehavior::class,
                 'createdAtAttribute' => 'date_create',
                 'updatedAtAttribute' => 'date_update',
                 'value' => new \yii\db\Expression('NOW()'),
@@ -184,7 +184,7 @@ class News extends \yii\db\ActiveRecord
     public function getFiles($callable = null)
     {
         return $this
-            ->hasMany(File::className(), ['id' => 'file_id'])
+            ->hasMany(File::class, ['id' => 'file_id'])
             ->viaTable('news_files', ['news_id' => 'id'], $callable);
     }
 }

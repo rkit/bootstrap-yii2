@@ -52,7 +52,7 @@ $this->title = Yii::t('app', 'Users');
            * @var id
            */
           [
-              'class' => CheckboxColumn::classname(),
+              'class' => CheckboxColumn::class,
               'headerOptions' => ['style' => 'width: 30px']
           ],
           /**

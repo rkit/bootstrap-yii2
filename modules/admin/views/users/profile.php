@@ -25,7 +25,7 @@ $this->title .= !empty($title) ? $title : Yii::t('app', 'Create');
 
       <!-- birth_day -->
       <?php $model->birth_day = $model->birth_day > 0 ? $model->birth_day : '' ?>
-      <?= $form->field($model, 'birth_day')->widget(DatePicker::classname(), [
+      <?= $form->field($model, 'birth_day')->widget(DatePicker::class, [
           'pluginOptions' => [
               'autoclose' => true,
               'format' => 'yyyy-mm-dd'

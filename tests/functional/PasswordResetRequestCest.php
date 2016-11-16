@@ -15,7 +15,7 @@ class PasswordResetRequestCest
     {
         $I->amOnRoute('/index/request-password-reset');
         $I->haveFixtures([
-             'user' => UserFixture::className(),
+             'user' => UserFixture::class,
         ]);
     }
 
