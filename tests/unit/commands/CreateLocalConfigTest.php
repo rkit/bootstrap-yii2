@@ -25,7 +25,7 @@ class CreateLocalConfigTest extends \Codeception\Test\Unit
         expect(count($command->options()))->equals(1);
     }
 
-    public function testCreate()
+    public function testSuccess()
     {
         $config = Yii::getAlias('@app/config/local/test.php');
 

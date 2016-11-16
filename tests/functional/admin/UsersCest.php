@@ -22,28 +22,13 @@ class UsersCest
     public function _before($I)
     {
         $I->haveFixtures([
-             'authItem' => [
-                 'class' => AuthItemFixture::className(),
-                 'dataFile' => codecept_data_dir() . 'models/auth_item.php',
-             ],
-             'authAssignment' => [
-                 'class' => AuthAssignmentFixture::className(),
-                 'dataFile' => codecept_data_dir() . 'models/auth_assignment.php',
-             ],
-             'authItemChild' => [
-                 'class' => AuthItemChildFixture::className(),
-                 'dataFile' => codecept_data_dir() . 'models/auth_item_child.php',
-             ],
-             'profile' => [
-                 'class' => UserProfileFixture::className(),
-                 'dataFile' => codecept_data_dir() . 'models/user_profile.php',
-             ],
-             'user' => [
-                 'class' => UserFixture::className(),
-                 'dataFile' => codecept_data_dir() . 'models/user.php',
-             ],
+             'authItem' => AuthItemFixture::className(),
+             'authAssignment' => AuthAssignmentFixture::className(),
+             'authItemChild' => AuthItemChildFixture::className(),
+             'profile' => UserProfileFixture::className(),
+             'user' => UserFixture::className(),
         ]);
-        $I->amLoggedInAs(User::findByUsername('superuser'));
+        $I->amLoggedInAs($I->grabFixture('user', 'user-1'));
         $I->amOnRoute($this->url);
     }
 
@@ -277,21 +262,22 @@ class UsersCest
     {
         $I->click('user-2');
         $I->submitForm($this->formId, [
-            $this->formName . '[role]' => 'EditorNews',
+            $this->formName . '[role]' => 'Editor',
         ]);
         $I->expectTo('see success');
         $I->see('Saved successfully');
 
         $I->amLoggedInAs(User::findByUsername('user-2'));
-        $I->amOnRoute('/admin/news');
+        $I->amOnRoute('/admin/settings');
         $I->seeResponseCodeIs(200);
 
         $I->amOnRoute('/admin/users');
         $I->seeResponseCodeIs(403);
 
         $I->amOnRoute('/admin');
-        $I->see('News', '#menu');
-        $I->seeNumberOfElements('#menu li', 1);
+        $I->see('Settings', '#menu');
+        $I->dontSee('Users', '#menu');
+        $I->dontSee('Roles', '#menu');
     }
 
     public function testEnable($I)

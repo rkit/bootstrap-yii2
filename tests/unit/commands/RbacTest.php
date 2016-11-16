@@ -25,7 +25,7 @@ class RbacTest extends \Codeception\Test\Unit
         expect(count($command->options()))->equals(1);
     }
 
-    public function testLoad()
+    public function testSuccess()
     {
         $config = Yii::getAlias('@app/tests/_data/rbac/permissions.php');
 
@@ -44,7 +44,7 @@ class RbacTest extends \Codeception\Test\Unit
             $permissionsInDb[$permission->name] = $permission->description;
         }
 
-        expect(count($permissionsInDb))->equals(10);
+        expect(count($permissionsInDb))->equals(5);
         expect($permissionsInDb)->equals($permissionsInConfig);
     }
 

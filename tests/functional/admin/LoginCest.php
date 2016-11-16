@@ -8,7 +8,6 @@ use app\tests\fixtures\User as UserFixture;
 use app\tests\fixtures\AuthItem as AuthItemFixture;
 use app\tests\fixtures\AuthItemChild as AuthItemChildFixture;
 use app\tests\fixtures\AuthAssignment as  AuthAssignmentFixture;
-use app\models\User;
 
 class LoginCest
 {
@@ -20,22 +19,10 @@ class LoginCest
     {
         $I->amOnRoute('/admin');
         $I->haveFixtures([
-             'authItem' => [
-                 'class' => AuthItemFixture::className(),
-                 'dataFile' => codecept_data_dir() . 'models/auth_item.php',
-             ],
-             'authAssignment' => [
-                 'class' => AuthAssignmentFixture::className(),
-                 'dataFile' => codecept_data_dir() . 'models/auth_assignment.php',
-             ],
-             'authItemChild' => [
-                 'class' => AuthItemChildFixture::className(),
-                 'dataFile' => codecept_data_dir() . 'models/auth_item_child.php',
-             ],
-             'user' => [
-                 'class' => UserFixture::className(),
-                 'dataFile' => codecept_data_dir() . 'models/user.php',
-             ],
+             'authItem' => AuthItemFixture::className(),
+             'authAssignment' => AuthAssignmentFixture::className(),
+             'authItemChild' => AuthItemChildFixture::className(),
+             'user' => UserFixture::className(),
         ]);
     }
 
@@ -166,17 +153,17 @@ class LoginCest
     public function testEnterToPageIndexWithNoPermission($I)
     {
         try {
-            $I->amLoggedInAs(User::findByUsername('user-2'));
+            $I->amLoggedInAs($I->grabFixture('user', 'user-2'));
             $I->amOnRoute('/admin');
         } catch (ForbiddenHttpException $Exception) {
         }
     }
 
-    public function testEnterToPageNewsWithNoPermission($I)
+    public function testEnterToPageWithNoPermission($I)
     {
         try {
-            $I->amLoggedInAs(User::findByUsername('user-2'));
-            $I->amOnRoute('/admin/news');
+            $I->amLoggedInAs($I->grabFixture('user', 'user-2'));
+            $I->amOnRoute('/admin/settings');
         } catch (ForbiddenHttpException $Exception) {
         }
     }

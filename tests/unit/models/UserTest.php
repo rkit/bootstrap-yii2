@@ -3,8 +3,13 @@
 namespace app\tests\unit\models;
 
 use Yii;
+use app\tests\fixtures\AuthItem as AuthItemFixture;
+use app\tests\fixtures\AuthAssignment as AuthAssignmentFixture;
 use app\tests\fixtures\User as UserFixture;
+use app\tests\fixtures\UserProfile as UserProfileFixture;
+use app\tests\fixtures\UserProvider as UserProviderFixture;
 use app\models\User;
+use app\models\UserProvider;
 use app\models\AuthItem;
 
 class UserTest extends \Codeception\Test\Unit
@@ -13,112 +18,71 @@ class UserTest extends \Codeception\Test\Unit
     protected function _before()
     {
         $this->tester->haveFixtures([
-             'user' => [
-                 'class' => UserFixture::className(),
-                 'dataFile' => codecept_data_dir() . 'models/user.php',
-             ],
+             'authItem' => AuthItemFixture::className(),
+             'authAssignment' => AuthAssignmentFixture::className(),
+             'user' => UserFixture::className(),
+             'profile' => UserProfileFixture::className(),
+             'provider' => UserProviderFixture::className(),
         ]);
-
     }
 
-    protected function createUser()
+    public function testGetProfile()
+    {
+        $user = $this->tester->grabFixture('user', 'user-2');
+        expect($user->profile)->isInstanceOf('app\models\UserProfile');
+    }
+
+    public function testSetProfile()
     {
         $user = new User();
-        $user->username = 'test';
-        $user->email = 'test@test.com';
-        $user->generateEmailConfirmToken();
-        $user->setPassword('test_password');
+        $user->setProfile(['full_name' => 'Test']);
 
         expect_that($user->save());
-        expect($user)->isInstanceOf('app\models\User');
-        expect_that($user->isActive());
-        expect_that($user->validatePassword('test_password'));
-
-        return $user;
+        expect($user->profile->full_name)->equals('Test');
     }
 
-    protected function createRole()
+    public function testGetProviders()
     {
-        $role = new AuthItem([
-            'type' => \yii\rbac\Item::TYPE_ROLE,
-            'name' => 'test',
-            'description' => 'test_description'
-        ]);
-
-        expect_that($role->save());
-
-        return $role;
+        $user = $this->tester->grabFixture('user', 'user-2');
+        expect($user->providers[0]->user)->isInstanceOf('app\models\User');
     }
 
-    public function testFindIdentity()
+    public function testSetProviders()
     {
-        expect_that($user = User::findIdentity(1));
-        expect($user->username)->equals('superuser');
-
-        expect_not(User::findIdentity(999));
-    }
-
-    /**
-     * @expectedException Exception
-     * @expectedExceptionMessage findIdentityByAccessToken is not implemented.
-     */
-    public function testFindIdentityByAccessToken()
-    {
-        expect_not(User::findIdentityByAccessToken('test_token'));
-    }
-
-    public function testFindByUsername()
-    {
-        expect_that($user = User::findByUsername('superuser'));
-        expect($user->username)->equals('superuser');
-
-        expect_not(User::findByUsername('test_user'));
-    }
-
-    public function testValidateAuthKey()
-    {
-        $user = User::findByUsername('superuser');
-        expect_that($user->validateAuthKey('dKz8PzyduJUDyrrhAC05-Mn53IvaXvoA'));
-        expect_not($user->validateAuthKey('test_password'));
-    }
-
-    public function testCreate()
-    {
-        $this->createUser();
-    }
-
-    public function testChangePassword()
-    {
-        $user = $this->createUser();
-        $user->passwordNew = 'test_new_password';
+        $user = new User();
+        $user->setProviders(['type' => UserProvider::TYPE_TWITTER]);
 
         expect_that($user->save());
-        expect_that($user->validatePassword('test_new_password'));
+        expect($user->providers[0]->type)->equals(UserProvider::TYPE_TWITTER);
     }
 
-    public function testAssignRole()
+    public function testGetRoles()
     {
-        $user = $this->createUser();
-        $role = $this->createRole();
+        $user = $this->tester->grabFixture('user', 'user-1');
+        expect($user->roles)->isInstanceOf('app\models\AuthItem');
+    }
 
-        $user->role = $role->name;
-        expect_that($user->save());
+    public function testGetStatuses()
+    {
+        $user = new User();
+        $statuses = $user->getStatuses();
 
-        $user = User::findByEmail($user->email);
+        expect_that(is_array($statuses));
+        expect(count($statuses))->equals(3);
+    }
 
-        $auth = Yii::$app->authManager;
-        $auth->assign($auth->getRole($user->role), $user->id);
+    public function testGetStatusName()
+    {
+        $user = new User();
+        $user->status = User::STATUS_ACTIVE;
 
-        expect_that($user->roles->name === $role->name);
-        expect($user->role)->equals($role->name);
-        expect(key($auth->getRolesByUser($user->id)))->equals($role->name);
-
-        $role->delete();
+        $status = $user->getStatusName();
+        expect($status)->equals('Active');
     }
 
     public function testStatusUnconfirmed()
     {
-        $user = $this->createUser();
+        $user = $this->tester->grabFixture('user', 'user-2');
 
         expect_not($user->isConfirmed());
         expect($user->email_confirm_token)->notEmpty();
@@ -126,7 +90,7 @@ class UserTest extends \Codeception\Test\Unit
 
     public function testStatusConfirmed()
     {
-        $user = $this->createUser();
+        $user = $this->tester->grabFixture('user', 'user-2');
         $user->setConfirmed();
         expect_that($user->save());
 
@@ -170,6 +134,115 @@ class UserTest extends \Codeception\Test\Unit
         $user = new User();
         $user->role = User::ROLE_SUPERUSER;
         expect_that($user->isSuperUser());
+    }
+
+    public function testFindByPasswordResetToken()
+    {
+        $user = $this->tester->grabFixture('user', 'user-1');
+        expect_that($user = User::findByPasswordResetToken($user->password_reset_token));
+        expect($user->username)->equals('superuser');
+
+        expect_not(User::findByPasswordResetToken(999));
+    }
+
+    public function testFindByEmailConfirmToken()
+    {
+        $user = $this->tester->grabFixture('user', 'user-1');
+        expect_that($user = User::findByEmailConfirmToken($user->email_confirm_token));
+        expect($user->username)->equals('superuser');
+
+        expect_not(User::findByEmailConfirmToken(999));
+    }
+
+    public function testFindIdentity()
+    {
+        expect_that($user = User::findIdentity(1));
+        expect($user->username)->equals('superuser');
+
+        expect_not(User::findIdentity(999));
+    }
+
+    /**
+     * @expectedException Exception
+     * @expectedExceptionMessage findIdentityByAccessToken is not implemented.
+     */
+    public function testFindIdentityByAccessToken()
+    {
+        expect_not(User::findIdentityByAccessToken('test_token'));
+    }
+
+    public function testFindByEmail()
+    {
+        expect_that($user = User::findByEmail('superuser@example.com'));
+        expect($user->username)->equals('superuser');
+
+        expect_not(User::findByEmail('test@test.com'));
+    }
+
+    public function testFindByUsername()
+    {
+        expect_that($user = User::findByUsername('superuser'));
+        expect($user->username)->equals('superuser');
+
+        expect_not(User::findByUsername('test_user'));
+    }
+
+    public function testValidateAuthKey()
+    {
+        $user = $this->tester->grabFixture('user', 'user-1');
+        expect_that($user->validateAuthKey('dKz8PzyduJUDyrrhAC05-Mn53IvaXvoA'));
+        expect_not($user->validateAuthKey('test_password'));
+    }
+
+    public function testCreate()
+    {
+        $user = new User();
+        $user->username = 'test';
+        $user->email = 'test@test.com';
+        $user->generateEmailConfirmToken();
+        $user->setPassword('test_password');
+
+        expect_that($user->save());
+        expect($user)->isInstanceOf('app\models\User');
+        expect_that($user->isActive());
+        expect_that($user->validatePassword('test_password'));
+
+        return $user;
+    }
+
+    public function testChangePassword()
+    {
+        $user = $this->tester->grabFixture('user', 'user-2');
+        $user->passwordNew = 'test_new_password';
+
+        expect_that($user->save());
+        expect_that($user->validatePassword('test_new_password'));
+    }
+
+    public function testAssignRole()
+    {
+        $user = $this->tester->grabFixture('user', 'user-2');
+        $role = new AuthItem([
+            'type' => \yii\rbac\Item::TYPE_ROLE,
+            'name' => 'test',
+            'description' => 'test_description'
+        ]);
+
+        expect_that($role->save());
+
+        $user->role = $role->name;
+        expect_that($user->save());
+
+        $user = User::findByEmail($user->email);
+
+        $auth = Yii::$app->authManager;
+        $auth->assign($auth->getRole($user->role), $user->id);
+
+        expect_that($user->roles->name === $role->name);
+        expect($user->role)->equals($role->name);
+        expect(key($auth->getRolesByUser($user->id)))->equals($role->name);
+
+        $role->delete();
     }
 
     public function testGenerateAuthKey()

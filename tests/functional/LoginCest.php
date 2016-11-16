@@ -16,10 +16,7 @@ class LoginCest
     {
         $I->amOnRoute('/index/login');
         $I->haveFixtures([
-             'user' => [
-                 'class' => UserFixture::className(),
-                 'dataFile' => codecept_data_dir() . 'models/user.php',
-             ],
+             'user' => UserFixture::className(),
         ]);
     }
 
@@ -166,7 +163,7 @@ class LoginCest
         $I->dontSee('login');
         $I->dontSeeElement($this->formId);
 
-        $user = User::findByUsername('user-2');
+        $user = $I->grabFixture('user', 'user-2');
         $user->status = User::STATUS_BLOCKED;
         $user->save();
 

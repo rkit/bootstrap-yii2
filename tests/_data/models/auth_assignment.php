@@ -2,7 +2,7 @@
 
 return [
     [
-        'item_name' => 'EditorNews',
+        'item_name' => 'Editor',
         'user_id' => 5,
     ],
 ];

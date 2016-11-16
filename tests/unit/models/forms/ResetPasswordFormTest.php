@@ -12,30 +12,27 @@ class ResetPasswordFormTest extends \Codeception\Test\Unit
     protected function _before()
     {
         $this->tester->haveFixtures([
-             'user' => [
-                 'class' => UserFixture::className(),
-                 'dataFile' => codecept_data_dir() . 'models/user.php',
-             ],
+             'user' => UserFixture::className(),
         ]);
     }
 
     public function testEmptyPassword()
     {
-        $userFixture = $this->tester->grabFixture('user', 1);
+        $user = $this->tester->grabFixture('user', 'user-1');
 
         $form = new ResetPasswordForm();
         $form->password = '';
-        expect_that($form->validateToken($userFixture->password_reset_token));
+        expect_that($form->validateToken($user->password_reset_token));
         expect_not($form->validate());
     }
 
     public function testTooShortPassword()
     {
-        $userFixture = $this->tester->grabFixture('user', 1);
+        $user = $this->tester->grabFixture('user', 'user-1');
 
         $form = new ResetPasswordForm();
         $form->password = 'qwe';
-        expect_that($form->validateToken($userFixture->password_reset_token));
+        expect_that($form->validateToken($user->password_reset_token));
         expect_not($form->validate());
     }
 
@@ -53,14 +50,14 @@ class ResetPasswordFormTest extends \Codeception\Test\Unit
 
     public function testSuccess()
     {
-        $userFixture = $this->tester->grabFixture('user', 1);
+        $user = $this->tester->grabFixture('user', 'user-1');
 
         $form = new ResetPasswordForm();
         $form->password = 'password-new';
-        expect_that($form->validateToken($userFixture->password_reset_token));
+        expect_that($form->validateToken($user->password_reset_token));
         expect_that($form->resetPassword());
 
-        $user = User::findByEmail($userFixture->email);
+        $user = User::findByEmail($user->email);
         expect($user->password_reset_token)->isEmpty();
         expect_that($user->validatePassword('password-new'));
     }

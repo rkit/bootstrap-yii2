@@ -3,8 +3,7 @@
 use \app\models\User;
 
 return [
-    [
-        'id' => 1,
+    'user-1' => [
         'username' => 'superuser',
         'email' => 'superuser@example.com',
         'auth_key' => 'dKz8PzyduJUDyrrhAC05-Mn53IvaXvoA',
@@ -18,8 +17,7 @@ return [
         'status' => User::STATUS_ACTIVE,
         'role' => User::ROLE_SUPERUSER
     ],
-    [
-        'id' => 2,
+    'user-2' => [
         'username' => 'user-2',
         'email' => 'user-2@example.com',
         'auth_key' => 'xFK_r79Q976mtxqccblijO-SmqjBwbNd',
@@ -32,8 +30,7 @@ return [
         'ip' => '2130706432',
         'status' => User::STATUS_ACTIVE
     ],
-    [
-        'id' => 3,
+    'user-3' => [
         'username' => 'user-3',
         'email' => 'user-3@example.com',
         'auth_key' => 'xFK_r79Q976mtxqccblijO-SmqjBwbNd',
@@ -46,8 +43,7 @@ return [
         'ip' => '2130706433',
         'status' => User::STATUS_BLOCKED
     ],
-    [
-        'id' => 4,
+    'user-4' => [
         'username' => 'user-4',
         'email' => 'user-4@example.com',
         'auth_key' => 'xFK_r79Q976mtxqccblijO-SmqjBwbNd',
@@ -60,8 +56,7 @@ return [
         'ip' => '2130706434',
         'status' => User::STATUS_DELETED
     ],
-    [
-        'id' => 5,
+    'user-5' => [
         'username' => 'user-5',
         'email' => 'user-5@example.com',
         'auth_key' => 'xFK_r79Q976mtxqccblijO-SmqjBwbNd',
@@ -73,10 +68,9 @@ return [
         'date_update' => '2015-01-05 12:02:00',
         'ip' => '2130706435',
         'status' => User::STATUS_ACTIVE,
-        'role' => 'EditorNews',
+        'role' => 'Editor',
     ],
-    [
-        'id' => 6,
+    'user-6' => [
         'username' => 'user-6',
         'email' => 'user-6@example.com',
         'auth_key' => 'xFK_r79Q976mtxqccblijO-SmqjBwbNd',

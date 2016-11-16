@@ -3,7 +3,7 @@
 namespace app\tests\unit\models;
 
 use app\tests\fixtures\User as UserFixture;
-use app\models\User;
+use app\tests\fixtures\UserProfile as UserProfileFixture;
 
 class UserProfileTest extends \Codeception\Test\Unit
 {
@@ -11,38 +11,32 @@ class UserProfileTest extends \Codeception\Test\Unit
     protected function _before()
     {
         $this->tester->haveFixtures([
-             'user' => [
-                 'class' => UserFixture::className(),
-                 'dataFile' => codecept_data_dir() . 'models/user.php',
-             ],
+             'user' => UserFixture::className(),
+             'profile' => UserProfileFixture::className(),
         ]);
-
     }
 
-    protected function createUser()
+    public function testGetUser()
     {
-        $user = new User();
-        $user->username = 'test';
-        $user->email = 'test@test.com';
-        $user->generateEmailConfirmToken();
-        $user->setPassword('test_password');
+        $user = $this->tester->grabFixture('user', 'user-2');
+        expect($user->profile->user)->isInstanceOf('app\models\User');
+    }
 
-        expect_that($user->save());
-        expect($user)->isInstanceOf('app\models\User');
-        expect_that($user->isActive());
-        expect_that($user->validatePassword('test_password'));
-
-        return $user;
+    public function testGetFiles()
+    {
+        $user = $this->tester->grabFixture('user', 'user-2');
+        $files = $user->profile->files;
+        expect_that(is_array($files));
     }
 
     public function testUpdate()
     {
-        $user = $this->createUser();
+        $user = $this->tester->grabFixture('user', 'user-2');
         $user->profile->full_name = 'Test';
         $user->profile->birth_day = '2001-01-02';
         expect_that($user->save());
 
-        $user = User::findByEmail($user->email);
+        $user = $this->tester->grabFixture('user', 'user-2');
         expect($user)->isInstanceOf('app\models\User');
         expect($user->profile->full_name)->equals('Test');
         expect($user->profile->birth_day)->equals('2001-01-02');

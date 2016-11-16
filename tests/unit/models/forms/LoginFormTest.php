@@ -12,10 +12,7 @@ class LoginFormTest extends \Codeception\Test\Unit
     protected function _before()
     {
         $this->tester->haveFixtures([
-             'user' => [
-                 'class' => UserFixture::className(),
-                 'dataFile' => codecept_data_dir() . 'models/user.php',
-             ],
+             'user' => UserFixture::className(),
         ]);
     }
 

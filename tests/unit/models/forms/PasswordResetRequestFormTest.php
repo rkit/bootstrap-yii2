@@ -16,10 +16,7 @@ class PasswordResetRequestFormTest extends \Codeception\Test\Unit
         Yii::$app->settings->set('emailName', 'Editor');
 
         $this->tester->haveFixtures([
-             'user' => [
-                 'class' => UserFixture::className(),
-                 'dataFile' => codecept_data_dir() . 'models/user.php',
-             ],
+             'user' => UserFixture::className(),
         ]);
     }
 
@@ -71,14 +68,14 @@ class PasswordResetRequestFormTest extends \Codeception\Test\Unit
 
     public function testSuccess()
     {
-        $userFixture = $this->tester->grabFixture('user', 1);
+        $user = $this->tester->grabFixture('user', 'user-1');
 
         $form = new PasswordResetRequestForm();
         $form->email = 'user-2@example.com';
         expect_that($form->validate());
         expect_that($form->sendEmail());
 
-        $user = User::findOne(['password_reset_token' => $userFixture->password_reset_token]);
+        $user = User::findOne(['password_reset_token' => $user->password_reset_token]);
         expect($user->password_reset_token)->notNull();
 
         $message = $this->tester->grabLastSentEmail();

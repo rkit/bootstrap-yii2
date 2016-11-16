@@ -3,14 +3,12 @@
 namespace app\tests\functional\admin;
 
 use Yii;
-use Codeception\Util\Locator;
 use yii\helpers\Url;
 use app\tests\fixtures\AuthItem as AuthItemFixture;
 use app\tests\fixtures\AuthItemChild as AuthItemChildFixture;
 use app\tests\fixtures\AuthAssignment as  AuthAssignmentFixture;
 use app\tests\fixtures\UserProfile as UserProfileFixture;
 use app\tests\fixtures\User as UserFixture;
-use app\models\User;
 use app\models\UserProfile;
 
 class UsersProfileCest
@@ -24,28 +22,13 @@ class UsersProfileCest
     public function _before($I)
     {
         $I->haveFixtures([
-             'authItem' => [
-                 'class' => AuthItemFixture::className(),
-                 'dataFile' => codecept_data_dir() . 'models/auth_item.php',
-             ],
-             'authAssignment' => [
-                 'class' => AuthAssignmentFixture::className(),
-                 'dataFile' => codecept_data_dir() . 'models/auth_assignment.php',
-             ],
-             'authItemChild' => [
-                 'class' => AuthItemChildFixture::className(),
-                 'dataFile' => codecept_data_dir() . 'models/auth_item_child.php',
-             ],
-             'profile' => [
-                 'class' => UserProfileFixture::className(),
-                 'dataFile' => codecept_data_dir() . 'models/user_profile.php',
-             ],
-             'user' => [
-                 'class' => UserFixture::className(),
-                 'dataFile' => codecept_data_dir() . 'models/user.php',
-             ],
+             'authItem' => AuthItemFixture::className(),
+             'authAssignment' => AuthAssignmentFixture::className(),
+             'authItemChild' => AuthItemChildFixture::className(),
+             'profile' => UserProfileFixture::className(),
+             'user' => UserFixture::className(),
         ]);
-        $I->amLoggedInAs(User::findByUsername('superuser'));
+        $I->amLoggedInAs($I->grabFixture('user', 'user-1'));
         $I->amOnRoute($this->url);
     }
 

@@ -5,7 +5,6 @@ namespace app\tests\functional\admin;
 use Yii;
 use yii\helpers\Url;
 use app\tests\fixtures\User as UserFixture;
-use app\models\User;
 
 class SettingsCest
 {
@@ -19,12 +18,9 @@ class SettingsCest
     public function _before($I)
     {
         $I->haveFixtures([
-             'user' => [
-                 'class' => UserFixture::className(),
-                 'dataFile' => codecept_data_dir() . 'models/user.php',
-             ],
+             'user' => UserFixture::className(),
         ]);
-        $I->amLoggedInAs(User::findByUsername('superuser'));
+        $I->amLoggedInAs($I->grabFixture('user', 'user-1'));
         $I->amOnRoute($this->url);
     }
 

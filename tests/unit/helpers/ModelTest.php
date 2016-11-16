@@ -3,21 +3,20 @@
 namespace app\tests\unit\helpers;
 
 use app\helpers\Model;
-use app\models\News;
+use app\models\forms\SignupForm;
 
 class ModelTest extends \Codeception\Test\Unit
 {
     public function testCollectModelErrors()
     {
-        $model = new News();
-        $model->save();
+        $model = new SignupForm();
+        $model->validate();
 
         $errors = Model::collectErrors($model);
 
-        expect_that(count($errors) === 4);
-        expect($errors['news-title'])->notEmpty();
-        expect($errors['news-type_id'])->notEmpty();
-        expect($errors['news-text'])->notEmpty();
-        expect($errors['news-date_pub'])->notEmpty();
+        expect_that(count($errors) === 3);
+        expect($errors['signupform-fullname'])->notEmpty();
+        expect($errors['signupform-email'])->notEmpty();
+        expect($errors['signupform-password'])->notEmpty();
     }
 }

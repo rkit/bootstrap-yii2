@@ -22,10 +22,7 @@ class SignupProviderCest
     public function _before($I)
     {
         $I->haveFixtures([
-             'user' => [
-                 'class' => UserFixture::className(),
-                 'dataFile' => codecept_data_dir() . 'models/user.php',
-             ],
+             'user' => UserFixture::className(),
         ]);
     }
 

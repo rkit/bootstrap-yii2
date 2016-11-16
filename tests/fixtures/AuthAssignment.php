@@ -10,4 +10,5 @@ use yii\test\ActiveFixture;
 class AuthAssignment extends ActiveFixture
 {
     public $tableName = 'auth_assignment';
+    public $dataFile = '@tests/_data/models/auth_assignment.php';
 }

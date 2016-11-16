@@ -10,4 +10,5 @@ use yii\test\ActiveFixture;
 class AuthItemChild extends ActiveFixture
 {
     public $tableName = 'auth_item_child';
+    public $dataFile = '@tests/_data/models/auth_item_child.php';
 }

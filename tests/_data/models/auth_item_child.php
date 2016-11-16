@@ -2,11 +2,11 @@
 
 return [
     [
-        'parent' => 'EditorNews',
+        'parent' => 'Editor',
         'child' => 'AdminModule',
     ],
     [
-        'parent' => 'EditorNews',
-        'child' => 'ACTION_AdminNews',
+        'parent' => 'Editor',
+        'child' => 'ACTION_AdminSettings',
     ],
 ];

@@ -3,7 +3,6 @@
 namespace app\tests\functional;
 
 use Yii;
-use yii\helpers\Url;
 use app\tests\fixtures\User as UserFixture;
 
 class SignupCest
@@ -16,10 +15,7 @@ class SignupCest
     {
         $I->amOnRoute('/index/signup');
         $I->haveFixtures([
-             'user' => [
-                 'class' => UserFixture::className(),
-                 'dataFile' => codecept_data_dir() . 'models/user.php',
-             ],
+             'user' => UserFixture::className(),
         ]);
     }
 

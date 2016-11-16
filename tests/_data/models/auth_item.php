@@ -20,18 +20,8 @@ return array_merge($items, [
         'type' => \yii\rbac\Item::TYPE_ROLE,
     ],
     [
-        'name' => 'EditorNews',
+        'name' => 'Editor',
         'description' => 'Role-1',
-        'type' => \yii\rbac\Item::TYPE_ROLE,
-    ],
-    [
-        'name' => 'EditorTags',
-        'description' => 'Role-2',
-        'type' => \yii\rbac\Item::TYPE_ROLE,
-    ],
-    [
-        'name' => 'EditorSettings',
-        'description' => 'Role-3',
         'type' => \yii\rbac\Item::TYPE_ROLE,
     ],
 ]);

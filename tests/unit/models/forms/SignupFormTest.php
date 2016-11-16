@@ -16,10 +16,7 @@ class SignupFormTest extends \Codeception\Test\Unit
         Yii::$app->settings->set('emailName', 'Editor');
 
         $this->tester->haveFixtures([
-             'user' => [
-                 'class' => UserFixture::className(),
-                 'dataFile' => codecept_data_dir() . 'models/user.php',
-             ],
+             'user' => UserFixture::className(),
         ]);
     }
 
