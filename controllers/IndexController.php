@@ -5,8 +5,9 @@ namespace app\controllers;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\web\ForbiddenHttpException;
+use yii\web\NotFoundHttpException;
 use app\handlers\AuthProviderHandler;
-use app\helpers\Http;
 use app\models\forms\LoginForm;
 use app\models\forms\SignupForm;
 use app\models\forms\SignupProviderForm;
@@ -207,7 +208,7 @@ class IndexController extends \yii\web\Controller
     {
         $user = Yii::$app->user->identity;
         if ($user->isConfirmed()) {
-            Http::exception(403);
+            throw new ForbiddenHttpException(Yii::t('app', 'Access Denied'));
         } // @codeCoverageIgnore
 
         $model = new ConfirmEmailForm();
@@ -322,7 +323,7 @@ class IndexController extends \yii\web\Controller
     public function actionMaintenance()
     {
         if (!Yii::$app->catchAll) {
-            Http::exception(404);
+            throw new NotFoundHttpException(Yii::t('app', 'Page not found'));
         } // @codeCoverageIgnore
 
         $this->layout = 'maintenance';

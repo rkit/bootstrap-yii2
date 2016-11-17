@@ -5,7 +5,7 @@ namespace app\modules\admin\controllers;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
-use app\helpers\Http;
+use yii\web\ForbiddenHttpException;
 use app\modules\admin\models\forms\LoginForm;
 
 class IndexController extends \yii\web\Controller
@@ -51,7 +51,7 @@ class IndexController extends \yii\web\Controller
     public function actionIndex()
     {
         if (!Yii::$app->user->can('AdminModule')) {
-            Http::exception(403);
+            throw new ForbiddenHttpException(Yii::t('app', 'Access Denied'));
         } // @codeCoverageIgnore
 
         return $this->render('index');

@@ -21,7 +21,7 @@ trait ModelTrait
         $model = $model::findOne($id);
 
         if ($model === null || ($checkAccess !== null && !$model->$checkAccess())) {
-            Http::exception(404);
+            throw new NotFoundHttpException(Yii::t('app', 'Page not found'));
         } // @codeCoverageIgnore
 
         return $model;

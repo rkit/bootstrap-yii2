@@ -3,7 +3,7 @@
 namespace app\modules\admin;
 
 use Yii;
-use app\helpers\Http;
+use yii\web\ForbiddenHttpException;
 
 class Module extends \yii\base\Module
 {
@@ -43,7 +43,7 @@ class Module extends \yii\base\Module
         if (!\Yii::$app->user->can('AdminModule') ||
             !\Yii::$app->user->can($this->getCurrentPermissionName($action))
         ) {
-            Http::exception(403);
+            throw new ForbiddenHttpException(Yii::t('app', 'Access Denied'));
         }
 
         return true;
