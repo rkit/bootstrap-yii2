@@ -7,7 +7,6 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
-use app\helpers\Model;
 use app\traits\ModelTrait;
 use app\models\AuthItem;
 use app\modules\admin\models\search\AuthItemSearch;
@@ -90,7 +89,7 @@ class RolesController extends \yii\web\Controller
             }
             if (Yii::$app->request->isAjax) {
                 Yii::$app->response->format = Response::FORMAT_JSON;
-                return Model::collectErrors($model);
+                return $this->collectErrors($model);
             }
         }
 

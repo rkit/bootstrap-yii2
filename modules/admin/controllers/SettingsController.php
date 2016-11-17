@@ -4,11 +4,13 @@ namespace app\modules\admin\controllers;
 
 use Yii;
 use yii\web\Response;
-use app\helpers\Model;
+use app\traits\ModelTrait;
 use app\modules\admin\models\forms\SettingsForm;
 
 class SettingsController extends \yii\web\Controller
 {
+    use ModelTrait;
+
     public function actionIndex()
     {
         $model = new SettingsForm();
@@ -21,7 +23,7 @@ class SettingsController extends \yii\web\Controller
             }
             if (Yii::$app->request->isAjax) {
                 Yii::$app->response->format = Response::FORMAT_JSON;
-                return Model::collectErrors($model);
+                return $this->collectErrors($model);
             }
         }
 

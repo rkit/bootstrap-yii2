@@ -6,7 +6,6 @@ use Yii;
 use yii\filters\VerbFilter;
 use yii\helpers\Url;
 use yii\web\Response;
-use app\helpers\Model;
 use app\traits\ModelTrait;
 use app\models\User;
 use app\models\UserProfile;
@@ -109,7 +108,7 @@ class UsersController extends \yii\web\Controller
             }
             if (Yii::$app->request->isAjax) {
                 Yii::$app->response->format = Response::FORMAT_JSON;
-                return Model::collectErrors($model);
+                return $this->collectErrors($model);
             }
         }
 
@@ -135,7 +134,7 @@ class UsersController extends \yii\web\Controller
             }
             if (Yii::$app->request->isAjax) {
                 Yii::$app->response->format = Response::FORMAT_JSON;
-                return Model::collectErrors($model);
+                return $this->collectErrors($model);
             }
         }
 
