@@ -1,7 +1,5 @@
 <?php
 use yii\helpers\Html;
-use app\helpers\Page;
-
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -10,7 +8,7 @@ use app\helpers\Page;
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <?= Page::title($this->title, Yii::$app->name); ?>
+  <title><?= Html::encode($this->title . ' / ' . Yii::$app->name) ?></title>
   <?= Html::csrfMetaTags()?>
   <?php $this->head() ?>
 </head>

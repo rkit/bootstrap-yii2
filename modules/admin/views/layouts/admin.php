@@ -2,7 +2,6 @@
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\bootstrap\Nav;
-use app\helpers\Page;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
@@ -14,7 +13,7 @@ use app\helpers\Page;
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <?= Page::title($this->title, Yii::t('app', 'Control Panel')); ?>
+  <title><?= Html::encode($this->title . ' / ' . Yii::t('app', 'Control Panel')) ?></title>
   <?= Html::csrfMetaTags() ?>
   <?php $this->head() ?>
   <?= Html::cssFile('/assets/' . ArrayHelper::getValue(Yii::$app->params['assets'], 'admin.css')) ?>

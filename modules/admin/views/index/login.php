@@ -1,6 +1,8 @@
 <?php
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+
+$this->title = Yii::t('app', 'Welcome!');
 ?>
 <?php $form = ActiveForm::begin([
       'id' => 'login-form',
