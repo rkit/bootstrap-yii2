@@ -14,8 +14,8 @@ use app\models\UserProfile;
 class UsersProfileCest
 {
     protected $pageTitle = 'Users';
-    protected $formName = 'UserForm';
-    protected $formId = '#users-form';
+    protected $formName = 'UserProfile';
+    protected $formId = '#profile-form';
     protected $url = '/admin/users';
 
     // @codingStandardsIgnoreFile
@@ -36,8 +36,8 @@ class UsersProfileCest
     {
         $I->click('user-2');
         $I->click('Profile');
-        $I->submitForm('#profile-form', [
-            'UserProfile[birth_day]' => 'test',
+        $I->submitForm($this->formId, [
+            $this->formName . '[birth_day]' => 'test',
         ]);
         $I->expectTo('see validations errors');
         $I->see('The format of Birth Day is invalid', '.help-block');
@@ -47,13 +47,13 @@ class UsersProfileCest
     {
         $I->click('user-2');
         $I->click('Profile');
-        $I->submitForm('#profile-form', [
-            'UserProfile[full_name]' =>  'Profile-2_UPD',
+        $I->submitForm($this->formId, [
+            $this->formName . '[full_name]' =>  'Profile-2_UPD',
         ]);
         $I->expectTo('see success');
         $I->see('Saved successfully');
 
-        $I->seeInField('UserProfile[full_name]', 'Profile-2_UPD');
+        $I->seeInField($this->formName . '[full_name]', 'Profile-2_UPD');
     }
 
     public function testAddPhoto($I)
@@ -63,19 +63,19 @@ class UsersProfileCest
 
         $I->click('user-2');
         $I->click('Profile');
-        $I->submitForm('#profile-form', [
-            'UserProfile[photo]' => $file->id,
+        $I->submitForm($this->formId, [
+            $this->formName . '[photo]' => $file->id,
         ]);
         $I->expectTo('see success');
         $I->see('Saved successfully');
 
-        $I->seeInField('UserProfile[photo]', $model->fileUrl('photo', $file));
+        $I->seeInField($this->formName . '[photo]', $model->fileUrl('photo', $file));
     }
 
     public function testUpdateViaAjax($I)
     {
         $I->sendAjaxPostRequest(Url::toRoute(['/admin/users/profile', 'id' => 2]), [
-            'UserProfile[full_name]' =>  'Profile-2_UPD',
+            $this->formName . '[full_name]' =>  'Profile-2_UPD',
         ]);
         $I->seeResponseCodeIs(200);
         $I->seeResponseContains('redirect');
@@ -84,7 +84,7 @@ class UsersProfileCest
     public function testUpdateWithWrongBirthDayViaAjax($I)
     {
         $I->sendAjaxPostRequest(Url::toRoute(['/admin/users/profile', 'id' => 2]), [
-            'UserProfile[birth_day]' => 'test',
+            $this->formName . '[birth_day]' => 'test',
         ]);
         $I->seeResponseCodeIs(200);
         $I->seeResponseContains('The format of Birth Day is invalid');

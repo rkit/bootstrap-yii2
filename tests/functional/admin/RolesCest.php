@@ -26,31 +26,6 @@ class RolesCest
         $I->amOnRoute($this->url);
     }
 
-    private function create($I, $name, $permissions, $roles, $isAjax = false)
-    {
-        $I->amOnRoute($this->url . '/edit');
-
-        $data = [
-            $this->formName . '[name]' => $name,
-            $this->formName . '[description]' => 'Test',
-            $this->formName . '[permissions]' => $permissions,
-            $this->formName . '[roles]' => $roles,
-        ];
-
-        if ($isAjax) {
-            $I->sendAjaxPostRequest(Url::toRoute($this->url . '/edit'), $data);
-            $I->seeResponseCodeIs(200);
-            $I->seeResponseContains('redirect');
-            $response = json_decode($I->grabResponse());
-            $I->amOnRoute($response->redirect);
-        } else {
-            $I->submitForm($this->formId, $data);
-            $I->seeResponseCodeIs(200);
-            $I->expectTo('see success');
-            $I->see('Saved successfully');
-        }
-    }
-
     public function testOpenIndexPage($I)
     {
         $I->see($this->pageTitle);
@@ -107,7 +82,17 @@ class RolesCest
 
     public function testCreate($I)
     {
-        $this->create($I, 'EditorUsers', ['ACTION_AdminUsers'], []);
+        $I->amOnRoute($this->url . '/edit');
+        $I->submitForm($this->formId, [
+            $this->formName . '[name]' => 'EditorUsers',
+            $this->formName . '[description]' => 'Test',
+            $this->formName . '[permissions]' => ['ACTION_AdminUsers'],
+            $this->formName . '[roles]' => [],
+        ]);
+        $I->seeResponseCodeIs(200);
+        $I->expectTo('see success');
+        $I->see('Saved successfully');
+
         $I->seeInField('AuthItem[name]', 'EditorUsers');
         $I->seeInField('AuthItem[permissions][]', 'ACTION_AdminUsers');
         $I->seeInField('AuthItem[roles][]', '');
@@ -118,7 +103,17 @@ class RolesCest
 
     public function testCreateWithExtendRole($I)
     {
-        $this->create($I, 'EditorUsersAndSettings', ['ACTION_AdminUsers'], ['Editor']);
+        $I->amOnRoute($this->url . '/edit');
+        $I->submitForm($this->formId, [
+            $this->formName . '[name]' => 'EditorUsersAndSettings',
+            $this->formName . '[description]' => 'Test',
+            $this->formName . '[permissions]' => ['ACTION_AdminUsers'],
+            $this->formName . '[roles]' => ['Editor'],
+        ]);
+        $I->seeResponseCodeIs(200);
+        $I->expectTo('see success');
+        $I->see('Saved successfully');
+
         $I->seeInField('AuthItem[name]', 'EditorUsersAndSettings');
         $I->seeInField('AuthItem[permissions][]', 'ACTION_AdminUsers');
         $I->seeInField('AuthItem[roles][]', 'Editor');
@@ -129,7 +124,17 @@ class RolesCest
 
     public function testCreateViaAjax($I)
     {
-        $this->create($I, 'EditorUsersAjax', ['ACTION_AdminUsers'], [], true);
+        $I->amOnRoute($this->url . '/edit');
+        $I->sendAjaxPostRequest(Url::toRoute($this->url . '/edit'), [
+            $this->formName . '[name]' => 'EditorUsersAjax',
+            $this->formName . '[description]' => 'Test',
+            $this->formName . '[permissions]' => ['ACTION_AdminUsers'],
+            $this->formName . '[roles]' => [],
+        ]);
+        $I->seeResponseCodeIs(200);
+        $I->seeResponseContains('redirect');
+        $response = json_decode($I->grabResponse());
+        $I->amOnRoute($response->redirect);
 
         $I->amOnRoute($this->url);
         $I->see('EditorUsersAjax');
