@@ -38,8 +38,7 @@ $this->title .= !empty($title) ? $title : Yii::t('app', 'Create');
       <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
 
       <!-- passwordNew -->
-      <input type="password" name="password" id="password_" style="display: none">
-      <?= $form->field($model, 'passwordNew')->passwordInput(['maxlength' => true]) ?>
+      <?= $form->field($model, 'passwordNew')->passwordInput(['maxlength' => true, 'autocomplete' => 'new-password']) ?>
 
       <!-- status -->
       <?= $form->field($model, 'status')
