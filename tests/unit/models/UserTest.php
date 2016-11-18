@@ -35,6 +35,7 @@ class UserTest extends \Codeception\Test\Unit
     public function testSetProfile()
     {
         $user = new User();
+        $user->email = 'test@test.ru';
         $user->setProfile(['full_name' => 'Test']);
 
         expect_that($user->save());
@@ -50,6 +51,7 @@ class UserTest extends \Codeception\Test\Unit
     public function testSetProviders()
     {
         $user = new User();
+        $user->email = 'test@test.ru';
         $user->setProviders(['type' => UserProvider::TYPE_TWITTER]);
 
         expect_that($user->save());

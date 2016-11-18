@@ -14,7 +14,7 @@ use app\models\User;
 class UsersCest
 {
     protected $pageTitle = 'Users';
-    protected $formName = 'UserForm';
+    protected $formName = 'User';
     protected $formId = '#users-form';
     protected $url = '/admin/users';
 
@@ -30,27 +30,6 @@ class UsersCest
         ]);
         $I->amLoggedInAs($I->grabFixture('user', 'user-1'));
         $I->amOnRoute($this->url);
-    }
-
-    private function create($I, $username, $isAjax = false)
-    {
-        $I->amOnRoute($this->url . '/edit');
-
-        $data = [
-            $this->formName . '[username]' => $username,
-            $this->formName . '[passwordNew]' => 'test_password',
-        ];
-
-        if ($isAjax) {
-            $I->sendAjaxPostRequest(Url::toRoute($this->url . '/edit'), $data);
-            $I->seeResponseCodeIs(200);
-            $I->seeResponseContains('redirect');
-        } else {
-            $I->submitForm($this->formId, $data);
-            $I->seeResponseCodeIs(200);
-            $I->expectTo('see success');
-            $I->see('Saved successfully');
-        }
     }
 
     public function testOpenIndexPage($I)
@@ -219,19 +198,27 @@ class UsersCest
         $I->amOnRoute($this->url . '/edit');
         $I->submitForm($this->formId, []);
         $I->expectTo('see validations errors');
-        $I->see('You must fill in username or email', '.help-block');
+        $I->see('Email cannot be blank', '.help-block');
     }
 
     public function testCreateWithEmptyFieldsViaAjax($I)
     {
         $I->sendAjaxPostRequest(Url::toRoute($this->url . '/edit'), [$this->formName . '[username]' => '']);
         $I->seeResponseCodeIs(200);
-        $I->seeResponseContains('You must fill in username or email');
+        $I->seeResponseContains('Email cannot be blank');
     }
 
     public function testCreate($I)
     {
-        $this->create($I, 'user-10');
+        $I->amOnRoute($this->url . '/edit');
+        $I->submitForm($this->formId, [
+            $this->formName . '[username]' => 'user-10',
+            $this->formName . '[email]' => 'user-10@test.ru',
+            $this->formName . '[passwordNew]' => 'test_password',
+        ]);
+        $I->seeResponseCodeIs(200);
+        $I->expectTo('see success');
+        $I->see('Saved successfully');
 
         $I->amOnRoute($this->url);
         $I->see('user-10');
@@ -239,7 +226,14 @@ class UsersCest
 
     public function testCreateViaAjax($I)
     {
-        $this->create($I, 'user-11', true);
+        $I->amOnRoute($this->url . '/edit');
+        $I->sendAjaxPostRequest(Url::toRoute($this->url . '/edit'), [
+            $this->formName . '[username]' => 'user-11',
+            $this->formName . '[email]' => 'user-11@test.ru',
+            $this->formName . '[passwordNew]' => 'test_password',
+        ]);
+        $I->seeResponseCodeIs(200);
+        $I->seeResponseContains('redirect');
 
         $I->amOnRoute($this->url);
         $I->see('user-11');

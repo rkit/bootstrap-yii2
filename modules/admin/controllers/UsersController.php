@@ -10,7 +10,6 @@ use app\traits\ModelTrait;
 use app\models\User;
 use app\models\UserProfile;
 use app\modules\admin\models\search\UserSearch;
-use app\modules\admin\models\forms\UserForm;
 
 class UsersController extends \yii\web\Controller
 {
@@ -84,7 +83,7 @@ class UsersController extends \yii\web\Controller
 
     public function actionEdit($id = null)
     {
-        $model = new UserForm();
+        $model = new User();
 
         if ($id) {
             $model = $this->findModel($model, $id);

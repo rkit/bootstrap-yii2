@@ -62,6 +62,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             ['username', 'default', 'value' => null],
 
             ['email', 'email'],
+            ['email', 'required'],
             ['email', 'string', 'max' => 255],
             ['email', 'unique'],
             ['email', 'default', 'value' => null],
@@ -72,6 +73,8 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             ['status', 'integer'],
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => array_keys(self::getStatuses())],
+
+            ['passwordNew', 'string', 'min' => 6],
         ];
     }
 
