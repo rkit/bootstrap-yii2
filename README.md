@@ -84,5 +84,4 @@ The application requires the document root to be set to the `web` directory.
 ### Coding Standard
 
 - PHP Code Sniffer — [phpcs.xml](./phpcs.xml)
-- PHP Mess Detector — [phpmd.xml](./phpmd.xml)
 - ESLint — [.eslintrc](./.eslintrc)
