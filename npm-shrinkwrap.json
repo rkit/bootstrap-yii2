@@ -1,0 +1,19 @@
+{
+  "dependencies": {
+    "bootstrap": {
+      "version": "3.3.7",
+      "from": "bootstrap@>=3.3.5 <4.0.0",
+      "resolved": "https://registry.npmjs.org/bootstrap/-/bootstrap-3.3.7.tgz"
+    },
+    "nprogress": {
+      "version": "0.1.6",
+      "from": "nprogress@>=0.1.6 <0.2.0",
+      "resolved": "https://registry.npmjs.org/nprogress/-/nprogress-0.1.6.tgz"
+    },
+    "yii2-ajaxform-plugin": {
+      "version": "0.0.3",
+      "from": "yii2-ajaxform-plugin@>=0.0.3 <0.0.4",
+      "resolved": "https://registry.npmjs.org/yii2-ajaxform-plugin/-/yii2-ajaxform-plugin-0.0.3.tgz"
+    }
+  }
+}
