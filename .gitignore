@@ -2,8 +2,8 @@
 Thumbs.db
 *.log
 
-/vendor
-node_modules
-tests/_tmp/*
-tests/_output/*
-tests/_support/_generated
+vendor/
+node_modules/
+tests/_tmp/
+tests/_output/
+tests/_support/_generated/
