@@ -13,8 +13,8 @@ class m161026_103038_create_user_profiles_files extends \yii\db\Migration
 
         $this->createTable('{{%user_profiles_files}}', [
             'id' => Schema::TYPE_PK,
-            'user_id' => Schema::TYPE_INTEGER . " NOT NULL DEFAULT 0",
-            'file_id' => Schema::TYPE_INTEGER . " NOT NULL DEFAULT 0",
+            'user_id' => Schema::TYPE_INTEGER . ' NOT NULL DEFAULT 0',
+            'file_id' => Schema::TYPE_INTEGER . ' NOT NULL DEFAULT 0',
         ], $tableOptions);
 
         $this->createIndex('link', '{{%user_profiles_files}}', 'user_id, file_id');
