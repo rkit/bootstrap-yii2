@@ -24,6 +24,7 @@ class NewsController extends \yii\web\Controller
                     'unpublish' => ['post'],
                     'delete' => ['post'],
                     'operations' => ['post'],
+                    'text-upload' => ['post'],
                     'preview-upload' => ['post'],
                     'gallery-upload' => ['post'],
                 ],

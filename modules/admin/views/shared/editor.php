@@ -19,7 +19,7 @@ use app\modules\admin\helpers\FileRulesDescription;
             'video',
             'fullscreen',
         ],
-        'imageUpload' => Url::to($imageUploadUrl),
+        'imageUpload' => Url::toRoute([$attribute . '-upload']),
         'imageUploadCallback' => new yii\web\JsExpression('function(data) {
             var $form = $(".field-news-text").closest("form");
             $form.yiiActiveForm("updateAttribute", "news-text", "");

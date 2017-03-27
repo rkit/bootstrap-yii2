@@ -18,7 +18,7 @@ $this->title .= !empty($model->title) ? $model->title : Yii::t('app', 'Create');
 
   <!-- text -->
   <?= $this->render('/shared/editor', [
-      'form' => $form, 'model' => $model, 'attribute' => 'text', 'imageUploadUrl' => 'text-upload'
+      'form' => $form, 'model' => $model, 'attribute' => 'text',
   ]) ?>
 
   <!-- preview -->
