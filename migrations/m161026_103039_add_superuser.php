@@ -1,10 +1,8 @@
 <?php
 
-use yii\db\Schema;
 use app\models\User;
-use app\migrations\Migration;
 
-class m161026_103039_add_superuser extends Migration
+class m161026_103039_add_superuser extends app\migrations\Migration
 {
     public function safeUp()
     {
@@ -25,6 +23,5 @@ class m161026_103039_add_superuser extends Migration
 
     public function safeDown()
     {
-
     }
 }

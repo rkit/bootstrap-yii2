@@ -1,9 +1,6 @@
 <?php
 
-use yii\db\Schema;
-use app\migrations\Migration;
-
-class m141230_043248_create_user extends Migration
+class m141230_043248_create_user extends app\migrations\Migration
 {
     public function up()
     {
@@ -11,24 +8,22 @@ class m141230_043248_create_user extends Migration
          * User
          */
         $this->createTable('{{%user}}', [
-            'id' => Schema::TYPE_PK,
-            'username' => Schema::TYPE_STRING . '(40) DEFAULT NULL',
-            'email' => Schema::TYPE_STRING . ' DEFAULT NULL',
-            'password' => Schema::TYPE_STRING,
-            'password_reset_token' => Schema::TYPE_STRING,
-            'email_confirm_token' => Schema::TYPE_STRING,
-            'auth_key' => Schema::TYPE_STRING . '(32) NOT NULL',
-            'date_confirm' => Schema::TYPE_TIMESTAMP . ' NULL DEFAULT NULL',
-            'date_create' => Schema::TYPE_TIMESTAMP . ' NULL DEFAULT NULL',
-            'date_update' => Schema::TYPE_TIMESTAMP . ' NULL DEFAULT NULL',
-            'date_login' => Schema::TYPE_TIMESTAMP . ' NULL DEFAULT NULL',
-            'ip' => Schema::TYPE_BIGINT . '(20) NOT NULL DEFAULT 0',
-            'role' => Schema::TYPE_STRING . "(64) NOT NULL DEFAULT ''",
-            'status' => 'tinyint(1) NOT NULL DEFAULT 0',
+            'id' => $this->primaryKey(),
+            'username' => $this->string(40)->null()->unique(),
+            'email' => $this->string()->null()->unique(),
+            'password' => $this->string()->notNull()->defaultValue(''),
+            'password_reset_token' => $this->string()->null()->unique(),
+            'email_confirm_token' => $this->string()->null()->unique(),
+            'auth_key' => $this->string(32)->notNull()->defaultValue(''),
+            'date_confirm' => $this->timestamp()->null(),
+            'date_create' => $this->timestamp()->null(),
+            'date_update' => $this->timestamp()->null(),
+            'date_login' => $this->timestamp()->null(),
+            'ip' => $this->bigInteger(20)->notNull()->defaultValue(0),
+            'role' => $this->string(64)->notNull()->defaultValue(''),
+            'status' => 'tinyint NOT NULL DEFAULT 0',
         ], $this->tableOptions);
 
-        $this->createIndex('email', '{{%user}}', 'email', true);
-        $this->createIndex('username', '{{%user}}', 'username', true);
         $this->createIndex('role', '{{%user}}', 'role');
         $this->createIndex('status', '{{%user}}', 'status');
 
@@ -36,10 +31,10 @@ class m141230_043248_create_user extends Migration
          * Profile
          */
         $this->createTable('{{%user_profile}}', [
-            'user_id' => Schema::TYPE_PK,
-            'full_name' => Schema::TYPE_STRING . "(40) NOT NULL DEFAULT ''",
-            'photo' => Schema::TYPE_STRING . " NOT NULL DEFAULT ''",
-            'birth_day' => Schema::TYPE_DATE . ' NULL DEFAULT NULL',
+            'user_id' => $this->primaryKey(),
+            'full_name' => $this->string(40)->notNull()->defaultValue(''),
+            'photo' => $this->string()->notNull()->defaultValue(''),
+            'birth_day' => $this->date()->null(),
         ], $this->tableOptions);
 
         $this->addForeignKey(
@@ -56,13 +51,13 @@ class m141230_043248_create_user extends Migration
         // Provider
         //
         $this->createTable('{{%user_provider}}', [
-            'id' => Schema::TYPE_PK,
-            'user_id' => Schema::TYPE_INTEGER . ' NOT NULL DEFAULT 0',
-            'type' => 'tinyint(1) NOT NULL DEFAULT 0',
-            'profile_id' => Schema::TYPE_STRING . " NOT NULL DEFAULT ''",
-            'profile_url' => Schema::TYPE_STRING . " NOT NULL DEFAULT ''",
-            'access_token' => Schema::TYPE_STRING . " NOT NULL DEFAULT ''",
-            'access_token_secret' => Schema::TYPE_STRING . " NOT NULL DEFAULT ''",
+            'id' => $this->primaryKey(),
+            'user_id' => $this->integer()->notNull()->defaultValue(0),
+            'type' => 'tinyint NOT NULL DEFAULT 0',
+            'profile_id' => $this->string()->notNull()->defaultValue(''),
+            'profile_url' => $this->string()->notNull()->defaultValue(''),
+            'access_token' => $this->string()->notNull()->defaultValue(''),
+            'access_token_secret' => $this->string()->notNull()->defaultValue(''),
         ], $this->tableOptions);
 
         $this->createIndex('user_id', '{{%user_provider}}', 'user_id');

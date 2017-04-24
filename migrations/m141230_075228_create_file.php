@@ -1,8 +1,6 @@
 <?php
 
-use yii\db\Schema;
-
-class m141230_075228_create_file extends \yii\db\Migration
+class m141230_075228_create_file extends app\migrations\Migration
 {
     public function safeUp()
     {
@@ -12,13 +10,13 @@ class m141230_075228_create_file extends \yii\db\Migration
         }
 
         $this->createTable('{{%file}}', [
-            'id' => Schema::TYPE_PK,
-            'user_id' => Schema::TYPE_INTEGER . ' NOT NULL DEFAULT 0',
-            'title' => Schema::TYPE_STRING . " NOT NULL DEFAULT ''",
-            'name' => Schema::TYPE_STRING . " NOT NULL DEFAULT ''",
-            'date_create' => Schema::TYPE_TIMESTAMP . ' NULL DEFAULT NULL',
-            'date_update' => Schema::TYPE_TIMESTAMP . ' NULL DEFAULT NULL',
-            'ip' => Schema::TYPE_BIGINT . '(20) NOT NULL DEFAULT 0',
+            'id' => $this->primaryKey(),
+            'user_id' => $this->integer()->notNull()->defaultValue(0),
+            'title' => $this->string()->notNull()->defaultValue(''),
+            'name' => $this->string()->notNull()->defaultValue(''),
+            'date_create' => $this->timestamp()->null(),
+            'date_update' => $this->timestamp()->null(),
+            'ip' => $this->bigInteger(20)->notNull()->defaultValue(0),
         ], $tableOptions);
     }
 
