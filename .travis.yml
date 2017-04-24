@@ -22,8 +22,7 @@ before_script:
   - chmod -R a+w runtime
   - mysql -e 'create database bootstrap_yii2_tests;'
   - php yii create-local-config --path=@app/config/local/config.php
-  - composer test-prepare
-  - composer test-build
+  - composer build:test
 
 script:
   - vendor/bin/codecept run --report --coverage-xml

@@ -2,29 +2,39 @@
 
 ## Preparation
 
-1. Create `bootstrap_yii2_tests` database and run
-   ```
-   composer test-prepare
-   ```
-
-2. Run build tests
-   ```
-   composer test-build
-   ```
+Create `bootstrap_yii2_tests` database and run
+```
+composer build:test
+```
 
 ## Commands
 
-- Run tests
+- Run all tests
   ```
   composer test
   ```
 
+- Run unit tests
+  ```
+  composer test:unit
+  ```
+
+- Run functional tests
+  ```
+  composer test:functional
+  ```
+
+- Reconfigure modules of codeception
+  ```
+  composer test:reconfig
+  ```
+
 - Run tests with coverage
   ```
-  composer test-coverage
+  composer test:coverage
   ```
 
 - Show coverage dashboard
   ```
-  composer test-coverage-open
+  composer test:stats
   ```

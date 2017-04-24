@@ -50,7 +50,7 @@
         "post-create-project-cmd": [
             "yii\\composer\\Installer::postCreateProject"
         ],
-        "install-app": [
+        "build:app": [
             "php yii migrate --migrationPath=@yii/log/migrations/ --interactive=0",
             "php yii migrate --migrationPath=@yii/rbac/migrations/ --interactive=0",
             "php yii migrate --migrationPath=@vendor/rkit/settings-yii2/src/migrations/ --interactive=0",
@@ -59,16 +59,19 @@
             "npm install",
             "npm run build"
         ],
-        "test-prepare": [
+        "build:test": [
             "php tests/bin/yii migrate --migrationPath=@yii/rbac/migrations/ --interactive=0",
             "php tests/bin/yii migrate --migrationPath=@vendor/rkit/settings-yii2/src/migrations/ --interactive=0",
             "php tests/bin/yii migrate/up --interactive=0",
-            "php tests/bin/yii rbac/up --path=tests/_data/rbac/permissions.php"
+            "php tests/bin/yii rbac/up --path=tests/_data/rbac/permissions.php",
+            "codecept build"
         ],
-        "test-build": "codecept build",
         "test": "codecept run",
-        "test-coverage": "codecept run --coverage-html",
-        "test-coverage-open": "open tests/_output/coverage/index.html"
+        "test:unit": "codecept run unit",
+        "test:functional": "codecept run functional",
+        "test:reconfig": "codecept build",
+        "test:coverage": "codecept run --coverage-html",
+        "test:stats": "open tests/_output/coverage/index.html"
     },
     "extra": {
         "yii\\composer\\Installer::postCreateProject": {
