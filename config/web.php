@@ -113,6 +113,17 @@ $config = [
             'class' => 'app\components\Notify',
         ],
     ],
+    'container' => [
+        'definitions' => [
+            'yii\widgets\LinkPager' => [
+                'maxButtonCount' => 5,
+                'nextPageLabel'  => '&rarr;',
+                'prevPageLabel'  => '&larr;',
+                'firstPageLabel' => '&lArr;',
+                'lastPageLabel'  => '&rArr;',
+            ],
+        ],
+    ],
     'params' => $params,
 ];
 

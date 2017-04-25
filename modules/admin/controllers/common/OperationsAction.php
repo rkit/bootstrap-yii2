@@ -40,7 +40,6 @@ class OperationsAction extends Action
             }
         }
 
-        Yii::$app->response->format = Response::FORMAT_JSON;
-        return true;
+        return $this->controller->asJson(true);
     }
 }

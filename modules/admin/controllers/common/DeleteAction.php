@@ -25,7 +25,6 @@ class DeleteAction extends Action
             return $this->controller->redirect(\yii\helpers\Url::to(['index']));
         }
 
-        Yii::$app->response->format = Response::FORMAT_JSON;
-        return true;
+        return $this->controller->asJson(true);
     }
 }

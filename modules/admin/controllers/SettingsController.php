@@ -22,8 +22,7 @@ class SettingsController extends \yii\web\Controller
                 return $this->refresh();
             }
             if (Yii::$app->request->isAjax) {
-                Yii::$app->response->format = Response::FORMAT_JSON;
-                return $this->collectErrors($model);
+                return $this->asJson($this->collectErrors($model));
             }
         }
 

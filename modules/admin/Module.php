@@ -10,20 +10,17 @@ class Module extends \yii\base\Module
     public $controllerNamespace = 'app\modules\admin\controllers';
     public $defaultRoute = 'index/index';
     public $layout = 'admin';
+    public $permissions = [];
 
     public function init()
     {
         parent::init();
 
-        Yii::$app->user->loginUrl = ['admin/index/login'];
+        if (Yii::$app->user->isGuest === false) {
+            $this->permissions = $this->getUserPermissions();
+        }
 
-        \Yii::$container->set('yii\widgets\LinkPager', [
-            'maxButtonCount' => 5,
-            'nextPageLabel'  => '&rarr;',
-            'prevPageLabel'  => '&larr;',
-            'firstPageLabel' => '&lArr;',
-            'lastPageLabel'  => '&rArr;',
-        ]);
+        Yii::$app->user->loginUrl = ['admin/index/login'];
     }
 
     public function beforeAction($action)
@@ -36,7 +33,7 @@ class Module extends \yii\base\Module
 
     public function checkAccess($action)
     {
-        if ($action->controller->id == 'index') {
+        if ($action->controller->id === 'index') {
             return true;
         }
 
@@ -52,5 +49,19 @@ class Module extends \yii\base\Module
     private function getCurrentPermissionName($action)
     {
         return 'ACTION_Admin' . ucfirst($action->controller->id);
+    }
+
+    private function getUserPermissions()
+    {
+        $authManager = Yii::$app->authManager;
+
+        if (Yii::$app->user->identity->isSuperUser() === false) {
+            return $authManager->getPermissionsByRole(Yii::$app->user->identity->role);
+        }
+
+        return Yii::$app->cache->getOrSet('rbac-permissions',
+        function () use ($authManager) {
+            return $authManager->getPermissions();
+        });
     }
 }

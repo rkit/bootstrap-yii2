@@ -2,15 +2,7 @@
 
 use yii\widgets\Menu;
 
-$permissions = Yii::$app->cache->get('rbac-permissions');
-if (!$permissions) {
-    $permissions = Yii::$app->authManager->getPermissions();
-    Yii::$app->cache->set('rbac-permissions', $permissions);
-}
-
-$permissions = Yii::$app->user->identity->isSuperUser()
-    ? $permissions
-    : Yii::$app->authManager->getPermissionsByRole(Yii::$app->user->identity->role);
+$permissions = Yii::$app->controller->module->permissions;
 
 $items = [
     [

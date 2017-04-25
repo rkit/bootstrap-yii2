@@ -82,14 +82,12 @@ class RolesController extends \yii\web\Controller
                 Yii::$app->session->setFlash('success', Yii::t('app.messages', 'Saved successfully'));
                 $urlToModel = Url::toRoute(['edit', 'name' => $model->name]);
                 if (Yii::$app->request->isAjax) {
-                    Yii::$app->response->format = Response::FORMAT_JSON;
-                    return ['redirect' => $urlToModel];
+                    return $this->asJson(['redirect' => $urlToModel]);
                 }
                 return $this->redirect($urlToModel);
             }
             if (Yii::$app->request->isAjax) {
-                Yii::$app->response->format = Response::FORMAT_JSON;
-                return $this->collectErrors($model);
+                return $this->asJson($this->collectErrors($model));
             }
         }
 
