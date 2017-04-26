@@ -66,10 +66,16 @@
             "php tests/bin/yii rbac/up --path=tests/_data/rbac/permissions.php",
             "codecept build"
         ],
+        "reconfig": [
+            "php yii rbac/up --path=@app/config/rbac/permissions.php"
+        ],
         "test": "codecept run",
         "test:unit": "codecept run unit",
         "test:functional": "codecept run functional",
-        "test:reconfig": "codecept build",
+        "test:reconfig": [
+            "codecept build",
+            "php tests/bin/yii rbac/up --path=tests/_data/rbac/permissions.php"
+        ],
         "test:coverage": "codecept run --coverage-html",
         "test:stats": "open tests/_output/coverage/index.html"
     },

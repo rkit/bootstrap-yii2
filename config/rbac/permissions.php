@@ -1,7 +1,7 @@
 <?php
 
 /**
- * AFTER CHANGES YOU MUST RUN THE FOLLOWING `php yii rbac/up`
+ * AFTER CHANGES YOU MUST RUN THE FOLLOWING `composer reconfig`
  */
 
 return [
