@@ -22,9 +22,10 @@ class SignupProviderForm extends \yii\base\Model
     /**
      * @param User $user
      */
-    public function __construct($user)
+    public function __construct($user, $email)
     {
         $this->user = $user;
+        $this->email = $email;
     }
 
     /**
@@ -91,26 +92,46 @@ class SignupProviderForm extends \yii\base\Model
     }
 
     /**
+     * Save user
+     *
+     * @return bool
+     */
+    public function saveUser()
+    {
+        $this->user->email = $this->email;
+
+        $profile = $this->user->profile;
+        if ($profile->isNewRecord && !empty($profile->photo)) {
+            $this->savePhoto($profile, $profile->photo);
+        }
+
+        if ($this->user->save()) {
+            return true;
+        }
+
+        $this->addErrors($this->user->getErrors());
+        return false;
+    }
+
+    /**
+     * Login
+     *
+     * @return bool
+     */
+    public function login()
+    {
+        return $this->user->authorize(true);
+    }
+
+    /**
      * Signs user up
      *
-     * @param bool $checkExistEmail
-     * @return \app\models\User
+     * @return bool
      */
-    public function signup($checkExistEmail = true)
+    public function signup()
     {
-        if ($this->validate($checkExistEmail ? null : [])) {
-            $this->user->email = $this->email;
-
-            $profile = $this->user->profile;
-            if ($profile->isNewRecord && !empty($profile->photo)) {
-                $this->savePhoto($profile, $profile->photo);
-            }
-
-            if ($this->user->save()) {
-                if ($this->user->authorize(true)) {
-                    return $this->user;
-                }
-            } // @codeCoverageIgnore
+        if ($this->validate()) {
+            return $this->saveUser();
         } // @codeCoverageIgnore
 
         return false;

@@ -1,6 +1,6 @@
 <?php
 
-namespace app\handlers;
+namespace app\services;
 
 use yii\authclient\ClientInterface;
 use yii\helpers\ArrayHelper;
@@ -8,9 +8,9 @@ use app\models\User;
 use app\models\UserProvider;
 
 /**
- * AuthProviderHandler handles successful authentication
+ * SocialAuth handles successful authentication
  */
-class AuthProviderHandler
+class SocialAuth
 {
     /**
      * @var int
@@ -27,11 +27,11 @@ class AuthProviderHandler
     /**
      * @var bool
      */
-    private $verified = false;
+    private $isVerified = false;
     /**
      * @var bool
      */
-    private $exist = false;
+    private $isExist = false;
     /**
      * @var ClientInterface
      */
@@ -46,23 +46,27 @@ class AuthProviderHandler
     /**
      * @SuppressWarnings(PHPMD.ElseExpression)
      */
-    public function handle()
+    public function execute()
     {
         $user = $this->findUserByProvider();
         if ($user) {
-            $this->exist = true;
+            $this->isExist = true;
         } else {
             $profile = $this->client->getUserAttributes();
             $this->email = ArrayHelper::getValue($profile, 'email');
-            $this->verified = ArrayHelper::getValue($profile, 'verified');
+            $this->isVerified = ArrayHelper::getValue($profile, 'verified');
 
-            if ($this->verified && !empty($this->email)) {
+            if ($this->isVerified && !empty($this->email)) {
                 $user = User::findByEmail($this->email);
             }
 
             if (!$user) {
                 $user = new User();
                 $user->setProfile($this->parseProfile());
+            }
+
+            if ($this->isVerified) {
+                $user->setConfirmed();
             }
         }
 
@@ -72,24 +76,24 @@ class AuthProviderHandler
         return $this;
     }
 
-    public function getUser()
+    public function user()
     {
         return $this->user;
     }
 
-    public function getEmail()
+    public function email()
     {
         return $this->email;
     }
 
     public function isExist()
     {
-        return $this->exist;
+        return $this->isExist;
     }
 
     public function isVerified()
     {
-        return $this->verified;
+        return $this->isVerified;
     }
 
     /**

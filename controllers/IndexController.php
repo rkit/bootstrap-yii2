@@ -7,7 +7,7 @@ use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
-use app\handlers\AuthProviderHandler;
+use app\services\SocialAuth;
 use app\models\forms\LoginForm;
 use app\models\forms\SignupForm;
 use app\models\forms\SignupProviderForm;
@@ -85,6 +85,12 @@ class IndexController extends \yii\web\Controller
         Yii::$app->session['authClient'] = $client;
     }
 
+    public function goHome()
+    {
+        Yii::$app->session['authClient'] = null;
+        return Yii::$app->getResponse()->redirect(Yii::$app->getHomeUrl());
+    }
+
     public function actionIndex()
     {
         return $this->render('index');
@@ -142,59 +148,46 @@ class IndexController extends \yii\web\Controller
     public function actionSignupProvider()
     {
         $session = Yii::$app->session;
-        $authClient = $session['authClient'];
-
-        if ($authClient === null) {
+        if ($session['authClient'] === null) {
             return $this->goHome();
         }
 
-        $authHandler = (new AuthProviderHandler($authClient))->handle();
+        $socialAuth = (new SocialAuth($session['authClient']))->execute();
+        $user = $socialAuth->user();
 
-        $user = $authHandler->getUser();
+        if ($user === null) {
+            return $this->goHome();
+        }
 
-        if ($authHandler->isExist()) {
-            $session['authClient'] = null;
-            if ($user->isActive()) {
-                $user->authorize(true);
-                return $this->goHome();
-            }
+        $model = new SignupProviderForm($user, $socialAuth->email());
+
+        if ($socialAuth->isExist() && $user->isActive() === false) {
             $session->setFlash('error', $user->getStatusDescription());
             return $this->goHome();
         }
 
-        $model = new SignupProviderForm($user);
-        $model->email = $authHandler->getEmail();
+        if ($socialAuth->isExist() && $user->isActive() && $model->login()) {
+            return $this->goHome();
+        }
 
-        if ($authHandler->isVerified() && $model->signup(false)) {
-            $user->setConfirmed();
-            $user->save();
-            $session['authClient'] = null;
+        if ($socialAuth->isVerified() && $model->saveUser() && $model->login()) {
             return $this->goHome();
         }
 
         if ($model->load(Yii::$app->request->post()) && $model->signup()) {
-            $session['authClient'] = null;
+            $model->login();
+
             if ($model->sendEmail()) {
                 $session->setFlash(
                     'success',
-                    Yii::t(
-                        'app.messages',
-                        'Please activate your account'
-                    ) . '. ' .
-                    Yii::t(
-                        'app.messages',
-                        'A letter for activation was sent to {email}',
-                        ['email' => $model->email]
-                    )
+                    Yii::t('app.messages', 'Please activate your account') . '. ' .
+                    Yii::t('app.messages', 'A letter for activation was sent to {email}', ['email' => $model->email])
                 );
                 return $this->goHome();
             }
             $session->setFlash(
                 'error',
-                Yii::t(
-                    'app.messages',
-                    'An error occurred while sending a message to activate account'
-                )
+                Yii::t('app.messages', 'An error occurred while sending a message to activate account')
             );
             return $this->goHome();
         }
@@ -216,20 +209,13 @@ class IndexController extends \yii\web\Controller
         if ($model->sendEmail($user)) {
             Yii::$app->session->setFlash(
                 'success',
-                Yii::t(
-                    'app.messages',
-                    'A letter for activation was sent to {email}',
-                    ['email' => $user->email]
-                )
+                Yii::t('app.messages', 'A letter for activation was sent to {email}', ['email' => $user->email])
             );
             return $this->goHome();
         }
         Yii::$app->session->setFlash(
             'error',
-            Yii::t(
-                'app.messages',
-                'An error occurred while sending a message to activate account'
-            )
+            Yii::t('app.messages', 'An error occurred while sending a message to activate account')
         );
         return $this->goHome();
     }
@@ -263,19 +249,13 @@ class IndexController extends \yii\web\Controller
             if ($model->sendEmail()) {
                 Yii::$app->session->setFlash(
                     'success',
-                    Yii::t(
-                        'app.messages',
-                        'We\'ve sent you an email with instructions to reset your password'
-                    )
+                    Yii::t('app.messages', 'We\'ve sent you an email with instructions to reset your password')
                 );
                 return $this->goHome();
             }
             Yii::$app->session->setFlash(
                 'error',
-                Yii::t(
-                    'app.messages',
-                    'An error occurred while sending a message to reset your password'
-                )
+                Yii::t('app.messages', 'An error occurred while sending a message to reset your password')
             );
             return $this->goHome();
         }
