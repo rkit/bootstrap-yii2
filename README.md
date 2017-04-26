@@ -34,7 +34,7 @@
 
 4. Build application
    ```
-   build:app
+   composer build:app
    ```
 
 Access to the Control Panel
