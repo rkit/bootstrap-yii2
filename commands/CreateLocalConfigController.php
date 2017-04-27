@@ -40,7 +40,7 @@ class CreateLocalConfigController extends Controller
      */
     public function actionIndex()
     {
-        $source = Yii::getAlias('@app/config/config.local');
+        $source = Yii::getAlias('@app/config/local/main.dist');
         $dist = Yii::getAlias($this->path);
 
         if (!file_exists($dist)) {

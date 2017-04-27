@@ -37,4 +37,20 @@ $config['components']['localFs'] = [
     'path' => '@webroot/uploads',
 ];
 
+/**
+ * Containers
+ */
+
+$config['container'] = [
+    'definitions' => [
+        'yii\widgets\LinkPager' => [
+            'maxButtonCount' => 5,
+            'nextPageLabel'  => '&rarr;',
+            'prevPageLabel'  => '&larr;',
+            'firstPageLabel' => '&lArr;',
+            'lastPageLabel'  => '&rArr;',
+        ],
+    ],
+];
+
 return $config;

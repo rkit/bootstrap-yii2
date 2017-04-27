@@ -113,22 +113,11 @@ $config = [
             'class' => 'app\components\Notify',
         ],
     ],
-    'container' => [
-        'definitions' => [
-            'yii\widgets\LinkPager' => [
-                'maxButtonCount' => 5,
-                'nextPageLabel'  => '&rarr;',
-                'prevPageLabel'  => '&larr;',
-                'firstPageLabel' => '&lArr;',
-                'lastPageLabel'  => '&rArr;',
-            ],
-        ],
-    ],
     'params' => $params,
 ];
 
 require_once __DIR__ . '/common.php';
-require_once __DIR__ . '/local/config.php';
+require_once __DIR__ . '/local/main.php';
 
 /**
  * Maintenance mode

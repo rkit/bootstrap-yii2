@@ -4,7 +4,7 @@
  * Config for Test Application
  */
 
-$local = require __DIR__ . '/local/config.php';
+$local = require __DIR__ . '/local/main.php';
 $local['components']['db']['dsn'] .= '_tests';
 
 $params = require __DIR__ . '/params.php';

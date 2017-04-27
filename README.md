@@ -28,9 +28,9 @@
 
 3. Creating a new database and local config
    ```
-   php yii create-local-config --path=@app/config/local/config.php
+   php yii create-local-config --path=@app/config/local/main.php
    ```
-   > filling in the database settings in the *config/local/config.php*
+   > filling in the database settings in the *config/local/main.php*
 
 4. Build application
    ```

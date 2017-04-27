@@ -14,7 +14,7 @@ defined('YII_ENV') or define('YII_ENV', 'test');
 require(__DIR__ . '/../../vendor/autoload.php');
 require(__DIR__ . '/../../vendor/yiisoft/yii2/Yii.php');
 
-$local = require __DIR__ . '../../../config/local/config.php';
+$local = require __DIR__ . '../../../config/local/main.php';
 $local['components']['db']['dsn'] .= '_tests';
 
 $config = yii\helpers\ArrayHelper::merge(
