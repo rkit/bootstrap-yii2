@@ -10,7 +10,7 @@ $allowedIPs = ['127.0.0.1'];
 $config['components']['db'] = [
     'class'                 => 'yii\db\Connection',
     'dsn'                   => 'mysql:host=localhost;dbname=bootstrap_yii2',
-    'username'              => 'root',
+    'username'              => 'bootstrap_yii2',
     'password'              => '',
     'emulatePrepare'        => true,
     'charset'               => 'utf8',
