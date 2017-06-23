@@ -43,9 +43,6 @@ class SocialAuth
         $this->type = UserProvider::getTypeByName($client->id);
     }
 
-    /**
-     * @SuppressWarnings(PHPMD.ElseExpression)
-     */
     public function execute()
     {
         $user = $this->findUserByProvider();

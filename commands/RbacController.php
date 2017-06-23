@@ -22,9 +22,6 @@ class RbacController extends Controller
      */
     public $path;
 
-    /**
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-     */
     public function options($actionId = '')
     {
         return ['path'];

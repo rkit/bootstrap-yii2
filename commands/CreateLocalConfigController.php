@@ -17,9 +17,6 @@ class CreateLocalConfigController extends Controller
      */
     public $path;
 
-    /**
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-     */
     public function options($actionId = '')
     {
         return ['path'];
@@ -35,9 +32,6 @@ class CreateLocalConfigController extends Controller
         return true;
     }
 
-    /**
-     * @SuppressWarnings(PHPMD.ElseExpression)
-     */
     public function actionIndex()
     {
         $source = Yii::getAlias('@app/config/local/main.dist');

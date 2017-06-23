@@ -36,9 +36,6 @@ class FileRulesDescription
         return Yii::t('app.validators', 'File types') . ': ' . $value . ' ';
     }
 
-    /**
-     * @SuppressWarnings(PHPMD.ElseExpression)
-     */
     private static function imageSizeDescription($rules)
     {
         if ($rules === null) {

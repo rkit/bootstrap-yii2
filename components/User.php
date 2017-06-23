@@ -30,7 +30,6 @@ class User extends \yii\web\User
      * [[\yii\rbac\ManagerInterface::checkAccess()]] to obtain the up-to-date access result. Note that this
      * caching is effective only within the same request and only works when `$params = []`.
      * @return boolean whether the user can perform the operation as specified by the given permission.
-     * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
      */
     public function can($permissionName, $params = [], $allowCaching = true)
     {
