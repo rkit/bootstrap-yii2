@@ -2,7 +2,7 @@ root = true
 
 [*]
 indent_style = space
-indent_size = 4
-
-[*.{html,js,css}]
 indent_size = 2
+
+[*.php]
+indent_size = 4
