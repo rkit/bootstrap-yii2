@@ -1,6 +1,9 @@
 <?php
+use yii\helpers\Html;
 use yii\helpers\Url;
 use app\modules\admin\helpers\FileRulesDescription;
+
+$inputId = Html::getInputId($model, $attribute);
 ?>
 <?= $form->field($model, $attribute)->widget(\vova07\imperavi\Widget::class, [
     'settings' => [
@@ -21,12 +24,12 @@ use app\modules\admin\helpers\FileRulesDescription;
         ],
         'imageUpload' => Url::toRoute([$attribute . '-upload']),
         'imageUploadCallback' => new yii\web\JsExpression('function(data) {
-            var $form = $(".field-news-text").closest("form");
-            $form.yiiActiveForm("updateAttribute", "news-text", "");
+            var $form = $(".field-'. $inputId . '").closest("form");
+            $form.yiiActiveForm("updateAttribute", "'. $inputId .'", "");
         }'),
         'imageUploadErrorCallback' => new yii\web\JsExpression('function(data) {
-            var $form = $(".field-news-text").closest("form");
-            $form.yiiActiveForm("updateAttribute", "news-text", [data.error]);
+            var $form = $(".field-'. $inputId . '").closest("form");
+            $form.yiiActiveForm("updateAttribute", "'. $inputId . '", [data.error]);
         }')
     ]
 ])->hint(
