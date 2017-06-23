@@ -4,6 +4,8 @@
  * Config for Console Application
  */
 
+define('YII_ENV_MODE', 'console');
+
 $params = require(__DIR__ . '/params.php');
 
 $config = [

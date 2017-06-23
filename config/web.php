@@ -4,6 +4,8 @@
  * Config for Web Application
  */
 
+define('YII_ENV_MODE', 'web');
+
 $params = require(__DIR__ . '/params.php');
 
 $config = [
@@ -13,7 +15,7 @@ $config = [
     'name'           => 'Bootstrap',
     'defaultRoute'   => 'index/index',
     'sourceLanguage' => 'en',
-    'language'       => 'ru',
+    'language'       => 'en',
     'timeZone'       => 'Europe/Moscow',
 
     'modules' => [
@@ -26,6 +28,8 @@ $config = [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'mwsCLjohbWvqV8sLaHXebbZxDhmHEHF3',
+            'enableCsrfValidation' => true,
+
             'parsers' => [
                 'application/json' => 'yii\web\JsonParser',
             ]
@@ -40,7 +44,7 @@ $config = [
                 'logout' => 'index/logout',
                 'reset-password' => 'index/reset-password',
                 'confirm-email' => 'index/confirm-email',
-                'confirm-request' => 'index/confirm-request'
+                'confirm-request' => 'index/confirm-request',
             ]
         ],
         'cache' => [
@@ -84,6 +88,13 @@ $config = [
                 [
                     'class' => 'yii\log\DbTarget',
                     'levels' => ['error', 'warning'],
+                    'except' => [
+                        'yii\web\HttpException:400',
+                        'yii\web\HttpException:401',
+                        'yii\web\HttpException:403',
+                        'yii\web\HttpException:404',
+                        'yii\web\HttpException:422',
+                    ],
                 ],
             ],
         ],
