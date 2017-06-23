@@ -16,6 +16,7 @@
     <rule ref="Squiz.Strings.DoubleQuoteUsage" />
     <rule ref="Squiz.Strings.DoubleQuoteUsage.ContainsVar">
         <severity>0</severity>
+        <exclude-pattern>*/views/*</exclude-pattern>
     </rule>
 
     <!-- Ignore missing namespace for migrations -->
@@ -34,6 +35,7 @@
             <property name="lineLimit" value="120"/>
             <property name="absoluteLineLimit" value="120"/>
         </properties>
+        <exclude-pattern>*/messages/*</exclude-pattern>
     </rule>
 
 </ruleset>
