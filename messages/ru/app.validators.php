@@ -17,13 +17,13 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Max. file number' => 'Макс. кол-во файлов',
     'File size must not exceed' => 'Размер файла не должен превышать',
     'File types' => 'Типы файлов',
     'Image size' => 'Размер картинки',
     'Incorrect email or password' => 'Неверный email или пароль',
     'Incorrect file format' => 'Неверный формат файла',
     'Incorrect username or password' => 'Неверное имя пользователя или пароль',
+    'Max. file number' => 'Макс. кол-во файлов',
     'Max. file size' => 'Макc. размер файла',
     'Max. height' => 'Макc. высота',
     'Max. size of image' => 'Макc. размер картинки',
@@ -36,5 +36,4 @@ return [
     'Set a new password' => 'Установить новый пароль',
     'There is no user with such email' => 'Пользователя с таким email не существует',
     'This email address has already been taken' => 'Данный email уже занят',
-    'You must fill in username or email' => 'Вы должны заполнить имя пользователя или email',
 ];

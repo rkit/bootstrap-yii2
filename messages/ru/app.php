@@ -18,7 +18,6 @@
  */
 return [
     'Access Denied' => 'Доступ закрыт',
-    'Access is unauthorized' => 'Требуется аутентификация',
     'Access to the Control Panel' => 'Доступ к панели управления',
     'Account not activated' => 'Аккаунт не активирован',
     'Activate Your Account' => 'Активируйте ваш аккаунт',
@@ -29,7 +28,6 @@ return [
     'All statuses' => 'Все статусы',
     'Are you sure you want to delete this record?' => 'Вы уверены, что хотите удалить эту запись?',
     'Are you sure you want to delete this records?' => 'Вы уверены, что хотите удалить эти записи?',
-    'Bad request' => 'Неверный запрос',
     'Birth Day' => 'День Рождения',
     'Control Panel' => 'Панель управления',
     'Control Panel / News' => 'Панель управления / Новости',
