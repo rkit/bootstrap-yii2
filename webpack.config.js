@@ -37,13 +37,14 @@ module.exports = {
     },
     modulesDirectories: [
       'node_modules',
+      __dirname + '/vendor/npm-asset',
       __dirname + '/vendor/yiisoft/yii2/assets',
     ],
   },
 
   plugins: [
     new BowerWebpackPlugin({
-      modulesDirectories: ['./vendor/bower'],
+      modulesDirectories: ['./vendor/bower-asset'],
       manifestFiles: ['bower.json', '.bower.json'],
       includes: /.*/,
       excludes: /.*\.less$/,

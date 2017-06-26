@@ -82,7 +82,7 @@ class AuthItem extends \yii\db\ActiveRecord
      *
      * @return bool
      */
-    public function isSuperUser()
+    public function isSuperUser(): bool
     {
         return $this->name === \app\models\User::ROLE_SUPERUSER;
     }

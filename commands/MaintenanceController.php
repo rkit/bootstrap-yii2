@@ -11,7 +11,7 @@ use yii\helpers\Console;
  */
 class MaintenanceController extends Controller
 {
-    public function actionOff()
+    public function actionOff(): bool
     {
         $this->stdout("Trying disabling maintenance mode...\n");
         $file = $this->resolveFile();
@@ -25,7 +25,7 @@ class MaintenanceController extends Controller
         return false;
     }
 
-    public function actionOn()
+    public function actionOn(): bool
     {
         $this->stdout("Trying enabling maintenance mode...\n");
         $file = $this->resolveFile();
@@ -44,7 +44,7 @@ class MaintenanceController extends Controller
      *
      * @return string
      */
-    private function resolveFile()
+    private function resolveFile(): string
     {
         return Yii::$app->getRuntimePath() . DIRECTORY_SEPARATOR . 'maintenance';
     }

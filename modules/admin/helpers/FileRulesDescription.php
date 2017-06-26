@@ -10,7 +10,7 @@ use yii\helpers\ArrayHelper;
  */
 class FileRulesDescription
 {
-    private static function maxSizeDescription($value)
+    private static function maxSizeDescription(string $value = null): string
     {
         if ($value === null) {
             return '';
@@ -19,7 +19,7 @@ class FileRulesDescription
         return Yii::t('app.validators', 'Max. file size') . ': ' . $value . ' ';
     }
 
-    private static function maxFilesDescription($value)
+    private static function maxFilesDescription(string $value = null): string
     {
         if ($value === null) {
             return '';
@@ -27,7 +27,7 @@ class FileRulesDescription
         return Yii::t('app.validators', 'Max. file number') . ': ' . $value . ' ';
     }
 
-    private static function extensionDescription($value)
+    private static function extensionDescription(array $value = null): string
     {
         if ($value === null) {
             return '';
@@ -36,7 +36,7 @@ class FileRulesDescription
         return Yii::t('app.validators', 'File types') . ': ' . $value . ' ';
     }
 
-    private static function imageSizeDescription($rules)
+    private static function imageSizeDescription(array $rules = null): string
     {
         if ($rules === null) {
             return '';
@@ -72,7 +72,7 @@ class FileRulesDescription
         return implode('<br>', array_filter($text));
     }
 
-    private static function isImageWithStrictSize($rules)
+    private static function isImageWithStrictSize(array $rules): bool
     {
         $maxWidth  = ArrayHelper::getValue($rules, 'maxWidth');
         $minWidth  = ArrayHelper::getValue($rules, 'minWidth');
@@ -82,12 +82,12 @@ class FileRulesDescription
         return count($rules) == 4 && ($maxWidth == $minWidth && $maxHeight == $minHeight);
     }
 
-    private static function isImageWithMinAndMaxSize($rules)
+    private static function isImageWithMinAndMaxSize(array $rules): bool
     {
         return count($rules) == 4;
     }
 
-    private static function isImageWithMinSize($rules)
+    private static function isImageWithMinSize(array $rules): bool
     {
         $minWidth  = ArrayHelper::getValue($rules, 'minWidth');
         $minHeight = ArrayHelper::getValue($rules, 'minHeight');
@@ -95,7 +95,7 @@ class FileRulesDescription
         return (count($rules) == 2 || count($rules) == 3) && $minWidth && $minHeight;
     }
 
-    private static function isImageWithMaxSize($rules)
+    private static function isImageWithMaxSize(array $rules): bool
     {
         $maxWidth  = ArrayHelper::getValue($rules, 'maxWidth');
         $maxHeight = ArrayHelper::getValue($rules, 'maxHeight');
@@ -103,7 +103,7 @@ class FileRulesDescription
         return (count($rules) == 2 || count($rules) == 3) && $maxWidth && $maxHeight;
     }
 
-    private static function prepareImageSizeDescription($rules, $exclude = [])
+    private static function prepareImageSizeDescription(array $rules, array $exclude = []): string
     {
         foreach ($exclude as $item) {
             unset($rules[$item]);
@@ -136,7 +136,7 @@ class FileRulesDescription
      * @param array $rules Validation rules
      * @return string
      */
-    public static function toText($rules)
+    public static function toText(array $rules): string
     {
         $text = [];
         $text[] = self::imageSizeDescription(ArrayHelper::getValue($rules, 'imageSize'));

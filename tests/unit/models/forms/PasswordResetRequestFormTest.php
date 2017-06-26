@@ -2,8 +2,7 @@
 
 namespace app\tests\unit\models\forms;
 
-use Yii;
-use app\tests\fixtures\User as UserFixture;
+use app\tests\fixtures\UserFixture;
 use app\models\User;
 use app\models\forms\PasswordResetRequestForm;
 
@@ -12,9 +11,6 @@ class PasswordResetRequestFormTest extends \Codeception\Test\Unit
     // @codingStandardsIgnoreFile
     protected function _before()
     {
-        Yii::$app->settings->set('emailMain', 'editor@mail.com');
-        Yii::$app->settings->set('emailName', 'Editor');
-
         $this->tester->haveFixtures([
              'user' => UserFixture::class,
         ]);
@@ -81,6 +77,5 @@ class PasswordResetRequestFormTest extends \Codeception\Test\Unit
         $message = $this->tester->grabLastSentEmail();
         expect('valid email is sent', $message)->isInstanceOf('yii\mail\MessageInterface');
         expect($message->getTo())->hasKey($form->email);
-        expect($message->getFrom())->hasKey('editor@mail.com');
     }
 }

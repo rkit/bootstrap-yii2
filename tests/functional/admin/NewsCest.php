@@ -3,18 +3,18 @@
 namespace app\tests\functional\admin;
 
 use app\tests\fixtures\UserFixture;
-use app\tests\fixtures\UserProfileFixture;
+use app\tests\fixtures\NewsFixture;
 
-class UsersCest
+class NewsCest
 {
-    protected $url = '/admin/users';
+    protected $url = '/admin/news';
 
     // @codingStandardsIgnoreFile
     public function _before($I)
     {
         $I->haveFixtures([
-             'profile' => UserProfileFixture::class,
              'user' => UserFixture::class,
+             'news' => NewsFixture::class,
         ]);
         $I->amLoggedInAs($I->grabFixture('user', 'user-1'));
         $I->amOnRoute($this->url);
@@ -40,18 +40,6 @@ class UsersCest
     public function testOpenEdit404($I)
     {
         $I->amOnRoute($this->url . '/edit', ['id' => 999]);
-        $I->seeResponseCodeIs(404);
-    }
-
-    public function testOpenProfilePage($I)
-    {
-        $I->amOnRoute($this->url . '/profile', ['id' => 1]);
-        $I->seeResponseCodeIs(200);
-    }
-
-    public function testOpenProfile404($I)
-    {
-        $I->amOnRoute($this->url . '/profile', ['id' => 999]);
         $I->seeResponseCodeIs(404);
     }
 }

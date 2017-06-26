@@ -25,7 +25,7 @@ return [
                 return $file;
             },
             'rules' => [
-                'imageSize' => ['minWidth' => 300, 'minHeight' => 300],
+                'imageSize' => ['minWidth' => 100, 'minHeight' => 100],
                 'mimeTypes' => ['image/png', 'image/jpg', 'image/jpeg'],
                 'extensions' => ['jpg', 'jpeg', 'png'],
                 'maxFiles' => 1,

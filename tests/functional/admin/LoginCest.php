@@ -2,12 +2,8 @@
 
 namespace app\tests\functional\admin;
 
-use yii\web\ForbiddenHttpException;
 use yii\helpers\Url;
-use app\tests\fixtures\User as UserFixture;
-use app\tests\fixtures\AuthItem as AuthItemFixture;
-use app\tests\fixtures\AuthItemChild as AuthItemChildFixture;
-use app\tests\fixtures\AuthAssignment as  AuthAssignmentFixture;
+use app\tests\fixtures\UserFixture;
 
 class LoginCest
 {
@@ -17,16 +13,13 @@ class LoginCest
     // @codingStandardsIgnoreFile
     public function _before($I)
     {
-        $I->amOnRoute('/admin');
         $I->haveFixtures([
-             'authItem' => AuthItemFixture::class,
-             'authAssignment' => AuthAssignmentFixture::class,
-             'authItemChild' => AuthItemChildFixture::class,
              'user' => UserFixture::class,
         ]);
+        $I->amOnRoute('/admin');
     }
 
-    public function openLoginPage($I)
+    public function openPage($I)
     {
         $I->see('Login');
     }
@@ -152,19 +145,15 @@ class LoginCest
 
     public function testEnterToPageIndexWithNoPermission($I)
     {
-        try {
-            $I->amLoggedInAs($I->grabFixture('user', 'user-2'));
-            $I->amOnRoute('/admin');
-        } catch (ForbiddenHttpException $Exception) {
-        }
+        $I->amLoggedInAs($I->grabFixture('user', 'user-2'));
+        $I->amOnRoute('/admin');
+        $I->seeResponseCodeIs(403);
     }
 
     public function testEnterToPageWithNoPermission($I)
     {
-        try {
-            $I->amLoggedInAs($I->grabFixture('user', 'user-2'));
-            $I->amOnRoute('/admin/settings');
-        } catch (ForbiddenHttpException $Exception) {
-        }
+        $I->amLoggedInAs($I->grabFixture('user', 'user-2'));
+        $I->amOnRoute('/admin/settings');
+        $I->seeResponseCodeIs(403);
     }
 }

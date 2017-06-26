@@ -2,8 +2,8 @@
 
 namespace app\tests\functional;
 
-use Yii;
-use app\tests\fixtures\User as UserFixture;
+use app\tests\fixtures\UserFixture;
+use app\tests\fixtures\UserProfileFixture;
 
 class SignupCest
 {
@@ -16,10 +16,11 @@ class SignupCest
         $I->amOnRoute('/index/signup');
         $I->haveFixtures([
              'user' => UserFixture::class,
+             'profile' => UserProfileFixture::class,
         ]);
     }
 
-    public function openSignupPage($I)
+    public function openPage($I)
     {
         $I->see('Signup');
     }
@@ -106,19 +107,6 @@ class SignupCest
         $I->dontSee('logout');
     }
 
-    public function testFailEmail($I)
-    {
-        Yii::$app->settings->emailMain = null;
-
-        $I->submitForm($this->formId, [
-            $this->formName . '[fullName]' => 'Test',
-            $this->formName . '[email]' => 'test@test.com',
-            $this->formName . '[password]' => 'fghfgh',
-        ]);
-
-        $I->see('An error occurred while sending a message to activate account');
-    }
-
     public function testSuccess($I)
     {
         $I->submitForm($this->formId, [
@@ -144,20 +132,9 @@ class SignupCest
         $I->see('Invalid link for activate account');
     }
 
-    public function testConfirmRequestFailEmail($I)
-    {
-        $I->amLoggedInAs(2);
-        Yii::$app->settings->emailMain = null;
-
-        $I->amOnRoute('/index/confirm-request');
-        $I->see('An error occurred while sending a message to activate account');
-    }
-
     public function testConfirmRequest($I)
     {
         $I->amLoggedInAs(2);
-        Yii::$app->settings->emailName = 'admin';
-        Yii::$app->settings->emailMain = 'admin@test.com';
 
         $I->amOnRoute('/index/confirm-request');
         $I->see('A letter for activation was sent to');

@@ -142,7 +142,7 @@ class News extends \yii\db\ActiveRecord
      *
      * @return string[]
      */
-    public static function getStatuses()
+    public static function getStatuses(): array
     {
         return [
             self::STATUS_BLOCKED => Yii::t('app', 'Not published'),
@@ -155,7 +155,7 @@ class News extends \yii\db\ActiveRecord
      *
      * @return string
      */
-    public function getStatusName()
+    public function getStatusName(): string
     {
         $statuses = self::getStatuses();
         return isset($statuses[$this->status]) ? $statuses[$this->status] : '';
@@ -166,7 +166,7 @@ class News extends \yii\db\ActiveRecord
      *
      * @param bool
      */
-    public function isBlocked()
+    public function isBlocked(): bool
     {
         return $this->status == self::STATUS_BLOCKED;
     }
@@ -176,7 +176,7 @@ class News extends \yii\db\ActiveRecord
      *
      * @param bool
      */
-    public function isActive()
+    public function isActive(): bool
     {
         return $this->status == self::STATUS_ACTIVE;
     }

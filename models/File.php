@@ -65,9 +65,8 @@ class File extends \yii\db\ActiveRecord
      * Generate a new name
      *
      * @param string $extension The file extension
-     * @return string
      */
-    public function generateName($extension)
+    public function generateName(string $extension): void
     {
         $name = date('YmdHis') . substr(md5(microtime() . uniqid()), 0, 10);
         $this->name = $name . '.' . $extension;

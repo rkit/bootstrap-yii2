@@ -37,24 +37,21 @@ class SocialAuth
      */
     private $client;
 
-    public function __construct(ClientInterface $client)
+    public function execute(ClientInterface $client): SocialAuth
     {
         $this->client = $client;
         $this->type = UserProvider::getTypeByName($client->id);
-    }
 
-    public function execute()
-    {
         $user = $this->findUserByProvider();
         if ($user) {
             $this->isExist = true;
         } else {
             $profile = $this->client->getUserAttributes();
             $this->email = ArrayHelper::getValue($profile, 'email');
-            $this->isVerified = ArrayHelper::getValue($profile, 'verified');
+            $this->isVerified = ArrayHelper::getValue($profile, 'verified', false);
 
             if ($this->isVerified && !empty($this->email)) {
-                $user = User::findByEmail($this->email);
+                $user = User::find()->email($this->email)->one();
             }
 
             if (!$user) {
@@ -73,22 +70,22 @@ class SocialAuth
         return $this;
     }
 
-    public function user()
+    public function user(): ?User
     {
         return $this->user;
     }
 
-    public function email()
+    public function email(): ?string
     {
         return $this->email;
     }
 
-    public function isExist()
+    public function isExist(): bool
     {
         return $this->isExist;
     }
 
-    public function isVerified()
+    public function isVerified(): bool
     {
         return $this->isVerified;
     }
@@ -98,11 +95,11 @@ class SocialAuth
      *
      * @return app\models\User|null
      */
-    private function findUserByProvider()
+    private function findUserByProvider(): ?User
     {
         $profile = $this->client->getUserAttributes();
         $id = ArrayHelper::getValue($profile, 'id');
-        if ($provider = UserProvider::findByProvider($this->type, $id)) {
+        if ($provider = UserProvider::find()->provider($this->type, $id)->one()) {
             $user = $provider->user;
             $provider->setAttributes($this->parseProvider());
             $provider->save();
@@ -117,7 +114,7 @@ class SocialAuth
      *
      * @return array
      */
-    private function parseProvider()
+    private function parseProvider(): array
     {
         $profile = $this->client->getUserAttributes();
         $token = $this->client->getAccessToken()->getParams();
@@ -145,7 +142,7 @@ class SocialAuth
      *
      * @return array
      */
-    private function parseProfile()
+    private function parseProfile(): array
     {
         $profile = $this->client->getUserAttributes();
 
@@ -173,7 +170,7 @@ class SocialAuth
      * @param array $token
      * @return array
      */
-    private function parseProviderFacebook($profile, $token)
+    private function parseProviderFacebook(array $profile, array $token): array
     {
         return [
             'profile_id' => ArrayHelper::getValue($profile, 'id'),
@@ -190,7 +187,7 @@ class SocialAuth
      * @param array $token
      * @return array
      */
-    private function parseProviderVkontakte($profile, $token)
+    private function parseProviderVkontakte(array $profile, array $token): array
     {
         return [
             'profile_id' => ArrayHelper::getValue($profile, 'id'),
@@ -207,7 +204,7 @@ class SocialAuth
      * @param array $token
      * @return array
      */
-    private function parseProviderTwitter($profile, $token)
+    private function parseProviderTwitter(array $profile, array $token): array
     {
         return [
             'profile_id' => ArrayHelper::getValue($profile, 'id'),
@@ -223,11 +220,11 @@ class SocialAuth
      * @param array $profile
      * @return array
      */
-    private function parseProfileFacebook($profile)
+    private function parseProfileFacebook(array $profile): array
     {
         return [
             'full_name' => trim(ArrayHelper::getValue($profile, 'name')),
-            'birth_day' => '—',
+            'birth_day' => '',
             'photo' => ArrayHelper::getValue($profile, 'picture.data.url', '')
         ];
     }
@@ -238,7 +235,7 @@ class SocialAuth
      * @param array $profile
      * @return array
      */
-    private function parseProfileVkontakte($profile)
+    private function parseProfileVkontakte(array $profile): array
     {
         $firstName = ArrayHelper::getValue($profile, 'first_name');
         $lastName = ArrayHelper::getValue($profile, 'last_name');
@@ -256,7 +253,7 @@ class SocialAuth
      * @param array $profile
      * @return array
      */
-    private function parseProfileTwitter($profile)
+    private function parseProfileTwitter(array $profile): array
     {
         $photo = ArrayHelper::getValue($profile, 'profile_image_url');
         return [

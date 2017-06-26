@@ -98,7 +98,7 @@ class RolesController extends \yii\web\Controller
         ]);
     }
 
-    private function setRoles($model, $roles, $permissions)
+    private function setRoles(AuthItem $model, array $roles, array $permissions): void
     {
         $auth = Yii::$app->authManager;
 
@@ -125,7 +125,7 @@ class RolesController extends \yii\web\Controller
         }
     }
 
-    private function preparePermissionsToSave($model)
+    private function preparePermissionsToSave(AuthItem $model): AuthItem
     {
         $permissions = Yii::$app->authManager->getPermissionsByRole($model->name);
         $model->permissions = ArrayHelper::index($permissions, 'name', []);
@@ -134,7 +134,7 @@ class RolesController extends \yii\web\Controller
         return $model;
     }
 
-    private function prepareRolesToSave($model)
+    private function prepareRolesToSave(AuthItem $model): AuthItem
     {
         $roles = Yii::$app->authManager->getChildren($model->name);
         $model->roles = ArrayHelper::index($roles, 'name', []);

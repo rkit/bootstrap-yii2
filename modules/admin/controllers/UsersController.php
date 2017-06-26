@@ -159,7 +159,7 @@ class UsersController extends \yii\web\Controller
         return $this->asJson($result);
     }
 
-    private function assignRole($model)
+    private function assignRole(\yii\db\ActiveRecord $model)
     {
         $auth = Yii::$app->authManager;
         $auth->revokeAll($model->id);

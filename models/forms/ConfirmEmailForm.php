@@ -4,6 +4,7 @@ namespace app\models\forms;
 
 use Yii;
 use app\models\User;
+use app\services\Tokenizer;
 
 class ConfirmEmailForm extends \yii\base\Model
 {
@@ -18,13 +19,14 @@ class ConfirmEmailForm extends \yii\base\Model
      * @param string $token
      * @return boolean
      */
-    public function validateToken($token)
+    public function validateToken(string $token): bool
     {
-        if (empty($token) || !is_string($token)) {
+        $tokenizer = new Tokenizer();
+        if (empty($token) || !is_string($token) || !$tokenizer->validate($token)) {
             return false;
         }
 
-        $this->user = User::findByEmailConfirmToken($token);
+        $this->user = User::find()->emailConfirmToken($token)->one();
 
         if (!$this->user) {
             return false;
@@ -38,7 +40,7 @@ class ConfirmEmailForm extends \yii\base\Model
      *
      * @return boolean
      */
-    public function confirmEmail()
+    public function confirmEmail(): bool
     {
         $this->user->setConfirmed();
         return $this->user->save(false);
@@ -50,10 +52,11 @@ class ConfirmEmailForm extends \yii\base\Model
      * @param User $user
      * @return boolean
      */
-    public function sendEmail($user)
+    public function sendEmail(User $user): bool
     {
-        if (!User::isTokenValid($user->email_confirm_token)) {
-            $user->generateEmailConfirmToken();
+        $tokenizer = new Tokenizer();
+        if (!$tokenizer->validate($user->email_confirm_token)) {
+            $user->setEmailConfirmToken($tokenizer->generate());
             $user->updateAttributes([
                 'email_confirm_token' => $user->email_confirm_token,
                 'date_confirm' => $user->date_confirm,

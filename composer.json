@@ -41,7 +41,7 @@
         "codeception/codeception": "^2.2.6",
         "codeception/specify": "~0.4.3",
         "codeception/verify": "~0.3.1",
-        "squizlabs/php_codesniffer": "3.0.0RC1"
+        "squizlabs/php_codesniffer": "^3.0.0"
     },
     "config": {
         "process-timeout": 1800
@@ -50,24 +50,23 @@
         "post-create-project-cmd": [
             "yii\\composer\\Installer::postCreateProject"
         ],
-        "build:app": [
+        "build": [
             "php yii migrate --migrationPath=@yii/log/migrations/ --interactive=0",
             "php yii migrate --migrationPath=@yii/rbac/migrations/ --interactive=0",
             "php yii migrate --migrationPath=@vendor/rkit/settings-yii2/src/migrations/ --interactive=0",
             "php yii migrate/up --interactive=0",
-            "php yii rbac/up --path=@app/config/rbac/permissions.php",
+            "composer reconfig",
             "npm install",
             "npm run build"
         ],
-        "build:test": [
+        "reconfig": [
+            "php yii rbac/up --path=@app/config/rbac/permissions.php"
+        ],
+        "test:build": [
             "php tests/bin/yii migrate --migrationPath=@yii/rbac/migrations/ --interactive=0",
             "php tests/bin/yii migrate --migrationPath=@vendor/rkit/settings-yii2/src/migrations/ --interactive=0",
             "php tests/bin/yii migrate/up --interactive=0",
-            "php tests/bin/yii rbac/up --path=tests/_data/rbac/permissions.php",
-            "codecept build"
-        ],
-        "reconfig": [
-            "php yii rbac/up --path=@app/config/rbac/permissions.php"
+            "composer test:reconfig"
         ],
         "test": "codecept run",
         "test:unit": "codecept run unit",
@@ -79,6 +78,12 @@
         "test:coverage": "codecept run --coverage-html",
         "test:stats": "open tests/_output/coverage/index.html"
     },
+    "repositories": [
+      {
+          "type": "composer",
+          "url": "https://asset-packagist.org"
+      }
+    ],
     "extra": {
         "yii\\composer\\Installer::postCreateProject": {
             "setPermission": [
@@ -91,10 +96,6 @@
             "generateCookieValidationKey": [
                 "config/web.php"
             ]
-        },
-        "asset-installer-paths": {
-            "npm-asset-library": "vendor/npm",
-            "bower-asset-library": "vendor/bower"
         }
     }
 }

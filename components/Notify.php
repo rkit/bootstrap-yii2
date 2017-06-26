@@ -30,15 +30,14 @@ class Notify extends \yii\base\Component
      * @param array $params
      * @return bool
      */
-    public function sendMessage($to, $subject, $view, $params = [])
+    public function sendMessage(string $to, string $subject, string $view, array $params = []): bool
     {
         $message = \Yii::$app->getMailer()->compose($view, $params);
 
-        if (!strlen($this->params->emailMain) || !strlen($this->params->emailName)) {
-            return false;
+        if (strlen($this->params->emailMain) && strlen($this->params->emailName)) {
+            $message->setFrom([$this->params->emailMain => $this->params->emailName]);
         }
 
-        $message->setFrom([$this->params->emailMain => $this->params->emailName]);
         $message->setTo($to);
 
         if (strlen($this->params->emailPrefix)) {
@@ -47,6 +46,11 @@ class Notify extends \yii\base\Component
             $message->setSubject($subject);
         }
 
-        return $message->send();
+        try {
+            return $message->send();
+        } catch (\Exception $e) {
+            Yii::error($e);
+            return false;
+        }
     }
 }

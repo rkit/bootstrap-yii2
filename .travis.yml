@@ -14,14 +14,13 @@ before_install:
 
 install:
   - composer self-update && composer --version
-  - composer global require "fxp/composer-asset-plugin:~1.1.1"
   - composer install
 
 before_script:
   - chmod -R a+w runtime
   - mysql -e 'create database bootstrap_yii2_tests;'
   - php yii create-local-config --path=@app/config/local/main.php
-  - composer build:test
+  - composer test:build
 
 script:
   - vendor/bin/codecept run --report --coverage-xml

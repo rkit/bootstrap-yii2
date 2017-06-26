@@ -2,7 +2,7 @@
 
 namespace app\tests\functional;
 
-use app\tests\fixtures\User as UserFixture;
+use app\tests\fixtures\UserFixture;
 
 class ResetPasswordCest
 {
@@ -19,7 +19,7 @@ class ResetPasswordCest
         $I->amOnRoute('/index/reset-password', ['token' => $user->password_reset_token]);
     }
 
-    public function openResetPasswordPage($I)
+    public function openPage($I)
     {
         $I->see('Reset password');
         $I->see('Please choose your new password');

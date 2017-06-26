@@ -43,7 +43,7 @@ class RbacController extends Controller
         Yii::$app->cache->delete('rbac-permissions');
     }
 
-    public function actionUp()
+    public function actionUp(): void
     {
         $currentPermissions = $this->auth->getPermissions();
         $newPermissions = require Yii::getAlias($this->path);
@@ -54,7 +54,7 @@ class RbacController extends Controller
         $this->stdout("Done!\n", Console::FG_GREEN);
     }
 
-    private function cleanUnusedPermissions($currentPermissions, $newPermissions)
+    private function cleanUnusedPermissions(array $currentPermissions, array $newPermissions): void
     {
         foreach ($currentPermissions as $currentPermission) {
             if (!isset($newPermissions[$currentPermission->name])) {
@@ -63,7 +63,7 @@ class RbacController extends Controller
         }
     }
 
-    private function updatePermissions($currentPermissions, $newPermissions)
+    private function updatePermissions(array $currentPermissions, array $newPermissions): void
     {
         foreach ($newPermissions as $name => $description) {
             $isNew = !isset($currentPermissions[$name]);
@@ -75,7 +75,7 @@ class RbacController extends Controller
         }
     }
 
-    private function add($name, $description)
+    private function add(string $name, string $description): void
     {
         $permission = $this->auth->createPermission($name);
         $permission->description = $description;
@@ -83,7 +83,7 @@ class RbacController extends Controller
         $this->stdout("Added: $name\n", Console::FG_GREEN);
     }
 
-    private function update($name, $description)
+    private function update(string $name, string $description): void
     {
         $permission = $this->auth->getPermission($name);
         $permission->description = $description;

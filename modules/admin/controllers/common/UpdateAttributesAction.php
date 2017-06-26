@@ -20,7 +20,7 @@ class UpdateAttributesAction extends Action
      */
     public $attributes;
 
-    public function run($id)
+    public function run(string $id)
     {
         $model = new $this->modelClass;
         $model = $this->findModel($model, $id);

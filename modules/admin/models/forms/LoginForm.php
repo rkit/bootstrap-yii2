@@ -74,10 +74,11 @@ class LoginForm extends \yii\base\Model
      * Logs in a user using the provided username and password.
      * @return boolean Whether the user is logged in successfully.
      */
-    public function login()
+    public function login(): bool
     {
         if ($this->validate()) {
-            return $this->getUser()->authorize($this->rememberMe);
+            $this->getUser()->updateDateLogin();
+            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
         }
         return false;
     }
@@ -87,10 +88,10 @@ class LoginForm extends \yii\base\Model
      *
      * @return User|null
      */
-    public function getUser()
+    public function getUser(): ?User
     {
         if ($this->user === false) {
-            $this->user = User::findByUsername($this->username);
+            $this->user = User::find()->username($this->username)->one();
         }
 
         return $this->user;

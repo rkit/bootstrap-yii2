@@ -3,7 +3,7 @@
 namespace app\tests\unit\models\forms;
 
 use Yii;
-use app\tests\fixtures\User as UserFixture;
+use app\tests\fixtures\UserFixture;
 use app\models\forms\SignupForm;
 use app\models\User;
 
@@ -109,7 +109,7 @@ class SignupFormTest extends \Codeception\Test\Unit
         expect_that($user->validatePassword('test_password'));
         expect_that($form->sendEmail());
 
-        $user = User::findByEmail('test@test.com');
+        $user = User::find()->email('test@test.com')->one();
         expect($user->profile->full_name)->equals('Test');
 
         $message = $this->tester->grabLastSentEmail();

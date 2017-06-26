@@ -72,10 +72,11 @@ class LoginForm extends \yii\base\Model
      *
      * @return boolean
      */
-    public function login()
+    public function login(): bool
     {
         if ($this->validate()) {
-            return $this->getUser()->authorize($this->rememberMe);
+            $this->getUser()->updateDateLogin();
+            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
         }
         return false;
     }
@@ -85,10 +86,10 @@ class LoginForm extends \yii\base\Model
      *
      * @return \app\models\User|null
      */
-    public function getUser()
+    public function getUser(): ?User
     {
         if ($this->user === false) {
-            $this->user = User::findByEmail($this->email);
+            $this->user = User::find()->email($this->email)->one();
         }
 
         return $this->user;

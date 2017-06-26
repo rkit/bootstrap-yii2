@@ -4,11 +4,8 @@ namespace app\tests\fixtures;
 
 use yii\test\ActiveFixture;
 
-/**
- * User fixture
- */
-class User extends ActiveFixture
+class UserFixture extends ActiveFixture
 {
     public $modelClass = 'app\models\User';
-    public $dataFile = '@tests/_data/models/user.php';
+    public $dataFile = '@tests/_data/tables/user.php';
 }

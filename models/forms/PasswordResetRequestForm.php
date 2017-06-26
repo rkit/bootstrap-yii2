@@ -4,6 +4,7 @@ namespace app\models\forms;
 
 use Yii;
 use app\models\User;
+use app\services\Tokenizer;
 
 class PasswordResetRequestForm extends \yii\base\Model
 {
@@ -42,13 +43,14 @@ class PasswordResetRequestForm extends \yii\base\Model
      *
      * @return boolean
      */
-    public function sendEmail()
+    public function sendEmail(): bool
     {
         /* @var $user User */
-        $user = User::findByEmail($this->email);
+        $user = User::find()->email($this->email)->one();
         if ($user) {
-            if (!User::isTokenValid($user->password_reset_token)) {
-                $user->generatePasswordResetToken();
+            $tokenizer = new Tokenizer();
+            if (!$tokenizer->validate($user->password_reset_token)) {
+                $user->setPasswordResetToken($tokenizer->generate());
             }
 
             if ($user->save(false)) {

@@ -4,7 +4,7 @@
 
 Create `bootstrap_yii2_tests` database and run
 ```
-composer build:test
+composer test:build
 ```
 
 ## Commands

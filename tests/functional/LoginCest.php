@@ -3,7 +3,7 @@
 namespace app\tests\functional;
 
 use yii\helpers\Url;
-use app\tests\fixtures\User as UserFixture;
+use app\tests\fixtures\UserFixture;
 use app\models\User;
 
 class LoginCest
@@ -20,7 +20,7 @@ class LoginCest
         ]);
     }
 
-    public function openLoginPage($I)
+    public function openPage($I)
     {
         $I->see('Login');
     }

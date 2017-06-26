@@ -16,7 +16,7 @@ class DeleteAction extends Action
      */
     public $modelClass;
 
-    public function run($id, $reload = false)
+    public function run(string $id, bool $reload = false)
     {
         $model = new $this->modelClass;
         $this->findModel($model, $id)->delete();

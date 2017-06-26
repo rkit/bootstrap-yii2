@@ -6,7 +6,7 @@
 
 define('YII_ENV_MODE', 'web');
 
-$params = require(__DIR__ . '/params.php');
+$params = require __DIR__ . '/params.php';
 
 $config = [
     'id'             => 'iNCVrvPTpDQuWpdnqqz6NPXeUHsRQoV3',
@@ -17,6 +17,11 @@ $config = [
     'sourceLanguage' => 'en',
     'language'       => 'en',
     'timeZone'       => 'Europe/Moscow',
+
+    'aliases' => [
+        '@bower' => '@vendor/bower-asset',
+        '@npm' => '@vendor/npm-asset',
+    ],
 
     'modules' => [
         'admin' => [

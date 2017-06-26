@@ -5,6 +5,7 @@ namespace app\models\forms;
 use Yii;
 use app\models\User;
 use app\models\UserProfile;
+use app\services\Tokenizer;
 
 class SignupForm extends \yii\base\Model
 {
@@ -61,7 +62,7 @@ class SignupForm extends \yii\base\Model
      *
      * @return \app\models\User
      */
-    public function signup()
+    public function signup(): ?User
     {
         if ($this->validate()) {
             $this->user = new User();
@@ -69,13 +70,15 @@ class SignupForm extends \yii\base\Model
             $this->user->setPassword($this->password);
             $this->user->setProfile(['full_name' => $this->fullName]);
             if ($this->user->save()) {
-                if ($this->user->authorize(true)) {
+                $this->user->updateDateLogin();
+
+                if (Yii::$app->user->login($this->user, 3600 * 24 * 30)) {
                     return $this->user;
                 }
             } // @codeCoverageIgnore
         } // @codeCoverageIgnore
 
-        return false;
+        return null;
     }
 
     /**
@@ -83,10 +86,11 @@ class SignupForm extends \yii\base\Model
      *
      * @return boolean
      */
-    public function sendEmail()
+    public function sendEmail(): bool
     {
-        if (!User::isTokenValid($this->user->email_confirm_token)) {
-            $this->user->generateEmailConfirmToken();
+        $tokenizer = new Tokenizer();
+        if (!$tokenizer->validate($this->user->email_confirm_token)) {
+            $this->user->setEmailConfirmToken($tokenizer->generate());
             $this->user->updateAttributes([
                 'email_confirm_token' => $this->user->email_confirm_token,
                 'date_confirm' => $this->user->date_confirm,

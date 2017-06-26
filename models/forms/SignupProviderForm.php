@@ -7,6 +7,8 @@ use yii\base\DynamicModel;
 use yii\helpers\FileHelper;
 use yii\web\UploadedFile;
 use app\models\User;
+use app\models\UserProfile;
+use app\services\Tokenizer;
 
 class SignupProviderForm extends \yii\base\Model
 {
@@ -59,13 +61,13 @@ class SignupProviderForm extends \yii\base\Model
      * @param string $path file path
      * @return UploadedFile
      */
-    private function makeUploadedFile($path)
+    private function makeUploadedFile(string $path): UploadedFile
     {
         $tmpFile = tempnam(sys_get_temp_dir(), 'app');
         file_put_contents($tmpFile, file_get_contents($path));
 
         $uploadedFile = new UploadedFile();
-        $uploadedFile->name = pathinfo($path, PATHINFO_BASENAME);
+        $uploadedFile->name = strtok(pathinfo($path, PATHINFO_BASENAME), '?');
         $uploadedFile->tempName = $tmpFile;
         $uploadedFile->type = FileHelper::getMimeType($tmpFile);
         $uploadedFile->size = filesize($tmpFile);
@@ -81,13 +83,15 @@ class SignupProviderForm extends \yii\base\Model
      * @param string $photo
      * @return void
      */
-    private function savePhoto($profile, $photo)
+    private function savePhoto(UserProfile $profile, string $photo): void
     {
         $file = $this->makeUploadedFile($photo);
         $model = new DynamicModel(compact('file'));
         $model->addRule('file', 'image', $profile->fileRules('photo', true))->validate();
         if (!$model->hasErrors()) {
             $profile->createFile('photo', $file->tempName, $model->file->name);
+        } else {
+            $profile->photo = '';
         }
     }
 
@@ -96,7 +100,7 @@ class SignupProviderForm extends \yii\base\Model
      *
      * @return bool
      */
-    public function saveUser()
+    public function saveUser(): bool
     {
         $this->user->email = $this->email;
 
@@ -118,9 +122,10 @@ class SignupProviderForm extends \yii\base\Model
      *
      * @return bool
      */
-    public function login()
+    public function login(): bool
     {
-        return $this->user->authorize(true);
+        $this->user->updateDateLogin();
+        return Yii::$app->user->login($this->user, 3600 * 24 * 30);
     }
 
     /**
@@ -128,7 +133,7 @@ class SignupProviderForm extends \yii\base\Model
      *
      * @return bool
      */
-    public function signup()
+    public function signup(): bool
     {
         if ($this->validate()) {
             return $this->saveUser();
@@ -142,10 +147,11 @@ class SignupProviderForm extends \yii\base\Model
      *
      * @return boolean
      */
-    public function sendEmail()
+    public function sendEmail(): bool
     {
-        if (!User::isTokenValid($this->user->email_confirm_token)) {
-            $this->user->generateEmailConfirmToken();
+        $tokenizer = new Tokenizer();
+        if (!$tokenizer->validate($this->user->email_confirm_token)) {
+            $this->user->setEmailConfirmToken($tokenizer->generate());
             $this->user->updateAttributes([
                 'email_confirm_token' => $this->user->email_confirm_token,
                 'date_confirm' => $this->user->date_confirm,

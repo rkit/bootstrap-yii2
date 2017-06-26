@@ -15,7 +15,7 @@ class NewsQuery extends ActiveQuery
      *
      * @return yii\db\ActiveQuery
      */
-    public function active()
+    public function active(): ActiveQuery
     {
         $this->andWhere(['status' => News::STATUS_ACTIVE]);
         return $this;
@@ -26,7 +26,7 @@ class NewsQuery extends ActiveQuery
      *
      * @return yii\db\ActiveQuery
      */
-    public function blocked()
+    public function blocked(): ActiveQuery
     {
         $this->andWhere(['status' => News::STATUS_BLOCKED]);
         return $this;

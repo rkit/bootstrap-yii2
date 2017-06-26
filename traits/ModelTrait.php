@@ -5,6 +5,7 @@ namespace app\traits;
 use Yii;
 use yii\helpers\Html;
 use yii\web\NotFoundHttpException;
+use yii\db\ActiveRecord;
 
 trait ModelTrait
 {
@@ -13,12 +14,12 @@ trait ModelTrait
      * If the model is not found or access denied, a 404 HTTP exception will be thrown.
      *
      * @param ActiveRecord $model
-     * @param int|array $id primary key or WHERE condition
-     * @param callable $checkAccess
+     * @param string $id primary key or WHERE condition
+     * @param string $checkAccess
      * @return ActiveRecord
      * @throws NotFoundHttpException
      */
-    public function findModel($model, $id, $checkAccess = null)
+    public function findModel(ActiveRecord $model, string $id, string $checkAccess = null): ActiveRecord
     {
         $model = $model::findOne($id);
 
@@ -29,22 +30,22 @@ trait ModelTrait
         return $model;
     }
 
-    /**
-     * Collect model errors
-     *
-     * @param Model $model the model to be validated
-     * @return array the error message array indexed by the attribute IDs.
-     */
-     public static function collectErrors($model)
-     {
-         $result = [];
-         /* @var $model Model */
-         $models = [$model];
-         foreach ($models as $model) {
-             foreach ($model->getErrors() as $attribute => $errors) {
-                 $result[Html::getInputId($model, $attribute)] = $errors;
-             }
-         }
-         return $result;
-     }
+   /**
+    * Collect model errors
+    *
+    * @param yii\base\Model $model the model to be validated
+    * @return array the error message array indexed by the attribute IDs.
+    */
+    public static function collectErrors(yii\base\Model $model): array
+    {
+        $result = [];
+        /* @var $model Model */
+        $models = [$model];
+        foreach ($models as $model) {
+            foreach ($model->getErrors() as $attribute => $errors) {
+                $result[Html::getInputId($model, $attribute)] = $errors;
+            }
+        }
+        return $result;
+    }
 }

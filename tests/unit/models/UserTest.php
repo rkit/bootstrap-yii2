@@ -3,14 +3,14 @@
 namespace app\tests\unit\models;
 
 use Yii;
-use app\tests\fixtures\AuthItem as AuthItemFixture;
-use app\tests\fixtures\AuthAssignment as AuthAssignmentFixture;
-use app\tests\fixtures\User as UserFixture;
-use app\tests\fixtures\UserProfile as UserProfileFixture;
-use app\tests\fixtures\UserProvider as UserProviderFixture;
+use app\tests\fixtures\AuthItemFixture;
+use app\tests\fixtures\UserFixture;
+use app\tests\fixtures\UserProfileFixture;
+use app\tests\fixtures\UserProviderFixture;
 use app\models\User;
 use app\models\UserProvider;
 use app\models\AuthItem;
+use app\services\Tokenizer;
 
 class UserTest extends \Codeception\Test\Unit
 {
@@ -19,17 +19,10 @@ class UserTest extends \Codeception\Test\Unit
     {
         $this->tester->haveFixtures([
              'authItem' => AuthItemFixture::class,
-             'authAssignment' => AuthAssignmentFixture::class,
              'user' => UserFixture::class,
              'profile' => UserProfileFixture::class,
              'provider' => UserProviderFixture::class,
         ]);
-    }
-
-    public function testGetProfile()
-    {
-        $user = $this->tester->grabFixture('user', 'user-2');
-        expect($user->profile)->isInstanceOf('app\models\UserProfile');
     }
 
     public function testSetProfile()
@@ -42,12 +35,6 @@ class UserTest extends \Codeception\Test\Unit
         expect($user->profile->full_name)->equals('Test');
     }
 
-    public function testGetProviders()
-    {
-        $user = $this->tester->grabFixture('user', 'user-2');
-        expect($user->providers[0]->user)->isInstanceOf('app\models\User');
-    }
-
     public function testSetProviders()
     {
         $user = new User();
@@ -56,30 +43,6 @@ class UserTest extends \Codeception\Test\Unit
 
         expect_that($user->save());
         expect($user->providers[0]->type)->equals(UserProvider::TYPE_TWITTER);
-    }
-
-    public function testGetRoles()
-    {
-        $user = $this->tester->grabFixture('user', 'user-1');
-        expect($user->roles)->isInstanceOf('app\models\AuthItem');
-    }
-
-    public function testGetStatuses()
-    {
-        $user = new User();
-        $statuses = $user->getStatuses();
-
-        expect_that(is_array($statuses));
-        expect(count($statuses))->equals(3);
-    }
-
-    public function testGetStatusName()
-    {
-        $user = new User();
-        $user->status = User::STATUS_ACTIVE;
-
-        $status = $user->getStatusName();
-        expect($status)->equals('Active');
     }
 
     public function testStatusUnconfirmed()
@@ -96,7 +59,7 @@ class UserTest extends \Codeception\Test\Unit
         $user->setConfirmed();
         expect_that($user->save());
 
-        $user = User::findByEmail($user->email);
+        $user = User::find()->email($user->email)->one();
         expect_that($user->isConfirmed());
         expect($user->email_confirm_token)->isEmpty();
     }
@@ -141,19 +104,19 @@ class UserTest extends \Codeception\Test\Unit
     public function testFindByPasswordResetToken()
     {
         $user = $this->tester->grabFixture('user', 'user-1');
-        expect_that($user = User::findByPasswordResetToken($user->password_reset_token));
+        expect_that($user = User::find()->passwordResetToken($user->password_reset_token)->one());
         expect($user->username)->equals('superuser');
 
-        expect_not(User::findByPasswordResetToken(999));
+        expect_not(User::find()->passwordResetToken(999)->one());
     }
 
     public function testFindByEmailConfirmToken()
     {
         $user = $this->tester->grabFixture('user', 'user-1');
-        expect_that($user = User::findByEmailConfirmToken($user->email_confirm_token));
+        expect_that($user = User::find()->emailConfirmToken($user->email_confirm_token)->one());
         expect($user->username)->equals('superuser');
 
-        expect_not(User::findByEmailConfirmToken(999));
+        expect_not(User::find()->emailConfirmToken(999)->one());
     }
 
     public function testFindIdentity()
@@ -175,18 +138,18 @@ class UserTest extends \Codeception\Test\Unit
 
     public function testFindByEmail()
     {
-        expect_that($user = User::findByEmail('superuser@example.com'));
+        expect_that($user = User::find()->email('superuser@example.com')->one());
         expect($user->username)->equals('superuser');
 
-        expect_not(User::findByEmail('test@test.com'));
+        expect_not(User::find()->email('test@test.com')->one());
     }
 
     public function testFindByUsername()
     {
-        expect_that($user = User::findByUsername('superuser'));
+        expect_that($user = User::find()->username('superuser')->one());
         expect($user->username)->equals('superuser');
 
-        expect_not(User::findByUsername('test_user'));
+        expect_not(User::find()->username('test_user')->one());
     }
 
     public function testValidateAuthKey()
@@ -201,7 +164,9 @@ class UserTest extends \Codeception\Test\Unit
         $user = new User();
         $user->username = 'test';
         $user->email = 'test@test.com';
-        $user->generateEmailConfirmToken();
+
+        $tokenizer = new Tokenizer();
+        $user->setEmailConfirmToken($tokenizer->generate());
         $user->setPassword('test_password');
 
         expect_that($user->save());
@@ -235,7 +200,7 @@ class UserTest extends \Codeception\Test\Unit
         $user->role = $role->name;
         expect_that($user->save());
 
-        $user = User::findByEmail($user->email);
+        $user = User::find()->email($user->email)->one();
 
         $auth = Yii::$app->authManager;
         $auth->assign($auth->getRole($user->role), $user->id);
@@ -259,7 +224,7 @@ class UserTest extends \Codeception\Test\Unit
         $user = new User();
         expect_not($user->validatePassword(''));
 
-        $user = User::findByEmail('user-2@example.com');
+        $user = User::find()->email('user-2@example.com')->one();
         expect_that($user->validatePassword('123123'));
         expect_not($user->validatePassword('test_password'));
     }

@@ -10,7 +10,7 @@ services:
     volumes:
       - ./docker/php/php-fpm.conf:/usr/local/etc/php-fpm.conf
       - ./docker/php/php.ini:/usr/local/etc/php/conf.d/php.ini
-      - ./:/var/www/app
+      - ./:/var/www/html
 
   nginx:
     image: nginx:1.12.0
@@ -20,7 +20,7 @@ services:
       - php
     volumes:
       - ./docker/nginx/conf.d/${NGINX_CONFIG}:/etc/nginx/conf.d/${NGINX_CONFIG}
-      - ./:/var/www/app
+      - ./:/var/www/html
 
   mysql:
     image: mysql:5.7

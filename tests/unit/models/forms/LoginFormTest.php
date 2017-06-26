@@ -3,7 +3,7 @@
 namespace app\tests\unit\models\forms;
 
 use Yii;
-use app\tests\fixtures\User as UserFixture;
+use app\tests\fixtures\UserFixture;
 use app\models\forms\LoginForm;
 
 class LoginFormTest extends \Codeception\Test\Unit

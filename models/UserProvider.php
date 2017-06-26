@@ -2,8 +2,8 @@
 
 namespace app\models;
 
-use yii\helpers\ArrayHelper;
 use app\models\User;
+use app\models\query\UserProviderQuery;
 
 /**
  * This is the model class for table "user_provider"
@@ -43,6 +43,15 @@ class UserProvider extends \yii\db\ActiveRecord
     }
 
     /**
+     * @inheritdoc
+     * @return UserProviderQuery
+     */
+    public static function find()
+    {
+        return new UserProviderQuery(get_called_class());
+    }
+
+    /**
      * @return \yii\db\ActiveQuery
      */
     public function getUser()
@@ -55,7 +64,7 @@ class UserProvider extends \yii\db\ActiveRecord
      *
      * @return array
      */
-    public static function getTypes()
+    public static function getTypes(): array
     {
         return [
             self::TYPE_TWITTER => 'twitter',
@@ -70,7 +79,7 @@ class UserProvider extends \yii\db\ActiveRecord
      * @return string $name
      * @return int
      */
-    public static function getTypeByName($name)
+    public static function getTypeByName(string $name): int
     {
         $types = array_flip(self::getTypes());
         return isset($types[$name]) ? $types[$name] : false;
@@ -81,21 +90,9 @@ class UserProvider extends \yii\db\ActiveRecord
      *
      * @return string
      */
-    public function getTypeName()
+    public function getTypeName(): string
     {
         $types = self::getTypes();
         return isset($types[$this->type]) ? $types[$this->type] : false;
-    }
-
-    /**
-     * Finds by type of provider
-     *
-     * @param int $type
-     * @param int $profileId
-     * @return app\models\UserProvider|null
-     */
-    public static function findByProvider($type, $profileId)
-    {
-        return static::findOne(['type' => $type, 'profile_id' => $profileId]);
     }
 }

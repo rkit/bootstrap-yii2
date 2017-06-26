@@ -17,6 +17,14 @@ use app\models\forms\ConfirmEmailForm;
 
 class IndexController extends \yii\web\Controller
 {
+    private $socialAuth;
+
+    public function __construct($id, $module, SocialAuth $socialAuth, $config = [])
+    {
+        $this->socialAuth = $socialAuth;
+        parent::__construct($id, $module, $config);
+    }
+
     /**
      * @inheritdoc
      */
@@ -152,25 +160,25 @@ class IndexController extends \yii\web\Controller
             return $this->goHome();
         }
 
-        $socialAuth = (new SocialAuth($session['authClient']))->execute();
-        $user = $socialAuth->user();
+        $this->socialAuth->execute($session['authClient']);
+        $user = $this->socialAuth->user();
 
         if ($user === null) {
             return $this->goHome();
         }
 
-        $model = new SignupProviderForm($user, $socialAuth->email());
+        $model = new SignupProviderForm($user, $this->socialAuth->email());
 
-        if ($socialAuth->isExist() && $user->isActive() === false) {
+        if ($this->socialAuth->isExist() && $user->isActive() === false) {
             $session->setFlash('error', $user->getStatusDescription());
             return $this->goHome();
         }
 
-        if ($socialAuth->isExist() && $user->isActive() && $model->login()) {
+        if ($this->socialAuth->isExist() && $user->isActive() && $model->login()) {
             return $this->goHome();
         }
 
-        if ($socialAuth->isVerified() && $model->saveUser() && $model->login()) {
+        if ($this->socialAuth->isVerified() && $model->saveUser() && $model->login()) {
             return $this->goHome();
         }
 

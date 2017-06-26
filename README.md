@@ -16,7 +16,6 @@
 
 1. Creating a project
    ```
-   composer global require "fxp/composer-asset-plugin:~1.0"
    composer create-project --prefer-dist --stability=dev rkit/bootstrap-yii2
    cd bootstrap-yii2
    ```
@@ -34,7 +33,7 @@
 
 4. Build application
    ```
-   composer build:app
+   composer build
    ```
 
 Access to the Control Panel

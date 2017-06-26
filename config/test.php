@@ -4,6 +4,8 @@
  * Config for Test Application
  */
 
+defined('YII_ENV_MODE') or define('YII_ENV_MODE', 'console');
+
 $local = require __DIR__ . '/local/main.php';
 $local['components']['db']['dsn'] .= '_tests';
 
@@ -71,6 +73,9 @@ return [
          ],
          'notify' => [
              'class' => 'app\components\Notify',
+         ],
+         'assetManager' => [
+             'bundles' => false,
          ],
          'authManager' => [
              'class' => 'yii\rbac\DbManager',

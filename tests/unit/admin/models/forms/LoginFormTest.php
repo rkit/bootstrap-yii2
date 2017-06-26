@@ -3,7 +3,7 @@
 namespace app\tests\unit\admin\models\forms;
 
 use Yii;
-use app\tests\fixtures\User as UserFixture;
+use app\tests\fixtures\UserFixture;
 use app\modules\admin\models\forms\LoginForm;
 
 class LoginFormTest extends \Codeception\Test\Unit
@@ -14,7 +14,6 @@ class LoginFormTest extends \Codeception\Test\Unit
         $this->tester->haveFixtures([
              'user' => [
                  'class' => UserFixture::class,
-                 'dataFile' => codecept_data_dir() . 'models/user.php',
              ],
         ]);
     }

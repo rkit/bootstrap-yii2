@@ -1,31 +1,35 @@
-actor: Tester
+actor_suffix: Tester
+
+extensions:
+  enabled:
+    - Codeception\Extension\RunFailed
 
 paths:
-    tests: tests
-    log: tests/_output
-    data: tests/_data
-    helpers: tests/_support
+  tests: tests
+  log: tests/_output
+  data: tests/_data
+  helpers: tests/_support
 
 settings:
-    bootstrap: _bootstrap.php
-    memory_limit: 1024M
-    colors: true
+  bootstrap: _bootstrap.php
+  memory_limit: 1024M
+  colors: true
 
 modules:
-    config:
-        Yii2:
-            configFile: 'config/test.php'
-            cleanup: false
+  config:
+    Yii2:
+      configFile: 'config/test.php'
+      cleanup: false
 
 coverage:
-    enabled: true
-    whitelist:
-       include:
-           - models/*
-           - controllers/*
-           - components/*
-           - commands/*
-           - mail/*
-           - modules/admin/controllers/*
-           - modules/admin/models/*
-           - modules/admin/helpers/*
+  enabled: true
+  whitelist:
+    include:
+      - models/*
+      - controllers/*
+      - components/*
+      - commands/*
+      - mail/*
+      - modules/admin/controllers/*
+      - modules/admin/models/*
+      - modules/admin/helpers/*
