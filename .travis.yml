@@ -18,7 +18,9 @@ install:
 
 before_script:
   - chmod -R a+w runtime
-  - mysql -e 'create database bootstrap_yii2_tests;'
+  - mysql -e 'CREATE DATABASE bootstrap_yii2_tests;'
+  - mysql -e "CREATE USER 'bootstrap_yii2'@'localhost' IDENTIFIED BY '';"
+  - mysql -e "GRANT ALL ON bootstrap_yii2_tests.* TO 'bootstrap_yii2'@'localhost';"
   - php yii create-local-config --path=@app/config/local/main.php
   - composer test:build
 
