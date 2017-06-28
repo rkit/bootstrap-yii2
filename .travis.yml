@@ -25,7 +25,7 @@ before_script:
   - composer test:build
 
 script:
-  - vendor/bin/codecept run --report --coverage-xml
+  - vendor/bin/codecept run --coverage-xml
 
 after_script:
   - wget https://scrutinizer-ci.com/ocular.phar
