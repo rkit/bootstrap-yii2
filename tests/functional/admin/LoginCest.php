@@ -88,7 +88,7 @@ class LoginCest
     public function testWrongFields($I)
     {
         $I->submitForm($this->formId, [
-            $this->formName . '[username]' => 'test@test.com',
+            $this->formName . '[username]' => 'test@example.com',
             $this->formName . '[password]' => 'testpassword',
         ]);
         $I->expectTo('see validations errors');

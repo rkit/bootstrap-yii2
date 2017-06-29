@@ -51,7 +51,7 @@ class IndexController extends \yii\web\Controller
     public function actionIndex()
     {
         if (!Yii::$app->user->can('AdminModule')) {
-            throw new ForbiddenHttpException(Yii::t('app', 'Access Denied'));
+            throw new ForbiddenHttpException(Yii::t('app.msg', 'Access Denied'));
         } // @codeCoverageIgnore
 
         return $this->render('index');

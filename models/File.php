@@ -60,15 +60,4 @@ class File extends \yii\db\ActiveRecord
         }
         return false; // @codeCoverageIgnore
     }
-
-    /**
-     * Generate a new name
-     *
-     * @param string $extension The file extension
-     */
-    public function generateName(string $extension): void
-    {
-        $name = date('YmdHis') . substr(md5(microtime() . uniqid()), 0, 10);
-        $this->name = $name . '.' . $extension;
-    }
 }

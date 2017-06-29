@@ -1,17 +1,14 @@
 <?php
 use yii\widgets\ActiveForm;
 use yii\helpers\Html;
-use yii\helpers\ArrayHelper;
 
-$title = $model->username ?: $model->email;
-$this->title = Yii::t('app', 'Users') . ' / ';
-$this->title .= !empty($title) ? $title : Yii::t('app', 'Create');
+$this->title = Yii::t('app', 'Users') . ' / ' . ($model->id ?? Yii::t('app', 'Create'));
 ?>
 <?= Html::a(Yii::t('app', 'List'), ['index'], ['class' => 'btn btn-default']) ?>&nbsp;
 <?= Html::a(Yii::t('app', 'Add'), ['edit'], ['class' => 'btn btn-default']) ?><hr>
 <?= $this->render('/shared/flash') ?>
 
-<?php if (!$model->isNewRecord): ?>
+<?php if ($model->id): ?>
 <ul class="nav nav-tabs">
   <li class="active"><?= Html::a(Yii::t('app', 'Main information'), ['edit', 'id' => $model->id]) ?></li>
   <li><?= Html::a(Yii::t('app', 'Profile'), ['profile', 'id' => $model->id]) ?></li>
@@ -21,11 +18,10 @@ $this->title .= !empty($title) ? $title : Yii::t('app', 'Create');
 <?php $form = ActiveForm::begin(['options' => ['id' => 'users-form', 'class' => 'ajax-form']]); ?>
 
   <div class="row">
-    <div class="col-md-<?= $model->isNewRecord ? '12' : '8' ?>">
+    <div class="col-md-<?= $model->id ? '8' : '12' ?>">
 
       <!-- role -->
-      <?= $form->field($model, 'role')
-          ->dropDownList(ArrayHelper::map($roles, 'name', 'description'), [
+      <?= $form->field($model, 'role')->dropDownList($model->rolesList(), [
               'class' => 'form-control',
               'prompt' => Yii::t('app', 'No role')
           ])
@@ -38,18 +34,20 @@ $this->title .= !empty($title) ? $title : Yii::t('app', 'Create');
       <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
 
       <!-- passwordNew -->
-      <?= $form->field($model, 'passwordNew')->passwordInput(['maxlength' => true, 'autocomplete' => 'new-password']) ?>
+      <?= $form->field($model, 'passwordNew')->passwordInput([
+          'maxlength' => true,
+          'autocomplete' => 'new-password'
+      ]) ?>
 
       <!-- status -->
-      <?= $form->field($model, 'status')
-          ->dropDownList($model->getStatuses(), [
+      <?= $form->field($model, 'status')->dropDownList($model->statusesList(), [
               'class' => 'form-control',
               'prompt' => Yii::t('app', 'Select status')
           ]); ?>
 
     </div>
 
-    <?php if (!$model->isNewRecord) : ?>
+    <?php if ($model->id) : ?>
     <?= $this->render('info', ['model' => $model]) ?>
     <?php endif?>
   </div>
@@ -62,10 +60,10 @@ $this->title .= !empty($title) ? $title : Yii::t('app', 'Create');
           'class' => 'btn btn-info',
           'data-loading-text' => Yii::t('app', 'Please wait…')
       ]) ?>
-      <?php if ($model->primaryKey) : ?>
+      <?php if ($model->id) : ?>
       <?= Html::a(
           Yii::t('app', 'Delete'),
-          ['delete', 'id' => $model->primaryKey, 'reload' => true],
+          ['delete', 'id' => $model->id, 'reload' => true],
           [
               'title' => Yii::t('app', 'Delete'),
               'class' => 'btn btn-danger',

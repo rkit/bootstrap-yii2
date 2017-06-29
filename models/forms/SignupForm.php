@@ -44,7 +44,7 @@ class SignupForm extends \yii\base\Model
             ['email', 'email'],
             ['email', 'unique',
                 'targetClass' => '\app\models\User',
-                'message' => Yii::t('app.validators', 'This email address has already been taken')
+                'message' => Yii::t('app.msg', 'This email address has already been taken')
             ],
         ];
     }
@@ -69,6 +69,7 @@ class SignupForm extends \yii\base\Model
             $this->user->email = $this->email;
             $this->user->setPassword($this->password);
             $this->user->setProfile(['full_name' => $this->fullName]);
+            $this->user->status = User::STATUS_ACTIVE;
             if ($this->user->save()) {
                 $this->user->updateDateLogin();
 

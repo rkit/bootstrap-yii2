@@ -50,7 +50,7 @@ class LoginFormTest extends \Codeception\Test\Unit
     public function testEmptyPassword()
     {
         $form = new LoginForm([
-            'email' => 'test@test.com',
+            'email' => 'test@example.com',
             'password' => '',
         ]);
 
@@ -62,7 +62,7 @@ class LoginFormTest extends \Codeception\Test\Unit
     public function testTooShortPassword()
     {
         $form = new LoginForm([
-            'email' => 'test@test.com',
+            'email' => 'test@example.com',
             'password' => '123',
         ]);
 
@@ -75,7 +75,7 @@ class LoginFormTest extends \Codeception\Test\Unit
     public function testWrongFields()
     {
         $form = new LoginForm([
-            'email' => 'test@test.com',
+            'email' => 'test@example.com',
             'password' => 'test_password',
         ]);
 
@@ -87,7 +87,7 @@ class LoginFormTest extends \Codeception\Test\Unit
     public function testWrongEmail()
     {
         $form = new LoginForm([
-            'email' => 'test@test.com',
+            'email' => 'test@example.com',
             'password' => '123123',
         ]);
 

@@ -35,7 +35,10 @@ class News extends \yii\db\ActiveRecord
 
     public function __construct($config = [])
     {
-        $this->attachBehavior('fileManager', require __DIR__ . '/behaviors/news/filemanager.php');
+        $this->attachBehavior(
+            'fileManager',
+            require Yii::getAlias('@app/models/behaviors/news/filemanager.php')
+        );
         parent::__construct($config);
     }
 
@@ -45,35 +48,6 @@ class News extends \yii\db\ActiveRecord
     public static function tableName()
     {
         return 'news';
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function rules()
-    {
-        return [
-            [
-                ['title', 'text', 'date_pub'], 'required'
-            ],
-            [
-                [
-                    'title', 'text', 'date_pub', 'preview',
-                    'gallery', 'galleryTitles', 'status'
-                ], 'safe'
-            ],
-
-            ['title', 'string', 'max' => 255],
-            ['text', 'string'],
-
-            ['date_pub', 'date', 'format' => 'php:Y-m-d H:i:s',
-                'timestampAttribute' => 'date_pub',
-                'timestampAttributeFormat' => 'php:Y-m-d H:i:s'
-            ],
-
-            ['status', 'integer'],
-            ['status', 'in', 'range' => array_keys(News::getStatuses())],
-        ];
     }
 
     /**
@@ -91,16 +65,6 @@ class News extends \yii\db\ActiveRecord
             'date_update' => Yii::t('app', 'Date update'),
             'date_pub' => Yii::t('app', 'Date publication'),
             'status' => Yii::t('app', 'Status'),
-        ];
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function attributeHints()
-    {
-        return [
-
         ];
     }
 

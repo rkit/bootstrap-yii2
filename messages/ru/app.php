@@ -17,7 +17,6 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Access Denied' => 'Доступ закрыт',
     'Access to the Control Panel' => 'Доступ к панели управления',
     'Account not activated' => 'Аккаунт не активирован',
     'Activate Your Account' => 'Активируйте ваш аккаунт',
@@ -76,7 +75,6 @@ return [
     'New line' => 'Новая строка',
     'New paragraph' => 'Новый параграф',
     'New password' => 'Новый пароль',
-    'New password was saved' => 'Новый пароль сохранен',
     'News' => 'Новости',
     'No role' => 'Нет роли',
     'Not published' => 'Не опубликовано',

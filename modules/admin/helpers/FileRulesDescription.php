@@ -10,34 +10,55 @@ use yii\helpers\ArrayHelper;
  */
 class FileRulesDescription
 {
-    private static function maxSizeDescription(string $value = null): string
+    /**
+     * @var array
+     */
+    private $rules = [];
+
+    /**
+     * @param array $rules Validation rules
+     */
+    public function __construct(array $rules)
     {
-        if ($value === null) {
-            return '';
-        }
-        $value = Yii::$app->formatter->asShortSize($value);
-        return Yii::t('app.validators', 'Max. file size') . ': ' . $value . ' ';
+        $this->rules = $rules;
     }
 
-    private static function maxFilesDescription(string $value = null): string
+    private function maxSizeDescription(): string
     {
-        if ($value === null) {
+        $rules = ArrayHelper::getValue($this->rules, 'maxSize');
+
+        if ($rules === null) {
             return '';
         }
-        return Yii::t('app.validators', 'Max. file number') . ': ' . $value . ' ';
+        $rules = Yii::$app->formatter->asShortSize($rules);
+        return Yii::t('app.msg', 'Max. file size') . ': ' . $rules . ' ';
     }
 
-    private static function extensionDescription(array $value = null): string
+    private function maxFilesDescription(): string
     {
-        if ($value === null) {
+        $rules = ArrayHelper::getValue($this->rules, 'maxFiles');
+
+        if ($rules === null) {
             return '';
         }
-        $value = strtoupper(implode(', ', $value));
-        return Yii::t('app.validators', 'File types') . ': ' . $value . ' ';
+        return Yii::t('app.msg', 'Max. file number') . ': ' . $rules . ' ';
     }
 
-    private static function imageSizeDescription(array $rules = null): string
+    private function extensionDescription(): string
     {
+        $rules = ArrayHelper::getValue($this->rules, 'extensions');
+
+        if ($rules === null) {
+            return '';
+        }
+        $rules = strtoupper(implode(', ', $rules));
+        return Yii::t('app.msg', 'File types') . ': ' . $rules . ' ';
+    }
+
+    private function imageSizeDescription(): string
+    {
+        $rules = ArrayHelper::getValue($this->rules, 'imageSize');
+
         if ($rules === null) {
             return '';
         }
@@ -49,30 +70,30 @@ class FileRulesDescription
 
         $text = [];
         switch ($rules) {
-            case self::isImageWithStrictSize($rules):
-                $text[] = Yii::t('app.validators', 'Image size') . ': ' . $maxWidth . 'x' . $maxHeight . 'px';
+            case $this->isImageWithStrictSize($rules):
+                $text[] = Yii::t('app.msg', 'Image size') . ': ' . $maxWidth . 'x' . $maxHeight . 'px';
                 break;
-            case self::isImageWithMinAndMaxSize($rules):
-                $text[] = Yii::t('app.validators', 'Min. size of image') . ': ' . $minWidth . 'x' . $minHeight . 'px';
-                $text[] = Yii::t('app.validators', 'Max. size of image') . ': ' . $maxWidth . 'x' . $maxHeight . 'px';
+            case $this->isImageWithMinAndMaxSize($rules):
+                $text[] = Yii::t('app.msg', 'Min. size of image') . ': ' . $minWidth . 'x' . $minHeight . 'px';
+                $text[] = Yii::t('app.msg', 'Max. size of image') . ': ' . $maxWidth . 'x' . $maxHeight . 'px';
                 break;
-            case self::isImageWithMinSize($rules):
-                $text[] = Yii::t('app.validators', 'Min. size of image') . ': ' . $minWidth . 'x' . $minHeight . 'px';
-                $text[] = self::prepareImageSizeDescription($rules, ['minWidth', 'minHeight']);
+            case $this->isImageWithMinSize($rules):
+                $text[] = Yii::t('app.msg', 'Min. size of image') . ': ' . $minWidth . 'x' . $minHeight . 'px';
+                $text[] = $this->prepareImageSizeDescription($rules, ['minWidth', 'minHeight']);
                 break;
-            case self::isImageWithMaxSize($rules):
-                $text[] = Yii::t('app.validators', 'Max. size of image') . ': ' . $maxWidth . 'x' . $maxHeight . 'px';
-                $text[] = self::prepareImageSizeDescription($rules, ['maxWidth', 'maxHeight']);
+            case $this->isImageWithMaxSize($rules):
+                $text[] = Yii::t('app.msg', 'Max. size of image') . ': ' . $maxWidth . 'x' . $maxHeight . 'px';
+                $text[] = $this->prepareImageSizeDescription($rules, ['maxWidth', 'maxHeight']);
                 break;
             default:
-                $text[] = self::prepareImageSizeDescription($rules);
+                $text[] = $this->prepareImageSizeDescription($rules);
                 break;
         }
 
         return implode('<br>', array_filter($text));
     }
 
-    private static function isImageWithStrictSize(array $rules): bool
+    private function isImageWithStrictSize(array $rules): bool
     {
         $maxWidth  = ArrayHelper::getValue($rules, 'maxWidth');
         $minWidth  = ArrayHelper::getValue($rules, 'minWidth');
@@ -82,12 +103,12 @@ class FileRulesDescription
         return count($rules) == 4 && ($maxWidth == $minWidth && $maxHeight == $minHeight);
     }
 
-    private static function isImageWithMinAndMaxSize(array $rules): bool
+    private function isImageWithMinAndMaxSize(array $rules): bool
     {
         return count($rules) == 4;
     }
 
-    private static function isImageWithMinSize(array $rules): bool
+    private function isImageWithMinSize(array $rules): bool
     {
         $minWidth  = ArrayHelper::getValue($rules, 'minWidth');
         $minHeight = ArrayHelper::getValue($rules, 'minHeight');
@@ -95,7 +116,7 @@ class FileRulesDescription
         return (count($rules) == 2 || count($rules) == 3) && $minWidth && $minHeight;
     }
 
-    private static function isImageWithMaxSize(array $rules): bool
+    private function isImageWithMaxSize(array $rules): bool
     {
         $maxWidth  = ArrayHelper::getValue($rules, 'maxWidth');
         $maxHeight = ArrayHelper::getValue($rules, 'maxHeight');
@@ -103,7 +124,7 @@ class FileRulesDescription
         return (count($rules) == 2 || count($rules) == 3) && $maxWidth && $maxHeight;
     }
 
-    private static function prepareImageSizeDescription(array $rules, array $exclude = []): string
+    private function prepareImageSizeDescription(array $rules, array $exclude = []): string
     {
         foreach ($exclude as $item) {
             unset($rules[$item]);
@@ -113,16 +134,16 @@ class FileRulesDescription
         foreach ($rules as $rule => $value) {
             switch ($rule) {
                 case 'minWidth':
-                    $text[] = Yii::t('app.validators', 'Min. width') . ' ' . $value . 'px';
+                    $text[] = Yii::t('app.msg', 'Min. width') . ' ' . $value . 'px';
                     break;
                 case 'minHeight':
-                    $text[] = Yii::t('app.validators', 'Min. height') . ' ' . $value . 'px';
+                    $text[] = Yii::t('app.msg', 'Min. height') . ' ' . $value . 'px';
                     break;
                 case 'maxWidth':
-                    $text[] = Yii::t('app.validators', 'Max. width') . ' ' . $value . 'px';
+                    $text[] = Yii::t('app.msg', 'Max. width') . ' ' . $value . 'px';
                     break;
                 case 'maxHeight':
-                    $text[] = Yii::t('app.validators', 'Max. height') . ' ' . $value . 'px';
+                    $text[] = Yii::t('app.msg', 'Max. height') . ' ' . $value . 'px';
                     break;
             }
         }
@@ -133,16 +154,16 @@ class FileRulesDescription
     /**
      * Get a description of the validation rules in as text
      *
-     * @param array $rules Validation rules
      * @return string
      */
-    public static function toText(array $rules): string
+    public function toText(): string
     {
         $text = [];
-        $text[] = self::imageSizeDescription(ArrayHelper::getValue($rules, 'imageSize'));
-        $text[] = self::extensionDescription(ArrayHelper::getValue($rules, 'extensions'));
-        $text[] = self::maxSizeDescription(ArrayHelper::getValue($rules, 'maxSize'));
-        $text[] = self::maxFilesDescription(ArrayHelper::getValue($rules, 'maxFiles'));
+
+        $text[] = $this->imageSizeDescription();
+        $text[] = $this->extensionDescription();
+        $text[] = $this->maxSizeDescription();
+        $text[] = $this->maxFilesDescription();
 
         return implode('<br>', array_filter($text));
     }

@@ -60,7 +60,7 @@ class LoginForm extends \yii\base\Model
             $user = $this->getUser();
 
             if (!$user || !$user->validatePassword($this->password)) {
-                $this->addError('password', Yii::t('app.validators', 'Incorrect email or password'));
+                $this->addError('password', Yii::t('app.msg', 'Incorrect email or password'));
             } elseif ($user && !$user->isActive()) {
                 $this->addError('password', $user->getStatusDescription());
             }
@@ -82,7 +82,7 @@ class LoginForm extends \yii\base\Model
     }
 
     /**
-     * Finds user by [[email]]
+     * Get user
      *
      * @return \app\models\User|null
      */

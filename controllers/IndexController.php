@@ -127,12 +127,8 @@ class IndexController extends \yii\web\Controller
                 Yii::$app->session->setFlash(
                     'success',
                     Yii::t(
-                        'app.messages',
-                        'Please activate your account'
-                    ) . '. ' .
-                    Yii::t(
-                        'app.messages',
-                        'A letter for activation was sent to {email}',
+                        'app.msg',
+                        'Please activate your account. A letter for activation was sent to {email}',
                         ['email' => $model->email]
                     )
                 );
@@ -141,7 +137,7 @@ class IndexController extends \yii\web\Controller
             Yii::$app->session->setFlash(
                 'error',
                 Yii::t(
-                    'app.messages',
+                    'app.msg',
                     'An error occurred while sending a message to activate account'
                 )
             );
@@ -188,14 +184,17 @@ class IndexController extends \yii\web\Controller
             if ($model->sendEmail()) {
                 $session->setFlash(
                     'success',
-                    Yii::t('app.messages', 'Please activate your account') . '. ' .
-                    Yii::t('app.messages', 'A letter for activation was sent to {email}', ['email' => $model->email])
+                    Yii::t(
+                        'app.msg',
+                        'Please activate your account. A letter for activation was sent to {email}',
+                        ['email' => $model->email]
+                    )
                 );
                 return $this->goHome();
             }
             $session->setFlash(
                 'error',
-                Yii::t('app.messages', 'An error occurred while sending a message to activate account')
+                Yii::t('app.msg', 'An error occurred while sending a message to activate account')
             );
             return $this->goHome();
         }
@@ -209,7 +208,7 @@ class IndexController extends \yii\web\Controller
     {
         $user = Yii::$app->user->identity;
         if ($user->isConfirmed()) {
-            throw new ForbiddenHttpException(Yii::t('app', 'Access Denied'));
+            throw new ForbiddenHttpException(Yii::t('app.msg', 'Access Denied'));
         } // @codeCoverageIgnore
 
         $model = new ConfirmEmailForm();
@@ -217,13 +216,13 @@ class IndexController extends \yii\web\Controller
         if ($model->sendEmail($user)) {
             Yii::$app->session->setFlash(
                 'success',
-                Yii::t('app.messages', 'A letter for activation was sent to {email}', ['email' => $user->email])
+                Yii::t('app.msg', 'A letter for activation was sent to {email}', ['email' => $user->email])
             );
             return $this->goHome();
         }
         Yii::$app->session->setFlash(
             'error',
-            Yii::t('app.messages', 'An error occurred while sending a message to activate account')
+            Yii::t('app.msg', 'An error occurred while sending a message to activate account')
         );
         return $this->goHome();
     }
@@ -235,7 +234,7 @@ class IndexController extends \yii\web\Controller
         if (!$model->validateToken($token)) {
             Yii::$app->session->setFlash(
                 'error',
-                Yii::t('app.messages', 'Invalid link for activate account')
+                Yii::t('app.msg', 'Invalid link for activate account')
             );
             return $this->goHome();
         }
@@ -243,7 +242,7 @@ class IndexController extends \yii\web\Controller
         if ($model->confirmEmail()) {
             Yii::$app->session->setFlash(
                 'success',
-                Yii::t('app.messages', 'Your account is successfully activated')
+                Yii::t('app.msg', 'Your account is successfully activated')
             );
         }
         return $this->goHome();
@@ -257,13 +256,13 @@ class IndexController extends \yii\web\Controller
             if ($model->sendEmail()) {
                 Yii::$app->session->setFlash(
                     'success',
-                    Yii::t('app.messages', 'We\'ve sent you an email with instructions to reset your password')
+                    Yii::t('app.msg', 'We\'ve sent you an email with instructions to reset your password')
                 );
                 return $this->goHome();
             }
             Yii::$app->session->setFlash(
                 'error',
-                Yii::t('app.messages', 'An error occurred while sending a message to reset your password')
+                Yii::t('app.msg', 'An error occurred while sending a message to reset your password')
             );
             return $this->goHome();
         }
@@ -280,7 +279,7 @@ class IndexController extends \yii\web\Controller
         if (!$model->validateToken($token)) {
             Yii::$app->session->setFlash(
                 'error',
-                Yii::t('app.messages', 'Invalid link for reset password')
+                Yii::t('app.msg', 'Invalid link for reset password')
             );
             return $this->goHome();
         }
@@ -291,7 +290,7 @@ class IndexController extends \yii\web\Controller
         ) {
             Yii::$app->session->setFlash(
                 'success',
-                Yii::t('app', 'New password was saved')
+                Yii::t('app.msg', 'New password was saved')
             );
             return $this->goHome();
         }
@@ -311,7 +310,7 @@ class IndexController extends \yii\web\Controller
     public function actionMaintenance()
     {
         if (!Yii::$app->catchAll) {
-            throw new NotFoundHttpException(Yii::t('app', 'Page not found'));
+            throw new NotFoundHttpException(Yii::t('app.msg', 'Page not found'));
         } // @codeCoverageIgnore
 
         $this->layout = 'maintenance';

@@ -35,5 +35,5 @@ $inputId = Html::getInputId($model, $attribute);
 ])->hint(
     'ENTER — ' . Yii::t('app', 'New paragraph') . ', ' .
     'SHIFT + ENTER — ' . Yii::t('app', 'New line') . '<br>' .
-    FileRulesDescription::toText($model->fileRules($attribute))
+    (new FileRulesDescription($fileRules))->toText()
 );

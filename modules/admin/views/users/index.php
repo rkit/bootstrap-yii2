@@ -169,7 +169,7 @@ $this->title = Yii::t('app', 'Users');
               'template' => '{status} {delete}',
               'buttons' => [
                   'status' => function ($url, $model) {
-                      if ($model->status == $model::STATUS_BLOCKED) {
+                      if ($model->isBlocked()) {
                           return Html::a(
                               '<span class="glyphicon glyphicon-play"></span>',
                               ['set-active', 'id' => $model->primaryKey],

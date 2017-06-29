@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for authManager.itemTable
@@ -37,25 +38,6 @@ class AuthItem extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
-        return [
-            [
-                ['name', 'description'], 'required'
-            ],
-            [
-                ['roles', 'permissions'], 'safe'
-            ],
-
-            ['name', 'unique'],
-            ['name', 'string', 'max' => 64],
-            ['name', 'match', 'pattern' => '/^[a-z]\w*$/i'],
-        ];
-    }
-
-    /**
-     * @inheritdoc
-     */
     public function attributeLabels()
     {
         return [
@@ -63,6 +45,20 @@ class AuthItem extends \yii\db\ActiveRecord
             'description' => Yii::t('app', 'Description'),
             'roles'       => Yii::t('app', 'Inherit role'),
             'permissions' => Yii::t('app', 'Permissions'),
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::class,
+                'createdAtAttribute' => 'created_at',
+                'updatedAtAttribute' => 'updated_at',
+            ],
         ];
     }
 

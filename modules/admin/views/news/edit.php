@@ -4,8 +4,7 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use kartik\datetime\DateTimePicker;
 
-$this->title = Yii::t('app', 'News') . ' / ';
-$this->title .= !empty($model->title) ? $model->title : Yii::t('app', 'Create');
+$this->title = Yii::t('app', 'News') . ' / ' . ($model->title ?? Yii::t('app', 'Create'));
 ?>
 <?= Html::a(Yii::t('app', 'List'), ['index'], ['class' => 'btn btn-default']) ?>&nbsp;
 <?= Html::a(Yii::t('app', 'Add'), ['edit'], ['class' => 'btn btn-default']) ?><hr>
@@ -18,13 +17,16 @@ $this->title .= !empty($model->title) ? $model->title : Yii::t('app', 'Create');
 
   <!-- text -->
   <?= $this->render('/shared/editor', [
-      'form' => $form, 'model' => $model, 'attribute' => 'text',
+      'form' => $form,
+      'model' => $model,
+      'attribute' => 'text',
+      'fileRules' => $model->model()->fileRules('text'),
   ]) ?>
 
   <!-- preview -->
   <?= $this->render('/shared/files/image/input', [
       'form' => $form,
-      'model' => $model,
+      'model' => $model->model(),
       'attribute' => 'preview',
       'crop' => false
   ]) ?>
@@ -46,7 +48,9 @@ $this->title .= !empty($model->title) ? $model->title : Yii::t('app', 'Create');
          role="tabpanel" aria-labelledby="headingOne">
         <div class="panel-body">
           <?= $this->render('/shared/files/gallery/input', [
-              'form' => $form, 'model' => $model, 'attribute' => 'gallery'
+              'form' => $form,
+              'model' => $model->model(),
+              'attribute' => 'gallery'
           ]) ?>
         </div>
       </div>
@@ -74,10 +78,10 @@ $this->title .= !empty($model->title) ? $model->title : Yii::t('app', 'Create');
           'class' => 'btn btn-info',
           'data-loading-text' => Yii::t('app', 'Please wait…')
       ]) ?>
-      <?php if ($model->primaryKey) : ?>
+      <?php if ($model->id) : ?>
       <?= Html::a(
           Yii::t('app', 'Delete'),
-          ['delete', 'id' => $model->primaryKey, 'reload' => true],
+          ['delete', 'id' => $model->id, 'reload' => true],
           [
               'title' => Yii::t('app', 'Delete'),
               'class' => 'btn btn-danger',

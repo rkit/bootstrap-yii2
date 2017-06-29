@@ -3,12 +3,11 @@
 namespace app\modules\admin\controllers;
 
 use Yii;
-use yii\web\Response;
 use yii\filters\VerbFilter;
 use yii\helpers\Url;
-use yii\helpers\ArrayHelper;
 use app\traits\ModelTrait;
 use app\models\AuthItem;
+use app\modules\admin\models\forms\AuthItemForm;
 use app\modules\admin\models\search\AuthItemSearch;
 
 class RolesController extends \yii\web\Controller
@@ -58,88 +57,29 @@ class RolesController extends \yii\web\Controller
 
     public function actionEdit($name = null)
     {
-        $model = new AuthItem();
-        $auth = Yii::$app->authManager;
-
-        $roles = ArrayHelper::index($auth->getRoles(), 'name');
-        $permissions = ArrayHelper::index($auth->getPermissions(), 'name');
+        $model = new AuthItemForm();
 
         if ($name) {
-            $model = $this->findModel($model, $name);
-            $model = $this->preparePermissionsToSave($model);
-            $model = $this->prepareRolesToSave($model);
-
-            unset($roles[$model->name]);
+            $model->setModel($this->findModel(new AuthItem, $name));
         }
 
         if (Yii::$app->request->isPost) {
-            $model->type = \yii\rbac\Item::TYPE_ROLE;
-            if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                if (!$model->isSuperUser()) {
-                    $this->setRoles($model, $roles, $permissions);
-                }
+            if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+                try {
+                    $model->save();
 
-                Yii::$app->session->setFlash('success', Yii::t('app.messages', 'Saved successfully'));
-                $urlToModel = Url::toRoute(['edit', 'name' => $model->name]);
-                if (Yii::$app->request->isAjax) {
-                    return $this->asJson(['redirect' => $urlToModel]);
+                    Yii::$app->session->setFlash('success', Yii::t('app.msg', 'Saved successfully'));
+                    return $this->asJson(['redirect' => Url::toRoute(['edit', 'name' => $model->name])]);
+                } catch (\Exception $e) {
+                    Yii::error($e);
+                    return $this->asJson(false);
                 }
-                return $this->redirect($urlToModel);
             }
-            if (Yii::$app->request->isAjax) {
-                return $this->asJson($this->collectErrors($model));
-            }
+            return $this->asJson($this->collectErrors($model));
         }
 
         return $this->render('edit', [
             'model' => $model,
-            'roles' => $roles,
-            'permissions' => $permissions
         ]);
-    }
-
-    private function setRoles(AuthItem $model, array $roles, array $permissions): void
-    {
-        $auth = Yii::$app->authManager;
-
-        $role = $auth->getRole($model->name);
-        $auth->removeChildren($role);
-
-        if (is_array($model->roles)) {
-            foreach ($model->roles as $r) {
-                $auth->addChild($role, $roles[$r]);
-            }
-        }
-
-        if (is_array($model->permissions)) {
-            $currPermissions = ArrayHelper::index(
-                $auth->getPermissionsByRole($model->name),
-                'name',
-                []
-            );
-            foreach ($model->permissions as $permission) {
-                if (!array_key_exists($permission, $currPermissions)) {
-                    $auth->addChild($role, $permissions[$permission]);
-                }
-            }
-        }
-    }
-
-    private function preparePermissionsToSave(AuthItem $model): AuthItem
-    {
-        $permissions = Yii::$app->authManager->getPermissionsByRole($model->name);
-        $model->permissions = ArrayHelper::index($permissions, 'name', []);
-        $model->permissions = array_keys($model->permissions);
-
-        return $model;
-    }
-
-    private function prepareRolesToSave(AuthItem $model): AuthItem
-    {
-        $roles = Yii::$app->authManager->getChildren($model->name);
-        $model->roles = ArrayHelper::index($roles, 'name', []);
-        $model->roles = array_keys($model->roles);
-
-        return $model;
     }
 }

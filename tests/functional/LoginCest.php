@@ -46,7 +46,7 @@ class LoginCest
     public function testEmptyPassword($I)
     {
         $I->submitForm($this->formId, [
-            $this->formName . '[email]' => 'test@test.com'
+            $this->formName . '[email]' => 'test@example.com'
         ]);
         $I->expectTo('see validations errors');
         $I->see('Password cannot be blank', '.help-block-error');
@@ -56,7 +56,7 @@ class LoginCest
     public function testTooShortPassword($I)
     {
         $I->submitForm($this->formId, [
-            $this->formName . '[email]' => 'test@test.com',
+            $this->formName . '[email]' => 'test@example.com',
             $this->formName . '[password]' => 'test',
         ]);
         $I->expectTo('see validations errors');
@@ -89,7 +89,7 @@ class LoginCest
     public function testWrongFields($I)
     {
         $I->submitForm($this->formId, [
-            $this->formName . '[email]' => 'test@test.com',
+            $this->formName . '[email]' => 'test@example.com',
             $this->formName . '[password]' => 'test_password',
         ]);
         $I->expectTo('see validations errors');
@@ -100,7 +100,7 @@ class LoginCest
     public function testWrongEmail($I)
     {
         $I->submitForm($this->formId, [
-            $this->formName . '[email]' => 'test@test.com',
+            $this->formName . '[email]' => 'test@example.com',
             $this->formName . '[password]' => '123123',
         ]);
         $I->expectTo('see validations errors');

@@ -12,7 +12,7 @@ class SignupFormTest extends \Codeception\Test\Unit
     // @codingStandardsIgnoreFile
     protected function _before()
     {
-        Yii::$app->settings->set('emailMain', 'editor@mail.com');
+        Yii::$app->settings->set('emailMain', 'editor@example.com');
         Yii::$app->settings->set('emailName', 'Editor');
 
         $this->tester->haveFixtures([
@@ -38,7 +38,7 @@ class SignupFormTest extends \Codeception\Test\Unit
     {
         $form = new SignupForm([
             'fullName' => 'Test',
-            'email' => 'test@test.com',
+            'email' => 'test@example.com',
             'password' => '',
         ]);
 
@@ -50,7 +50,7 @@ class SignupFormTest extends \Codeception\Test\Unit
     {
         $form = new SignupForm([
             'fullName' => 'Test',
-            'email' => 'test@test.com',
+            'email' => 'test@example.com',
             'password' => 'test',
         ]);
 
@@ -74,7 +74,7 @@ class SignupFormTest extends \Codeception\Test\Unit
     {
         $form = new SignupForm([
             'fullName' => '',
-            'email' => 'test@test.com',
+            'email' => 'test@example.com',
             'password' => 'test_password',
         ]);
 
@@ -98,23 +98,23 @@ class SignupFormTest extends \Codeception\Test\Unit
     {
         $form = new SignupForm([
             'fullName' => 'Test',
-            'email' => 'test@test.com',
+            'email' => 'test@example.com',
             'password' => 'test_password',
         ]);
 
         $user = $form->signup();
         expect($user)->isInstanceOf('app\models\User');
         expect_not($user->isConfirmed());
-        expect($user->email)->equals('test@test.com');
+        expect($user->email)->equals('test@example.com');
         expect_that($user->validatePassword('test_password'));
         expect_that($form->sendEmail());
 
-        $user = User::find()->email('test@test.com')->one();
+        $user = User::find()->email('test@example.com')->one();
         expect($user->profile->full_name)->equals('Test');
 
         $message = $this->tester->grabLastSentEmail();
         expect('valid email is sent', $message)->isInstanceOf('yii\mail\MessageInterface');
         expect($message->getTo())->hasKey($user->email);
-        expect($message->getFrom())->hasKey('editor@mail.com');
+        expect($message->getFrom())->hasKey('editor@example.com');
     }
 }

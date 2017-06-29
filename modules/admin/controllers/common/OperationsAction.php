@@ -4,7 +4,6 @@ namespace app\modules\admin\controllers\common;
 
 use Yii;
 use yii\base\Action;
-use yii\web\Response;
 
 class OperationsAction extends Action
 {

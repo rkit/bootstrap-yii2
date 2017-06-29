@@ -3,6 +3,7 @@
 use Intervention\Image\ImageManagerStatic as Image;
 use yii\helpers\ArrayHelper;
 use app\models\File;
+use app\helpers\Generator;
 
 return [
     'class' => 'rkit\filemanager\behaviors\FileBehavior',
@@ -20,7 +21,7 @@ return [
             'createFile' => function ($path, $name) {
                 $file = new File();
                 $file->title = $name;
-                $file->generateName(pathinfo($name, PATHINFO_EXTENSION));
+                $file->name = Generator::fileName(pathinfo($name, PATHINFO_EXTENSION));
                 $file->save();
                 return $file;
             },
@@ -38,7 +39,7 @@ return [
                 'extensions' => ['jpg', 'jpeg', 'png'],
                 'maxFiles' => 1,
                 'maxSize' => 1024 * 1024 * 1, // 1 MB
-                'tooBig' => Yii::t('app.validators', 'File size must not exceed') . ' 1Mb'
+                'tooBig' => Yii::t('app.msg', 'File size must not exceed') . ' 1Mb'
             ],
             'preset' => [
                 '200x200' => function ($realPath, $publicPath, $thumbPath) {
@@ -71,7 +72,7 @@ return [
             'createFile' => function ($path, $name) {
                 $file = new File();
                 $file->title = $name;
-                $file->generateName(pathinfo($name, PATHINFO_EXTENSION));
+                $file->name = Generator::fileName(pathinfo($name, PATHINFO_EXTENSION));
                 $file->save();
                 return $file;
             },
@@ -101,7 +102,7 @@ return [
                 'extensions' => ['jpg', 'jpeg', 'png'],
                 'maxSize' => 1024 * 1024 * 1, // 1 MB
                 'maxFiles' => 10,
-                'tooBig' => Yii::t('app.validators', 'File size must not exceed') . ' 1Mb'
+                'tooBig' => Yii::t('app.msg', 'File size must not exceed') . ' 1Mb'
             ],
             'preset' => [
                 '80x80' => function ($realPath, $publicPath, $thumbPath) {
@@ -123,7 +124,7 @@ return [
             'createFile' => function ($path, $name) {
                 $file = new File();
                 $file->title = $name;
-                $file->generateName(pathinfo($name, PATHINFO_EXTENSION));
+                $file->name = Generator::fileName(pathinfo($name, PATHINFO_EXTENSION));
                 $file->save();
                 return $file;
             },
@@ -139,7 +140,7 @@ return [
                 'mimeTypes' => ['image/png', 'image/jpg', 'image/jpeg'],
                 'extensions' => ['jpg', 'jpeg', 'png'],
                 'maxSize' => 1024 * 1024 * 1, // 1 MB
-                'tooBig' => Yii::t('app.validators', 'File size must not exceed') . ' 1Mb'
+                'tooBig' => Yii::t('app.msg', 'File size must not exceed') . ' 1Mb'
             ]
         ],
     ]

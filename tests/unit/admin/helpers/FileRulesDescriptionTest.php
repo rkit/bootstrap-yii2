@@ -16,7 +16,7 @@ class FileRulesDescriptionTest extends \Codeception\Test\Unit
             'tooBig' => 'File size must not exceed 1Mb',
         ];
 
-        $text = FileRulesDescription::toText($rules);
+        $text = (new FileRulesDescription($rules))->toText();
 
         expect($text)->contains('Min. size of image: 300x300px');
         expect($text)->contains('Max. file size: 1');
@@ -32,7 +32,7 @@ class FileRulesDescriptionTest extends \Codeception\Test\Unit
             'tooBig' => 'File size must not exceed 1Mb',
         ];
 
-        $text = FileRulesDescription::toText($rules);
+        $text = (new FileRulesDescription($rules))->toText();
 
         expect($text)->contains('Max. file size: 1');
         expect($text)->contains('File types: JPG, JPEG, PNG');
@@ -50,7 +50,7 @@ class FileRulesDescriptionTest extends \Codeception\Test\Unit
             ],
         ];
 
-        $text = FileRulesDescription::toText($rules);
+        $text = (new FileRulesDescription($rules))->toText();
 
         expect($text)->equals('Image size: 300x300px');
     }
@@ -66,7 +66,7 @@ class FileRulesDescriptionTest extends \Codeception\Test\Unit
             ]
         ];
 
-        $text = FileRulesDescription::toText($rules);
+        $text = (new FileRulesDescription($rules))->toText();
 
         expect($text)->contains('Min. size of image: 290x290px');
         expect($text)->contains('Max. size of image: 300x300px');
@@ -75,7 +75,7 @@ class FileRulesDescriptionTest extends \Codeception\Test\Unit
     public function testImageWithMinSize()
     {
         $rules = ['imageSize' => ['minWidth' => 300, 'minHeight' => 300]];
-        $text = FileRulesDescription::toText($rules);
+        $text = (new FileRulesDescription($rules))->toText();
 
         expect($text)->equals('Min. size of image: 300x300px');
     }
@@ -83,7 +83,7 @@ class FileRulesDescriptionTest extends \Codeception\Test\Unit
     public function testImageWithMaxSize()
     {
         $rules = ['imageSize' => ['maxWidth' => 300, 'maxHeight' => 300]];
-        $text = FileRulesDescription::toText($rules);
+        $text = (new FileRulesDescription($rules))->toText();
 
         expect($text)->equals('Max. size of image: 300x300px');
     }
@@ -91,7 +91,7 @@ class FileRulesDescriptionTest extends \Codeception\Test\Unit
     public function testImageWithOnlyMaxWidth()
     {
         $rules = ['imageSize' => ['maxWidth' => 300]];
-        $text = FileRulesDescription::toText($rules);
+        $text = (new FileRulesDescription($rules))->toText();
 
         expect($text)->equals('Max. width 300px');
     }
@@ -99,7 +99,7 @@ class FileRulesDescriptionTest extends \Codeception\Test\Unit
     public function testImageWithOnlyMaxHeight()
     {
         $rules = ['imageSize' => ['maxHeight' => 300]];
-        $text = FileRulesDescription::toText($rules);
+        $text = (new FileRulesDescription($rules))->toText();
 
         expect($text)->equals('Max. height 300px');
     }
@@ -107,7 +107,7 @@ class FileRulesDescriptionTest extends \Codeception\Test\Unit
     public function testImageWithOnlyMinWidth()
     {
         $rules = ['imageSize' => ['minWidth' => 300]];
-        $text = FileRulesDescription::toText($rules);
+        $text = (new FileRulesDescription($rules))->toText();
 
         expect($text)->equals('Min. width 300px');
     }
@@ -115,7 +115,7 @@ class FileRulesDescriptionTest extends \Codeception\Test\Unit
     public function testImageWithOnlyMinHeight()
     {
         $rules = ['imageSize' => ['minHeight' => 300]];
-        $text = FileRulesDescription::toText($rules);
+        $text = (new FileRulesDescription($rules))->toText();
 
         expect($text)->equals('Min. height 300px');
     }

@@ -94,7 +94,7 @@ $this->title = Yii::t('app', 'News');
               'attribute' => 'status',
               'format' => 'raw',
               'value' => function ($model) {
-                  $class = $model->status === $model::STATUS_ACTIVE ? 'success' : 'warning';
+                  $class = $model->isActive() ? 'success' : 'warning';
                   return '<span class="label label-' . $class . '">' . $model->getStatusName() . '</span>';
               },
               'filter' => Html::activeDropDownList(
@@ -111,7 +111,7 @@ $this->title = Yii::t('app', 'News');
               'template' => '{status} {delete}',
               'buttons' => [
                   'status' => function ($url, $model) {
-                      if ($model->status == $model::STATUS_BLOCKED) {
+                      if ($model->isBlocked()) {
                           return Html::a(
                               '<span class="glyphicon glyphicon-play"></span>',
                               ['set-publish', 'id' => $model->primaryKey],

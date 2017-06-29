@@ -24,7 +24,7 @@ use app\modules\admin\helpers\FileRulesDescription;
 
                 if (ui && ui.other.length && ui.other[0].errors) {
                   var errors = ui.other.map(function(v) {
-                    return v.name + ": '.Yii::t('app.validators', 'Incorrect file format').'";
+                    return v.name + ": '.Yii::t('app.msg', 'Incorrect file format').'";
                   });
 
                   if ($(".field-" + field).hasClass("has-error")) {
@@ -62,6 +62,6 @@ use app\modules\admin\helpers\FileRulesDescription;
             'duplicate' => true
         ]
     ])
-    ->hint(FileRulesDescription::toText($model->fileRules($attribute)), [
+    ->hint((new FileRulesDescription($model->fileRules($attribute)))->toText(), [
         'class' => 'fileapi-rules'
     ]);

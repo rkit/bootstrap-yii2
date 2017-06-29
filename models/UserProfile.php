@@ -17,7 +17,10 @@ class UserProfile extends \yii\db\ActiveRecord
 {
     public function __construct($config = [])
     {
-        $this->attachBehavior('fileManager', require __DIR__ . '/behaviors/user-profile/filemanager.php');
+        $this->attachBehavior(
+            'fileManager',
+            require Yii::getAlias('@app/models/behaviors/user-profile/filemanager.php')
+        );
         parent::__construct($config);
     }
 
@@ -27,22 +30,6 @@ class UserProfile extends \yii\db\ActiveRecord
     public static function tableName()
     {
         return 'user_profile';
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function rules()
-    {
-        return [
-            [
-                ['birth_day', 'photo'], 'safe',
-            ],
-
-            ['birth_day', 'date', 'format' => 'php:Y-m-d'],
-
-            ['full_name', 'string', 'max' => 40],
-        ];
     }
 
     /**

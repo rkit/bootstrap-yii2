@@ -41,7 +41,7 @@ class PasswordResetRequestCest
     public function testNonExistEmail($I)
     {
         $I->submitForm($this->formId, [
-            $this->formName . '[email]' => 'test@test.com',
+            $this->formName . '[email]' => 'test@example.com',
         ]);
         $I->see('There is no user with such email', '.help-block-error');
     }

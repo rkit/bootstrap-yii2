@@ -42,7 +42,7 @@ class SignupProviderForm extends \yii\base\Model
             ['email', 'email'],
             ['email', 'unique',
                 'targetClass' => '\app\models\User',
-                'message' => Yii::t('app.validators', 'This email address has already been taken')
+                'message' => Yii::t('app.msg', 'This email address has already been taken')
             ],
         ];
     }

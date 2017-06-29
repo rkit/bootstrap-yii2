@@ -40,7 +40,7 @@ class Module extends \yii\base\Module
         if (!\Yii::$app->user->can('AdminModule') ||
             !\Yii::$app->user->can($this->getCurrentPermissionName($action))
         ) {
-            throw new ForbiddenHttpException(Yii::t('app', 'Access Denied'));
+            throw new ForbiddenHttpException(Yii::t('app.msg', 'Access Denied'));
         }
 
         return true;

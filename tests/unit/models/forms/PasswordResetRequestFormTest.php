@@ -35,7 +35,7 @@ class PasswordResetRequestFormTest extends \Codeception\Test\Unit
     public function testNonExistEmail()
     {
         $form = new PasswordResetRequestForm();
-        $form->email = 'test@test.com';
+        $form->email = 'test@example.com';
         expect_not($form->validate());
         expect_not($form->sendEmail());
     }

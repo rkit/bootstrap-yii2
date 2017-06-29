@@ -19,11 +19,11 @@ use yii\helpers\Html;
 	</ul>
 </div>
 
-<?php if (count($model->providers)) : ?>
+<?php if (count($model->model()->providers)) : ?>
 <div class="col-md-4">
 	<ul class="list-group">
 		<li class="list-group-item text-muted"><?= Yii::t('app', 'Social Networks') ?></li>
-		<?php foreach ($model->providers as $provider) : ?>
+		<?php foreach ($model->model()->providers as $provider) : ?>
 		<li class="list-group-item text-right">
 			<span class="pull-left">
 				<strong><?= ucfirst($provider->getTypeName()) ?></strong>
@@ -35,7 +35,7 @@ use yii\helpers\Html;
 </div>
 <?php endif?>
 
-<?php if (!$model->isConfirmed()): ?>
+<?php if (!$model->model()->isConfirmed()): ?>
 <div class="col-md-4">
 	<div class="alert alert-warning" role="alert">
 		<?= Yii::t('app', 'Account not activated') ?>

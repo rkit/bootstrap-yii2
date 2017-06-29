@@ -3,8 +3,7 @@ use yii\widgets\ActiveForm;
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 
-$this->title = Yii::t('app', 'Roles') . ' / ';
-$this->title .= !empty($model->description) ? $model->description : Yii::t('app', 'Create');
+$this->title = Yii::t('app', 'Roles') . ' / ' . ($model->name ?? Yii::t('app', 'Create'));
 ?>
 <?= Html::a(Yii::t('app', 'List'), ['index'], ['class' => 'btn btn-default']) ?>&nbsp;
 <?= Html::a(Yii::t('app', 'Add'), ['edit'], ['class' => 'btn btn-default']) ?><hr>
@@ -13,35 +12,29 @@ $this->title .= !empty($model->description) ? $model->description : Yii::t('app'
 <?php $form = ActiveForm::begin(['options' => ['id' => 'roles-form', 'class' => 'ajax-form']]); ?>
 
     <!-- name -->
-  <?= $form->field($model, 'name')->textInput(['maxlength' => true])->hint(Yii::t('app.validators', 'Only latin letters')) ?>
+  <?= $form->field($model, 'name')->textInput(['maxlength' => true])->hint(Yii::t('app.msg', 'Only latin letters')) ?>
 
   <!-- description -->
   <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
 
-  <?php if ($model->isSuperUser()):?>
+  <?php if ($model->model()->isSuperUser()):?>
   <div class="alert alert-warning" role="alert">
       <?= Yii::t('app', 'This role has all privileges by default, it can not be deleted') ?>
   </div>
   <?php endif?>
 
   <!-- permissions -->
-  <?= $form->field($model, 'permissions')
-      ->dropDownList(ArrayHelper::map($permissions, 'name', function ($row) {
-          return Yii::t('app', $row->description);
-      }), [
+  <?= $form->field($model, 'permissions')->dropDownList($model->permissionsList(), [
           'multiple' => true,
           'size' => 15,
-          'disabled' => $model->isSuperUser()
+          'disabled' => $model->model()->isSuperUser()
       ]) ?>
 
   <!-- roles -->
-  <?= $form->field($model, 'roles')
-      ->dropDownList(ArrayHelper::map($roles, 'name', function ($row) {
-          return Yii::t('app', $row->description);
-      }), [
+  <?= $form->field($model, 'roles')->dropDownList($model->rolesList(), [
           'multiple' => true,
           'size' => 15,
-          'disabled' => $model->isSuperUser()
+          'disabled' => $model->model()->isSuperUser()
       ])
       ->hint(Yii::t('app', 'The role will receive all the privileges of the selected role')) ?>
 
@@ -53,10 +46,10 @@ $this->title .= !empty($model->description) ? $model->description : Yii::t('app'
           'class' => 'btn btn-info',
           'data-loading-text' => Yii::t('app', 'Please wait…')
       ]) ?>
-      <?php if ($model->primaryKey) : ?>
+      <?php if ($model->name) : ?>
       <?= Html::a(
           Yii::t('app', 'Delete'),
-          ['delete', 'id' => $model->primaryKey, 'reload' => true],
+          ['delete', 'id' => $model->name, 'reload' => true],
           [
               'title' => Yii::t('app', 'Delete'),
               'class' => 'btn btn-danger',

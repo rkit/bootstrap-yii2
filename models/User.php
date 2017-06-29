@@ -53,40 +53,6 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
-        return [
-            ['username', 'string', 'min' => 3, 'max' => 40],
-            ['username', 'match', 'pattern' => '/^[a-zA-Z0-9_-]+$/'],
-            ['username', 'unique'],
-            ['username', 'default', 'value' => null],
-
-            ['email', 'email'],
-            ['email', 'required'],
-            ['email', 'string', 'max' => 255],
-            ['email', 'unique'],
-            ['email', 'default', 'value' => null],
-
-            ['role', 'string'],
-            [
-                'role',
-                'exist',
-                'targetClass' => AuthItem::class,
-                'targetAttribute' => ['role' => 'name'],
-                'filter' => ['type' => \yii\rbac\Item::TYPE_ROLE]
-            ],
-
-            ['status', 'integer'],
-            ['status', 'default', 'value' => self::STATUS_ACTIVE],
-            ['status', 'in', 'range' => array_keys(self::getStatuses())],
-
-            ['passwordNew', 'string', 'min' => 6],
-        ];
-    }
-
-    /**
-     * @inheritdoc
-     */
     public function attributeLabels()
     {
         return [
@@ -102,18 +68,6 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             'status' => Yii::t('app', 'Status'),
 
             'passwordNew' => Yii::t('app', 'New password'),
-        ];
-    }
-
-    /**
-     * @inheritdoc
-     * @codeCoverageIgnore
-     */
-    public function attributeHints()
-    {
-        return [
-            'username' => Yii::t('app.validators', 'Only letters, numbers, symbols _ and -'),
-            'passwordNew' => Yii::t('app.validators', 'Set a new password')
         ];
     }
 

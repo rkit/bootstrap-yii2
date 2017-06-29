@@ -63,7 +63,7 @@ class SignupCest
     {
         $I->submitForm($this->formId, [
             $this->formName . '[fullName]' => 'Test',
-            $this->formName . '[email]' => 'test@test.com',
+            $this->formName . '[email]' => 'test@example.com',
             $this->formName . '[password]' => '',
         ]);
         $I->expectTo('see validations errors');
@@ -75,7 +75,7 @@ class SignupCest
     {
         $I->submitForm($this->formId, [
             $this->formName . '[fullName]' => '',
-            $this->formName . '[email]' => 'test@test.com',
+            $this->formName . '[email]' => 'test@example.com',
             $this->formName . '[password]' => 'fghfgh',
         ]);
         $I->expectTo('see validations errors');
@@ -87,7 +87,7 @@ class SignupCest
     {
         $I->submitForm($this->formId, [
             $this->formName . '[fullName]' => 'Test',
-            $this->formName . '[email]' => 'test@test.com',
+            $this->formName . '[email]' => 'test@example.com',
             $this->formName . '[password]' => 'fgh',
         ]);
         $I->expectTo('see validations errors');
@@ -111,7 +111,7 @@ class SignupCest
     {
         $I->submitForm($this->formId, [
             $this->formName . '[fullName]' => 'Test',
-            $this->formName . '[email]' => 'test@test.com',
+            $this->formName . '[email]' => 'test@example.com',
             $this->formName . '[password]' => 'fghfgh',
         ]);
         $I->amOnRoute('/');
@@ -148,10 +148,10 @@ class SignupCest
     {
         $I->submitForm($this->formId, [
             $this->formName . '[fullName]' => 'Test',
-            $this->formName . '[email]' => 'test@test.com',
+            $this->formName . '[email]' => 'test@example.com',
             $this->formName . '[password]' => 'fghfgh',
         ]);
-        $user = $I->grabRecord('app\models\User', ['email' => 'test@test.com']);
+        $user = $I->grabRecord('app\models\User', ['email' => 'test@example.com']);
         $I->amOnRoute('/index/confirm-email', ['token' => $user->email_confirm_token]);
         $I->see('Your account is successfully activated');
 
