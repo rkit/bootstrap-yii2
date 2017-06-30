@@ -123,13 +123,13 @@ class SignupCest
     public function testConfirmEmailEmptyToken($I)
     {
         $I->amOnRoute('/index/confirm-email', ['token' => '']);
-        $I->see('Invalid link for activate account');
+        $I->see('Invalid token for activate account');
     }
 
     public function testConfirmEmailWrongToken($I)
     {
         $I->amOnRoute('/index/confirm-email', ['token' => 'qwe']);
-        $I->see('Invalid link for activate account');
+        $I->see('Invalid token for activate account');
     }
 
     public function testConfirmRequest($I)

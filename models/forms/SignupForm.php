@@ -3,8 +3,9 @@
 namespace app\models\forms;
 
 use Yii;
+use yii\base\Exception;
+use yii\base\UserException;
 use app\models\User;
-use app\models\UserProfile;
 use app\services\Tokenizer;
 
 class SignupForm extends \yii\base\Model
@@ -54,40 +55,47 @@ class SignupForm extends \yii\base\Model
      */
     public function attributeLabels()
     {
-        return array_merge((new User())->attributeLabels(), ['fullName' => Yii::t('app', 'Full Name')]);
+        return [
+            'email' => Yii::t('app', 'Email'),
+            'password' => Yii::t('app', 'Password'),
+            'fullName' => Yii::t('app', 'Full Name'),
+        ];
     }
 
     /**
      * Signs user up
      *
+     * @throws Exception
      * @return \app\models\User
      */
-    public function signup(): ?User
+    public function signup(): User
     {
-        if ($this->validate()) {
-            $this->user = new User();
-            $this->user->email = $this->email;
-            $this->user->setPassword($this->password);
-            $this->user->setProfile(['full_name' => $this->fullName]);
-            $this->user->status = User::STATUS_ACTIVE;
-            if ($this->user->save()) {
-                $this->user->updateDateLogin();
+        $user = new User();
+        $user->email = $this->email;
+        $user->setPassword($this->password);
+        $user->setProfile(['full_name' => $this->fullName]);
+        $user->status = User::STATUS_ACTIVE;
 
-                if (Yii::$app->user->login($this->user, 3600 * 24 * 30)) {
-                    return $this->user;
-                }
-            } // @codeCoverageIgnore
-        } // @codeCoverageIgnore
+        if (!$user->save()) {
+            throw new Exception(Yii::t('app.msg', 'An error occurred while saving user'));
+        }
 
-        return null;
+        $this->user = $user;
+
+        $user->updateDateLogin();
+        Yii::$app->user->login($user, 3600 * 24 * 30);
+
+        $this->sendEmail();
+
+        return $this->user;
     }
 
     /**
      * Sends an email with a link, for confirm the email
      *
-     * @return boolean
+     * @throws UserException
      */
-    public function sendEmail(): bool
+    private function sendEmail(): void
     {
         $tokenizer = new Tokenizer();
         if (!$tokenizer->validate($this->user->email_confirm_token)) {
@@ -98,11 +106,15 @@ class SignupForm extends \yii\base\Model
             ]);
         }
 
-        return Yii::$app->notify->sendMessage(
+        $sent = Yii::$app->notify->sendMessage(
             $this->email,
             Yii::t('app', 'Activate Your Account'),
             'emailConfirmToken',
             ['user' => $this->user]
         );
+
+        if (!$sent) {
+            throw new UserException(Yii::t('app.msg', 'An error occurred while sending a message to activate account'));
+        }
     }
 }

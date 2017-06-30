@@ -62,6 +62,9 @@
         "reconfig": [
             "php yii rbac/up --path=@app/config/rbac/permissions.php"
         ],
+        "translate": [
+            "php yii message messages/config.php"
+        ],
         "test:build": [
             "php tests/bin/yii migrate --migrationPath=@yii/rbac/migrations/ --interactive=0",
             "php tests/bin/yii migrate --migrationPath=@vendor/rkit/settings-yii2/src/migrations/ --interactive=0",

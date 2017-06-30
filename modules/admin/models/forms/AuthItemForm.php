@@ -3,6 +3,7 @@
 namespace app\modules\admin\models\forms;
 
 use Yii;
+use yii\base\Exception;
 use yii\helpers\ArrayHelper;
 use app\models\AuthItem;
 
@@ -110,7 +111,13 @@ class AuthItemForm extends \yii\base\Model
         return $this->model;
     }
 
-    public function save()
+    /**
+     * Save auth item
+     *
+     * @throws Exception
+     * @return AuthItem
+     */
+    public function save(): AuthItem
     {
         $model = $this->model();
 
@@ -119,7 +126,7 @@ class AuthItemForm extends \yii\base\Model
         $model->type = \yii\rbac\Item::TYPE_ROLE;
 
         if (!$model->save()) {
-            throw new \yii\base\Exception(Yii::t('app.msg', 'An error occurred while saving'));
+            throw new Exception(Yii::t('app.msg', 'An error occurred while saving authItem'));
         }
 
         if (!$model->isSuperUser()) {

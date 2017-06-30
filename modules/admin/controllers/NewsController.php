@@ -106,15 +106,10 @@ class NewsController extends \yii\web\Controller
             $data['NewsForm'] = $data['NewsForm'] + $data['News'];
 
             if ($model->load($data) && $model->validate()) {
-                try {
-                    $model->save();
+                $model->save();
 
-                    Yii::$app->session->setFlash('success', Yii::t('app.msg', 'Saved successfully'));
-                    return $this->asJson(['redirect' => Url::toRoute(['edit', 'id' => $model->id])]);
-                } catch (\Exception $e) {
-                    Yii::error($e);
-                    return $this->asJson(false);
-                }
+                Yii::$app->session->setFlash('success', Yii::t('app.msg', 'Saved successfully'));
+                return $this->asJson(['redirect' => Url::toRoute(['edit', 'id' => $model->id])]);
             }
             return $this->asJson($this->collectErrors($model));
         }

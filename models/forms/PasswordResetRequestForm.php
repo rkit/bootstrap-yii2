@@ -3,6 +3,8 @@
 namespace app\models\forms;
 
 use Yii;
+use yii\base\Exception;
+use yii\base\UserException;
 use app\models\User;
 use app\services\Tokenizer;
 
@@ -35,34 +37,42 @@ class PasswordResetRequestForm extends \yii\base\Model
      */
     public function attributeLabels()
     {
-        return (new User())->attributeLabels();
+        return [
+            'email' => Yii::t('app', 'Email'),
+        ];
     }
 
     /**
      * Sends an email with a link, for resetting the password
      *
-     * @return boolean
+     * @throws Exception
+     * @throws UserException
      */
-    public function sendEmail(): bool
+    public function sendEmail(): void
     {
         /* @var $user User */
         $user = User::find()->email($this->email)->one();
-        if ($user) {
-            $tokenizer = new Tokenizer();
-            if (!$tokenizer->validate($user->password_reset_token)) {
-                $user->setPasswordResetToken($tokenizer->generate());
+        if (!$user) {
+            throw new UserException(Yii::t('app.msg', 'User not found'));
+        }
+
+        $tokenizer = new Tokenizer();
+        if (!$tokenizer->validate($user->password_reset_token)) {
+            $user->setPasswordResetToken($tokenizer->generate());
+            if (!$user->save()) {
+                throw new Exception(Yii::t('app.msg', 'An error occurred while saving user'));
             }
+        }
 
-            if ($user->save(false)) {
-                return Yii::$app->notify->sendMessage(
-                    $this->email,
-                    Yii::t('app', 'Password Reset'),
-                    'passwordResetToken',
-                    ['user' => $user]
-                );
-            } // @codeCoverageIgnore
-        } // @codeCoverageIgnore
+        $sent = Yii::$app->notify->sendMessage(
+            $user->email,
+            Yii::t('app', 'Password Reset'),
+            'passwordResetToken',
+            ['user' => $user]
+        );
 
-        return false;
+        if (!$sent) {
+            throw new UserException(Yii::t('app.msg', 'An error occurred while sending a message to reset password'));
+        }
     }
 }

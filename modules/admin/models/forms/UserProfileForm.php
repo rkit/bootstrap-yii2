@@ -3,6 +3,7 @@
 namespace app\modules\admin\models\forms;
 
 use Yii;
+use yii\base\Exception;
 use app\models\UserProfile;
 
 class UserProfileForm extends \yii\base\Model
@@ -86,7 +87,13 @@ class UserProfileForm extends \yii\base\Model
         return $this->model;
     }
 
-    public function save()
+    /**
+     * Save profile
+     *
+     * @throws Exception
+     * @return UserProfile
+     */
+    public function save(): UserProfile
     {
         $model = $this->model();
 
@@ -96,7 +103,7 @@ class UserProfileForm extends \yii\base\Model
         $model->birth_day = $this->birth_day;
 
         if (!$model->save()) {
-            throw new \yii\base\Exception(Yii::t('app.msg', 'An error occurred while saving'));
+            throw new Exception(Yii::t('app.msg', 'An error occurred while saving profile'));
         }
 
         return $model;

@@ -3,6 +3,7 @@
 namespace app\modules\admin\models\forms;
 
 use Yii;
+use yii\base\Exception;
 use app\models\News;
 
 class NewsForm extends \yii\base\Model
@@ -136,7 +137,13 @@ class NewsForm extends \yii\base\Model
         return $this->model;
     }
 
-    public function save()
+    /**
+     * Save news
+     *
+     * @throws Exception
+     * @return News
+     */
+    public function save(): News
     {
         $model = $this->model();
 
@@ -149,7 +156,7 @@ class NewsForm extends \yii\base\Model
         $model->status = $this->status;
 
         if (!$model->save()) {
-            throw new \yii\base\Exception(Yii::t('app.msg', 'An error occurred while saving'));
+            throw new Exception(Yii::t('app.msg', 'An error occurred while saving news'));
         }
 
         $this->id = $model->id;

@@ -1,12 +1,12 @@
 <?php
 
-namespace app\tests\unit\models\forms;
+namespace app\tests\unit\services;
 
 use app\tests\fixtures\UserFixture;
 use app\models\User;
-use app\models\forms\ConfirmEmailForm;
+use app\services\ConfirmEmail;
 
-class ConfirmEmailFormTest extends \Codeception\Test\Unit
+class ConfirmEmailTest extends \Codeception\Test\Unit
 {
     // @codingStandardsIgnoreFile
     protected function _before()
@@ -16,16 +16,24 @@ class ConfirmEmailFormTest extends \Codeception\Test\Unit
         ]);
     }
 
+    /**
+     * @expectedException Exception
+     * @expectedExceptionMessage Invalid token for activate account
+     */
     public function testWrongToken()
     {
-        $form = new ConfirmEmailForm();
-        expect_not($form->validateToken('notexistingtoken_1391882543'));
+        $form = new ConfirmEmail();
+        expect_not($form->setConfirmed('notexistingtoken_1391882543'));
     }
 
+    /**
+     * @expectedException Exception
+     * @expectedExceptionMessage Invalid token for activate account
+     */
     public function testEmptyToken()
     {
-        $form = new ConfirmEmailForm();
-        expect_not($form->validateToken(''));
+        $form = new ConfirmEmail();
+        expect_not($form->setConfirmed(''));
     }
 
     public function testSuccess()
@@ -33,9 +41,8 @@ class ConfirmEmailFormTest extends \Codeception\Test\Unit
         $user = User::find()->email('superuser@example.com')->one();
         expect_not($user->isConfirmed());
 
-        $form = new ConfirmEmailForm();
-        expect_that($form->validateToken($user->email_confirm_token));
-        expect_that($form->confirmEmail());
+        $form = new ConfirmEmail();
+        $form->setConfirmed($user->email_confirm_token);
 
         $user = User::find()->email($user->email)->one();
         expect($user->email_confirm_token)->isEmpty();

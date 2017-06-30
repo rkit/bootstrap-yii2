@@ -28,7 +28,7 @@ class SignupFormTest extends \Codeception\Test\Unit
             'password' => '',
         ]);
 
-        expect_not($form->signup());
+        expect_not($form->validate());
         expect($form->getFirstError('fullName'))->notEmpty();
         expect($form->getFirstError('email'))->notEmpty();
         expect($form->getFirstError('password'))->notEmpty();
@@ -42,7 +42,7 @@ class SignupFormTest extends \Codeception\Test\Unit
             'password' => '',
         ]);
 
-        expect_not($form->signup());
+        expect_not($form->validate());
         expect($form->getFirstError('password'))->notEmpty();
     }
 
@@ -54,7 +54,7 @@ class SignupFormTest extends \Codeception\Test\Unit
             'password' => 'test',
         ]);
 
-        expect_not($form->signup());
+        expect_not($form->validate());
         expect($form->getFirstError('password'))->notEmpty();
     }
 
@@ -66,7 +66,7 @@ class SignupFormTest extends \Codeception\Test\Unit
             'password' => 'test_password',
         ]);
 
-        expect_not($form->signup());
+        expect_not($form->validate());
         expect($form->getFirstError('email'))->notEmpty();
     }
 
@@ -78,7 +78,7 @@ class SignupFormTest extends \Codeception\Test\Unit
             'password' => 'test_password',
         ]);
 
-        expect_not($form->signup());
+        expect_not($form->validate());
         expect($form->getFirstError('fullName'))->notEmpty();
     }
 
@@ -90,7 +90,7 @@ class SignupFormTest extends \Codeception\Test\Unit
             'password' => 'test_password',
         ]);
 
-        expect_not($form->signup());
+        expect_not($form->validate());
         expect($form->getFirstError('email'))->notEmpty();
     }
 
@@ -102,12 +102,13 @@ class SignupFormTest extends \Codeception\Test\Unit
             'password' => 'test_password',
         ]);
 
+        expect_that($form->validate());
+
         $user = $form->signup();
         expect($user)->isInstanceOf('app\models\User');
         expect_not($user->isConfirmed());
         expect($user->email)->equals('test@example.com');
         expect_that($user->validatePassword('test_password'));
-        expect_that($form->sendEmail());
 
         $user = User::find()->email('test@example.com')->one();
         expect($user->profile->full_name)->equals('Test');

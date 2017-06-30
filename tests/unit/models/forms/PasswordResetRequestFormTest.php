@@ -16,28 +16,40 @@ class PasswordResetRequestFormTest extends \Codeception\Test\Unit
         ]);
     }
 
+    /**
+     * @expectedException Exception
+     * @expectedExceptionMessage User not found
+     */
     public function testEmptyEmail()
     {
         $form = new PasswordResetRequestForm();
         $form->email = '';
         expect_not($form->validate());
-        expect_not($form->sendEmail());
+        $form->sendEmail();
     }
 
+    /**
+     * @expectedException Exception
+     * @expectedExceptionMessage User not found
+     */
     public function testWrongEmail()
     {
         $form = new PasswordResetRequestForm();
         $form->email = 'test_email';
         expect_not($form->validate());
-        expect_not($form->sendEmail());
+        $form->sendEmail();
     }
 
+    /**
+     * @expectedException Exception
+     * @expectedExceptionMessage User not found
+     */
     public function testNonExistEmail()
     {
         $form = new PasswordResetRequestForm();
         $form->email = 'test@example.com';
         expect_not($form->validate());
-        expect_not($form->sendEmail());
+        $form->sendEmail();
     }
 
     public function testUserBlocked()
@@ -59,7 +71,7 @@ class PasswordResetRequestFormTest extends \Codeception\Test\Unit
         $form = new PasswordResetRequestForm();
         $form->email = 'user-5@example.com';
         expect_that($form->validate());
-        expect_that($form->sendEmail());
+        $form->sendEmail();
     }
 
     public function testSuccess()
@@ -69,7 +81,7 @@ class PasswordResetRequestFormTest extends \Codeception\Test\Unit
         $form = new PasswordResetRequestForm();
         $form->email = 'user-2@example.com';
         expect_that($form->validate());
-        expect_that($form->sendEmail());
+        $form->sendEmail();
 
         $user = User::findOne(['password_reset_token' => $user->password_reset_token]);
         expect($user->password_reset_token)->notNull();

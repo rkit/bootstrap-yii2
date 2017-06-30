@@ -20,9 +20,8 @@ class ResetPasswordFormTest extends \Codeception\Test\Unit
     {
         $user = $this->tester->grabFixture('user', 'user-1');
 
-        $form = new ResetPasswordForm();
+        $form = new ResetPasswordForm($user->password_reset_token);
         $form->password = '';
-        expect_that($form->validateToken($user->password_reset_token));
         expect_not($form->validate());
     }
 
@@ -30,32 +29,36 @@ class ResetPasswordFormTest extends \Codeception\Test\Unit
     {
         $user = $this->tester->grabFixture('user', 'user-1');
 
-        $form = new ResetPasswordForm();
+        $form = new ResetPasswordForm($user->password_reset_token);
         $form->password = 'qwe';
-        expect_that($form->validateToken($user->password_reset_token));
         expect_not($form->validate());
     }
 
+    /**
+     * @expectedException Exception
+     * @expectedExceptionMessage Invalid link for reset password
+     */
     public function testWrongToken()
     {
-        $form = new ResetPasswordForm();
-        expect_not($form->validateToken('notexistingtoken_1391882543'));
+        $form = new ResetPasswordForm('notexistingtoken_1391882543');
     }
 
+    /**
+     * @expectedException Exception
+     * @expectedExceptionMessage Invalid link for reset password
+     */
     public function testEmptyToken()
     {
-        $form = new ResetPasswordForm();
-        expect_not($form->validateToken(''));
+        $form = new ResetPasswordForm('');
     }
 
     public function testSuccess()
     {
         $user = $this->tester->grabFixture('user', 'user-1');
 
-        $form = new ResetPasswordForm();
+        $form = new ResetPasswordForm($user->password_reset_token);
         $form->password = 'password-new';
-        expect_that($form->validateToken($user->password_reset_token));
-        expect_that($form->resetPassword());
+        $form->resetPassword();
 
         $user = User::find()->email($user->email)->one();
         expect($user->password_reset_token)->isEmpty();

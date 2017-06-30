@@ -8,20 +8,22 @@ use yii\filters\AccessControl;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use app\services\SocialAuth;
+use app\services\ConfirmEmail;
 use app\models\forms\LoginForm;
 use app\models\forms\SignupForm;
 use app\models\forms\SignupProviderForm;
 use app\models\forms\PasswordResetRequestForm;
 use app\models\forms\ResetPasswordForm;
-use app\models\forms\ConfirmEmailForm;
 
 class IndexController extends \yii\web\Controller
 {
     private $socialAuth;
+    private $confirmEmail;
 
-    public function __construct($id, $module, SocialAuth $socialAuth, $config = [])
+    public function __construct($id, $module, SocialAuth $socialAuth, ConfirmEmail $confirmEmail, $config = [])
     {
         $this->socialAuth = $socialAuth;
+        $this->confirmEmail = $confirmEmail;
         parent::__construct($id, $module, $config);
     }
 
@@ -122,25 +124,18 @@ class IndexController extends \yii\web\Controller
     public function actionSignup()
     {
         $model = new SignupForm();
-        if ($model->load(Yii::$app->request->post()) && $model->signup()) {
-            if ($model->sendEmail()) {
-                Yii::$app->session->setFlash(
-                    'success',
-                    Yii::t(
-                        'app.msg',
-                        'Please activate your account. A letter for activation was sent to {email}',
-                        ['email' => $model->email]
-                    )
-                );
-                return $this->goHome();
-            }
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $model->signup();
+
             Yii::$app->session->setFlash(
-                'error',
+                'success',
                 Yii::t(
                     'app.msg',
-                    'An error occurred while sending a message to activate account'
+                    'Please activate your account. A letter for activation was sent to {email}',
+                    ['email' => $model->email]
                 )
             );
+
             return $this->goHome();
         }
 
@@ -170,31 +165,26 @@ class IndexController extends \yii\web\Controller
             return $this->goHome();
         }
 
-        if ($this->socialAuth->isExist() && $user->isActive() && $model->login()) {
-            return $this->goHome();
-        }
-
-        if ($this->socialAuth->isVerified() && $model->saveUser() && $model->login()) {
-            return $this->goHome();
-        }
-
-        if ($model->load(Yii::$app->request->post()) && $model->signup()) {
+        if ($this->socialAuth->isExist() && $user->isActive()) {
             $model->login();
+            return $this->goHome();
+        }
 
-            if ($model->sendEmail()) {
-                $session->setFlash(
-                    'success',
-                    Yii::t(
-                        'app.msg',
-                        'Please activate your account. A letter for activation was sent to {email}',
-                        ['email' => $model->email]
-                    )
-                );
-                return $this->goHome();
-            }
+        if ($this->socialAuth->isVerified()) {
+            $model->signup();
+            return $this->goHome();
+        }
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $model->signup();
+            $model->sendEmail();
             $session->setFlash(
-                'error',
-                Yii::t('app.msg', 'An error occurred while sending a message to activate account')
+                'success',
+                Yii::t(
+                    'app.msg',
+                    'Please activate your account. A letter for activation was sent to {email}',
+                    ['email' => $model->email]
+                )
             );
             return $this->goHome();
         }
@@ -211,40 +201,21 @@ class IndexController extends \yii\web\Controller
             throw new ForbiddenHttpException(Yii::t('app.msg', 'Access Denied'));
         } // @codeCoverageIgnore
 
-        $model = new ConfirmEmailForm();
+        $this->confirmEmail->sendEmail($user);
 
-        if ($model->sendEmail($user)) {
-            Yii::$app->session->setFlash(
-                'success',
-                Yii::t('app.msg', 'A letter for activation was sent to {email}', ['email' => $user->email])
-            );
-            return $this->goHome();
-        }
         Yii::$app->session->setFlash(
-            'error',
-            Yii::t('app.msg', 'An error occurred while sending a message to activate account')
+            'success',
+            Yii::t('app.msg', 'A letter for activation was sent to {email}', ['email' => $user->email])
         );
+
         return $this->goHome();
     }
 
     public function actionConfirmEmail($token)
     {
-        $model = new ConfirmEmailForm();
+        $this->confirmEmail->setConfirmed($token);
 
-        if (!$model->validateToken($token)) {
-            Yii::$app->session->setFlash(
-                'error',
-                Yii::t('app.msg', 'Invalid link for activate account')
-            );
-            return $this->goHome();
-        }
-
-        if ($model->confirmEmail()) {
-            Yii::$app->session->setFlash(
-                'success',
-                Yii::t('app.msg', 'Your account is successfully activated')
-            );
-        }
+        Yii::$app->session->setFlash('success', Yii::t('app.msg', 'Your account is successfully activated'));
         return $this->goHome();
     }
 
@@ -253,17 +224,13 @@ class IndexController extends \yii\web\Controller
         $model = new PasswordResetRequestForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            if ($model->sendEmail()) {
-                Yii::$app->session->setFlash(
-                    'success',
-                    Yii::t('app.msg', 'We\'ve sent you an email with instructions to reset your password')
-                );
-                return $this->goHome();
-            }
+            $model->sendEmail();
+
             Yii::$app->session->setFlash(
-                'error',
-                Yii::t('app.msg', 'An error occurred while sending a message to reset your password')
+                'success',
+                Yii::t('app.msg', 'We\'ve sent you an email with instructions to reset your password')
             );
+
             return $this->goHome();
         }
 
@@ -274,25 +241,11 @@ class IndexController extends \yii\web\Controller
 
     public function actionResetPassword($token)
     {
-        $model = new ResetPasswordForm();
+        $model = new ResetPasswordForm($token);
 
-        if (!$model->validateToken($token)) {
-            Yii::$app->session->setFlash(
-                'error',
-                Yii::t('app.msg', 'Invalid link for reset password')
-            );
-            return $this->goHome();
-        }
-
-        if ($model->load(Yii::$app->request->post()) &&
-            $model->validate() &&
-            $model->resetPassword()
-        ) {
-            Yii::$app->session->setFlash(
-                'success',
-                Yii::t('app.msg', 'New password was saved')
-            );
-            return $this->goHome();
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $model->resetPassword();
+            Yii::$app->session->setFlash('success', Yii::t('app.msg', 'New password was saved'));
         }
 
         return $this->render('resetPassword', [

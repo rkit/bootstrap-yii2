@@ -12,6 +12,15 @@
 - [File Manager](https://github.com/rkit/filemanager-yii2)
 - [Webpack for assets](https://webpack.github.io/)
 
+
+## Soft
+
+- PHP 7.1
+- Node.js + NPM 5.x
+- Composer
+
+> For to setup development environment, you could use [Docker](./README.md#docker)
+
 ## Installation
 
 1. Creating a project
@@ -50,11 +59,6 @@ The application requires the document root to be set to the `web` directory.
 
 ### Debug mode
 
-- Apache Configuration
-  ```apache
-  SetEnv APPLICATION_ENV "development"
-  ```
-
 - Nginx Configuration
   ```nginx
   fastcgi_param APPLICATION_ENV development;
@@ -80,3 +84,18 @@ The application requires the document root to be set to the `web` directory.
 
 - PHP Code Sniffer — [phpcs.xml](./phpcs.xml)
 - ESLint — [.eslintrc](./.eslintrc)
+
+### Docker for development environment
+
+1. Install [Docker](https://www.docker.com/)
+
+2. Copy [.env.dist](./.env.dist) to `.env` and specify environment variables
+
+3. Create and start containers
+   ```sh
+   docker-compose up -d
+   ```
+
+## Configuring Server
+
+- Nginx - [development config](./docker/nginx/conf.d/dev.conf)

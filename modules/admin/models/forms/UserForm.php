@@ -3,6 +3,7 @@
 namespace app\modules\admin\models\forms;
 
 use Yii;
+use yii\base\Exception;
 use yii\helpers\ArrayHelper;
 use app\models\AuthItem;
 use app\models\User;
@@ -163,7 +164,13 @@ class UserForm extends \yii\base\Model
         return $this->model;
     }
 
-    public function save()
+    /**
+     * Save user
+     *
+     * @throws Exception
+     * @return User
+     */
+    public function save(): User
     {
         $model = $this->model();
 
@@ -183,7 +190,7 @@ class UserForm extends \yii\base\Model
         }
 
         if (!$model->save()) {
-            throw new \yii\base\Exception(Yii::t('app.msg', 'An error occurred while saving'));
+            throw new Exception(Yii::t('app.msg', 'An error occurred while saving user'));
         }
 
         $this->id = $model->id;

@@ -3,6 +3,8 @@
 namespace app\models\forms;
 
 use Yii;
+use yii\base\Exception;
+use yii\web\BadRequestHttpException;
 use app\models\User;
 use app\services\Tokenizer;
 
@@ -16,6 +18,29 @@ class ResetPasswordForm extends \yii\base\Model
      * @var \app\models\User
      */
     private $user;
+
+    /**
+     * Creates a form model given a token.
+     *
+     * @param string $token
+     * @param array $config name-value pairs that will be used to initialize the object properties
+     * @throws \yii\base\BadRequestHttpException
+     */
+    public function __construct($token, $config = [])
+    {
+        $tokenizer = new Tokenizer();
+        if (empty($token) || !is_string($token) || !$tokenizer->validate($token)) {
+            throw new BadRequestHttpException(Yii::t('app.msg', 'Invalid link for reset password'));
+        }
+
+        $this->user = User::find()->passwordResetToken($token)->one();
+
+        if (!$this->user) {
+            throw new BadRequestHttpException(Yii::t('app.msg', 'Invalid link for reset password'));
+        }
+
+        parent::__construct($config);
+    }
 
     /**
      * @inheritdoc
@@ -34,44 +59,26 @@ class ResetPasswordForm extends \yii\base\Model
      */
     public function attributeLabels()
     {
-        return (new User())->attributeLabels();
-    }
-
-    /**
-     * Validate token
-     *
-     * @param string $token
-     * @return boolean
-     */
-    public function validateToken(string $token): bool
-    {
-        $tokenizer = new Tokenizer();
-        if (empty($token) || !is_string($token) || !$tokenizer->validate($token)) {
-            return false;
-        }
-
-        $this->user = User::find()->passwordResetToken($token)->one();
-
-        if (!$this->user) {
-            return false;
-        }
-
-        return true;
+        return [
+            'password' => Yii::t('app', 'Password'),
+        ];
     }
 
     /**
      * Resets password
      *
-     * @return boolean
+     * @throws Exception
      */
-    public function resetPassword(): bool
+    public function resetPassword(): void
     {
         $this->user->setPassword($this->password);
         $this->user->removePasswordResetToken();
         $this->user->updateDateLogin();
 
-        Yii::$app->user->login($this->user, 3600 * 24 * 30);
+        if (!$this->user->save()) {
+            throw new Exception(Yii::t('app.msg', 'An error occurred while saving user'));
+        }
 
-        return $this->user->save(false);
+        Yii::$app->user->login($this->user, 3600 * 24 * 30);
     }
 }
