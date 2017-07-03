@@ -23,24 +23,29 @@
 
 ## Installation
 
-1. Creating a project
+1. Cloning a repository
    ```
-   composer create-project --prefer-dist --stability=dev rkit/bootstrap-yii2
+   git clone https://github.com/rkit/bootstrap-yii2.git
    cd bootstrap-yii2
    ```
 
-2. Checking requirements
+2. Creating a project
+   ```sh
+   composer create-project
+   ```
+
+3. Checking requirements
    ```
    php requirements.php
    ```
 
-3. Creating a new database and local config
+4. Creating a new database and local config
    ```
    php yii create-local-config --path=@app/config/local/main.php
    ```
    > filling in the database settings in the *config/local/main.php*
 
-4. Build application
+5. Build application
    ```
    composer build
    ```
@@ -87,7 +92,7 @@ The application requires the document root to be set to the `web` directory.
 
 ### Docker for development environment
 
-1. Install [Docker](https://www.docker.com/)
+1. Install [Docker](https://www.docker.com/) and run the first step of [installation](./README.md#installation)
 
 2. Copy [.env.dist](./.env.dist) to `.env` and specify environment variables
 
@@ -95,6 +100,9 @@ The application requires the document root to be set to the `web` directory.
    ```sh
    docker-compose up -d
    ```
+
+4. Follow the [installation](./README.md#installation) steps (skip the first step).  
+   Run all commands through docker `docker-compose exec php`
 
 ## Configuring Server
 
