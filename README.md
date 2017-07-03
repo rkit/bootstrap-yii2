@@ -92,7 +92,7 @@ The application requires the document root to be set to the `web` directory.
 
 ### Docker for development environment
 
-1. Install [Docker](https://www.docker.com/) and run the first step of [installation](./README.md#installation)
+1. Install [Docker](https://www.docker.com/) and execute the first step of [installation](./README.md#installation)
 
 2. Copy [.env.dist](./.env.dist) to `.env` and specify environment variables
 
