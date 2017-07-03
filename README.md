@@ -19,7 +19,7 @@
 - Node.js + NPM 5.x
 - Composer
 
-> For to setup development environment, you could use [Docker](./README.md#docker)
+> For to setup development environment, you could use [Docker](./README.md#docker-for-development-environment)
 
 ## Installation
 
