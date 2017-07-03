@@ -15,7 +15,7 @@
 
 ## Soft
 
-- PHP 7.1
+- PHP 7.1.x
 - Node.js + NPM 5.x
 - Composer
 
