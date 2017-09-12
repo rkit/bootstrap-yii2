@@ -56,7 +56,8 @@ password: fghfgh
 
 ## Configuring Server
 
-- Nginx - [development config](./docker/nginx/conf.d/dev.conf)
+- Nginx
+  - [Development config](./docker/nginx/conf.d/dev.conf)
 
 ## Debug mode
 
