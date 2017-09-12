@@ -54,18 +54,15 @@ username: editor
 password: fghfgh
 ```
 
-## Configuring Server
-
-- Nginx - [development config](./docker/nginx/conf.d/dev.conf)
-
 ## Development
 
 ### Debug mode
 
-- Nginx Configuration
-  ```nginx
-  fastcgi_param APPLICATION_ENV development;
-  ```
+Add to nginx config:
+
+```nginx
+fastcgi_param APPLICATION_ENV development;
+```
 
 ### Tests
 
