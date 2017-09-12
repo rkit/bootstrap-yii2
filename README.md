@@ -70,12 +70,12 @@ fastcgi_param APPLICATION_ENV development;
 
 ## Tests
 
-- [See docs](/tests/#tests)
+[See docs](/tests/#tests)
 
 ## Coding Standard
 
-- PHP Code Sniffer — [phpcs.xml](./phpcs.xml)
-- ESLint — [.eslintrc](./.eslintrc)
+- PHP Code Sniffer ([phpcs.xml](./phpcs.xml))
+- ESLint ([.eslintrc](./.eslintrc))
 
 ## Docker for development environment
 
