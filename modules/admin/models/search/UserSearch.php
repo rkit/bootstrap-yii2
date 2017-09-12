@@ -2,13 +2,11 @@
 
 namespace app\modules\admin\models\search;
 
-use Yii;
-use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\User;
+use app\models\entity\User;
 
 /**
- * UserSearch represents the model behind the search form about `app\models\User`.
+ * UserSearch represents the model behind the search form about `app\models\entity\User`.
  */
 class UserSearch extends User
 {
@@ -19,7 +17,7 @@ class UserSearch extends User
     {
         return [
             [
-                ['username', 'email', 'ip', 'role'], 'string'
+                ['username', 'email', 'ip', 'role_name'], 'string'
             ],
 
             ['date_create', 'date', 'format' => 'yyyy-mm-dd'],
@@ -37,7 +35,7 @@ class UserSearch extends User
      */
     public function search($params)
     {
-        $query = User::find()->with('roles');
+        $query = User::find()->with('role');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -51,8 +49,6 @@ class UserSearch extends User
             ],
         ]);
 
-        $dataProvider->getPagination()->setPageSize(Yii::$app->request->get('pageSize'), true);
-
         if (!($this->load($params) && $this->validate())) {
             return $dataProvider;
         }
@@ -60,7 +56,7 @@ class UserSearch extends User
         $query->andFilterWhere([
             'ip' => !empty($this->ip) ? ip2long($this->ip) : null,
             'status' => $this->status,
-            'role' => $this->role,
+            'role_name' => $this->role_name,
             'DATE(date_create)' => $this->date_create
         ]);
 

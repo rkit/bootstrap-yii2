@@ -4,9 +4,8 @@ namespace app\modules\admin\controllers;
 
 use Yii;
 use yii\filters\VerbFilter;
-use yii\helpers\Url;
 use app\traits\ModelTrait;
-use app\models\AuthItem;
+use app\models\entity\AuthItem;
 use app\modules\admin\models\forms\AuthItemForm;
 use app\modules\admin\models\search\AuthItemSearch;
 
@@ -21,7 +20,7 @@ class RolesController extends \yii\web\Controller
                 'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['post'],
-                    'operations' => ['post'],
+                    'batch' => ['post'],
                 ],
             ],
         ];
@@ -30,16 +29,16 @@ class RolesController extends \yii\web\Controller
     public function actions()
     {
         return [
-            'operations' => [
-                'class' => 'app\modules\admin\controllers\common\OperationsAction',
-                'modelClass' => 'app\models\AuthItem',
-                'operations' => [
+            'batch' => [
+                'class' => 'app\modules\admin\actions\BatchAction',
+                'modelClass' => 'app\models\entity\AuthItem',
+                'actions' => [
                     'delete' => [],
                 ]
             ],
             'delete' => [
-                'class' => 'app\modules\admin\controllers\common\DeleteAction',
-                'modelClass' => 'app\models\AuthItem',
+                'class' => 'app\modules\admin\actions\DeleteAction',
+                'modelClass' => 'app\models\entity\AuthItem',
             ],
         ];
     }
@@ -64,13 +63,15 @@ class RolesController extends \yii\web\Controller
         }
 
         if (Yii::$app->request->isPost) {
+            Yii::$app->response->format = 'json';
+
             if ($model->load(Yii::$app->request->post()) && $model->validate()) {
                 $model->save();
 
                 Yii::$app->session->setFlash('success', Yii::t('app.msg', 'Saved successfully'));
-                return $this->asJson(['redirect' => Url::toRoute(['edit', 'name' => $model->name])]);
+                return $this->redirect(['edit', 'name' => $model->name]);
             }
-            return $this->asJson($this->collectErrors($model));
+            return $this->asJsonModelErrors($model);
         }
 
         return $this->render('edit', [

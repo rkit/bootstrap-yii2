@@ -13,6 +13,10 @@ class SettingsForm extends \yii\base\Model
     /**
      * @var string
      */
+    public $emailRequest;
+    /**
+     * @var string
+     */
     public $emailName;
     /**
      * @var string
@@ -55,7 +59,7 @@ class SettingsForm extends \yii\base\Model
     {
         return [
             'emailMain' => Yii::t('app', 'All notifications for users go to this address'),
-            'emailPrefix' => Yii::t('app', 'Subject in the email: "Prefix: Subject"')
+            'emailPrefix' => Yii::t('app', 'Subject in the email: "Prefix: Subject"'),
         ];
     }
 }

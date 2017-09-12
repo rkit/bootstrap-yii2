@@ -9,7 +9,7 @@ $this->title = Yii::t('app', 'Users');
 ?>
 <?= Html::a(Yii::t('app', 'Add'), ['edit'], ['class' => 'btn btn-default']) ?>
 
-<?= Html::beginForm(['operations'], 'post') ?>
+<?= Html::beginForm(['batch'], 'post') ?>
   <?php \yii\widgets\Pjax::begin(); ?>
 
   <?= GridView::widget([
@@ -23,7 +23,7 @@ $this->title = Yii::t('app', 'Users');
          </div>
          <div class="panel-footer">{summary}</div>
        </div>
-       <div class="operations">
+       <div class="batch">
          ' . Html::submitButton(Yii::t('app', 'delete'), [
              'name' => 'operation',
              'value' => 'delete',
@@ -62,10 +62,10 @@ $this->title = Yii::t('app', 'Users');
               'attribute' => 'username',
               'format' => 'raw',
               'value' => function ($model) {
-                  $username = $model['username'] ? $model['username'] : '(' . Yii::t('app', 'not set') . ')';
-                  return Html::a(Html::encode($username), ['edit', 'id' => $model['id']], ['data-pjax' => 0]) .
+                  $username = $model->username ? $model->username : '(' . Yii::t('app', 'not set') . ')';
+                  return Html::a(Html::encode($username), ['edit', 'id' => $model->id], ['data-pjax' => 0]) .
                   (
-                      $model['id'] === Yii::$app->user->id
+                      $model->id === Yii::$app->user->id
                       ? ' <span class="label label-info">' . Yii::t('app', 'it`s me') . '</span>'
                       : ''
                   );
@@ -79,7 +79,7 @@ $this->title = Yii::t('app', 'Users');
               'format' => 'raw',
               'value' => function ($model) {
                   $email = $model['email'] ? $model['email'] : '(' . Yii::t('app', 'not set') . ')';
-                  return Html::a(Html::encode($email), ['edit', 'id' => $model['id']], ['data-pjax' => 0]);
+                  return Html::a(Html::encode($email), ['edit', 'id' => $model->id], ['data-pjax' => 0]);
               }
           ],
           /**
@@ -135,7 +135,7 @@ $this->title = Yii::t('app', 'Users');
                   ['class' => 'form-control', 'prompt' => Yii::t('app', 'All roles')]
               ),
               'value' => function ($model) {
-                  return $model->roles ? $model->roles->description : '—';
+                  return $model->role ? $model->role->description : '—';
               },
           ],
           /**

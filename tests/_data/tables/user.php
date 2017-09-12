@@ -1,6 +1,6 @@
 <?php
 
-use \app\models\User;
+use \app\models\entity\User;
 
 return [
     'user-1' => [
@@ -15,7 +15,7 @@ return [
         'date_update' => '2015-01-01 12:02:00',
         'ip' => '2130706431',
         'status' => User::STATUS_ACTIVE,
-        'role' => User::ROLE_SUPERUSER
+        'role_name' => User::ROLE_SUPERUSER
     ],
     'user-2' => [
         'username' => 'user-2',
@@ -68,7 +68,7 @@ return [
         'date_update' => '2015-01-05 12:02:00',
         'ip' => '2130706435',
         'status' => User::STATUS_ACTIVE,
-        'role' => 'Editor',
+        'role_name' => 'Editor',
     ],
     'user-6' => [
         'username' => 'user-6',

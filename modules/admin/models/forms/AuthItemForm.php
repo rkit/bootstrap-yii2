@@ -5,7 +5,7 @@ namespace app\modules\admin\models\forms;
 use Yii;
 use yii\base\Exception;
 use yii\helpers\ArrayHelper;
-use app\models\AuthItem;
+use app\models\entity\AuthItem;
 
 class AuthItemForm extends \yii\base\Model
 {
@@ -34,7 +34,7 @@ class AuthItemForm extends \yii\base\Model
      */
     public $updated_at;
     /**
-     * @var \app\models\AuthItem
+     * @var \app\models\entity\AuthItem
      */
     private $model;
 
@@ -44,12 +44,8 @@ class AuthItemForm extends \yii\base\Model
     public function rules()
     {
         return [
-            [
-                ['name', 'description'], 'required'
-            ],
-            [
-                ['roles', 'permissions'], 'safe'
-            ],
+            [['name', 'description'], 'required'],
+            [['roles', 'permissions'], 'safe'],
 
             ['name', 'unique', 'targetClass' => AuthItem::class, 'filter' => function ($query) {
                 if (!$this->model()->isNewRecord) {
@@ -138,18 +134,18 @@ class AuthItemForm extends \yii\base\Model
 
     public function permissionsList(): array
     {
-        $permissions = Yii::$app->authManager->getPermissions();
-        return ArrayHelper::map($permissions, 'name', function ($row) {
+        $list = Yii::$app->authManager->getPermissions();
+        return ArrayHelper::map($list, 'name', function ($row) {
             return Yii::t('app', $row->description);
         });
     }
 
     public function rolesList(): array
     {
-        $roles = Yii::$app->authManager->getRoles();
-        unset($roles[$this->model->name]);
+        $list = Yii::$app->authManager->getRoles();
+        unset($list[$this->model->name]);
 
-        return ArrayHelper::map($roles, 'name', 'description');
+        return ArrayHelper::map($list, 'name', 'description');
     }
 
     private function assignRolesAndPermissions(): void

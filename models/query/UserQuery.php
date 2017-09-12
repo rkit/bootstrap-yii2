@@ -3,7 +3,7 @@
 namespace app\models\query;
 
 use yii\db\ActiveQuery;
-use app\models\User;
+use app\models\entity\User;
 
 /**
  * ActiveQuery for User

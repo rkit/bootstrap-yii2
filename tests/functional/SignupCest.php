@@ -151,7 +151,7 @@ class SignupCest
             $this->formName . '[email]' => 'test@example.com',
             $this->formName . '[password]' => 'fghfgh',
         ]);
-        $user = $I->grabRecord('app\models\User', ['email' => 'test@example.com']);
+        $user = $I->grabRecord('app\models\entity\User', ['email' => 'test@example.com']);
         $I->amOnRoute('/index/confirm-email', ['token' => $user->email_confirm_token]);
         $I->see('Your account is successfully activated');
 

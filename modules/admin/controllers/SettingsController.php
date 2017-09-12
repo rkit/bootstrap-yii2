@@ -15,14 +15,15 @@ class SettingsController extends \yii\web\Controller
         $model = new SettingsForm();
 
         if (Yii::$app->request->isPost) {
+            Yii::$app->response->format = 'json';
+
             if ($model->load(Yii::$app->request->post()) && $model->validate()) {
                 Yii::$app->settings->load($model->getAttributes());
+
                 Yii::$app->session->setFlash('success', Yii::t('app.msg', 'Saved successfully'));
                 return $this->refresh();
             }
-            if (Yii::$app->request->isAjax) {
-                return $this->asJson($this->collectErrors($model));
-            }
+            return $this->asJsonModelErrors($model);
         }
 
         $model->setAttributes(Yii::$app->settings->all());

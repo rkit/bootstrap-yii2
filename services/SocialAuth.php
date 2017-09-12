@@ -4,8 +4,8 @@ namespace app\services;
 
 use yii\authclient\ClientInterface;
 use yii\helpers\ArrayHelper;
-use app\models\User;
-use app\models\UserProvider;
+use app\models\entity\User;
+use app\models\entity\UserProvider;
 
 /**
  * SocialAuth handles successful authentication
@@ -93,7 +93,7 @@ class SocialAuth
     /**
      * Find user by provider
      *
-     * @return app\models\User|null
+     * @return app\models\entity\User|null
      */
     private function findUserByProvider(): ?User
     {
@@ -222,10 +222,20 @@ class SocialAuth
      */
     private function parseProfileFacebook(array $profile): array
     {
+        $fbId = ArrayHelper::getValue($profile, 'id');
+        $fbPhotoUrl = 'https://graph.facebook.com/' . $fbId . '/picture?width=500&redirect=false';
+        $fbPhotoData = json_decode(file_get_contents($fbPhotoUrl));
+
+        if (is_object($fbPhotoData) && isset($fbPhotoData->data)) {
+            $photo = $fbPhotoData->data->url;
+        } else {
+            $photo = ArrayHelper::getValue($profile, 'picture.data.url', '');
+        }
+
         return [
             'full_name' => trim(ArrayHelper::getValue($profile, 'name')),
             'birth_day' => '',
-            'photo' => ArrayHelper::getValue($profile, 'picture.data.url', '')
+            'photo' => $photo
         ];
     }
 

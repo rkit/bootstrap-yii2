@@ -5,7 +5,7 @@ namespace app\models\forms;
 use Yii;
 use yii\base\Exception;
 use yii\web\BadRequestHttpException;
-use app\models\User;
+use app\models\entity\User;
 use app\services\Tokenizer;
 
 class ResetPasswordForm extends \yii\base\Model
@@ -15,7 +15,7 @@ class ResetPasswordForm extends \yii\base\Model
      */
     public $password;
     /**
-     * @var \app\models\User
+     * @var \app\models\entity\User
      */
     private $user;
 

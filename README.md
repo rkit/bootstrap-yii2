@@ -10,8 +10,6 @@
 - Users, Roles, Registration, Basic and social authorization
 - [Settings](https://github.com/rkit/settings-yii2)
 - [File Manager](https://github.com/rkit/filemanager-yii2)
-- [Webpack for assets](https://webpack.github.io/)
-
 
 ## Soft
 
@@ -58,7 +56,7 @@ password: fghfgh
 
 ## Configuring Server
 
-The application requires the document root to be set to the `web` directory.
+- Nginx - [development config](./docker/nginx/conf.d/dev.conf)
 
 ## Development
 
@@ -67,18 +65,6 @@ The application requires the document root to be set to the `web` directory.
 - Nginx Configuration
   ```nginx
   fastcgi_param APPLICATION_ENV development;
-  ```
-
-### Assets
-
-- Watch mode (debug)
-  ```
-  npm run watch
-  ```
-
-- Build for production
-  ```
-  npm run build
   ```
 
 ### Tests

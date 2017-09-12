@@ -1,7 +1,9 @@
 <?php
 use yii\helpers\Html;
-use yii\helpers\ArrayHelper;
 use yii\bootstrap\Nav;
+use app\modules\admin\assets\AppAsset;
+
+AppAsset::register($this);
 
 /* @var $this \yii\web\View */
 /* @var $content string */
@@ -15,8 +17,8 @@ use yii\bootstrap\Nav;
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title><?= Html::encode($this->title . ' / ' . Yii::t('app', 'Control Panel')) ?></title>
   <?= Html::csrfMetaTags() ?>
+  <link rel="icon" type="image/png" href="/img/favicon.png" />
   <?php $this->head() ?>
-  <?= Html::cssFile('/assets/' . ArrayHelper::getValue(Yii::$app->params['assets'], 'admin.css')) ?>
 </head>
 <body>
 <?php $this->beginBody() ?>
@@ -56,8 +58,6 @@ use yii\bootstrap\Nav;
     </div>
   </div>
   <?php endif?>
-
-  <?= Html::jsFile('/assets/' . ArrayHelper::getValue(Yii::$app->params['assets'], 'admin.js')) ?>
 <?php $this->endBody() ?>
 </body>
 </html>

@@ -5,8 +5,7 @@ namespace app\modules\admin\models\forms;
 use Yii;
 use yii\base\Exception;
 use yii\helpers\ArrayHelper;
-use app\models\AuthItem;
-use app\models\User;
+use app\models\entity\{AuthItem, User};
 
 class UserForm extends \yii\base\Model
 {
@@ -41,7 +40,7 @@ class UserForm extends \yii\base\Model
     /**
      * @var string
      */
-    public $role;
+    public $role_name;
     /**
      * @var int
      */
@@ -51,7 +50,7 @@ class UserForm extends \yii\base\Model
      */
     public $passwordNew;
     /**
-     * @var \app\models\User
+     * @var \app\models\entity\User
      */
     private $model;
 
@@ -80,12 +79,12 @@ class UserForm extends \yii\base\Model
             }],
             ['email', 'default', 'value' => null],
 
-            ['role', 'string'],
+            ['role_name', 'string'],
             [
-                'role',
+                'role_name',
                 'exist',
                 'targetClass' => AuthItem::class,
-                'targetAttribute' => ['role' => 'name'],
+                'targetAttribute' => ['role_name' => 'name'],
                 'filter' => ['type' => \yii\rbac\Item::TYPE_ROLE]
             ],
 
@@ -111,7 +110,7 @@ class UserForm extends \yii\base\Model
             'date_update' => Yii::t('app', 'Date update'),
             'date_login' => Yii::t('app', 'Last login'),
             'ip' => Yii::t('app', 'IP'),
-            'role' => Yii::t('app', 'Role'),
+            'role_name' => Yii::t('app', 'Role'),
             'status' => Yii::t('app', 'Status'),
 
             'passwordNew' => Yii::t('app', 'New password'),
@@ -125,8 +124,8 @@ class UserForm extends \yii\base\Model
     public function attributeHints()
     {
         return [
-            'username' => Yii::t('app.msg', 'Only letters, numbers, symbols _ and -'),
-            'passwordNew' => Yii::t('app.msg', 'Set a new password')
+            'username' => Yii::t('app', 'Only letters, numbers, symbols _ and -'),
+            'passwordNew' => Yii::t('app', 'Set a new password')
         ];
     }
 
@@ -146,7 +145,7 @@ class UserForm extends \yii\base\Model
         $this->date_update = $model->date_update;
         $this->date_login = $model->date_login;
         $this->ip = $model->id;
-        $this->role = $model->role;
+        $this->role_name = $model->role_name;
         $this->status = $model->status;
     }
 
@@ -181,7 +180,7 @@ class UserForm extends \yii\base\Model
         $model->date_update = $this->date_update;
         $model->date_login = $this->date_login;
         $model->ip = $this->id;
-        $model->role = $this->role;
+        $model->role_name = $this->role_name;
         $model->status = $this->status;
         $model->passwordNew = $this->passwordNew;
 
@@ -195,7 +194,7 @@ class UserForm extends \yii\base\Model
 
         $this->id = $model->id;
 
-        $this->assignUserToRole($model->id, $model->role);
+        $this->assignUserToRole($model->id, $model->role_name);
 
         return $model;
     }
@@ -207,8 +206,8 @@ class UserForm extends \yii\base\Model
 
     public function rolesList(): array
     {
-        $roles = Yii::$app->authManager->getRoles();
-        return ArrayHelper::map($roles, 'name', 'description');
+        $list = Yii::$app->authManager->getRoles();
+        return ArrayHelper::map($list, 'name', 'description');
     }
 
     private function assignUserToRole(int $userId, string $roleName = ''): void

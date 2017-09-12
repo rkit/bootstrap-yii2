@@ -3,7 +3,7 @@
 namespace app\models\forms;
 
 use Yii;
-use app\models\User;
+use app\models\entity\User;
 
 class LoginForm extends \yii\base\Model
 {
@@ -20,7 +20,7 @@ class LoginForm extends \yii\base\Model
      */
     public $rememberMe = true;
     /**
-     * @var \app\models\User
+     * @var \app\models\entity\User
      */
     private $user = false;
 
@@ -84,7 +84,7 @@ class LoginForm extends \yii\base\Model
     /**
      * Get user
      *
-     * @return \app\models\User|null
+     * @return \app\models\entity\User|null
      */
     public function getUser(): ?User
     {

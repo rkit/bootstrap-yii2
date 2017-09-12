@@ -3,7 +3,7 @@
 namespace app\modules\admin\models\forms;
 
 use Yii;
-use app\models\User;
+use app\models\entity\User;
 
 class LoginForm extends \yii\base\Model
 {
@@ -20,7 +20,7 @@ class LoginForm extends \yii\base\Model
      */
     public $rememberMe = true;
     /**
-     * @var \app\models\User
+     * @var \app\models\entity\User
      */
     private $user = false;
 
@@ -30,9 +30,7 @@ class LoginForm extends \yii\base\Model
     public function rules()
     {
         return [
-            [
-                ['username', 'password'], 'required'
-            ],
+            [['username', 'password'], 'required'],
 
             ['username', 'string', 'min' => 3, 'max' => 40],
 

@@ -1,6 +1,6 @@
 <?php
 
-use \app\models\User;
+use \app\models\entity\User;
 
 $permissions = require __DIR__ . '/../../../config/rbac/permissions.php';
 $items = [];

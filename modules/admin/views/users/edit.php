@@ -21,8 +21,7 @@ $this->title = Yii::t('app', 'Users') . ' / ' . ($model->id ?? Yii::t('app', 'Cr
     <div class="col-md-<?= $model->id ? '8' : '12' ?>">
 
       <!-- role -->
-      <?= $form->field($model, 'role')->dropDownList($model->rolesList(), [
-              'class' => 'form-control',
+      <?= $form->field($model, 'role_name')->dropDownList($model->rolesList(), [
               'prompt' => Yii::t('app', 'No role')
           ])
           ->label(Html::a(Yii::t('app', 'Role'), ['/admin/roles'])); ?>
@@ -41,7 +40,6 @@ $this->title = Yii::t('app', 'Users') . ' / ' . ($model->id ?? Yii::t('app', 'Cr
 
       <!-- status -->
       <?= $form->field($model, 'status')->dropDownList($model->statusesList(), [
-              'class' => 'form-control',
               'prompt' => Yii::t('app', 'Select status')
           ]); ?>
 

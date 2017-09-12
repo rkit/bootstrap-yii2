@@ -3,7 +3,7 @@
 namespace app\tests\unit\models\forms;
 
 use app\tests\fixtures\UserFixture;
-use app\models\User;
+use app\models\entity\User;
 use app\models\forms\ResetPasswordForm;
 
 class ResetPasswordFormTest extends \Codeception\Test\Unit

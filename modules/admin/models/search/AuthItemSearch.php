@@ -2,13 +2,11 @@
 
 namespace app\modules\admin\models\search;
 
-use Yii;
-use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\AuthItem;
+use app\models\entity\AuthItem;
 
 /**
- * AuthItemSearch represents the model behind the search form about `app\models\AuthItem`.
+ * AuthItemSearch represents the model behind the search form about `app\models\entity\AuthItem`.
  */
 class AuthItemSearch extends AuthItem
 {

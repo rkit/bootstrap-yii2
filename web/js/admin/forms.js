@@ -1,57 +1,63 @@
-var $ = require('jquery');
-
-function showAlert($form) {
-  var $alert = $(
-    '<div class="form-alert callout callout-danger animated fadeInUp" />'
-  ).hide().html(
-    '<h4>Критическая ошибка</h4>' +
-    '<p>Извините, возникли проблемы, попробуйте позже…</p>'
-  );
-
-  $form.find('.form-alert').remove();
-  $form.data('yiiActiveForm')
-    .submitObject
-    .closest('.form-controls')
-    .prepend($alert);
-
-  $alert.fadeIn(100);
+function showAlert($form, jqXHR) {
+  if (jqXHR.responseJSON) {
+    renderAlert($form, jqXHR.responseJSON.name, jqXHR.responseJSON.message);
+  } else if (jqXHR.responseText) {
+    renderAlert($form, jqXHR.statusText, jqXHR.responseText);
+  }
 }
 
-$('.ajax-form').yiiAjaxForm({
-  beforeSend: function() {
-    var $button = $(this).data('yiiActiveForm').submitObject;
-    if ($button) {
-      $button.button('loading');
-    }
-  },
+function renderAlert($form, header, text) {
+  var alert = $(
+    '<div class="form-alert callout callout-danger animated fadeInUp" />'
+  ).html('<h4>' + header + '</h4>' + '<p>' + text + '</p>');
 
-  error: function(jqXHR) {
-    if (jqXHR.status && jqXHR.status === 302) {
-      return true;
-    }
+  $form
+    .data('yiiActiveForm')
+    .submitObject.closest('.form-controls')
+    .prepend(alert);
+}
 
-    showAlert($(this));
-  },
+function hideAlert($form) {
+  $form.find('.form-alert').remove();
+}
 
-  complete: function() {
-    var $button = $(this).data('yiiActiveForm').submitObject;
-    if ($button) {
-      $button.button('reset');
-    }
-  },
+(function() {
+  $('.ajax-form').yiiAjaxForm({
+    beforeSend: function() {
+      hideAlert($(this));
 
-  success: function(data) {
-    if (data === false) {
-      showAlert($(this));
-      return;
-    }
+      var submitObject = $(this).data('yiiActiveForm').submitObject;
+      if (submitObject) {
+        $(this)
+          .data('yiiActiveForm')
+          .submitObject.button('loading');
+      }
+    },
 
-    if (data.redirect) {
-      document.location.href = data.redirect;
-    } else if (data.reload) {
-      location.reload(true);
-    }
-    // show validation error messages
-    $(this).yiiActiveForm('updateMessages', data);
-  },
-});
+    error: function(jqXHR) {
+      var status = jqXHR.status;
+      if (status === 301 || status === 302) {
+        return;
+      }
+
+      switch (status) {
+        case 422:
+          $(this).yiiActiveForm('updateMessages', jqXHR.responseJSON);
+          break;
+        default:
+          showAlert($(this), jqXHR);
+      }
+    },
+
+    complete: function() {
+      var submitObject = $(this).data('yiiActiveForm').submitObject;
+      if (submitObject) {
+        $(this)
+          .data('yiiActiveForm')
+          .submitObject.button('reset');
+      }
+    },
+
+    success: function() {},
+  });
+})();

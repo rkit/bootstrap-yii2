@@ -6,7 +6,7 @@ use Yii;
 use yii\base\Exception;
 use yii\base\UserException;
 use yii\web\BadRequestHttpException;
-use app\models\User;
+use app\models\entity\User;
 use app\services\Tokenizer;
 
 class ConfirmEmail

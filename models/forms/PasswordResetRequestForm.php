@@ -5,7 +5,7 @@ namespace app\models\forms;
 use Yii;
 use yii\base\Exception;
 use yii\base\UserException;
-use app\models\User;
+use app\models\entity\User;
 use app\services\Tokenizer;
 
 class PasswordResetRequestForm extends \yii\base\Model
@@ -25,7 +25,7 @@ class PasswordResetRequestForm extends \yii\base\Model
             ['email', 'required'],
             ['email', 'email'],
             ['email', 'exist',
-                'targetClass' => '\app\models\User',
+                'targetClass' => '\app\models\entity\User',
                 'filter' => ['status' => User::STATUS_ACTIVE],
                 'message' => Yii::t('app.msg', 'There is no user with such email')
             ],

@@ -4,10 +4,9 @@ namespace app\modules\admin\controllers;
 
 use Yii;
 use yii\filters\VerbFilter;
-use yii\helpers\Url;
 use app\traits\ModelTrait;
-use app\models\User;
-use app\models\UserProfile;
+use app\models\entity\User;
+use app\models\entity\UserProfile;
 use app\modules\admin\models\forms\UserForm;
 use app\modules\admin\models\forms\UserProfileForm;
 use app\modules\admin\models\search\UserSearch;
@@ -25,7 +24,7 @@ class UsersController extends \yii\web\Controller
                     'set-active' => ['post'],
                     'set-block' => ['post'],
                     'delete' => ['post'],
-                    'operations' => ['post'],
+                    'batch' => ['post'],
                     'photo-upload' => ['post'],
                 ],
             ],
@@ -35,27 +34,27 @@ class UsersController extends \yii\web\Controller
     public function actions()
     {
         return [
-            'operations' => [
-                'class' => 'app\modules\admin\controllers\common\OperationsAction',
+            'batch' => [
+                'class' => 'app\modules\admin\actions\BatchAction',
                 'modelClass' => User::class,
-                'operations' => [
+                'actions' => [
                     'delete' => [],
                     'set-active' => ['status' => User::STATUS_ACTIVE],
                     'set-block' => ['status' => User::STATUS_BLOCKED]
                 ]
             ],
             'set-active' => [
-                'class' => 'app\modules\admin\controllers\common\UpdateAttributesAction',
+                'class' => 'app\modules\admin\actions\UpdateAttributesAction',
                 'modelClass' => User::class,
                 'attributes' => ['status' => User::STATUS_ACTIVE],
             ],
             'set-block' => [
-                'class' => 'app\modules\admin\controllers\common\UpdateAttributesAction',
+                'class' => 'app\modules\admin\actions\UpdateAttributesAction',
                 'modelClass' => User::class,
                 'attributes' => ['status' => User::STATUS_BLOCKED],
             ],
             'delete' => [
-                'class' => 'app\modules\admin\controllers\common\DeleteAction',
+                'class' => 'app\modules\admin\actions\DeleteAction',
                 'modelClass' => User::class,
             ],
             'photo-upload' => [
@@ -90,13 +89,15 @@ class UsersController extends \yii\web\Controller
         }
 
         if (Yii::$app->request->isPost) {
+            Yii::$app->response->format = 'json';
+
             if ($model->load(Yii::$app->request->post()) && $model->validate()) {
                 $model->save();
 
                 Yii::$app->session->setFlash('success', Yii::t('app.msg', 'Saved successfully'));
-                return $this->asJson(['redirect' => Url::toRoute(['edit', 'id' => $model->id])]);
+                return $this->redirect(['edit', 'id' => $model->id]);
             }
-            return $this->asJson($this->collectErrors($model));
+            return $this->asJsonModelErrors($model);
         }
 
         return $this->render('edit', [
@@ -110,16 +111,15 @@ class UsersController extends \yii\web\Controller
         $model->setModel($this->findModel(new UserProfile, $id));
 
         if (Yii::$app->request->isPost) {
-            $data = Yii::$app->request->post();
-            $data['UserProfileForm'] = $data['UserProfileForm'] + $data['UserProfile'];
+            Yii::$app->response->format = 'json';
 
-            if ($model->load($data) && $model->validate()) {
+            if ($model->load(Yii::$app->request->post()) && $model->validate()) {
                 $model->save();
 
                 Yii::$app->session->setFlash('success', Yii::t('app.msg', 'Saved successfully'));
-                return $this->asJson(['redirect' => Url::toRoute(['profile', 'id' => $model->user_id])]);
+                return $this->redirect(['profile', 'id' => $model->user_id]);
             }
-            return $this->asJson($this->collectErrors($model));
+            return $this->asJsonModelErrors($model);
         }
 
         return $this->render('profile', [

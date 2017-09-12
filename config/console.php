@@ -20,6 +20,11 @@ $config = [
         'authManager' => [
             'class' => 'yii\rbac\DbManager',
         ],
+        'urlManager' => [
+            'baseUrl' => 'http://bootstrap-yii2.dev',
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
+        ],
         'db' => [
             'class' => 'yii\db\Connection',
         ],

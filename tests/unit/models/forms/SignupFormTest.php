@@ -5,7 +5,7 @@ namespace app\tests\unit\models\forms;
 use Yii;
 use app\tests\fixtures\UserFixture;
 use app\models\forms\SignupForm;
-use app\models\User;
+use app\models\entity\User;
 
 class SignupFormTest extends \Codeception\Test\Unit
 {
@@ -105,7 +105,7 @@ class SignupFormTest extends \Codeception\Test\Unit
         expect_that($form->validate());
 
         $user = $form->signup();
-        expect($user)->isInstanceOf('app\models\User');
+        expect($user)->isInstanceOf('app\models\entity\User');
         expect_not($user->isConfirmed());
         expect($user->email)->equals('test@example.com');
         expect_that($user->validatePassword('test_password'));

@@ -1,12 +1,15 @@
 <?php
 
-class m141230_043248_create_user extends app\migrations\Migration
+use app\migrations\Migration;
+
+class m141230_043248_create_user extends Migration
 {
     public function up()
     {
         /**
          * User
          */
+
         $this->createTable('{{%user}}', [
             'id' => $this->primaryKey(),
             'username' => $this->string(40)->null()->unique(),
@@ -20,16 +23,17 @@ class m141230_043248_create_user extends app\migrations\Migration
             'date_update' => $this->timestamp()->null(),
             'date_login' => $this->timestamp()->null(),
             'ip' => $this->bigInteger(20)->notNull()->defaultValue(0),
-            'role' => $this->string(64)->notNull()->defaultValue(''),
+            'role_name' => $this->string(64)->notNull()->defaultValue(''),
             'status' => 'tinyint NOT NULL DEFAULT 0',
         ], $this->tableOptions);
 
-        $this->createIndex('role', '{{%user}}', 'role');
+        $this->createIndex('role_name', '{{%user}}', 'role_name');
         $this->createIndex('status', '{{%user}}', 'status');
 
         /**
          * Profile
          */
+
         $this->createTable('{{%user_profile}}', [
             'user_id' => $this->primaryKey(),
             'full_name' => $this->string(40)->notNull()->defaultValue(''),
@@ -38,7 +42,7 @@ class m141230_043248_create_user extends app\migrations\Migration
         ], $this->tableOptions);
 
         $this->addForeignKey(
-            'fk_user_profile',
+            'fk_user_profile__user_id__user_id',
             '{{%user_profile}}',
             'user_id',
             '{{%user}}',
@@ -47,9 +51,10 @@ class m141230_043248_create_user extends app\migrations\Migration
             'CASCADE'
         );
 
-        //
-        // Provider
-        //
+        /**
+         * Provider
+         */
+
         $this->createTable('{{%user_provider}}', [
             'id' => $this->primaryKey(),
             'user_id' => $this->integer()->notNull()->defaultValue(0),

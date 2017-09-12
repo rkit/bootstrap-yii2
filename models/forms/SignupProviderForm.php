@@ -8,8 +8,8 @@ use yii\helpers\FileHelper;
 use yii\web\UploadedFile;
 use yii\base\Exception;
 use yii\base\UserException;
-use app\models\User;
-use app\models\UserProfile;
+use app\models\entity\User;
+use app\models\entity\UserProfile;
 use app\services\Tokenizer;
 
 class SignupProviderForm extends \yii\base\Model
@@ -19,7 +19,7 @@ class SignupProviderForm extends \yii\base\Model
      */
     public $email;
     /**
-     * @var \app\models\User
+     * @var \app\models\entity\User
      */
     private $user = null;
 
@@ -43,7 +43,7 @@ class SignupProviderForm extends \yii\base\Model
             ['email', 'string', 'max' => 255],
             ['email', 'email'],
             ['email', 'unique',
-                'targetClass' => '\app\models\User',
+                'targetClass' => '\app\models\entity\User',
                 'message' => Yii::t('app.msg', 'This email address has already been taken')
             ],
         ];
@@ -83,7 +83,7 @@ class SignupProviderForm extends \yii\base\Model
     /**
      * Save photo
      *
-     * @param \app\models\UserProfile $profile
+     * @param \app\models\entity\UserProfile $profile
      * @param string $photo
      * @return void
      */
@@ -112,7 +112,7 @@ class SignupProviderForm extends \yii\base\Model
      * Signs user up
      *
      * @throws Exception
-     * @return \app\models\User
+     * @return \app\models\entity\User
      */
     public function signup(): User
     {

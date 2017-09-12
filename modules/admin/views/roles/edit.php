@@ -1,7 +1,6 @@
 <?php
 use yii\widgets\ActiveForm;
 use yii\helpers\Html;
-use yii\helpers\ArrayHelper;
 
 $this->title = Yii::t('app', 'Roles') . ' / ' . ($model->name ?? Yii::t('app', 'Create'));
 ?>

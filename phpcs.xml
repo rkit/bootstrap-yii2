@@ -6,30 +6,23 @@
         <!-- exclude rules -->
         <exclude name="PSR1.Classes.ClassDeclaration"/>
         <exclude name="PSR1.Files.SideEffects"/>
+        <exclude name="PSR2.Namespaces.UseDeclaration.MultipleDeclarations"/>
         <exclude name="Squiz.WhiteSpace.SuperfluousWhitespace"/>
         <!-- exclude files -->
         <exclude-pattern>*/views/*</exclude-pattern>
         <exclude-pattern>*/mail/*</exclude-pattern>
     </rule>
 
-    <!-- Use single quote -->
     <rule ref="Squiz.Strings.DoubleQuoteUsage" />
     <rule ref="Squiz.Strings.DoubleQuoteUsage.ContainsVar">
         <severity>0</severity>
         <exclude-pattern>*/views/*</exclude-pattern>
     </rule>
 
-    <!-- Ignore missing namespace for migrations -->
-    <rule ref="PSR1.Classes.ClassDeclaration.MissingNamespace">
-        <exclude-pattern>*/migrations/*</exclude-pattern>
-    </rule>
-
-    <!-- Ignore camel caps format for class name of migrations -->
     <rule ref="Squiz.Classes.ValidClassName.NotCamelCaps">
         <exclude-pattern>*/migrations/*</exclude-pattern>
     </rule>
 
-    <!-- Line Length -->
     <rule ref="Generic.Files.LineLength">
         <properties>
             <property name="lineLimit" value="120"/>
@@ -37,5 +30,6 @@
         </properties>
         <exclude-pattern>*/messages/*</exclude-pattern>
     </rule>
+
 
 </ruleset>

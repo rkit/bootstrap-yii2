@@ -37,7 +37,7 @@ return [
         ],
         'user' => [
             'class' => 'app\components\User',
-            'identityClass' => 'app\models\User',
+            'identityClass' => 'app\models\entity\User',
             'enableAutoLogin' => false,
             'loginUrl' => ['/index/login']
         ],

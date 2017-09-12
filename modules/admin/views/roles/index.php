@@ -7,7 +7,7 @@ $this->title = Yii::t('app', 'Roles');
 ?>
 <?= Html::a(Yii::t('app', 'Add'), ['edit'], ['class' => 'btn btn-default']) ?>
 
-<?= Html::beginForm(['operations'], 'post') ?>
+<?= Html::beginForm(['batch'], 'post') ?>
   <?php \yii\widgets\Pjax::begin(); ?>
 
   <?= GridView::widget([
@@ -21,7 +21,7 @@ $this->title = Yii::t('app', 'Roles');
          </div>
          <div class="panel-footer">{summary}</div>
        </div>
-       <div class="operations">
+       <div class="batch">
          ' . Html::submitButton(Yii::t('app', 'delete'), [
              'name' => 'operation',
              'value' => 'delete',
@@ -48,7 +48,7 @@ $this->title = Yii::t('app', 'Roles');
               'attribute' => 'name',
               'format' => 'raw',
               'value' => function ($model) {
-                  return Html::a(Html::encode($model['name']), ['edit', 'name' => $model['name']], ['data-pjax' => 0]);
+                  return Html::a(Html::encode($model->name), ['edit', 'name' => $model->name], ['data-pjax' => 0]);
               }
           ],
           /**

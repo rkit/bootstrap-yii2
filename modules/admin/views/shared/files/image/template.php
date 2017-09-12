@@ -3,7 +3,7 @@
     <div class="fileapi-browse" data-fileapi="active.hide">
       <span class="glyphicon glyphicon-picture"></span>
       <span class="fileapi-browse-text">
-        <?= $value ? Yii::t('app', 'Uploaded') : Yii::t('app', 'Upload') ?>
+        <?=Yii::t('app', 'Upload') ?>
       </span>
       <span data-fileapi="name"></span>
       <input type="file" name="<?= $inputName ?>">
@@ -37,7 +37,6 @@
     file.fileapi('clear');
     file.find('input[type=\"hidden\"]').val('');
     file.find('.fileapi-preview-wrapper').empty();
-    file.find('.fileapi-browse-text').text('" . Yii::t('app', 'Upload') . "');
   })"); ?>
   <?php endif; ?>
 

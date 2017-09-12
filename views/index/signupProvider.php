@@ -1,7 +1,7 @@
 <?php
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
-use app\models\UserProvider;
+use app\models\entity\UserProvider;
 
 $this->title = Yii::t('app', 'Registration');
 ?>

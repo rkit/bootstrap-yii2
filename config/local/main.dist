@@ -19,6 +19,12 @@ $config['components']['db'] = [
 ];
 
 /**
+ * Mailer
+ */
+
+$config['components']['mailer']['useFileTransport'] = true;
+
+/**
  * Gii & Debug Panel
  */
 

@@ -1,6 +1,32 @@
 <?php
 
 /**
+ * Urls
+ */
+
+$config['components']['urlManager']['rules'] = [
+    // frontend
+    '/' => 'index/index',
+    'auth-social' => 'index/auth-social',
+    'signup' => 'index/signup',
+    'signup-provider' => 'index/signup-provider',
+    'login' => 'index/login',
+    'logout' => 'index/logout',
+    'reset-password' => 'index/reset-password',
+    'request-password-reset' => 'index/request-password-reset',
+    'confirm-email' => 'index/confirm-email',
+    'confirm-request' => 'index/confirm-request',
+
+    // background call
+
+
+    // admin
+    'admin' => 'admin/index/index',
+    'admin/<controller>' => 'admin/<controller>',
+    'admin/<controller>/<action>' => 'admin/<controller>/<action>',
+];
+
+/**
  * Translations
  */
 

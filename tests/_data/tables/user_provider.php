@@ -1,6 +1,6 @@
 <?php
 
-use app\models\UserProvider;
+use app\models\entity\UserProvider;
 
 return [
     'profile-2' => [

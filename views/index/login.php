@@ -1,5 +1,6 @@
 <?php
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\bootstrap\ActiveForm;
 
 $this->title = Yii::t('app', 'Login');
@@ -18,7 +19,7 @@ $this->title = Yii::t('app', 'Login');
         <!-- rememberMe -->
         <?= $form->field($model, 'rememberMe')->checkbox() ?>
         <div class="form-group text-muted">
-          <?= Html::a(Yii::t('app', 'Forgot your password?'), ['index/request-password-reset']) ?>
+          <?= Html::a(Yii::t('app', 'Forgot your password?'), ['request-password-reset']) ?>
         </div>
         <hr>
         <div class="form-group">
@@ -27,7 +28,7 @@ $this->title = Yii::t('app', 'Login');
           </div>
           <div class="pull-right">
             <?= yii\authclient\widgets\AuthChoice::widget([
-                'baseAuthUrl' => ['index/auth']
+                'baseAuthUrl' => ['auth-social']
             ]) ?>
           </div>
         </div>

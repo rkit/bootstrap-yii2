@@ -24,6 +24,7 @@ class IndexController extends \yii\web\Controller
     {
         $this->socialAuth = $socialAuth;
         $this->confirmEmail = $confirmEmail;
+
         parent::__construct($id, $module, $config);
     }
 
@@ -36,7 +37,7 @@ class IndexController extends \yii\web\Controller
             'access' => [
                 'class' => AccessControl::class,
                 'only' => [
-                    'auth',
+                    'auth-social',
                     'logout',
                     'signup',
                     'signup-provider',
@@ -46,7 +47,7 @@ class IndexController extends \yii\web\Controller
                 'rules' => [
                     [
                         'actions' => [
-                            'auth',
+                            'auth-social',
                             'signup',
                             'signup-provider',
                             'request-password-reset',
@@ -82,7 +83,7 @@ class IndexController extends \yii\web\Controller
             'error' => [
                 'class' => 'yii\web\ErrorAction',
             ],
-            'auth' => [
+            'auth-social' => [
                 'class' => 'yii\authclient\AuthAction',
                 'successCallback' => [$this, 'successCallback'],
                 'successUrl' => 'signup-provider'

@@ -6,7 +6,7 @@ use yii\helpers\Url;
 <div class="alert alert-warning" role="alert">
   <?= Yii::t('app.msg', 'To complete the registration process, you must activate your account') ?><br>
   <?= Yii::t('app.msg', 'We sent you a letter on {email}', ['email' => Yii::$app->user->identity->email]) ?><br>
-  <?= Html::a(Yii::t('app', 'Send again'), ['/confirm-request']) ?>
+  <?= Html::a(Yii::t('app', 'Send again'), ['confirm-request']) ?>
 </div>
 <?php endif?>
 
@@ -20,7 +20,6 @@ use yii\helpers\Url;
   <li>Users, Roles, Registration, Basic and social authorization</li>
   <li>Settings</li>
   <li><a href="https://github.com/rkit/filemanager-yii2">File Manager</a></li>
-  <li><a href="https://webpack.github.io/">Webpack for assets</a></li>
 </ul>
 
 <hr>

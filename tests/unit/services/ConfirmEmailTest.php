@@ -3,7 +3,7 @@
 namespace app\tests\unit\services;
 
 use app\tests\fixtures\UserFixture;
-use app\models\User;
+use app\models\entity\User;
 use app\services\ConfirmEmail;
 
 class ConfirmEmailTest extends \Codeception\Test\Unit

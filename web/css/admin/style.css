@@ -1,5 +1,6 @@
-/* Reset
--------------------------------------------------- */
+/**
+ * Reset
+ */
 
 html,
 body {
@@ -23,8 +24,9 @@ table thead a {
   color: #333;
 }
 
-/* Reset Bootstrap
--------------------------------------------------- */
+/**
+ * Reset Bootstrap
+ */
 
 .input-group-addon, .input-group-btn {
   width: 0;
@@ -50,9 +52,6 @@ table thead a {
   font-weight: normal
 }
 
-/* Layouts
--------------------------------------------------- */
-
 .container-fluid {
   padding: 24px 40px 40px 30px;
 }
@@ -61,30 +60,7 @@ table thead a {
     padding-left: 20px
   }
 
-/* Forms
--------------------------------------------------- */
-
 .form-controls .btn-danger { margin: 0px 5px; }
-
-/* GridView
--------------------------------------------------- */
-
-.gridview .filters {
-  background: #F5F5F5;
-}
-
-.gridview .summary {
-  font-size: 13px
-}
-
-.gridview .empty {
-  padding-top: 20px;
-  text-align: center;
-  color: #666;
-}
-
-/* Panel
--------------------------------------------------- */
 
 .panel-heading .lead  {
   margin: 0px;
@@ -105,9 +81,6 @@ table thead a {
   .panel-body.panel-table table td:first-child {
     padding-left: 15px;
   }
-
-/* Callout
--------------------------------------------------- */
 
 .callout {
   padding: 20px;
@@ -154,8 +127,9 @@ table thead a {
       color: #5bc0de
     }
 
-/* Form SignIn
--------------------------------------------------- */
+/**
+ * Form SignIn
+ */
 
 .form-signin {
   max-width: 330px;
@@ -163,8 +137,9 @@ table thead a {
   margin: 0 auto;
 }
 
-/* Sidebar
--------------------------------------------------- */
+/**
+ * Sidebar
+ */
 
 .sidebar {
   padding-left: 0px;
@@ -273,14 +248,55 @@ table thead a {
   }
 }
 
-/* Sortable
--------------------------------------------------- */
+/**
+ * Sortable
+ */
 
-.sortable { border: none; }
+.sortable { border: none !important; }
 
   .sortable li {
-    border: none;
+    border: none !important;
     margin: 0;
     padding: inherit;
   }
-    .sortable li:hover { background: none; }
+
+/**
+ * GridView
+ */
+
+.gridview .filters {
+  background: #F5F5F5;
+}
+
+.gridview .summary {
+  font-size: 13px
+}
+
+.gridview .empty {
+  padding-top: 20px;
+  text-align: center;
+  color: #666;
+}
+
+/**
+ * Sort ICON
+ */
+
+a.asc:after, a.desc:after {
+    position: relative;
+    top: 1px;
+    display: inline-block;
+    font-family: 'Glyphicons Halflings';
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+    padding-left: 5px;
+}
+
+a.asc:after {
+    content: "\e151";
+}
+
+a.desc:after {
+    content: "\e152";
+}

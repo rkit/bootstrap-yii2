@@ -3,24 +3,22 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "watch": "webpack --watch --config webpack.config.development.js",
-    "build": "webpack -p --config webpack.config.production.js"
+    "precommit": "lint-staged"
+  },
+  "lint-staged": {
+    "web/js/**/*.js": [
+      "prettier --trailing-comma es5 --single-quote --write",
+      "eslint --fix",
+      "git add"
+    ]
   },
   "devDependencies": {
-    "babel-eslint": "^4.1.5",
-    "bower-webpack-plugin": "^0.1.9",
-    "css-loader": "^0.23.0",
-    "eslint": "^1.9.0",
-    "eslint-config-airbnb": "^1.0.0",
-    "extract-text-webpack-plugin": "^0.9.1",
-    "file-loader": "^0.8.4",
-    "style-loader": "^0.13.0",
-    "webpack": "^1.12.6",
-    "webpack-manifest-plugin": "^0.5.0"
+    "eslint": "^4.3.0",
+    "husky": "^0.14.3",
+    "lint-staged": "^4.0.2",
+    "prettier": "^1.5.3",
+    "uglify-js": "^3.0.14",
+    "uglifycss": "0.0.27"
   },
-  "dependencies": {
-    "bootstrap": "^3.3.5",
-    "nprogress": "^0.1.6",
-    "yii2-ajaxform-plugin": "^0.0.3"
-  }
+  "dependencies": {}
 }

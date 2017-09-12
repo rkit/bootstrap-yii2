@@ -3,6 +3,9 @@ use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
+use app\assets\AppAsset;
+
+AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -11,10 +14,9 @@ use yii\bootstrap\NavBar;
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title><?= Html::encode($this->title . ' / ' . Yii::$app->name) ?></title>
+  <title><?= ($this->title ? Html::encode($this->title . ' / ') : '') . Yii::$app->name ?></title>
   <?= Html::csrfMetaTags()?>
   <?php $this->head() ?>
-  <?= Html::cssFile('/assets/' . ArrayHelper::getValue(Yii::$app->params['assets'], 'front.css')) ?>
 </head>
 <body>
 <?php $this->beginBody() ?>
@@ -49,7 +51,6 @@ use yii\bootstrap\NavBar;
     </div>
   </div>
 
-  <?= Html::jsFile('/assets/' . ArrayHelper::getValue(Yii::$app->params['assets'], 'front.js')) ?>
 <?php $this->endBody() ?>
 </body>
 </html>

@@ -4,7 +4,7 @@ namespace app\modules\admin\models\forms;
 
 use Yii;
 use yii\base\Exception;
-use app\models\UserProfile;
+use app\models\entity\UserProfile;
 
 class UserProfileForm extends \yii\base\Model
 {
@@ -25,7 +25,7 @@ class UserProfileForm extends \yii\base\Model
      */
     public $birth_day;
     /**
-     * @var \app\models\UserProfile
+     * @var \app\models\entity\UserProfile
      */
     private $model;
 
@@ -35,9 +35,7 @@ class UserProfileForm extends \yii\base\Model
     public function rules()
     {
         return [
-            [
-                ['birth_day', 'photo'], 'safe',
-            ],
+            [['birth_day', 'photo'], 'safe'],
 
             ['birth_day', 'date', 'format' => 'php:Y-m-d'],
 

@@ -5,7 +5,7 @@ namespace app\models\forms;
 use Yii;
 use yii\base\Exception;
 use yii\base\UserException;
-use app\models\User;
+use app\models\entity\User;
 use app\services\Tokenizer;
 
 class SignupForm extends \yii\base\Model
@@ -23,7 +23,7 @@ class SignupForm extends \yii\base\Model
      */
     public $fullName;
     /**
-     * @var \app\models\User
+     * @var \app\models\entity\User
      */
     private $user;
 
@@ -44,7 +44,7 @@ class SignupForm extends \yii\base\Model
             ['email', 'string', 'max' => 255],
             ['email', 'email'],
             ['email', 'unique',
-                'targetClass' => '\app\models\User',
+                'targetClass' => '\app\models\entity\User',
                 'message' => Yii::t('app.msg', 'This email address has already been taken')
             ],
         ];
@@ -66,7 +66,7 @@ class SignupForm extends \yii\base\Model
      * Signs user up
      *
      * @throws Exception
-     * @return \app\models\User
+     * @return \app\models\entity\User
      */
     public function signup(): User
     {

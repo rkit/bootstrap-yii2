@@ -6,6 +6,7 @@ use Yii;
 use yii\helpers\Html;
 use yii\web\NotFoundHttpException;
 use yii\db\ActiveRecord;
+use yii\web\Response;
 
 trait ModelTrait
 {
@@ -14,12 +15,12 @@ trait ModelTrait
      * If the model is not found or access denied, a 404 HTTP exception will be thrown.
      *
      * @param ActiveRecord $model
-     * @param string $id primary key or WHERE condition
+     * @param mixed $id primary key or WHERE condition
      * @param string $checkAccess
      * @return ActiveRecord
      * @throws NotFoundHttpException
      */
-    public function findModel(ActiveRecord $model, string $id, string $checkAccess = null): ActiveRecord
+    public function findModel(ActiveRecord $model, $id, string $checkAccess = null): ActiveRecord
     {
         $model = $model::findOne($id);
 
@@ -30,22 +31,25 @@ trait ModelTrait
         return $model;
     }
 
-   /**
-    * Collect model errors
-    *
-    * @param yii\base\Model $model the model to be validated
-    * @return array the error message array indexed by the attribute IDs.
-    */
-    public static function collectErrors(yii\base\Model $model): array
+    /**
+     * Returns an error messages as an array indexed by the ID.
+     * This is a helper method that simplifies the way of writing AJAX validation code
+     *
+     * @param yii\base\Model $model
+     * @return yii\web\Response
+     */
+    public function asJsonModelErrors(\yii\base\Model $model): Response
     {
+        $response = Yii::$app->getResponse();
+        $response->format = Response::FORMAT_JSON;
+        $response->statusCode = 422;
+
         $result = [];
-        /* @var $model Model */
-        $models = [$model];
-        foreach ($models as $model) {
-            foreach ($model->getErrors() as $attribute => $errors) {
-                $result[Html::getInputId($model, $attribute)] = $errors;
-            }
+        foreach ($model->getErrors() as $attribute => $errors) {
+            $result[Html::getInputId($model, $attribute)] = $errors;
         }
-        return $result;
+
+        $response->data = $result;
+        return $response;
     }
 }

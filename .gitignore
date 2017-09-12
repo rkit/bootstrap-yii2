@@ -3,7 +3,8 @@ Thumbs.db
 *.log
 .env
 
-vendor/
+web/sitemap
+/vendor/
 node_modules/
 tests/_tmp/
 tests/_output/

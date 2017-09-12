@@ -6,17 +6,6 @@ $permissions = Yii::$app->controller->module->permissions;
 
 $items = [
     [
-        'label'  => Yii::t('app', 'News'),
-        'url'    => ['/admin/news/index'],
-        'visible' => array_key_exists('ACTION_AdminNews', $permissions),
-        'active' => in_array(Yii::$app->request->pathInfo, [
-            'admin/news',
-            'admin/news/index',
-            'admin/news/edit'
-        ])
-    ],
-
-    [
         'label'  => Yii::t('app', 'Users'),
         'url'    => ['/admin/users/index'],
         'visible' => array_key_exists('ACTION_AdminUsers', $permissions),

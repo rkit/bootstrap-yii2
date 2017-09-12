@@ -59,9 +59,11 @@ class Module extends \yii\base\Module
             return $authManager->getPermissionsByRole(Yii::$app->user->identity->role);
         }
 
-        return Yii::$app->cache->getOrSet('rbac-permissions',
-        function () use ($authManager) {
-            return $authManager->getPermissions();
-        });
+        return Yii::$app->cache->getOrSet(
+            'rbac-permissions',
+            function () use ($authManager) {
+                return $authManager->getPermissions();
+            }
+        );
     }
 }

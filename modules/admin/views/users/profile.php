@@ -2,6 +2,9 @@
 use yii\widgets\ActiveForm;
 use yii\helpers\Html;
 use kartik\date\DatePicker;
+use yii\web\JsExpression;
+use rkit\fileapi\Widget as FileApi;
+use app\modules\admin\helpers\FileRulesDescription;
 
 $this->title = Yii::t('app', 'Users') . ' / ' . $model->user_id;
 ?>
@@ -32,11 +35,37 @@ $this->title = Yii::t('app', 'Users') . ' / ' . $model->user_id;
     </div>
     <div class="col-md-4">
       <!-- photo -->
-      <?= $this->render('/shared/files/image/input', [
-          'form' => $form,
-          'model' => $model->model(),
-          'attribute' => 'photo'
-      ]) ?>
+      <?= $form->field($model, 'photo', ['template' => "{label}\n{error}\n{input}\n{hint}"])
+          ->widget(FileApi::class, [
+              'template' => '@app/modules/admin/views/shared/files/image/template',
+              'callbacks' => [
+                  'select' => new JsExpression('function (evt, ui) {
+                    if (ui && ui.other.length && ui.other[0].errors) {
+                      alert("' . Yii::t('app.msg', 'Incorrect file format') . '");
+                    }
+                  }'),
+                  'filecomplete' => new JsExpression('function (evt, ui) {
+                    if (ui.result.error) {
+                      alert(ui.result.error);
+                      return;
+                    }
+                    $(this).find("input:hidden:last").val(ui.result.id);
+                    $(this).find(".fileapi-preview-wrapper").html("<img src=" + ui.result.path + ">");
+                    $(this).closest("form").yiiActiveForm("updateAttribute", "' . Html::getInputId($model, 'photo') . '", []);
+                  }'),
+              ],
+              'settings' => [
+                  'url' => yii\helpers\Url::toRoute(['photo-upload']),
+                  'imageSize' => $model->model()->fileRules('photo')['imageSize'],
+                  'accept' => implode(',', $model->model()->fileRules('photo')['mimeTypes']),
+                  'imageAutoOrientation' => false,
+                  'duplicate' => true
+              ]
+          ])
+          ->hint((new FileRulesDescription($model->model()->fileRules('photo')))->toText(), [
+              'class' => 'fileapi-rules'
+          ]);
+      ?>
     </div>
   </div>
 

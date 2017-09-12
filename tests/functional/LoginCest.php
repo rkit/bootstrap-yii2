@@ -4,7 +4,7 @@ namespace app\tests\functional;
 
 use yii\helpers\Url;
 use app\tests\fixtures\UserFixture;
-use app\models\User;
+use app\models\entity\User;
 
 class LoginCest
 {
