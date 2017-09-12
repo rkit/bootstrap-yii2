@@ -1,7 +1,5 @@
 # Tests
 
-## Preparation
-
 Create `bootstrap_yii2_tests` database and run
 ```
 composer test:build

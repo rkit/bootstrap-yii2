@@ -54,14 +54,15 @@ username: editor
 password: fghfgh
 ```
 
-## Configuring Server
+## Configuration
 
-- Nginx
-  - [Development config](./docker/nginx/conf.d/dev.conf)
+### Server
 
-## Debug mode
+- [Nginx development config](./docker/nginx/conf.d/dev.conf)
+- [PHP config](./docker/php/php.ini)
+- [MySQL config](./docker/mysql/my.cnf)
 
-For enable debug mode, add to nginx config:
+For enable **debug mode**, add to nginx config:
 
 ```nginx
 fastcgi_param APPLICATION_ENV development;
@@ -88,4 +89,6 @@ fastcgi_param APPLICATION_ENV development;
    ```
 
 4. Follow the [installation](./README.md#installation) steps (skip the first step).  
-   Run all commands through docker `docker-compose exec php`
+   Run all commands through docker `docker-compose exec php`.  
+   > For example:  
+   `docker-compose exec php composer build`
