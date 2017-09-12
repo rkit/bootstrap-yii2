@@ -54,26 +54,28 @@ username: editor
 password: fghfgh
 ```
 
-## Development
+## Configuring Server
 
-### Debug mode
+- Nginx - [development config](./docker/nginx/conf.d/dev.conf)
 
-Add to nginx config:
+## Debug mode
+
+For enable debug mode, add to nginx config:
 
 ```nginx
 fastcgi_param APPLICATION_ENV development;
 ```
 
-### Tests
+## Tests
 
 - [See docs](/tests/#tests)
 
-### Coding Standard
+## Coding Standard
 
 - PHP Code Sniffer — [phpcs.xml](./phpcs.xml)
 - ESLint — [.eslintrc](./.eslintrc)
 
-### Docker for development environment
+## Docker for development environment
 
 1. Install [Docker](https://www.docker.com/) and execute the first step of [installation](./README.md#installation)
 
@@ -86,7 +88,3 @@ fastcgi_param APPLICATION_ENV development;
 
 4. Follow the [installation](./README.md#installation) steps (skip the first step).  
    Run all commands through docker `docker-compose exec php`
-
-## Configuring Server
-
-- Nginx - [development config](./docker/nginx/conf.d/dev.conf)
