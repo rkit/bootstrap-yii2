@@ -11,10 +11,10 @@ function renderAlert($form, header, text) {
     '<div class="form-alert callout callout-danger animated fadeInUp" />'
   ).html('<h4>' + header + '</h4>' + '<p>' + text + '</p>');
 
-  $form
-    .data('yiiActiveForm')
-    .submitObject.closest('.form-controls')
-    .prepend(alert);
+  var submitObject = $form.data('yiiActiveForm').submitObject;
+  if (submitObject) {
+    submitObject.closest('.form-controls').prepend(alert);
+  }
 }
 
 function hideAlert($form) {
@@ -28,9 +28,7 @@ function hideAlert($form) {
 
       var submitObject = $(this).data('yiiActiveForm').submitObject;
       if (submitObject) {
-        $(this)
-          .data('yiiActiveForm')
-          .submitObject.button('loading');
+        submitObject.button('loading');
       }
     },
 
@@ -52,9 +50,7 @@ function hideAlert($form) {
     complete: function() {
       var submitObject = $(this).data('yiiActiveForm').submitObject;
       if (submitObject) {
-        $(this)
-          .data('yiiActiveForm')
-          .submitObject.button('reset');
+        submitObject.button('reset');
       }
     },
 
