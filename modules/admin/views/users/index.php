@@ -126,11 +126,11 @@ $this->title = Yii::t('app', 'Users');
            * @var role
            */
           [
-              'attribute' => 'role',
+              'attribute' => 'role_name',
               'format' => 'raw',
               'filter' => Html::activeDropDownList(
                   $userSearch,
-                  'role',
+                  'role_name',
                   ArrayHelper::map($roles, 'name', 'description'),
                   ['class' => 'form-control', 'prompt' => Yii::t('app', 'All roles')]
               ),
