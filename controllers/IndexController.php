@@ -160,7 +160,7 @@ class IndexController extends \yii\web\Controller
         $model = new SignupProviderForm($user);
 
         if (!$user->isNewRecord && $user->isActive() === false) {
-            $session->setFlash('error', $user->getStatusDescription());
+            Yii::$app->session->setFlash('error', $user->getStatusDescription());
             return $this->goHome();
         }
 
