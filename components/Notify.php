@@ -56,7 +56,7 @@ class Notify extends \yii\base\Component
 
         try {
             return $message->send();
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             Yii::error($e);
             return false;
         }
