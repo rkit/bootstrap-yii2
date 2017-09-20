@@ -71,6 +71,13 @@ $config['container'] = [
             'firstPageLabel' => '&lArr;',
             'lastPageLabel'  => '&rArr;',
         ],
+        'app\services\SocialAuth' => [
+            'parsers' => [
+                'vkontakte' => 'app\parsers\auth\Vkontakte',
+                'twitter' => '\app\parsers\auth\Twitter',
+                'facebook' => '\app\parsers\auth\Facebook',
+            ]
+        ],
     ],
 ];
 

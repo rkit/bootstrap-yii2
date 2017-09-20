@@ -17,12 +17,10 @@ use app\models\forms\ResetPasswordForm;
 
 class IndexController extends \yii\web\Controller
 {
-    private $socialAuth;
     private $confirmEmail;
 
-    public function __construct($id, $module, SocialAuth $socialAuth, ConfirmEmail $confirmEmail, $config = [])
+    public function __construct($id, $module, ConfirmEmail $confirmEmail, $config = [])
     {
-        $this->socialAuth = $socialAuth;
         $this->confirmEmail = $confirmEmail;
 
         parent::__construct($id, $module, $config);
@@ -147,39 +145,34 @@ class IndexController extends \yii\web\Controller
 
     public function actionSignupProvider()
     {
-        $session = Yii::$app->session;
-        if ($session['authClient'] === null) {
+        try {
+            $socialAuth = \Yii::$container->get(SocialAuth::class, [Yii::$app->session['authClient']]);
+        } catch (\Throwable $e) {
+            Yii::error($e);
             return $this->goHome();
         }
 
-        $this->socialAuth->execute($session['authClient']);
-        $user = $this->socialAuth->user();
-
+        $user = $socialAuth->prepareUser();
         if ($user === null) {
             return $this->goHome();
         }
 
-        $model = new SignupProviderForm($user, $this->socialAuth->email());
+        $model = new SignupProviderForm($user);
 
-        if ($this->socialAuth->isExist() && $user->isActive() === false) {
+        if (!$user->isNewRecord && $user->isActive() === false) {
             $session->setFlash('error', $user->getStatusDescription());
             return $this->goHome();
         }
 
-        if ($this->socialAuth->isExist() && $user->isActive()) {
+        if (!$user->isNewRecord && $user->isActive()) {
             $model->login();
             return $this->goHome();
         }
 
-        if ($this->socialAuth->isVerified()) {
-            $model->signup();
-            return $this->goHome();
-        }
-
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+        if ($model->validate() || ($model->load(Yii::$app->request->post()) && $model->validate())) {
             $model->signup();
             $model->sendEmail();
-            $session->setFlash(
+            Yii::$app->session->setFlash(
                 'success',
                 Yii::t(
                     'app.msg',

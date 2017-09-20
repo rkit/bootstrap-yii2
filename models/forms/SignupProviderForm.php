@@ -26,10 +26,10 @@ class SignupProviderForm extends \yii\base\Model
     /**
      * @param User $user
      */
-    public function __construct($user, $email)
+    public function __construct($user)
     {
         $this->user = $user;
-        $this->email = $email;
+        $this->email = $user->email;
     }
 
     /**

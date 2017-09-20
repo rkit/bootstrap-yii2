@@ -13,10 +13,10 @@ class UserProviderQuery extends ActiveQuery
      * Select by type of provider
      *
      * @param int $type
-     * @param int $profileId
+     * @param string $profileId
      * @return yii\db\ActiveQuery
      */
-    public function provider(int $type, int $profileId): ActiveQuery
+    public function provider(int $type, string $profileId): ActiveQuery
     {
         $this->andWhere(['type' => $type, 'profile_id' => $profileId]);
         return $this;

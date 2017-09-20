@@ -35,6 +35,7 @@ $config['components']['authClientCollection'] = [
             'class' => 'yii\authclient\clients\VKontakte',
             'clientId' => '',
             'clientSecret' => '',
+            'scope' => 'email',
         ],
         'twitter' => [
             'class' => 'yii\authclient\clients\Twitter',
