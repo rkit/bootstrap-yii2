@@ -97,7 +97,7 @@ class IndexController extends \yii\web\Controller
     public function goHome()
     {
         Yii::$app->session['authClient'] = null;
-        return Yii::$app->getResponse()->redirect(Yii::$app->getHomeUrl());
+        return parent::goHome();
     }
 
     public function actionIndex()
