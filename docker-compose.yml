@@ -2,24 +2,28 @@ version: '2'
 
 services:
   php:
-    image: rkit/docker-phpstack:7.1
+    build: 
+      context: ./
+      dockerfile: ./config/docker/php/Dockerfile
+
     expose:
       - 9000
     links:
       - mysql:mysql
     volumes:
-      - ./docker/php/php-fpm.conf:/usr/local/etc/php-fpm.conf
-      - ./docker/php/php.ini:/usr/local/etc/php/conf.d/php.ini
+      - ./config/docker/php/php.ini:/usr/local/etc/php/conf.d/php.ini
       - ./:/var/www/html
 
   nginx:
     image: nginx:1.12.0
+    depends_on:
+      - php
     ports:
       - "80:80"
     links:
       - php
     volumes:
-      - ./docker/nginx/conf.d/${NGINX_CONFIG}:/etc/nginx/conf.d/${NGINX_CONFIG}
+      - ./config/docker/nginx/conf.d/bootstrap-yii2.conf:/etc/nginx/conf.d/bootstrap-yii2.conf
       - ./:/var/www/html
 
   mysql:
@@ -27,7 +31,7 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./config/docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
       - data-mysql-5.7:/var/lib/mysql
     restart: always
     env_file: .env
