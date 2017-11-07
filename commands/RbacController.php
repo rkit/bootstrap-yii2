@@ -8,7 +8,7 @@ use yii\console\{Controller, ExitCode};
 use yii\helpers\Console;
 
 /**
- * Command for create permissions
+ * Command for update permissions
  * @see config/rbac/permissions.php
  */
 class RbacController extends Controller
