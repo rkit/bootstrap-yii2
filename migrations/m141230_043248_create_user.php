@@ -24,6 +24,8 @@ class m141230_043248_create_user extends Migration
             'ip' => $this->bigInteger(20)->notNull()->defaultValue(0),
             'role_name' => $this->string(64)->notNull()->defaultValue(''),
             'status' => 'tinyint NOT NULL DEFAULT 0',
+            'allowance' => $this->integer()->notNull()->defaultValue(0),
+            'allowance_updated_at' => $this->integer()->notNull()->defaultValue(0),
         ], $this->tableOptions);
 
         $this->createIndex('role_name', '{{%user}}', 'role_name');
