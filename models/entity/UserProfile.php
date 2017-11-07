@@ -71,20 +71,4 @@ class UserProfile extends \yii\db\ActiveRecord
     {
         return new \app\models\query\UserProfileQuery(get_called_class());
     }
-
-    /**
-     * Get thumb for photo
-     *
-     * @param string $size Preset Name
-     * @return string
-     */
-    public function photo($size)
-    {
-        $default = '/img/userpic-default.jpg';
-        if (empty($this->photo)) {
-            return $default;
-        }
-
-        return $this->thumbUrl('photo', $size);
-    }
 }
