@@ -13,13 +13,35 @@ use yii\helpers\{Console, ArrayHelper};
 class CreateLocalConfigController extends Controller
 {
     /**
-     * @var string
+     * @var string MySQL host
+     */
+    public $MYSQL_HOST;
+    /**
+     * @var string MySQL database
+     */
+    public $MYSQL_DATABASE;
+    /**
+     * @var string MySQL user
+     */
+    public $MYSQL_USER;
+    /**
+     * @var string MySQL password
+     */
+    public $MYSQL_PASSWORD;
+    /**
+     * @var string Config file path
      */
     public $path;
 
     public function options($actionId = '')
     {
-        return ['path'];
+        return [
+            'path', 
+            'MYSQL_HOST',
+            'MYSQL_DATABASE',
+            'MYSQL_USER',
+            'MYSQL_PASSWORD',
+        ];
     }
 
     public function beforeAction($action)
@@ -52,12 +74,22 @@ class CreateLocalConfigController extends Controller
     private function specifySettings(string $file)
     {
         $contents = file_get_contents($file);
-        $env = parse_ini_file(Yii::getAlias(Yii::getAlias('@app/.env')));
+        $settings = $this->getSettings();
 
-        foreach ($env as $var => $value) {
+        foreach ($settings as $var => $value) {
             $contents = str_replace('%' . $var  . '%', $value, $contents);
         }
 
         file_put_contents($file, $contents);
+    }
+
+    private function getSettings()
+    {
+        $envFile = Yii::getAlias('@app/.env');
+        if (file_exists($envFile)) {
+            return parse_ini_file($envFile);
+        }
+
+        return $this->getOptionValues('');
     }
 }

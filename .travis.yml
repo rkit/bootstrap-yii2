@@ -18,7 +18,7 @@ before_script:
   - mysql -e 'CREATE DATABASE bootstrap_yii2_tests;'
   - mysql -u root -e "CREATE USER 'bootstrap_yii2'@'localhost' IDENTIFIED BY '';"
   - mysql -u root -e "GRANT ALL ON bootstrap_yii2_tests.* TO 'bootstrap_yii2'@'localhost';"
-  - php yii create-local-config --path=@app/config/local/main.php
+  - php yii create-local-config --path=@app/config/local/main.php --MYSQL_HOST=localhost --MYSQL_DATABASE=bootstrap_yii2 --MYSQL_USER=bootstrap_yii2 --MYSQL_PASSWORD=
   - composer test:build
 
 script:
