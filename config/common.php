@@ -74,9 +74,9 @@ $config['container'] = [
         ],
         'app\modules\auth\services\SocialAuth' => [
             'parsers' => [
-                'vkontakte' => '\app\parsers\oauth\Vkontakte',
-                'twitter' => '\app\parsers\oauth\Twitter',
-                'facebook' => '\app\parsers\oauth\Facebook',
+                'vkontakte' => '\app\modules\auth\oauth\parsers\Vkontakte',
+                'twitter' => '\app\modules\auth\oauth\parsers\Twitter',
+                'facebook' => '\app\modules\auth\oauth\parsers\Facebook',
             ]
         ],
     ],

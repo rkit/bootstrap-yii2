@@ -1,8 +1,9 @@
 <?php
 
-namespace app\parsers\oauth;
+namespace app\modules\auth\oauth\parsers;
 
 use yii\helpers\ArrayHelper;
+use app\modules\auth\oauth\Parser;
 
 /**
  * Parser for Twitter OAuth

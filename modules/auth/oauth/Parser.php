@@ -1,6 +1,6 @@
 <?php
 
-namespace app\parsers\oauth;
+namespace app\modules\auth\oauth;
 
 use yii\authclient\ClientInterface;
 
