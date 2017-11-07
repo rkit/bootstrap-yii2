@@ -164,7 +164,7 @@ class User extends \yii\db\ActiveRecord implements RateLimitInterface, IdentityI
 
     /**
      * @inheritdoc
-     * @return \query\UserQuery the active query used by this AR class.
+     * @return \app\models\query\UserQuery the active query used by this AR class.
      */
     public static function find()
     {

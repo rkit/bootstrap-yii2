@@ -39,7 +39,7 @@ class UserProvider extends \yii\db\ActiveRecord
 
     /**
      * @inheritdoc
-     * @return \query\UserProviderQuery the active query used by this AR class.
+     * @return \app\models\query\UserProviderQuery the active query used by this AR class.
      */
     public static function find()
     {
