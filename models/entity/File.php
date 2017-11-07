@@ -20,7 +20,6 @@ class File extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
-     * @codeCoverageIgnore
      * @internal
      */
     public static function tableName()
@@ -52,13 +51,13 @@ class File extends \yii\db\ActiveRecord
         if (parent::beforeSave($insert)) {
             if ($insert) {
                 if (!Yii::$app instanceof \yii\console\Application) {
-                    $this->user_id = Yii::$app->user->isGuest ? 0 : Yii::$app->user->id; // @codeCoverageIgnore
-                    $this->ip = ip2long(Yii::$app->request->getUserIP()); // @codeCoverageIgnore
-                } // @codeCoverageIgnore
+                    $this->user_id = Yii::$app->user->isGuest ? 0 : Yii::$app->user->id;
+                    $this->ip = ip2long(Yii::$app->request->getUserIP());
+                }
             }
             return true;
         }
-        return false; // @codeCoverageIgnore
+        return false;
     }
 
     /**

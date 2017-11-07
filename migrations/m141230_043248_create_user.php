@@ -12,7 +12,6 @@ class m141230_043248_create_user extends Migration
 
         $this->createTable('{{%user}}', [
             'id' => $this->primaryKey(),
-            'username' => $this->string(40)->null()->unique(),
             'email' => $this->string()->null()->unique(),
             'password' => $this->string()->notNull()->defaultValue(''),
             'password_reset_token' => $this->string()->null()->unique(),
@@ -38,7 +37,6 @@ class m141230_043248_create_user extends Migration
             'user_id' => $this->primaryKey(),
             'full_name' => $this->string(40)->notNull()->defaultValue(''),
             'photo' => $this->string()->notNull()->defaultValue(''),
-            'birth_day' => $this->date()->null(),
         ], $this->tableOptions);
 
         $this->addForeignKey(

@@ -8,17 +8,13 @@ use app\modules\admin\models\forms\LoginForm;
 
 class LoginFormTest extends \Codeception\Test\Unit
 {
-    // @codingStandardsIgnoreFile
     protected function _before()
     {
         $this->tester->haveFixtures([
-             'user' => [
-                 'class' => UserFixture::class,
-             ],
+             'user' => UserFixture::class,
         ]);
     }
 
-    // @codingStandardsIgnoreFile
     protected function _after()
     {
         Yii::$app->user->logout();
@@ -27,7 +23,7 @@ class LoginFormTest extends \Codeception\Test\Unit
     public function testEmptyFields()
     {
         $form = new LoginForm([
-            'username' => '',
+            'email' => '',
             'password' => '',
         ]);
 
@@ -36,15 +32,15 @@ class LoginFormTest extends \Codeception\Test\Unit
         expect_that(Yii::$app->user->isGuest);
     }
 
-    public function testEmptyUsername()
+    public function testEmptyEmail()
     {
         $form = new LoginForm([
-            'username' => '',
+            'email' => '',
             'password' => 'test_password',
         ]);
 
         expect_not($form->login());
-        expect($form->errors['username'][0])->notEmpty();
+        expect($form->errors['email'][0])->notEmpty();
         expect_that(Yii::$app->user->isGuest);
     }
 
@@ -52,7 +48,7 @@ class LoginFormTest extends \Codeception\Test\Unit
     public function testEmptyPassword()
     {
         $form = new LoginForm([
-            'username' => 'test_username',
+            'email' => 'test@example.com',
             'password' => '',
         ]);
 
@@ -64,56 +60,56 @@ class LoginFormTest extends \Codeception\Test\Unit
     public function testTooShortPassword()
     {
         $form = new LoginForm([
-            'username' => 'test_username',
+            'email' => 'test@example.com',
             'password' => 'test',
         ]);
 
         expect_not($form->login());
         expect($form->errors['password'][0])->notEmpty();
         expect_that(Yii::$app->user->isGuest);
-        expect($form->errors['password'][0])->contains('Incorrect username or password');
+        expect($form->errors['password'][0])->contains('Incorrect email or password');
     }
 
     public function testWrongFields()
     {
         $form = new LoginForm([
-            'username' => 'test_username',
+            'email' => 'test@example.com',
             'password' => 'test_password',
         ]);
 
         expect_not($form->login());
         expect_that(Yii::$app->user->isGuest);
-        expect($form->errors['password'][0])->contains('Incorrect username or password');
+        expect($form->errors['password'][0])->contains('Incorrect email or password');
     }
 
-    public function testWrongUsername()
+    public function testWrongEmail()
     {
         $form = new LoginForm([
-            'username' => 'test_username',
+            'email' => 'test@example.com',
             'password' => 'fghfgh',
         ]);
 
         expect_not($form->login());
         expect_that(Yii::$app->user->isGuest);
-        expect($form->errors['password'][0])->contains('Incorrect username or password');
+        expect($form->errors['password'][0])->contains('Incorrect email or password');
     }
 
     public function testWrongPassword()
     {
         $form = new LoginForm([
-            'username' => 'superuser',
+            'email' => 'superuser@example.com',
             'password' => 'test_password',
         ]);
 
         expect_not($form->login());
         expect_that(Yii::$app->user->isGuest);
-        expect($form->errors['password'][0])->contains('Incorrect username or password');
+        expect($form->errors['password'][0])->contains('Incorrect email or password');
     }
 
     public function testUserBlocked()
     {
         $form = new LoginForm([
-            'username' => 'user-3',
+            'email' => 'user-3@example.com',
             'password' => '123123',
         ]);
 
@@ -126,7 +122,7 @@ class LoginFormTest extends \Codeception\Test\Unit
     public function testUserDeleted()
     {
         $form = new LoginForm([
-            'username' => 'user-4',
+            'email' => 'user-4@example.com',
             'password' => '123123',
         ]);
 
@@ -139,7 +135,7 @@ class LoginFormTest extends \Codeception\Test\Unit
     public function testSuccess()
     {
         $form = new LoginForm([
-            'username' => 'superuser',
+            'email' => 'superuser@example.com',
             'password' => 'fghfgh',
         ]);
 

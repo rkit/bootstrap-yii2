@@ -6,13 +6,13 @@ use Yii;
 use yii\base\NotSupportedException;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
+use yii\filters\RateLimitInterface;
 use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "{{%user}}".
  *
  * @property integer $id
- * @property string $username
  * @property string $email
  * @property string $password
  * @property string $password_reset_token
@@ -30,7 +30,7 @@ use yii\behaviors\TimestampBehavior;
  * @property UserProfile $profile
  * @property UserProvider[] $providers
  */
-class User extends \yii\db\ActiveRecord implements IdentityInterface
+class User extends \yii\db\ActiveRecord implements RateLimitInterface, IdentityInterface
 {
     const STATUS_DELETED = 0;
     const STATUS_ACTIVE  = 1;
@@ -58,7 +58,6 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'username' => Yii::t('app', 'Username'),
             'email' => Yii::t('app', 'Email'),
             'password' => Yii::t('app', 'Password'),
             'date_create' => Yii::t('app', 'Date create'),
@@ -89,7 +88,6 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
 
     /**
      * @inheritdoc
-     * @codeCoverageIgnore
      */
     public function events()
     {
@@ -105,6 +103,23 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             'update' => self::OP_ALL,
             'delete' => self::OP_ALL,
         ];
+    }
+
+    public function getRateLimit($request, $action)
+    {
+        return [Yii::$app->params['user.rateLimitMax'], Yii::$app->params['user.rateLimitTime']];
+    }
+
+    public function loadAllowance($request, $action)
+    {
+        return [$this->allowance, $this->allowance_updated_at];
+    }
+
+    public function saveAllowance($request, $action, $allowance, $timestamp)
+    {
+        $this->allowance = $allowance;
+        $this->allowance_updated_at = $timestamp;
+        $this->save();
     }
 
     /**
@@ -178,9 +193,9 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             }
 
             return true;
-        } // @codeCoverageIgnore
+        }
 
-        return false; // @codeCoverageIgnore
+        return false;
     }
 
     /**
@@ -401,6 +416,11 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     {
         $this->email_confirm_token = $token;
         $this->date_confirm = null;
+    }
+
+    public function getName()
+    {
+        return $this->profile->full_name;
     }
 
     /**

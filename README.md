@@ -1,8 +1,6 @@
 # Bootstrap for Yii2
 
 [![Build Status](https://travis-ci.org/rkit/bootstrap-yii2.svg?branch=master)](https://travis-ci.org/rkit/bootstrap-yii2)
-[![Code Coverage](https://scrutinizer-ci.com/g/rkit/bootstrap-yii2/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/rkit/bootstrap-yii2/?branch=master)
-[![codecov.io](http://codecov.io/github/rkit/bootstrap-yii2/coverage.svg?branch=master)](http://codecov.io/github/rkit/bootstrap-yii2?branch=master)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/rkit/bootstrap-yii2/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/rkit/bootstrap-yii2/?branch=master)
 
 ## Features
@@ -13,13 +11,13 @@
 
 ## Soft
 
-- PHP 7.1.x
-- Node.js + NPM 5.x
+- PHP 7.1
+- Node.js + NPM 5
 - Composer
 
-> For to setup development environment, you could use [Docker](./README.md#docker-for-development-environment)
-
 ## Installation
+
+> For to setup development environment, you could use [Docker](./README.md#docker-for-development-environment)
 
 1. Cloning a repository
    ```
@@ -27,40 +25,22 @@
    cd bootstrap-yii2
    ```
 
-2. Creating a project
+2. Copy [.env.dist](./.env.dist) to `.env` and specify settings
+
+3. Creating a project
    ```sh
    composer create-project
    ```
 
-3. Checking requirements
-   ```
-   php requirements.php
-   ```
-
-4. Creating a new database and local config
-   ```
-   php yii create-local-config --path=@app/config/local/main.php
-   ```
-   > filling in the database settings in the *config/local/main.php*
-
-5. Build application
-   ```
-   composer build
-   ```
-
 Access to the Control Panel
 ```
-username: editor  
+email: editor@example.com  
 password: fghfgh
 ```
 
 ## Configuration
 
 ### Server
-
-- [Nginx development config](./docker/nginx/conf.d/dev.conf)
-- [PHP config](./docker/php/php.ini)
-- [MySQL config](./docker/mysql/my.cnf)
 
 For enable **debug mode**, add to nginx config:
 
@@ -79,16 +59,24 @@ fastcgi_param APPLICATION_ENV development;
 
 ## Docker for development environment
 
-1. Install [Docker](https://www.docker.com/) and execute the first step of [installation](./README.md#installation)
+1. Install [Docker](https://www.docker.com/)
 
-2. Copy [.env.dist](./.env.dist) to `.env` and specify environment variables
+2. Cloning a repository
+   ```
+   git clone https://github.com/rkit/bootstrap-yii2.git
+   cd bootstrap-yii2
+   ```
 
-3. Create and start containers
+3. Copy [.env.dist](./.env.dist) to `.env` and specify settings
+   > MYSQL_ROOT_PASSWORD  
+   > MYSQL_PASSWORD
+
+4. Create and start containers
    ```sh
    docker-compose up -d
    ```
 
-4. Follow the [installation](./README.md#installation) steps (skip the first step).  
-   Run all commands through docker `docker-compose exec php`.  
-   > For example:  
-   `docker-compose exec php composer build`
+5. Creating a project
+   ```sh
+   docker-compose exec php composer create-project
+   ```

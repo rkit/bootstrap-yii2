@@ -5,7 +5,15 @@ use yii\helpers\Html;
 $this->title = Yii::t('app', 'Users') . ' / ' . ($model->id ?? Yii::t('app', 'Create'));
 ?>
 <?= Html::a(Yii::t('app', 'List'), ['index'], ['class' => 'btn btn-default']) ?>&nbsp;
-<?= Html::a(Yii::t('app', 'Add'), ['edit'], ['class' => 'btn btn-default']) ?><hr>
+<?= Html::a(Yii::t('app', 'Add'), ['edit'], ['class' => 'btn btn-default']) ?>&nbsp;
+<?php if ($model->id):?>
+<!-- <?= Html::a(
+    Yii::t('app', 'View on site'),
+    ['/users/view', 'id' => $model->id],
+    ['class' => 'btn btn-success', 'target' => '_blank']
+)?> -->
+<?php endif?>
+<hr>
 <?= $this->render('/shared/flash') ?>
 
 <?php if ($model->id): ?>
@@ -15,7 +23,7 @@ $this->title = Yii::t('app', 'Users') . ' / ' . ($model->id ?? Yii::t('app', 'Cr
 </ul><br>
 <?php endif ?>
 
-<?php $form = ActiveForm::begin(['options' => ['id' => 'users-form', 'class' => 'ajax-form']]); ?>
+<?php $form = ActiveForm::begin(['options' => ['class' => 'ajax-form']]); ?>
 
   <div class="row">
     <div class="col-md-<?= $model->id ? '8' : '12' ?>">
@@ -25,9 +33,6 @@ $this->title = Yii::t('app', 'Users') . ' / ' . ($model->id ?? Yii::t('app', 'Cr
               'prompt' => Yii::t('app', 'No role')
           ])
           ->label(Html::a(Yii::t('app', 'Role'), ['/admin/roles'])); ?>
-
-      <!-- username -->
-      <?= $form->field($model, 'username')->textInput(['maxlength' => true]) ?>
 
       <!-- email -->
       <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
@@ -65,7 +70,7 @@ $this->title = Yii::t('app', 'Users') . ' / ' . ($model->id ?? Yii::t('app', 'Cr
           [
               'title' => Yii::t('app', 'Delete'),
               'class' => 'btn btn-danger',
-              'data-confirm' => Yii::t('app', 'Are you sure you want to delete this record?')
+              'data-confirm' => Yii::t('app', 'Are you sure you want to delete this user?')
           ]
       ); ?>
       <?php endif?>

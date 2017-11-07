@@ -3,29 +3,27 @@
 namespace app\modules\admin\controllers;
 
 use Yii;
-use yii\filters\VerbFilter;
-use app\traits\ModelTrait;
-use app\models\entity\User;
-use app\models\entity\UserProfile;
-use app\modules\admin\models\forms\UserForm;
-use app\modules\admin\models\forms\UserProfileForm;
+use app\traits\ControllerTrait;
+use app\models\entity\{User, UserProfile};
+use app\modules\admin\models\forms\{UserForm, UserProfileForm};
 use app\modules\admin\models\search\UserSearch;
 
 class UsersController extends \yii\web\Controller
 {
-    use ModelTrait;
+    use ControllerTrait;
 
     public function behaviors()
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::class,
+                'class' => 'yii\filters\VerbFilter',
                 'actions' => [
                     'set-active' => ['post'],
                     'set-block' => ['post'],
                     'delete' => ['post'],
                     'batch' => ['post'],
                     'photo-upload' => ['post'],
+                    'autocomplete' => ['post'],
                 ],
             ],
         ];
@@ -85,7 +83,7 @@ class UsersController extends \yii\web\Controller
         $model = new UserForm();
 
         if ($id) {
-            $model->setModel($this->findModel(new User, $id));
+            $model->setModel($this->findModel(User::class, $id));
         }
 
         if (Yii::$app->request->isPost) {
@@ -107,8 +105,8 @@ class UsersController extends \yii\web\Controller
 
     public function actionProfile($id)
     {
-        $model = new UserProfileForm();
-        $model->setModel($this->findModel(new UserProfile, $id));
+        $profile = $this->findModel(UserProfile::class, $id);
+        $model = new UserProfileForm($profile);
 
         if (Yii::$app->request->isPost) {
             Yii::$app->response->format = 'json';

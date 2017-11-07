@@ -6,16 +6,18 @@ $this->title = Yii::t('app', 'Settings');
 ?>
 <?= $this->render('/shared/flash') ?>
 
-<?php $form = ActiveForm::begin(['options' => ['id' => 'settings-form', 'class' => 'ajax-form']]); ?>
+<?php $form = ActiveForm::begin(['options' => ['class' => 'ajax-form']]); ?>
 
   <h2><small><?= Yii::t('app', 'Email') ?></small></h2>
   <div class="well">
+    <!-- emailRequest -->
+    <?= $form->field($model, 'emailRequest')->textInput(['maxlength' => true]) ?>
     <!-- emailMain -->
-    <?= $form->field($model, 'emailMain') ?>
+    <?= $form->field($model, 'emailMain')->textInput(['maxlength' => true]) ?>
     <!-- emailName -->
-    <?= $form->field($model, 'emailName') ?>
+    <?= $form->field($model, 'emailName')->textInput(['maxlength' => true]) ?>
     <!-- emailPrefix -->
-    <?= $form->field($model, 'emailPrefix') ?>
+    <?= $form->field($model, 'emailPrefix')->textInput(['maxlength' => true]) ?>
   </div>
 
   <hr>

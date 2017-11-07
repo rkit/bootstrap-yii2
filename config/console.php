@@ -21,7 +21,8 @@ $config = [
             'class' => 'yii\rbac\DbManager',
         ],
         'urlManager' => [
-            'baseUrl' => 'http://bootstrap-yii2.dev',
+            'baseUrl' => '',
+            'hostInfo' => $params['host'],
             'enablePrettyUrl' => true,
             'showScriptName' => false,
         ],

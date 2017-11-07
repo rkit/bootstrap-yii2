@@ -16,10 +16,6 @@ class UserForm extends \yii\base\Model
     /**
      * @var string
      */
-    public $username;
-    /**
-     * @var string
-     */
     public $email;
     /**
      * @var string
@@ -60,15 +56,6 @@ class UserForm extends \yii\base\Model
     public function rules()
     {
         return [
-            ['username', 'string', 'min' => 3, 'max' => 40],
-            ['username', 'match', 'pattern' => '/^[a-zA-Z0-9_-]+$/'],
-            ['username', 'unique', 'targetClass' => User::class, 'filter' => function ($query) {
-                if (!$this->model()->isNewRecord) {
-                    $query->andWhere(['not', ['id' => $this->model()->id]]);
-                }
-            }],
-            ['username', 'default', 'value' => null],
-
             ['email', 'email'],
             ['email', 'required'],
             ['email', 'string', 'max' => 255],
@@ -77,7 +64,6 @@ class UserForm extends \yii\base\Model
                     $query->andWhere(['not', ['id' => $this->model()->id]]);
                 }
             }],
-            ['email', 'default', 'value' => null],
 
             ['role_name', 'string'],
             [
@@ -103,7 +89,6 @@ class UserForm extends \yii\base\Model
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'username' => Yii::t('app', 'Username'),
             'email' => Yii::t('app', 'Email'),
             'password' => Yii::t('app', 'Password'),
             'date_create' => Yii::t('app', 'Date create'),
@@ -119,12 +104,10 @@ class UserForm extends \yii\base\Model
 
     /**
      * @inheritdoc
-     * @codeCoverageIgnore
      */
     public function attributeHints()
     {
         return [
-            'username' => Yii::t('app', 'Only letters, numbers, symbols _ and -'),
             'passwordNew' => Yii::t('app', 'Set a new password')
         ];
     }
@@ -139,7 +122,6 @@ class UserForm extends \yii\base\Model
         $this->model = $model;
 
         $this->id = $model->id;
-        $this->username = $model->username;
         $this->email = $model->email;
         $this->date_create = $model->date_create;
         $this->date_update = $model->date_update;
@@ -174,7 +156,6 @@ class UserForm extends \yii\base\Model
         $model = $this->model();
 
         $model->id = $this->id;
-        $model->username = $this->username;
         $model->email = $this->email;
         $model->date_create = $this->date_create;
         $model->date_update = $this->date_update;

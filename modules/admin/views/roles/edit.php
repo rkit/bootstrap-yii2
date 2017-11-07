@@ -8,10 +8,10 @@ $this->title = Yii::t('app', 'Roles') . ' / ' . ($model->name ?? Yii::t('app', '
 <?= Html::a(Yii::t('app', 'Add'), ['edit'], ['class' => 'btn btn-default']) ?><hr>
 <?= $this->render('/shared/flash') ?>
 
-<?php $form = ActiveForm::begin(['options' => ['id' => 'roles-form', 'class' => 'ajax-form']]); ?>
+<?php $form = ActiveForm::begin(['options' => ['class' => 'ajax-form']]); ?>
 
     <!-- name -->
-  <?= $form->field($model, 'name')->textInput(['maxlength' => true])->hint(Yii::t('app.msg', 'Only latin letters')) ?>
+  <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
   <!-- description -->
   <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
@@ -34,8 +34,7 @@ $this->title = Yii::t('app', 'Roles') . ' / ' . ($model->name ?? Yii::t('app', '
           'multiple' => true,
           'size' => 15,
           'disabled' => $model->model()->isSuperUser()
-      ])
-      ->hint(Yii::t('app', 'The role will receive all the privileges of the selected role')) ?>
+      ]) ?>
 
   <hr>
   <div class="form-controls">
@@ -52,7 +51,7 @@ $this->title = Yii::t('app', 'Roles') . ' / ' . ($model->name ?? Yii::t('app', '
           [
               'title' => Yii::t('app', 'Delete'),
               'class' => 'btn btn-danger',
-              'data-confirm' => Yii::t('app', 'Are you sure you want to delete this record?')
+              'data-confirm' => Yii::t('app', 'Are you sure you want to delete this role?')
           ]
       ); ?>
       <?php endif?>

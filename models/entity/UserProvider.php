@@ -17,9 +17,9 @@ namespace app\models\entity;
  */
 class UserProvider extends \yii\db\ActiveRecord
 {
-    const TYPE_TWITTER   = 1;
-    const TYPE_FACEBOOK  = 2;
-    const TYPE_VKONTAKTE = 3;
+    const TYPE_GOOGLE = 1;
+    const TYPE_FACEBOOK = 2;
+    const TYPE_INSTAGRAM = 3;
 
     /**
      * @inheritdoc
@@ -54,9 +54,9 @@ class UserProvider extends \yii\db\ActiveRecord
     public static function getTypes(): array
     {
         return [
-            self::TYPE_TWITTER => 'twitter',
+            self::TYPE_GOOGLE => 'google',
             self::TYPE_FACEBOOK => 'facebook',
-            self::TYPE_VKONTAKTE => 'vkontakte',
+            self::TYPE_INSTAGRAM => 'instagram',
         ];
     }
 

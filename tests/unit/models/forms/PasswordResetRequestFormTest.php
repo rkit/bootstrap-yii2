@@ -4,11 +4,10 @@ namespace app\tests\unit\models\forms;
 
 use app\tests\fixtures\UserFixture;
 use app\models\entity\User;
-use app\models\forms\PasswordResetRequestForm;
+use app\modules\auth\models\forms\PasswordResetRequestForm;
 
 class PasswordResetRequestFormTest extends \Codeception\Test\Unit
 {
-    // @codingStandardsIgnoreFile
     protected function _before()
     {
         $this->tester->haveFixtures([

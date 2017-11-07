@@ -10,8 +10,7 @@ use Yii;
  * @property integer $user_id
  * @property string $full_name
  * @property string $photo
- * @property string $birth_day
- *
+ * 
  * @property User $user
  * @property File $photoFile
  */
@@ -41,9 +40,8 @@ class UserProfile extends \yii\db\ActiveRecord
     {
         return [
             'user_id' => Yii::t('app', 'User'),
-            'full_name' => Yii::t('app', 'Full Name'),
+            'full_name' => Yii::t('app', 'Your name'),
             'photo' => Yii::t('app', 'Photo'),
-            'birth_day' => Yii::t('app', 'Birth Day'),
         ];
     }
 
@@ -72,5 +70,21 @@ class UserProfile extends \yii\db\ActiveRecord
     public static function find()
     {
         return new \app\models\query\UserProfileQuery(get_called_class());
+    }
+
+    /**
+     * Get thumb for photo
+     *
+     * @param string $size Preset Name
+     * @return string
+     */
+    public function photo($size)
+    {
+        $default = '/img/userpic-default.jpg';
+        if (empty($this->photo)) {
+            return $default;
+        }
+
+        return $this->thumbUrl('photo', $size);
     }
 }

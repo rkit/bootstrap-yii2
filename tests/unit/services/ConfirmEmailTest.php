@@ -4,11 +4,10 @@ namespace app\tests\unit\services;
 
 use app\tests\fixtures\UserFixture;
 use app\models\entity\User;
-use app\services\ConfirmEmail;
+use app\modules\auth\services\ConfirmEmail;
 
 class ConfirmEmailTest extends \Codeception\Test\Unit
 {
-    // @codingStandardsIgnoreFile
     protected function _before()
     {
         $this->tester->haveFixtures([

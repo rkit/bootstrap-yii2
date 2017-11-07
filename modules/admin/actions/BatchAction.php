@@ -32,7 +32,8 @@ class BatchAction extends Action
                             $model->delete();
                             break;
                         default:
-                            $model->updateAttributes($attrubutes);
+                            $model->setAttributes($attrubutes, false);
+                            $model->save(false);
                             break;
                     }
                 }

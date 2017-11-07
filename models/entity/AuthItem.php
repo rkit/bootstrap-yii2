@@ -41,7 +41,7 @@ class AuthItem extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'name'        => Yii::t('app', 'Name'),
+            'name'        => Yii::t('app', 'Title'),
             'description' => Yii::t('app', 'Description'),
             'roles'       => Yii::t('app', 'Inherit role'),
             'permissions' => Yii::t('app', 'Permissions'),
@@ -64,7 +64,6 @@ class AuthItem extends \yii\db\ActiveRecord
 
     /**
      * @inheritdoc
-     * @codeCoverageIgnore
      */
     public function events()
     {

@@ -4,11 +4,11 @@ namespace app\modules\admin\actions;
 
 use Yii;
 use yii\base\Action;
-use app\traits\ModelTrait;
+use app\traits\ControllerTrait;
 
 class UpdateAttributesAction extends Action
 {
-    use ModelTrait;
+    use ControllerTrait;
 
     /**
      * @var string $modelClass
@@ -21,11 +21,9 @@ class UpdateAttributesAction extends Action
 
     public function run(string $id)
     {
-        $model = new $this->modelClass;
-        $model = $this->findModel($model, $id);
+        $model = $this->findModel($this->modelClass, $id);
 
-        $model->updateAttributes($this->attributes);
-
-        return $this->controller->asJson(true);
+        $model->setAttributes($this->attributes, false);
+        return $this->controller->asJson($model->save(false));
     }
 }

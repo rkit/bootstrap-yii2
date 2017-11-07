@@ -17,6 +17,7 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
+    'Please activate your account' => 'Пожалуйста, активируйте ваш аккаунт',
     'A letter for activation was sent to {email}' => 'Письмо для активации было отправлено на {email}',
     'Access Denied' => 'Доступ запрещен',
     'An error occurred while confirming' => 'Произошла ошибка во время подтверждения',
@@ -29,7 +30,6 @@ return [
     'Image size' => 'Размер картинки',
     'Incorrect email or password' => 'Неверный email или пароль',
     'Incorrect file format' => 'Неверный формат файла',
-    'Incorrect username or password' => 'Неверное имя пользователя или пароль',
     'Invalid link for reset password' => 'Неверная ссылка для сброса пароля',
     'Invalid token for activate account' => 'Неверный ключ для активации аккаунта',
     'Max. file number' => 'Макс. кол-во файлов',
@@ -43,7 +43,7 @@ return [
     'New password was saved' => 'Новый пароль сохранен',
     'Only latin letters' => 'Только латинские буквы',
     'Page not found' => 'Страница не найдена',
-    'Please activate your account. A letter for activation was sent to {email}' => 'Пожалуйста активируйте ваш аккаунт. Письмо для активации было отправлено на {email}',
+    'Please activate your account. A letter for activation was sent to {email}' => 'Пожалуйста, активируйте ваш аккаунт. Письмо для активации было отправлено на {email}',
     'Saved successfully' => 'Сохранено успешно',
     'There is no user with such email' => 'Пользователя с таким email не существует',
     'This email address has already been taken' => 'Данный email уже занят',

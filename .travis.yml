@@ -9,9 +9,6 @@ cache:
   directories:
     - $HOME/.composer/cache
 
-before_install:
-  - pip install --user codecov
-
 install:
   - composer self-update && composer --version
   - composer install
@@ -30,6 +27,3 @@ script:
 after_script:
   - wget https://scrutinizer-ci.com/ocular.phar
   - php ocular.phar code-coverage:upload --format=php-clover tests/_output/coverage.xml
-
-after_success:
-  - codecov

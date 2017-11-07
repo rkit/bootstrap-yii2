@@ -62,28 +62,30 @@
    * Usage:
    * GridView::widget(['options' => ['class' => 'gridview']])
    */
-  $(
-    document
-  ).on('click', '.gridview tbody tr td input[type="checkbox"]', function() {
-    if ($(this).is(':checked')) {
-      $(this)
-        .closest('tr')
-        .addClass('active');
-    } else {
-      $(this)
-        .closest('tr')
-        .removeClass('active');
-    }
+  $(document).on(
+    'click',
+    '.gridview tbody tr td input[type="checkbox"]',
+    function() {
+      if ($(this).is(':checked')) {
+        $(this)
+          .closest('tr')
+          .addClass('active');
+      } else {
+        $(this)
+          .closest('tr')
+          .removeClass('active');
+      }
 
-    var $gridview = $(this).closest('.gridview');
-    var $batch = $gridview.find('.batch button');
+      var $gridview = $(this).closest('.gridview');
+      var $batch = $gridview.find('.batch button');
 
-    if ($gridview.find('tbody input:checked').size()) {
-      $batch.removeClass('disabled');
-    } else {
-      $batch.addClass('disabled');
+      if ($gridview.find('tbody input:checked').length) {
+        $batch.removeClass('disabled');
+      } else {
+        $batch.addClass('disabled');
+      }
     }
-  });
+  );
 
   /**
    * Select all checkboxes in GridView

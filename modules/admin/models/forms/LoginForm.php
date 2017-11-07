@@ -10,7 +10,7 @@ class LoginForm extends \yii\base\Model
     /**
      * @var string
      */
-    public $username;
+    public $email;
     /**
      * @var string
      */
@@ -30,10 +30,9 @@ class LoginForm extends \yii\base\Model
     public function rules()
     {
         return [
-            [['username', 'password'], 'required'],
+            [['email', 'password'], 'required'],
 
-            ['username', 'string', 'min' => 3, 'max' => 40],
-
+            ['email', 'email'],
             ['rememberMe', 'boolean'],
 
             ['password', 'validatePassword'],
@@ -61,7 +60,7 @@ class LoginForm extends \yii\base\Model
             $user = $this->getUser();
 
             if (!$user || !$user->validatePassword($this->password)) {
-                $this->addError('password', Yii::t('app.msg', 'Incorrect username or password'));
+                $this->addError('password', Yii::t('app.msg', 'Incorrect email or password'));
             } elseif ($user && !$user->isActive()) {
                 $this->addError('password', $user->getStatusDescription());
             }
@@ -69,7 +68,7 @@ class LoginForm extends \yii\base\Model
     }
 
     /**
-     * Logs in a user using the provided username and password.
+     * Logs in a user using the provided email and password.
      * @return boolean Whether the user is logged in successfully.
      */
     public function login(): bool
@@ -89,7 +88,7 @@ class LoginForm extends \yii\base\Model
     public function getUser(): ?User
     {
         if ($this->user === false) {
-            $this->user = User::find()->username($this->username)->one();
+            $this->user = User::find()->email($this->email)->one();
         }
 
         return $this->user;

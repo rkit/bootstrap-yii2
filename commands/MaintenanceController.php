@@ -3,7 +3,7 @@
 namespace app\commands;
 
 use Yii;
-use yii\console\Controller;
+use yii\console\{Controller, ExitCode};
 use yii\helpers\Console;
 
 /**
@@ -11,7 +11,7 @@ use yii\helpers\Console;
  */
 class MaintenanceController extends Controller
 {
-    public function actionOff(): bool
+    public function actionOff(): int
     {
         $this->stdout("Trying disabling maintenance mode...\n");
         $file = $this->resolveFile();
@@ -19,13 +19,14 @@ class MaintenanceController extends Controller
         if (file_exists($file)) {
             unlink($file);
             $this->stdout("Done\n", Console::FG_GREEN);
-            return true;
+            return ExitCode::OK;
         }
+
         $this->stdout("Application is NOT in maintenance mode.\n", Console::FG_YELLOW);
-        return false;
+        return ExitCode::USAGE;
     }
 
-    public function actionOn(): bool
+    public function actionOn(): int
     {
         $this->stdout("Trying enabling maintenance mode...\n");
         $file = $this->resolveFile();
@@ -33,10 +34,11 @@ class MaintenanceController extends Controller
         if (!file_exists($file)) {
             file_put_contents($file, time());
             $this->stdout("Done\n", Console::FG_GREEN);
-            return true;
+            return ExitCode::OK;
         }
+
         $this->stdout("Application is already in maintenance mode.\n", Console::FG_YELLOW);
-        return false;
+        return ExitCode::USAGE;
     }
 
     /**

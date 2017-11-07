@@ -17,57 +17,43 @@ $this->title = Yii::t('app', 'Users') . ' / ' . $model->user_id;
   <li class="active"><?= Html::a(Yii::t('app', 'Profile'), ['profile', 'id' => $model->user_id]) ?></li>
 </ul><br>
 
-<?php $form = ActiveForm::begin(['options' => ['id' => 'profile-form', 'class' => 'ajax-form']]); ?>
+<?php $form = ActiveForm::begin(['options' => ['class' => 'ajax-form']]); ?>
 
-  <div class="row">
-    <div class="col-md-8">
-      <!-- full_name -->
-      <?= $form->field($model, 'full_name')->textInput(['maxlength' => true]) ?>
+    <!-- full_name -->
+    <?= $form->field($model, 'full_name')->textInput(['maxlength' => true]) ?>
 
-      <!-- birth_day -->
-      <?php $model->birth_day = $model->birth_day > 0 ? $model->birth_day : '' ?>
-      <?= $form->field($model, 'birth_day')->widget(DatePicker::class, [
-          'pluginOptions' => [
-              'autoclose' => true,
-              'format' => 'yyyy-mm-dd'
-          ]
-      ]); ?>
-    </div>
-    <div class="col-md-4">
-      <!-- photo -->
-      <?= $form->field($model, 'photo', ['template' => "{label}\n{error}\n{input}\n{hint}"])
-          ->widget(FileApi::class, [
-              'template' => '@app/modules/admin/views/shared/files/image/template',
-              'callbacks' => [
-                  'select' => new JsExpression('function (evt, ui) {
-                    if (ui && ui.other.length && ui.other[0].errors) {
-                      alert("' . Yii::t('app.msg', 'Incorrect file format') . '");
-                    }
-                  }'),
-                  'filecomplete' => new JsExpression('function (evt, ui) {
-                    if (ui.result.error) {
-                      alert(ui.result.error);
-                      return;
-                    }
-                    $(this).find("input:hidden:last").val(ui.result.id);
-                    $(this).find(".fileapi-preview-wrapper").html("<img src=" + ui.result.path + ">");
-                    $(this).closest("form").yiiActiveForm("updateAttribute", "' . Html::getInputId($model, 'photo') . '", []);
-                  }'),
-              ],
-              'settings' => [
-                  'url' => yii\helpers\Url::toRoute(['photo-upload']),
-                  'imageSize' => $model->model()->fileRules('photo')['imageSize'],
-                  'accept' => implode(',', $model->model()->fileRules('photo')['mimeTypes']),
-                  'imageAutoOrientation' => false,
-                  'duplicate' => true
-              ]
-          ])
-          ->hint((new FileRulesDescription($model->model()->fileRules('photo')))->toText(), [
-              'class' => 'fileapi-rules'
-          ]);
-      ?>
-    </div>
-  </div>
+    <!-- photo -->
+    <?= $form->field($model, 'photo', ['template' => "{label}\n{error}\n{input}\n{hint}"])
+        ->widget(FileApi::class, [
+            'template' => '@app/modules/admin/views/shared/files/image/template',
+            'callbacks' => [
+                'select' => new JsExpression('function (evt, ui) {
+                if (ui && ui.other.length && ui.other[0].errors) {
+                    alert("' . Yii::t('app.msg', 'Incorrect file format') . '");
+                }
+                }'),
+                'filecomplete' => new JsExpression('function (evt, ui) {
+                if (ui.result.error) {
+                    alert(ui.result.error);
+                    return;
+                }
+                $(this).find("input:hidden:last").val(ui.result.id);
+                $(this).find(".fileapi-preview-wrapper").html("<img src=" + ui.result.path + ">");
+                $(this).closest("form").yiiActiveForm("updateAttribute", "' . Html::getInputId($model, 'photo') . '", []);
+                }'),
+            ],
+            'settings' => [
+                'url' => yii\helpers\Url::toRoute(['photo-upload']),
+                'imageSize' => $model->model()->fileRules('photo')['imageSize'],
+                'accept' => implode(',', $model->model()->fileRules('photo')['mimeTypes']),
+                'imageAutoOrientation' => false,
+                'duplicate' => true
+            ]
+        ])
+        ->hint(FileRulesDescription::asDescription($model->model()->fileRules('photo')), [
+            'class' => 'fileapi-rules'
+        ]);
+    ?>
 
   <hr>
   <div class="form-controls">
@@ -83,7 +69,7 @@ $this->title = Yii::t('app', 'Users') . ' / ' . $model->user_id;
           [
               'title' => Yii::t('app', 'Delete'),
               'class' => 'btn btn-danger',
-              'data-confirm' => Yii::t('app', 'Are you sure you want to delete this record?')
+              'data-confirm' => Yii::t('app', 'Are you sure you want to delete this user?')
           ]
       ); ?>
     </div>

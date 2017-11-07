@@ -1,8 +1,4 @@
-actor_suffix: Tester
-
-extensions:
-  enabled:
-    - Codeception\Extension\RunFailed
+actor: Tester 
 
 paths:
   tests: tests
@@ -21,15 +17,3 @@ modules:
       configFile: 'config/test.php'
       cleanup: false
 
-coverage:
-  enabled: true
-  whitelist:
-    include:
-      - models/*
-      - controllers/*
-      - components/*
-      - commands/*
-      - mail/*
-      - modules/admin/controllers/*
-      - modules/admin/models/*
-      - modules/admin/helpers/*

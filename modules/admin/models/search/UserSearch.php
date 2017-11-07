@@ -10,17 +10,29 @@ use app\models\entity\User;
  */
 class UserSearch extends User
 {
+    public $date_create_start;
+    public $date_create_end;
+    public $date_login_start;
+    public $date_login_end;
+
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [
-                ['username', 'email', 'ip', 'role_name'], 'string'
-            ],
+            [['email', 'role_name'], 'string'],
 
-            ['date_create', 'date', 'format' => 'yyyy-mm-dd'],
+            ['id', 'number'],
+
+            [
+                [
+                    'date_create_start',
+                    'date_create_end',
+                    'date_login_start',
+                    'date_login_end'
+                ], 'date', 'format' => 'yyyy-mm-dd'
+            ],
 
             ['status', 'integer'],
             ['status', 'in', 'range' => array_keys(User::getStatuses())],
@@ -54,13 +66,14 @@ class UserSearch extends User
         }
 
         $query->andFilterWhere([
-            'ip' => !empty($this->ip) ? ip2long($this->ip) : null,
+            'id' => $this->id,
             'status' => $this->status,
             'role_name' => $this->role_name,
-            'DATE(date_create)' => $this->date_create
         ]);
 
-        $query->andFilterWhere(['like', 'user.username', $this->username]);
+        $query->andFilterWhere(['between', 'DATE(date_create)', $this->date_create_start, $this->date_create_end]);
+        $query->andFilterWhere(['between', 'DATE(date_login)', $this->date_login_start, $this->date_login_end]);
+
         $query->andFilterWhere(['like', 'user.email', $this->email]);
 
         return $dataProvider;

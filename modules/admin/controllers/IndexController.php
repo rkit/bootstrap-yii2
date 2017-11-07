@@ -3,8 +3,6 @@
 namespace app\modules\admin\controllers;
 
 use Yii;
-use yii\filters\AccessControl;
-use yii\filters\VerbFilter;
 use yii\web\ForbiddenHttpException;
 use app\modules\admin\models\forms\LoginForm;
 
@@ -14,7 +12,7 @@ class IndexController extends \yii\web\Controller
     {
         return [
             'access' => [
-                'class' => AccessControl::class,
+                'class' => 'yii\filters\AccessControl',
                 'rules' => [
                     [
                         'allow'   => true,
@@ -40,7 +38,7 @@ class IndexController extends \yii\web\Controller
                 ],
             ],
             'verbs' => [
-                'class' => VerbFilter::class,
+                'class' => 'yii\filters\VerbFilter',
                 'actions' => [
                     'logout' => ['post'],
                 ],
@@ -52,7 +50,7 @@ class IndexController extends \yii\web\Controller
     {
         if (!Yii::$app->user->can('AdminModule')) {
             throw new ForbiddenHttpException(Yii::t('app.msg', 'Access Denied'));
-        } // @codeCoverageIgnore
+        }
 
         return $this->render('index');
     }

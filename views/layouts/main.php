@@ -4,6 +4,7 @@ use yii\helpers\ArrayHelper;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use app\assets\AppAsset;
+use app\helpers\PageTitle;
 
 AppAsset::register($this);
 ?>
@@ -14,7 +15,7 @@ AppAsset::register($this);
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title><?= ($this->title ? Html::encode($this->title . ' / ') : '') . Yii::$app->name ?></title>
+  <title><?= ($this->title ? PageTitle::process($this->title . ' / ') : '') . Yii::$app->name ?></title>
   <?= Html::csrfMetaTags()?>
   <?php $this->head() ?>
 </head>
@@ -30,12 +31,12 @@ AppAsset::register($this);
         ],
     ]);
     if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => Yii::t('app', 'Signup'), 'url' => ['/signup']];
-        $menuItems[] = ['label' => Yii::t('app', 'Login'), 'url' => ['/login']];
+        $menuItems[] = ['label' => Yii::t('app', 'Sign in'), 'url' => ['/auth/login']];
+        $menuItems[] = ['label' => Yii::t('app', 'Sign up'), 'url' => ['/auth/signup']];
     } else {
         $menuItems[] = [
             'label' => Yii::t('app', 'Logout'),
-            'url' => ['/logout'],
+            'url' => ['/profile/logout'],
             'linkOptions' => ['data-method' => 'post']
         ];
     }

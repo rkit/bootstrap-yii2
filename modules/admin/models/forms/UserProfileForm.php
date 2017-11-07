@@ -21,13 +21,27 @@ class UserProfileForm extends \yii\base\Model
      */
     public $photo;
     /**
-     * @var string
-     */
-    public $birth_day;
-    /**
      * @var \app\models\entity\UserProfile
      */
     private $model;
+
+    /**
+     * Creates a form model given a user profile
+     *
+     * @param UserProfile $model
+     * @param array $config name-value pairs that will be used to initialize the object properties
+     */
+    public function __construct(UserProfile $model, $config = [])
+    {
+        $this->model = $model;
+
+        $this->user_id = $model->user_id;
+        $this->full_name = $model->full_name;
+        $this->photo = $model->photo;
+
+        parent::__construct($config);
+    }
+
 
    /**
     * @return array the validation rules.
@@ -35,9 +49,7 @@ class UserProfileForm extends \yii\base\Model
     public function rules()
     {
         return [
-            [['birth_day', 'photo'], 'safe'],
-
-            ['birth_day', 'date', 'format' => 'php:Y-m-d'],
+            [['photo'], 'safe'],
 
             ['full_name', 'string', 'max' => 40],
         ];
@@ -50,25 +62,9 @@ class UserProfileForm extends \yii\base\Model
     {
         return [
             'user_id' => Yii::t('app', 'User'),
-            'full_name' => Yii::t('app', 'Full Name'),
+            'full_name' => Yii::t('app', 'Name'),
             'photo' => Yii::t('app', 'Photo'),
-            'birth_day' => Yii::t('app', 'Birth Day'),
         ];
-    }
-
-    /**
-     * Set model
-     *
-     * @param UserProfile $model
-     */
-    public function setModel(UserProfile $model): void
-    {
-        $this->model = $model;
-
-        $this->user_id = $model->user_id;
-        $this->full_name = $model->full_name;
-        $this->photo = $model->photo;
-        $this->birth_day = $model->birth_day;
     }
 
     /**
@@ -78,10 +74,6 @@ class UserProfileForm extends \yii\base\Model
      */
     public function model(): UserProfile
     {
-        if ($this->model === null) {
-            $this->model = new UserProfile();
-        }
-
         return $this->model;
     }
 
@@ -98,7 +90,6 @@ class UserProfileForm extends \yii\base\Model
         $model->user_id = $this->user_id;
         $model->full_name = $this->full_name;
         $model->photo = $this->photo;
-        $model->birth_day = $this->birth_day;
 
         if (!$model->save()) {
             throw new Exception(Yii::t('app.msg', 'An error occurred while saving profile'));

@@ -87,18 +87,6 @@ class UserQuery extends ActiveQuery
     }
 
     /**
-     * Select by username
-     *
-     * @param string $username
-     * @return yii\db\ActiveQuery
-     */
-    public function username(string $username): ActiveQuery
-    {
-        $this->andWhere(['username' => $username]);
-        return $this;
-    }
-
-    /**
      * Select by email
      *
      * @param string $email

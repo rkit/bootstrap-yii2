@@ -3,17 +3,17 @@
 namespace app\modules\admin\controllers;
 
 use Yii;
-use app\traits\ModelTrait;
+use app\traits\ControllerTrait;
 use app\modules\admin\models\forms\SettingsForm;
 
 class SettingsController extends \yii\web\Controller
 {
-    use ModelTrait;
+    use ControllerTrait;
 
     public function actionIndex()
     {
         $model = new SettingsForm();
-
+ 
         if (Yii::$app->request->isPost) {
             Yii::$app->response->format = 'json';
 

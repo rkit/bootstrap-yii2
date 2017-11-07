@@ -3,21 +3,20 @@
 namespace app\modules\admin\controllers;
 
 use Yii;
-use yii\filters\VerbFilter;
-use app\traits\ModelTrait;
+use app\traits\ControllerTrait;
 use app\models\entity\AuthItem;
 use app\modules\admin\models\forms\AuthItemForm;
 use app\modules\admin\models\search\AuthItemSearch;
 
 class RolesController extends \yii\web\Controller
 {
-    use ModelTrait;
+    use ControllerTrait;
 
     public function behaviors()
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::class,
+                'class' => 'yii\filters\VerbFilter',
                 'actions' => [
                     'delete' => ['post'],
                     'batch' => ['post'],
@@ -59,7 +58,7 @@ class RolesController extends \yii\web\Controller
         $model = new AuthItemForm();
 
         if ($name) {
-            $model->setModel($this->findModel(new AuthItem, $name));
+            $model->setModel($this->findModel(AuthItem::class, $name));
         }
 
         if (Yii::$app->request->isPost) {

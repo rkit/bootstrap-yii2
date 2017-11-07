@@ -7,18 +7,19 @@
 $config['components']['urlManager']['rules'] = [
     // frontend
     '/' => 'index/index',
-    'auth-social' => 'index/auth-social',
-    'signup' => 'index/signup',
-    'signup-provider' => 'index/signup-provider',
-    'login' => 'index/login',
-    'logout' => 'index/logout',
-    'reset-password' => 'index/reset-password',
-    'request-password-reset' => 'index/request-password-reset',
-    'confirm-email' => 'index/confirm-email',
-    'confirm-request' => 'index/confirm-request',
 
-    // background call
+    // auth
+    'auth/login' => 'auth/index/login',
+    'auth/signup' => 'auth/index/signup',
+    'auth/confirm-request' => 'auth/index/confirm-request',
+    'auth/confirm-email' => 'auth/index/confirm-email',
+    'auth/request-password-reset' => 'auth/index/request-password-reset',
+    'auth/reset-password' => 'auth/index/reset-password',
+    'auth/social' => 'auth/social/index',
+    'auth/social/signup' => 'auth/social/signup',
 
+    // profile
+    'profile/logout' => 'profile/index/logout',
 
     // admin
     'admin' => 'admin/index/index',
@@ -71,11 +72,11 @@ $config['container'] = [
             'firstPageLabel' => '&lArr;',
             'lastPageLabel'  => '&rArr;',
         ],
-        'app\services\SocialAuth' => [
+        'app\modules\auth\services\SocialAuth' => [
             'parsers' => [
-                'vkontakte' => 'app\parsers\auth\Vkontakte',
-                'twitter' => '\app\parsers\auth\Twitter',
-                'facebook' => '\app\parsers\auth\Facebook',
+                'vkontakte' => '\app\parsers\oauth\Vkontakte',
+                'twitter' => '\app\parsers\oauth\Twitter',
+                'facebook' => '\app\parsers\oauth\Facebook',
             ]
         ],
     ],

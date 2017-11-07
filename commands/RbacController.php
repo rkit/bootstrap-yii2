@@ -4,7 +4,7 @@ namespace app\commands;
 
 use Yii;
 use yii\base\InvalidConfigException;
-use yii\console\Controller;
+use yii\console\{Controller, ExitCode};
 use yii\helpers\Console;
 
 /**
@@ -43,7 +43,7 @@ class RbacController extends Controller
         Yii::$app->cache->delete('rbac-permissions');
     }
 
-    public function actionUp(): void
+    public function actionUp(): int
     {
         $currentPermissions = $this->auth->getPermissions();
         $newPermissions = require Yii::getAlias($this->path);
@@ -52,6 +52,7 @@ class RbacController extends Controller
         $this->updatePermissions($currentPermissions, $newPermissions);
 
         $this->stdout("Done!\n", Console::FG_GREEN);
+        return ExitCode::OK;
     }
 
     private function cleanUnusedPermissions(array $currentPermissions, array $newPermissions): void

@@ -12,7 +12,14 @@ $bundles = YII_ENV_PROD ? require __DIR__ . '/local/assets.php' : [];
 $config = [
     'id'             => 'iNCVrvPTpDQuWpdnqqz6NPXeUHsRQoV3',
     'basePath'       => dirname(__DIR__),
-    'bootstrap'      => ['log'],
+    'bootstrap'      => [
+        'log',
+        'bootstrap' => [
+            'class' => 'app\components\Bootstrap',
+            'events' => [
+            ]
+        ]
+    ],
     'name'           => 'Bootstrap',
     'defaultRoute'   => 'index/index',
     'sourceLanguage' => 'en',
@@ -25,8 +32,18 @@ $config = [
     ],
 
     'modules' => [
+        'auth' => [
+            'class' => 'app\modules\auth\Module',
+            'defaultRoute' => 'index/index',
+        ],
         'admin' => [
             'class' => 'app\modules\admin\Module',
+            'defaultRoute' => 'index/index',
+            'layout' => 'main',
+        ],
+        'profile' => [
+            'class' => 'app\modules\profile\Module',
+            'defaultRoute' => 'index/index',
         ],
     ],
 
@@ -69,7 +86,7 @@ $config = [
             'class' => 'app\components\User',
             'identityClass' => 'app\models\entity\User',
             'enableAutoLogin' => true,
-            'loginUrl' => ['/index/login']
+            'loginUrl' => ['/auth/login']
         ],
         'errorHandler' => [
             'errorAction' => YII_ENV_DEV ? null : '/index/error',

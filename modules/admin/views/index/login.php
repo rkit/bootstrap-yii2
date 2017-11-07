@@ -15,8 +15,8 @@ $this->title = Yii::t('app', 'Welcome!');
   <p class="lead"><?= Yii::t('app', 'Control Panel') ?></p>
   <hr>
 
-  <?= $form->field($model, 'username')->textInput([
-      'placeholder' => Yii::t('app', 'Enter username'),
+  <?= $form->field($model, 'email')->textInput([
+      'placeholder' => Yii::t('app', 'Enter email'),
       'autofocus' => 'autofocus',
   ]) ?>
   <?= $form->field($model, 'password')->passwordInput([

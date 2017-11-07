@@ -4,8 +4,8 @@ namespace app\commands;
 
 use Yii;
 use yii\base\InvalidConfigException;
-use yii\console\Controller;
-use yii\helpers\Console;
+use yii\console\{Controller, ExitCode};
+use yii\helpers\{Console, ArrayHelper};
 
 /**
  * Command for create local config
@@ -39,9 +39,25 @@ class CreateLocalConfigController extends Controller
 
         if (!file_exists($dist)) {
             copy($source, $dist);
+            $this->specifySettings($dist);
+
             $this->stdout("Created successfully!\n", Console::FG_GREEN);
         } else {
-            $this->stdout("Config file is exist!\n", Console::FG_RED); // @codeCoverageIgnore
+            $this->stdout("Config file is exist!\n", Console::FG_RED);
         }
+
+        return ExitCode::OK;
+    }
+
+    private function specifySettings(string $file)
+    {
+        $contents = file_get_contents($file);
+        $env = parse_ini_file(Yii::getAlias(Yii::getAlias('@app/.env')));
+
+        foreach ($env as $var => $value) {
+            $contents = str_replace('%' . $var  . '%', $value, $contents);
+        }
+
+        file_put_contents($file, $contents);
     }
 }

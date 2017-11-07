@@ -2,7 +2,7 @@
 
 namespace app\commands;
 
-use yii\console\Controller;
+use yii\console\{Controller, ExitCode};
 use yii2tech\sitemap\File;
 use yii\helpers\Console;
 
@@ -18,13 +18,14 @@ class SitemapController extends Controller
         $this->sitemap = new File();
     }
 
-    public function actionCreate(): void
+    public function actionCreate(): int
     {
         // writeItems…
 
         $this->sitemap->close();
 
         $this->stdout("Done!\n", Console::FG_GREEN);
+        return ExitCode::OK;
     }
 
     private function writeItems(string $modelClass, $cb)

@@ -2,21 +2,11 @@
   "name": "bootstrap-yii2",
   "version": "1.0.0",
   "private": true,
-  "scripts": {
-    "precommit": "lint-staged"
-  },
-  "lint-staged": {
-    "web/js/**/*.js": [
-      "prettier --trailing-comma es5 --single-quote --write",
-      "eslint --fix",
-      "git add"
-    ]
-  },
   "devDependencies": {
     "eslint": "^4.3.0",
-    "husky": "^0.14.3",
-    "lint-staged": "^4.0.2",
-    "prettier": "^1.5.3",
+    "eslint-config-prettier": "^2.6.0",
+    "eslint-plugin-prettier": "^2.3.1",
+    "prettier": "^1.7.4",
     "uglify-js": "^3.0.14",
     "uglifycss": "0.0.27"
   },

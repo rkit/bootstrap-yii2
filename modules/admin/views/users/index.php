@@ -27,21 +27,23 @@ $this->title = Yii::t('app', 'Users');
          ' . Html::submitButton(Yii::t('app', 'delete'), [
              'name' => 'operation',
              'value' => 'delete',
-             'data-confirmation' => Yii::t('app', 'Are you sure you want to delete this records?'),
+             'data-confirmation' => Yii::t('app', 'Are you sure you want to delete this users?'),
              'data-loading-text' => Yii::t('app', 'Please wait…'),
              'class' => 'submit disabled confirmation btn btn-danger btn-xs'
          ]) . '
          ' . Html::submitButton(Yii::t('app', 'active'), [
              'name' => 'operation',
              'value' => 'set-active',
+             'data-confirmation' => Yii::t('app', 'Are you sure you want to make active this users?'),
              'data-loading-text' => Yii::t('app', 'Please wait…'),
-             'class' => 'submit disabled btn btn-success btn-xs'
+             'class' => 'submit disabled confirmation btn btn-success btn-xs'
          ]) . '
          ' . Html::submitButton(Yii::t('app', 'block'), [
              'name' => 'operation',
              'value' => 'set-block',
+             'data-confirmation' => Yii::t('app', 'Are you sure you want to block this users?'),
              'data-loading-text' => Yii::t('app', 'Please wait…'),
-             'class' => 'submit disabled btn btn-warning btn-xs'
+             'class' => 'submit disabled confirmation btn btn-warning btn-xs'
          ]) . '
        </div>
       {pager}
@@ -56,19 +58,14 @@ $this->title = Yii::t('app', 'Users');
               'headerOptions' => ['style' => 'width: 30px']
           ],
           /**
-           * @var username
+           * @var id
            */
           [
-              'attribute' => 'username',
+              'attribute' => 'id',
               'format' => 'raw',
+              'headerOptions' => ['style' => 'width: 75px'],
               'value' => function ($model) {
-                  $username = $model->username ? $model->username : '(' . Yii::t('app', 'not set') . ')';
-                  return Html::a(Html::encode($username), ['edit', 'id' => $model->id], ['data-pjax' => 0]) .
-                  (
-                      $model->id === Yii::$app->user->id
-                      ? ' <span class="label label-info">' . Yii::t('app', 'it`s me') . '</span>'
-                      : ''
-                  );
+                  return Html::a(Html::encode($model->id), ['edit', 'id' => $model->id], ['data-pjax' => 0]);
               }
           ],
           /**
@@ -79,7 +76,12 @@ $this->title = Yii::t('app', 'Users');
               'format' => 'raw',
               'value' => function ($model) {
                   $email = $model['email'] ? $model['email'] : '(' . Yii::t('app', 'not set') . ')';
-                  return Html::a(Html::encode($email), ['edit', 'id' => $model->id], ['data-pjax' => 0]);
+                  return Html::a(Html::encode($email), ['edit', 'id' => $model->id], ['data-pjax' => 0]) .
+                  (
+                      $model->id === Yii::$app->user->id
+                      ? ' <span class="label label-info">' . Yii::t('app', 'it`s me') . '</span>'
+                      : ''
+                  );
               }
           ],
           /**
@@ -87,12 +89,15 @@ $this->title = Yii::t('app', 'Users');
            */
           [
               'attribute' => 'date_create',
-              'format' => 'raw',
+              'format' => 'datetime',
               'headerOptions' => ['style' => 'width: 180px'],
               'filter' => DatePicker::widget(
                   [
                       'model' => $userSearch,
                       'attribute' => 'date_create',
+                      'type' => DatePicker::TYPE_RANGE,
+                      'attribute' => 'date_create_start',
+                      'attribute2' => 'date_create_end',
                       'pluginOptions' => [
                         'autoclose' => true,
                         'format' => 'yyyy-mm-dd',
@@ -102,25 +107,29 @@ $this->title = Yii::t('app', 'Users');
                       ],
                   ]
               ),
-              'value' => function ($model) {
-                  return
-                      Yii::$app->formatter->asDateTime($model->date_create) . '<br>' .
-                      '<span class="text-muted small">
-                          ' . Yii::t('app', 'Login') . ': ' .
-                          ($model->date_login > 0 ? Yii::$app->formatter->asDateTime($model->date_login) : '—') .
-                      '</span>';
-              }
           ],
           /**
-           * @var IP
+           * @var date_login
            */
           [
-              'attribute' => 'ip',
-              'format' => 'text',
-              'headerOptions' => ['style' => 'width: 150px'],
-              'value' => function ($model) {
-                  return long2ip($model->ip);
-              },
+              'attribute' => 'date_login',
+              'format' => 'datetime',
+              'headerOptions' => ['style' => 'width: 180px'],
+              'filter' => DatePicker::widget(
+                  [
+                      'model' => $userSearch,
+                      'type' => DatePicker::TYPE_RANGE,
+                      'attribute' => 'date_login_start',
+                      'attribute2' => 'date_login_end',
+                      'pluginOptions' => [
+                        'autoclose' => true,
+                        'format' => 'yyyy-mm-dd',
+                      ],
+                      'options' => [
+                          'class' => 'form-control',
+                      ],
+                  ]
+              ),
           ],
           /**
            * @var role
@@ -162,6 +171,19 @@ $this->title = Yii::t('app', 'Users');
                   ['class' => 'form-control', 'prompt' => Yii::t('app', 'All statuses')]
               )
           ],
+          /**
+           * @var view
+           */
+        //   [
+        //       'format' => 'raw',
+        //       'headerOptions' => ['style' => 'width: 35px'],
+        //       'value' => function ($model) {
+        //           return Html::a(
+        //               Html::tag('i', '', ['class' => 'glyphicon glyphicon-eye-open']),
+        //               ['/users/view', 'id' => $model->id], ['data-pjax' => 0, 'target' => '_blank']
+        //           );
+        //       }
+        //   ],
           // action buttons
           [
               'class' => 'yii\grid\ActionColumn',
@@ -174,9 +196,10 @@ $this->title = Yii::t('app', 'Users');
                               '<span class="glyphicon glyphicon-play"></span>',
                               ['set-active', 'id' => $model->primaryKey],
                               [
-                                  'title' => Yii::t('app', 'Enable'),
-                                  'class' => 'submit btn btn-xs btn-success',
-                                  'data-pjax' => 0
+                                  'title' => Yii::t('app', 'Activate'),
+                                  'class' => 'confirmation submit btn btn-xs btn-success',
+                                  'data-pjax' => 0,
+                                  'data-confirmation' => Yii::t('app', 'Are you sure you want to make active this user?')
                               ]
                           );
                       } else {
@@ -184,9 +207,10 @@ $this->title = Yii::t('app', 'Users');
                               '<span class="glyphicon glyphicon-pause"></span>',
                               ['set-block', 'id' => $model->primaryKey],
                               [
-                                  'title' => Yii::t('app', 'Disable'),
-                                  'class' => 'submit btn btn-xs btn-warning',
-                                  'data-pjax' => 0
+                                  'title' => Yii::t('app', 'Block'),
+                                  'class' => 'confirmation submit btn btn-xs btn-warning',
+                                  'data-pjax' => 0,
+                                  'data-confirmation' => Yii::t('app', 'Are you sure you want to block this user?')
                               ]
                           );
                       }
@@ -199,7 +223,7 @@ $this->title = Yii::t('app', 'Users');
                               'title' => Yii::t('app', 'Delete'),
                               'class' => 'confirmation submit btn btn-xs btn-danger',
                               'data-pjax' => 0,
-                              'data-confirmation' => Yii::t('app', 'Are you sure you want to delete this record?')
+                              'data-confirmation' => Yii::t('app', 'Are you sure you want to delete this user?')
                           ]
                       );
                   }

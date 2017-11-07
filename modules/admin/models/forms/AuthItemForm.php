@@ -63,10 +63,22 @@ class AuthItemForm extends \yii\base\Model
     public function attributeLabels()
     {
         return [
-            'name'        => Yii::t('app', 'Name'),
+            'name'        => Yii::t('app', 'Title'),
             'description' => Yii::t('app', 'Description'),
             'roles'       => Yii::t('app', 'Inherit role'),
             'permissions' => Yii::t('app', 'Permissions'),
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function attributeHints()
+    {
+        return [
+            'name' => Yii::t('app.msg', 'Only latin letters'),
+            'roles' => Yii::t('app', 'The role will receive all the privileges of the selected role'),
+            'permissions' => Yii::t('app', 'Selected sections will be available for editing'),
         ];
     }
 
