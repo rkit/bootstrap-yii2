@@ -72,7 +72,7 @@ class IndexController extends \yii\web\Controller
 
     public function actionSignup()
     {
-        $model = new SignupForm();
+        $model = Yii::$container->get(SignupForm::class);
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $model->signup();
@@ -119,7 +119,7 @@ class IndexController extends \yii\web\Controller
 
     public function actionRequestPasswordReset()
     {
-        $model = new PasswordResetRequestForm();
+        $model = Yii::$container->get(PasswordResetRequestForm::class);
 
         if (Yii::$app->request->isPost) {
             if ($model->load(Yii::$app->request->post()) && $model->validate()) {
@@ -140,7 +140,7 @@ class IndexController extends \yii\web\Controller
 
     public function actionResetPassword($token)
     {
-        $model = new ResetPasswordForm($token);
+        $model = Yii::$container->get(ResetPasswordForm::class, [$token]);
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $model->resetPassword();

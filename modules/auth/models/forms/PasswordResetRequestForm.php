@@ -13,6 +13,17 @@ class PasswordResetRequestForm extends \yii\base\Model
      * @var string
      */
     public $email;
+    /**
+     * @var Tokenizer
+     */
+    private $tokenizer;
+    
+    public function __construct(Tokenizer $tokenizer, $config = [])
+    {
+        $this->tokenizer = $tokenizer;
+
+        parent::__construct($config);
+    }
 
     /**
      * @inheritdoc
@@ -55,9 +66,8 @@ class PasswordResetRequestForm extends \yii\base\Model
             throw new UserException(Yii::t('app.msg', 'User not found'));
         }
 
-        $tokenizer = new Tokenizer();
-        if (!$tokenizer->validate($user->password_reset_token)) {
-            $user->setPasswordResetToken($tokenizer->generate());
+        if (!$this->tokenizer->validate($user->password_reset_token)) {
+            $user->setPasswordResetToken($this->tokenizer->generate());
             if (!$user->save()) {
                 throw new Exception(Yii::t('app.msg', 'An error occurred while saving user'));
             }

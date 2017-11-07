@@ -20,14 +20,21 @@ class SignupProviderForm extends \yii\base\Model
      * @var \app\models\entity\User
      */
     private $user = null;
+    /**
+     * @var Tokenizer
+     */
+    private $tokenizer;
 
     /**
      * @param User $user
      */
-    public function __construct($user)
+    public function __construct(User $user, Tokenizer $tokenizer, $config = [])
     {
+        $this->tokenizer = $tokenizer;
         $this->user = $user;
         $this->email = $user->email;
+
+        parent::__construct($config);
     }
 
     /**
@@ -139,9 +146,8 @@ class SignupProviderForm extends \yii\base\Model
      */
     public function sendEmail(): void
     {
-        $tokenizer = new Tokenizer();
-        if (!$tokenizer->validate($this->user->email_confirm_token)) {
-            $this->user->setEmailConfirmToken($tokenizer->generate());
+        if (!$this->tokenizer->validate($this->user->email_confirm_token)) {
+            $this->user->setEmailConfirmToken($this->tokenizer->generate());
             $this->user->updateAttributes([
                 'email_confirm_token' => $this->user->email_confirm_token,
                 'date_confirm' => $this->user->date_confirm,

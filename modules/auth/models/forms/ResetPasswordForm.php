@@ -18,6 +18,10 @@ class ResetPasswordForm extends \yii\base\Model
      * @var \app\models\entity\User
      */
     private $user;
+    /**
+     * @var Tokenizer
+     */
+    private $tokenizer;
 
     /**
      * Creates a form model given a token.
@@ -26,10 +30,11 @@ class ResetPasswordForm extends \yii\base\Model
      * @param array $config name-value pairs that will be used to initialize the object properties
      * @throws \yii\base\BadRequestHttpException
      */
-    public function __construct($token, $config = [])
+    public function __construct($token, Tokenizer $tokenizer, $config = [])
     {
-        $tokenizer = new Tokenizer();
-        if (empty($token) || !is_string($token) || !$tokenizer->validate($token)) {
+        $this->tokenizer = $tokenizer;
+
+        if (empty($token) || !is_string($token) || !$this->tokenizer->validate($token)) {
             throw new BadRequestHttpException(Yii::t('app.msg', 'Invalid link for reset password'));
         }
 

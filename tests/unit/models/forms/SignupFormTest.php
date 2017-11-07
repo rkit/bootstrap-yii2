@@ -22,7 +22,8 @@ class SignupFormTest extends \Codeception\Test\Unit
 
     public function testEmptyFields()
     {
-        $form = new SignupForm([
+        $form = Yii::$container->get(SignupForm::class);
+        $form->setAttributes([
             'fullName' => '',
             'email' => '',
             'password' => '',
@@ -36,7 +37,8 @@ class SignupFormTest extends \Codeception\Test\Unit
 
     public function testEmptyPassword()
     {
-        $form = new SignupForm([
+        $form = Yii::$container->get(SignupForm::class);
+        $form->setAttributes([
             'fullName' => 'Test',
             'email' => 'test@example.com',
             'password' => '',
@@ -48,7 +50,8 @@ class SignupFormTest extends \Codeception\Test\Unit
 
     public function testTooShortPassword()
     {
-        $form = new SignupForm([
+        $form = Yii::$container->get(SignupForm::class);
+        $form->setAttributes([
             'fullName' => 'Test',
             'email' => 'test@example.com',
             'password' => 'test',
@@ -60,7 +63,8 @@ class SignupFormTest extends \Codeception\Test\Unit
 
     public function testEmptyEmail()
     {
-        $form = new SignupForm([
+        $form = Yii::$container->get(SignupForm::class);
+        $form->setAttributes([
             'fullName' => 'Test',
             'email' => '',
             'password' => 'test_password',
@@ -72,7 +76,8 @@ class SignupFormTest extends \Codeception\Test\Unit
 
     public function testEmptyFullName()
     {
-        $form = new SignupForm([
+        $form = Yii::$container->get(SignupForm::class);
+        $form->setAttributes([
             'fullName' => '',
             'email' => 'test@example.com',
             'password' => 'test_password',
@@ -84,7 +89,8 @@ class SignupFormTest extends \Codeception\Test\Unit
 
     public function testExist()
     {
-        $form = new SignupForm([
+        $form = Yii::$container->get(SignupForm::class);
+        $form->setAttributes([
             'fullName' => 'Test',
             'email' => 'user-2@example.com',
             'password' => 'test_password',
@@ -96,7 +102,8 @@ class SignupFormTest extends \Codeception\Test\Unit
 
     public function testSuccess()
     {
-        $form = new SignupForm([
+        $form = Yii::$container->get(SignupForm::class);
+        $form->setAttributes([
             'fullName' => 'Test',
             'email' => 'test@example.com',
             'password' => 'test_password',

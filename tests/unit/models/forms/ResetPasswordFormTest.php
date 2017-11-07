@@ -2,6 +2,7 @@
 
 namespace app\tests\unit\models\forms;
 
+use Yii;
 use app\tests\fixtures\UserFixture;
 use app\models\entity\User;
 use app\modules\auth\models\forms\ResetPasswordForm;
@@ -19,7 +20,7 @@ class ResetPasswordFormTest extends \Codeception\Test\Unit
     {
         $user = $this->tester->grabFixture('user', 'user-1');
 
-        $form = new ResetPasswordForm($user->password_reset_token);
+        $form = Yii::$container->get(ResetPasswordForm::class, [$user->password_reset_token]);
         $form->password = '';
         expect_not($form->validate());
     }
@@ -28,7 +29,7 @@ class ResetPasswordFormTest extends \Codeception\Test\Unit
     {
         $user = $this->tester->grabFixture('user', 'user-1');
 
-        $form = new ResetPasswordForm($user->password_reset_token);
+        $form = Yii::$container->get(ResetPasswordForm::class, [$user->password_reset_token]);
         $form->password = 'qwe';
         expect_not($form->validate());
     }
@@ -39,7 +40,7 @@ class ResetPasswordFormTest extends \Codeception\Test\Unit
      */
     public function testWrongToken()
     {
-        $form = new ResetPasswordForm('notexistingtoken_1391882543');
+        $form = Yii::$container->get(ResetPasswordForm::class, ['notexistingtoken_1391882543']);
     }
 
     /**
@@ -48,14 +49,14 @@ class ResetPasswordFormTest extends \Codeception\Test\Unit
      */
     public function testEmptyToken()
     {
-        $form = new ResetPasswordForm('');
+        $form = Yii::$container->get(ResetPasswordForm::class, ['']);
     }
 
     public function testSuccess()
     {
         $user = $this->tester->grabFixture('user', 'user-1');
 
-        $form = new ResetPasswordForm($user->password_reset_token);
+        $form = Yii::$container->get(ResetPasswordForm::class, [$user->password_reset_token]);
         $form->password = 'password-new';
         $form->resetPassword();
 

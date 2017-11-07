@@ -9,6 +9,13 @@ use app\models\entity\User;
 
 class ConfirmEmail
 {
+    private $tokenizer;
+
+    public function __construct(Tokenizer $tokenizer)
+    {
+        $this->tokenizer = $tokenizer;
+    }
+
     /**
      * Confirm email
      *
@@ -17,9 +24,7 @@ class ConfirmEmail
      */
     public function setConfirmed(string $token): void
     {
-        $tokenizer = new Tokenizer();
-
-        if ($tokenizer->validate($token)) {
+        if ($this->tokenizer->validate($token)) {
             $user = User::find()->emailConfirmToken($token)->one();
 
             if ($user) {
@@ -41,9 +46,8 @@ class ConfirmEmail
      */
     public function sendEmail(User $user): void
     {
-        $tokenizer = new Tokenizer();
-        if (!$tokenizer->validate($user->email_confirm_token)) {
-            $user->setEmailConfirmToken($tokenizer->generate());
+        if (!$this->tokenizer->validate($user->email_confirm_token)) {
+            $user->setEmailConfirmToken($this->tokenizer->generate());
             $user->updateAttributes([
                 'email_confirm_token' => $user->email_confirm_token,
                 'date_confirm' => $user->date_confirm,

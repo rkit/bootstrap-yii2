@@ -2,6 +2,7 @@
 
 namespace app\tests\unit\services;
 
+use Yii;
 use app\tests\fixtures\UserFixture;
 use app\models\entity\User;
 use app\modules\auth\services\ConfirmEmail;
@@ -21,7 +22,7 @@ class ConfirmEmailTest extends \Codeception\Test\Unit
      */
     public function testWrongToken()
     {
-        $form = new ConfirmEmail();
+        $form = Yii::$container->get(ConfirmEmail::class);
         expect_not($form->setConfirmed('notexistingtoken_1391882543'));
     }
 
@@ -31,7 +32,7 @@ class ConfirmEmailTest extends \Codeception\Test\Unit
      */
     public function testEmptyToken()
     {
-        $form = new ConfirmEmail();
+        $form = Yii::$container->get(ConfirmEmail::class);
         expect_not($form->setConfirmed(''));
     }
 
@@ -40,7 +41,7 @@ class ConfirmEmailTest extends \Codeception\Test\Unit
         $user = User::find()->email('superuser@example.com')->one();
         expect_not($user->isConfirmed());
 
-        $form = new ConfirmEmail();
+        $form = Yii::$container->get(ConfirmEmail::class);
         $form->setConfirmed($user->email_confirm_token);
 
         $user = User::find()->email($user->email)->one();
