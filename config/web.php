@@ -122,9 +122,6 @@ $config = [
         'settings' => [
             'class' => 'rkit\settings\Settings',
         ],
-        'notify' => [
-            'class' => 'app\components\Notify',
-        ],
     ],
     'params' => $params,
 ];

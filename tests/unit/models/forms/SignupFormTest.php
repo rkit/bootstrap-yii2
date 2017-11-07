@@ -11,9 +11,6 @@ class SignupFormTest extends \Codeception\Test\Unit
 {
     protected function _before()
     {
-        Yii::$app->settings->set('emailMain', 'editor@example.com');
-        Yii::$app->settings->set('emailName', 'Editor');
-
         $this->tester->haveFixtures([
              'user' => UserFixture::class,
              'profile' => UserProfileFixture::class,
@@ -123,6 +120,5 @@ class SignupFormTest extends \Codeception\Test\Unit
         $message = $this->tester->grabLastSentEmail();
         expect('valid email is sent', $message)->isInstanceOf('yii\mail\MessageInterface');
         expect($message->getTo())->hasKey($user->email);
-        expect($message->getFrom())->hasKey('editor@example.com');
     }
 }

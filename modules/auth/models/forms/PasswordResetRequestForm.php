@@ -73,12 +73,11 @@ class PasswordResetRequestForm extends \yii\base\Model
             }
         }
 
-        $sent = Yii::$app->notify->sendMessage(
-            $user->email,
-            Yii::t('app', 'Password Reset'),
-            'passwordResetToken',
-            ['user' => $user]
-        );
+        $sent = Yii::$app->mailer
+            ->compose('passwordResetToken', ['user' => $user])
+            ->setTo($user->email)
+            ->setSubject(Yii::t('app', 'Password Reset'))
+            ->send();
 
         if (!$sent) {
             throw new UserException(Yii::t('app.msg', 'An error occurred while sending a message to reset password'));

@@ -154,12 +154,11 @@ class SignupProviderForm extends \yii\base\Model
             ]);
         }
 
-        $sent = Yii::$app->notify->sendMessage(
-            $this->email,
-            Yii::t('app', 'Registration'),
-            'registration',
-            ['user' => $this->user]
-        );
+        $sent = Yii::$app->mailer
+            ->compose('registration', ['user' => $this->user])
+            ->setTo($this->email)
+            ->setSubject(Yii::t('app', 'Registration'))
+            ->send();
 
         if (!$sent) {
             throw new UserException(Yii::t('app.msg', 'An error occurred while sending a message to activate account'));

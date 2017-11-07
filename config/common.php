@@ -80,6 +80,16 @@ $config['container'] = [
             ]
         ],
     ],
+    'singletons' => [
+        'yii\swiftmailer\Message' => function () {
+            $message = new \yii\swiftmailer\Message();
+            $message->setFrom([
+                Yii::$app->settings->emailMain => Yii::$app->settings->emailName
+            ]);
+
+            return $message;
+        }
+    ]
 ];
 
 

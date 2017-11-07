@@ -54,12 +54,11 @@ class ConfirmEmail
             ]);
         }
 
-        $sent = Yii::$app->notify->sendMessage(
-            $user->email,
-            Yii::t('app', 'Activate Your Account'),
-            'emailConfirmToken',
-            ['user' => $user]
-        );
+        $sent = Yii::$app->mailer
+            ->compose('emailConfirmToken', ['user' => $user])
+            ->setTo($user->email)
+            ->setSubject(Yii::t('app', 'Activate Your Account'))
+            ->send();
 
         if (!$sent) {
             throw new UserException(

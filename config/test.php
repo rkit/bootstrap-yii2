@@ -71,9 +71,6 @@ return [
          'settings' => [
              'class' => 'rkit\settings\Settings',
          ],
-         'notify' => [
-             'class' => 'app\components\Notify',
-         ],
          'assetManager' => [
              'bundles' => false,
          ],

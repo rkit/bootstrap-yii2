@@ -6,6 +6,9 @@ use yii\base\BootstrapInterface;
 
 class Bootstrap implements BootstrapInterface
 {
+    /**
+     * @var array
+     */
     public $events;
 
     public function bootstrap($app)
