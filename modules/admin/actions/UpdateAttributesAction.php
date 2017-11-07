@@ -2,7 +2,6 @@
 
 namespace app\modules\admin\actions;
 
-use Yii;
 use yii\base\Action;
 use app\traits\ControllerTrait;
 
