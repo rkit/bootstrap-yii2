@@ -248,7 +248,7 @@ class User extends \yii\db\ActiveRecord implements RateLimitInterface, IdentityI
     }
 
     /**
-     * Get statuse name
+     * Get status name
      *
      * @return string
      */
