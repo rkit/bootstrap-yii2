@@ -57,27 +57,20 @@ class SocialController extends \yii\web\Controller
 
     public function actionSignup()
     {
-        try {
-            $socialAuth = Yii::$container->get(SocialAuth::class, [Yii::$app->session['authClient']]);
-        } catch (\Throwable $e) {
-            Yii::error($e);
+        if (Yii::$app->session['authClient'] === null) {
             return $this->redirect(['/']);
         }
 
+        $socialAuth = Yii::$container->get(SocialAuth::class, [Yii::$app->session['authClient']]);
         $user = $socialAuth->prepareUser();
-        if ($user === null) {
-            return $this->redirect(['/']);
-        }
-
         $model = Yii::$container->get(SignupProviderForm::class, [$user]);
 
-        if (!$user->isNewRecord && $user->isActive() === false) {
-            Yii::$app->session->setFlash('error', $user->getStatusDescription());
-            return $this->redirect(['/']);
-        }
-
-        if (!$user->isNewRecord && $user->isActive()) {
-            $model->login();
+        if (!$user->isNewRecord) {
+            if ($user->isActive()) {
+                $model->login();
+            } else {
+                Yii::$app->session->setFlash('error', $user->getStatusDescription());
+            }
             return $this->redirect(['/']);
         }
 

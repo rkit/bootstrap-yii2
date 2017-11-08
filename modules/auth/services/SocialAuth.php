@@ -34,7 +34,7 @@ class SocialAuth
         $this->providerId = $client->getUserAttributes()['id'];
     }
 
-    public function prepareUser(): ?User
+    public function prepareUser(): User
     {
         $user = null;
         $parser = $this->parser();
