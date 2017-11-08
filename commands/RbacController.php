@@ -18,7 +18,7 @@ class RbacController extends Controller
      */
     private $auth;
     /**
-     * @var string
+     * @var string Config file path
      */
     public $path;
 
