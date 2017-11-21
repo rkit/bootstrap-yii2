@@ -82,7 +82,7 @@ class AuthItem extends \yii\db\ActiveRecord
     }
 
     /**
-     * Is SuperUser?
+     * Whether the role is SuperUser
      *
      * @return bool
      */

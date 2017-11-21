@@ -259,7 +259,7 @@ class User extends \yii\db\ActiveRecord implements RateLimitInterface, IdentityI
     }
 
     /**
-     * Is it deleted?
+     * Whether the user is deleted
      *
      * @param bool
      */
@@ -269,7 +269,7 @@ class User extends \yii\db\ActiveRecord implements RateLimitInterface, IdentityI
     }
 
     /**
-     * Is it blocked?
+     * Whether the user is blocked
      *
      * @param bool
      */
@@ -279,7 +279,7 @@ class User extends \yii\db\ActiveRecord implements RateLimitInterface, IdentityI
     }
 
     /**
-     * Is it active?
+     * Whether the user is active
      *
      * @param bool
      */
@@ -289,7 +289,7 @@ class User extends \yii\db\ActiveRecord implements RateLimitInterface, IdentityI
     }
 
     /**
-     * Is it confirmed?
+     * Whether the user is confirmed
      *
      * @param bool
      */
@@ -299,7 +299,7 @@ class User extends \yii\db\ActiveRecord implements RateLimitInterface, IdentityI
     }
 
     /**
-     * Is SuperUser?
+     * Whether the user is SuperUser
      *
      * @return bool
      */
