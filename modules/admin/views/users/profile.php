@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use kartik\date\DatePicker;
 use yii\web\JsExpression;
 use rkit\fileapi\Widget as FileApi;
-use app\modules\admin\helpers\FileRulesDescription;
+use app\modules\admin\printers\FileRulesTextPrinter;
 
 $this->title = Yii::t('app', 'Users') . ' / ' . $model->user_id;
 ?>
@@ -50,7 +50,7 @@ $this->title = Yii::t('app', 'Users') . ' / ' . $model->user_id;
                 'duplicate' => true
             ]
         ])
-        ->hint(FileRulesDescription::asDescription($model->model()->fileRules('photo')), [
+        ->hint(new FileRulesTextPrinter($model->model()->fileRules('photo')), [
             'class' => 'fileapi-rules'
         ]);
     ?>
