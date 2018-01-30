@@ -12,7 +12,7 @@
 ## Soft
 
 - PHP 7.1
-- Node.js + NPM 5
+- Node 8 + NPM 5
 - Composer
 
 ## Installation
