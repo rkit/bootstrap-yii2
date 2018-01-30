@@ -17,7 +17,7 @@ class m141230_075228_add_superuser extends Migration
 
         $auth = Yii::$app->authManager;
         $role = $auth->createRole($user->role_name);
-        $role->description = Yii::t('app', 'SuperUser');
+        $role->description = Yii::t('app', 'Administrator');
         $auth->add($role);
         $auth->assign($role, $user->id);
     }

@@ -2,7 +2,7 @@
 <p class="lead">
   <span class="label label-info">
     <?= Yii::t('app', 'You') ?>
-    «<?= @Yii::$app->authManager->getRole(Yii::$app->user->identity->role)->description ?>»
+    «<?= Yii::t('app', Yii::$app->authManager->getRole(Yii::$app->user->identity->role)->description) ?>»
   </span>
 </p>
 
@@ -25,6 +25,5 @@
     <?php if (isset($_SERVER['SERVER_SOFTWARE'])) :?>
     <li>Server <?= ucfirst($_SERVER['SERVER_SOFTWARE']); ?></li>
     <?php endif?>
-    <li>OS <?= ucfirst(php_uname('s')) ?></li>
   </ul>
 </div>
