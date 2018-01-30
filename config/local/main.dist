@@ -5,6 +5,12 @@ $allowedIPs = ['127.0.0.1'];
 $isAllow = YII_ENV_MODE === 'web' && in_array($_SERVER['REMOTE_ADDR'], $allowedIPs);
 
 /**
+ *  Base
+ */
+
+$config['components']['urlManager']['hostInfo'] = 'http://bootstrap-yii2.test';
+
+/**
  * Db
  */
 

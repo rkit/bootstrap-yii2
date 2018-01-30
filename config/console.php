@@ -22,7 +22,7 @@ $config = [
         ],
         'urlManager' => [
             'baseUrl' => '',
-            'hostInfo' => $params['host'],
+            'hostInfo' => '',
             'enablePrettyUrl' => true,
             'showScriptName' => false,
         ],
