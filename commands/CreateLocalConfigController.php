@@ -61,7 +61,7 @@ class CreateLocalConfigController extends Controller
 
         if (!file_exists($dist)) {
             copy($source, $dist);
-            $this->specifySettings($dist);
+            $this->fill($dist);
 
             $this->stdout("Created successfully!\n", Console::FG_GREEN);
         } else {
@@ -71,10 +71,10 @@ class CreateLocalConfigController extends Controller
         return ExitCode::OK;
     }
 
-    private function specifySettings(string $file)
+    private function fill(string $file)
     {
         $contents = file_get_contents($file);
-        $settings = $this->getSettings();
+        $settings = array_merge($this->envVars(), $this->getOptionValues(''));
 
         foreach ($settings as $var => $value) {
             $contents = str_replace('%' . $var  . '%', $value, $contents);
@@ -83,13 +83,11 @@ class CreateLocalConfigController extends Controller
         file_put_contents($file, $contents);
     }
 
-    private function getSettings()
+    private function envVars()
     {
         $envFile = Yii::getAlias('@app/.env');
         if (file_exists($envFile)) {
             return parse_ini_file($envFile);
         }
-
-        return $this->getOptionValues('');
     }
 }
