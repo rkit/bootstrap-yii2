@@ -20,7 +20,7 @@ class SitemapController extends Controller
 
     public function actionCreate(): int
     {
-        // writeItems…
+        // $this->writeItems(…);
 
         $this->sitemap->close();
 
@@ -28,9 +28,8 @@ class SitemapController extends Controller
         return ExitCode::OK;
     }
 
-    private function writeItems(string $modelClass, $cb)
+    private function writeItems(array $items, $cb)
     {
-        $items = $modelClass::find()->active()->asArray()->all();
         foreach ($items as $item) {
             $options = [];
 
