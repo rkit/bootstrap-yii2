@@ -3,9 +3,10 @@ use yii\helpers\{Html, ArrayHelper};
 use yii\bootstrap\{Nav, NavBar};
 use app\assets\AppAsset;
 
-$this->title = str_replace('"', '“', $this->title);
-$this->title = Html::encode($this->title);
-$this->title = $this->title ? $this->title . ' / ' : '';
+$pageTitle = $this->title;
+$pageTitle = str_replace('"', '“', $pageTitle);
+$pageTitle = Html::encode($pageTitle);
+$pageTitle = $pageTitle ? $pageTitle . ' / ' : '';
 
 AppAsset::register($this);
 
@@ -19,7 +20,7 @@ AppAsset::register($this);
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title><?= $this->title . Yii::$app->name ?></title>
+  <title><?= $pageTitle . Yii::$app->name ?></title>
   <?= Html::csrfMetaTags()?>
   <?php $this->head() ?>
 </head>
