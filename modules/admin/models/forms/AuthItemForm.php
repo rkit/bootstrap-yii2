@@ -39,7 +39,7 @@ class AuthItemForm extends \yii\base\Model
     private $model;
 
    /**
-    * @return array the validation rules.
+    * @return array The validation rules
     */
     public function rules()
     {

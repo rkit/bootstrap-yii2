@@ -3,7 +3,7 @@
 namespace app\models\entity;
 
 /**
- * This is the model class for table "{{%user_provider}}".
+ * This is the model class for table "{{%user_provider}}"
  *
  * @property integer $id
  * @property integer $user_id
@@ -39,7 +39,7 @@ class UserProvider extends \yii\db\ActiveRecord
 
     /**
      * @inheritdoc
-     * @return \app\models\query\UserProviderQuery the active query used by this AR class.
+     * @return \app\models\query\UserProviderQuery The active query used by this AR class
      */
     public static function find()
     {

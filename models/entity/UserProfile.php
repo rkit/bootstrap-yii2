@@ -5,7 +5,7 @@ namespace app\models\entity;
 use Yii;
 
 /**
- * This is the model class for table "{{%user_profile}}".
+ * This is the model class for table "{{%user_profile}}"
  *
  * @property integer $user_id
  * @property string $full_name
@@ -65,7 +65,7 @@ class UserProfile extends \yii\db\ActiveRecord
 
     /**
      * @inheritdoc
-     * @return \app\models\query\UserProfileQuery the active query used by this AR class.
+     * @return \app\models\query\UserProfileQuery The active query used by this AR class
      */
     public static function find()
     {

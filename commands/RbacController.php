@@ -9,6 +9,7 @@ use yii\helpers\Console;
 
 /**
  * Command for update permissions
+ * 
  * @see config/rbac/permissions.php
  */
 class RbacController extends Controller

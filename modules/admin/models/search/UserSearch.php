@@ -6,7 +6,7 @@ use yii\data\ActiveDataProvider;
 use app\models\entity\User;
 
 /**
- * UserSearch represents the model behind the search form about `app\models\entity\User`.
+ * UserSearch represents the model behind the search form about `app\models\entity\User`
  */
 class UserSearch extends User
 {
@@ -40,10 +40,10 @@ class UserSearch extends User
     }
 
     /**
-     * Search by request criteria.
+     * Search by request criteria
      *
-     * @param array|null Filter params.
-     * @return ActiveDataProvider Data provider.
+     * @param array|null Filter params
+     * @return ActiveDataProvider Data provider
      */
     public function search($params)
     {

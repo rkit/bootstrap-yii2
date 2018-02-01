@@ -6,7 +6,7 @@ use Yii;
 use yii\behaviors\TimestampBehavior;
 
 /**
- * This is the model class for table "{{%file}}".
+ * This is the model class for table "{{%file}}"
  *
  * @property integer $id
  * @property integer $user_id
@@ -62,7 +62,7 @@ class File extends \yii\db\ActiveRecord
 
     /**
      * @inheritdoc
-     * @return \app\models\query\FileQuery the active query used by this AR class.
+     * @return \app\models\query\FileQuery The active query used by this AR class
      */
     public static function find()
     {

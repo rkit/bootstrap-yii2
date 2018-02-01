@@ -6,6 +6,9 @@ use Yii;
 use yii\web\ForbiddenHttpException;
 use app\modules\admin\models\forms\LoginForm;
 
+/**
+ * Allowed controller for all
+ */
 class IndexController extends \yii\web\Controller
 {
     public function behaviors()

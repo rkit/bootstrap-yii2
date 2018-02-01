@@ -11,10 +11,10 @@ trait ControllerTrait
 {
     /**
      * Find the model based on its primary key value or WHERE condition.
-     * If the model is not found, then 404 HTTP exception will be thrown
+     * If the model is not found, then 404 HTTP exception will be thrown.
      *
      * @param string $model Class name
-     * @param mixed $condition primary key or WHERE condition
+     * @param mixed $condition Primary key or WHERE condition
      * @return ActiveRecord
      * @throws NotFoundHttpException
      */
@@ -30,8 +30,8 @@ trait ControllerTrait
     }
 
     /**
-     * Find the model based on prepared ActiveQuery
-     * If the model is not found, then 404 HTTP exception will be thrown
+     * Find the model based on prepared ActiveQuery.
+     * If the model is not found, then 404 HTTP exception will be thrown.
      *
      * @param ActiveQuery $query
      * @return ActiveRecord
@@ -50,7 +50,7 @@ trait ControllerTrait
 
     /**
      * Returns an error messages as an array indexed by the ID.
-     * This is a helper method that simplifies the way of writing AJAX validation code
+     * This is a helper method that simplifies the way of writing AJAX validation code.
      *
      * @param yii\base\Model $model
      * @return yii\web\Response

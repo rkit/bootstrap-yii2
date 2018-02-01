@@ -6,7 +6,9 @@ use yii\db\ActiveQuery;
 use app\models\entity\User;
 
 /**
- * ActiveQuery for User
+ * This is the ActiveQuery class for [[\entity\User]]
+ *
+ * @see \entity\User
  */
 class UserQuery extends ActiveQuery
 {
@@ -59,7 +61,7 @@ class UserQuery extends ActiveQuery
     /**
      * Select by password reset token
      *
-     * @param string $token password reset token
+     * @param string $token Password reset token
      * @return yii\db\ActiveQuery
      */
     public function passwordResetToken(string $token): ActiveQuery
@@ -74,7 +76,7 @@ class UserQuery extends ActiveQuery
     /**
      * Select by confirm email token
      *
-     * @param string $token confirm email token
+     * @param string $token Confirm email token
      * @return yii\db\ActiveQuery
      */
     public function emailConfirmToken(string $token): ActiveQuery

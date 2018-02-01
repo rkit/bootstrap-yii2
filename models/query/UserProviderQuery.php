@@ -5,7 +5,9 @@ namespace app\models\query;
 use yii\db\ActiveQuery;
 
 /**
- * ActiveQuery for UserProvider
+ * This is the ActiveQuery class for [[\entity\UserProvider]]
+ *
+ * @see \entity\UserProvider
  */
 class UserProviderQuery extends ActiveQuery
 {

@@ -6,7 +6,7 @@ use Yii;
 use yii\behaviors\TimestampBehavior;
 
 /**
- * This is the model class for table "{{%auth_item}}".
+ * This is the model class for table "{{%auth_item}}"
  *
  * @property string $name
  * @property integer $type
@@ -74,7 +74,7 @@ class AuthItem extends \yii\db\ActiveRecord
 
     /**
      * @inheritdoc
-     * @return \app\models\query\AuthItemQuery the active query used by this AR class.
+     * @return \app\models\query\AuthItemQuery The active query used by this AR class
      */
     public static function find()
     {
@@ -92,7 +92,8 @@ class AuthItem extends \yii\db\ActiveRecord
     }
 
     /**
-     * Deleting a file from the db and from the file system
+     * Delete auth item.
+     * WARNING: Impossible delete a superuser.
      *
      * @return bool
      */

@@ -5,7 +5,7 @@ namespace app\models\query;
 use yii\db\ActiveQuery;
 
 /**
- * This is the ActiveQuery class for [[\entity\UserProfile]].
+ * This is the ActiveQuery class for [[\entity\UserProfile]]
  *
  * @see \entity\UserProfile
  */

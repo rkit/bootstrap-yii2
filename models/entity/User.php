@@ -10,7 +10,7 @@ use yii\filters\RateLimitInterface;
 use yii\behaviors\TimestampBehavior;
 
 /**
- * This is the model class for table "{{%user}}".
+ * This is the model class for table "{{%user}}"
  *
  * @property integer $id
  * @property string $email
@@ -164,7 +164,7 @@ class User extends \yii\db\ActiveRecord implements RateLimitInterface, IdentityI
 
     /**
      * @inheritdoc
-     * @return \app\models\query\UserQuery the active query used by this AR class.
+     * @return \app\models\query\UserQuery The active query used by this AR class
      */
     public static function find()
     {
@@ -367,8 +367,8 @@ class User extends \yii\db\ActiveRecord implements RateLimitInterface, IdentityI
     /**
      * Validates password
      *
-     * @param string $password password to validate
-     * @return boolean if password provided is valid for current user
+     * @param string $password Password to validate
+     * @return boolean If password provided is valid for current user
      */
     public function validatePassword(string $password): bool
     {

@@ -6,25 +6,25 @@ use Yii;
 use yii\helpers\ArrayHelper;
 
 /**
- * Converting file validation rules to text.
+ * Converting file validation rules to text
  */
 class FileRulesTextPrinter
 {
     /**
-     * @var array Validation rules.
+     * @var array Validation rules
      */
     private $rules;
     /**
-     * @var array Validation rules of image.
+     * @var array Validation rules of image
      */
     private $imageSize;
     /**
-     * @var string Delimiter for rules.
+     * @var string Delimiter for rules
      */
     private $delimiter = '<br>';
 
     /**
-     * @param array $rules Validation rules.
+     * @param array $rules Validation rules
      * @param string $delimiter Delimiter for rules. Default `<br>` 
      */
     public function __construct(array $rules, $delimiter = null)
@@ -38,7 +38,7 @@ class FileRulesTextPrinter
     }
 
     /**
-     * Get a description of the validation rules in as text.
+     * Get a description of the validation rules in as text
      *
      * @return string
      */
@@ -55,7 +55,7 @@ class FileRulesTextPrinter
     }
 
     /**
-     * Get description for rule the `maximum size`.
+     * Get description for rule the `maximum size`
      * 
      * @return string|null
      */
@@ -70,7 +70,7 @@ class FileRulesTextPrinter
     }
 
     /**
-     * Get description for rule the `maximum count of files`.
+     * Get description for rule the `maximum count of files`
      * 
      * @return string|null
      */
@@ -85,7 +85,7 @@ class FileRulesTextPrinter
     }
 
     /**
-     * Get description for rule the `allowed extensions`.
+     * Get description for rule the `allowed extensions`
      * 
      * @return string|null
      */
@@ -100,7 +100,7 @@ class FileRulesTextPrinter
     }
 
     /**
-     * Get description for rule the `image sizes`.
+     * Get description for rule the `image sizes`
      * 
      * @return string|null
      */
@@ -136,7 +136,7 @@ class FileRulesTextPrinter
     }
 
     /**
-     * Whether the image has strict size.
+     * Whether the image has strict size
      * 
      * @return bool 
      */
@@ -151,7 +151,7 @@ class FileRulesTextPrinter
     }
 
     /**
-     * Get description for image with strict size.
+     * Get description for image with strict size
      * 
      * @return string
      */
@@ -164,7 +164,7 @@ class FileRulesTextPrinter
     }
 
     /**
-     * Whether the image has max and min size.
+     * Whether the image has max and min size
      * 
      * @return bool 
      */
@@ -174,7 +174,7 @@ class FileRulesTextPrinter
     }
 
     /**
-     * Whether the image has min size.
+     * Whether the image has min size
      * 
      * @return bool 
      */
@@ -187,7 +187,7 @@ class FileRulesTextPrinter
     }
 
     /**
-     * Get description for image with min size.
+     * Get description for image with min size
      * 
      * @return string
      */
@@ -200,7 +200,7 @@ class FileRulesTextPrinter
     }
 
     /**
-     * Whether the image has max size.
+     * Whether the image has max size
      * 
      * @return bool 
      */
@@ -213,7 +213,7 @@ class FileRulesTextPrinter
     }
 
     /**
-     * Get description for image with max size.
+     * Get description for image with max size
      * 
      * @return string
      */

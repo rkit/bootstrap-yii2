@@ -6,7 +6,7 @@ use yii\data\ActiveDataProvider;
 use app\models\entity\AuthItem;
 
 /**
- * AuthItemSearch represents the model behind the search form about `app\models\entity\AuthItem`.
+ * AuthItemSearch represents the model behind the search form about `app\models\entity\AuthItem`
  */
 class AuthItemSearch extends AuthItem
 {
@@ -21,10 +21,10 @@ class AuthItemSearch extends AuthItem
     }
 
     /**
-     * Search by request criteria.
+     * Search by request criteria
      *
-     * @param array|null Filter params.
-     * @return ActiveDataProvider Data provider.
+     * @param array|null Filter params
+     * @return ActiveDataProvider Data provider
      */
     public function search($params)
     {

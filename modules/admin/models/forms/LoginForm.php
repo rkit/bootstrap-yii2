@@ -25,7 +25,7 @@ class LoginForm extends \yii\base\Model
     private $user = false;
 
     /**
-     * @return array the validation rules.
+     * @return array The validation rules
      */
     public function rules()
     {
@@ -68,8 +68,9 @@ class LoginForm extends \yii\base\Model
     }
 
     /**
-     * Logs in a user using the provided email and password.
-     * @return boolean Whether the user is logged in successfully.
+     * Logs in a user using the provided email and password
+     * 
+     * @return boolean Whether the user is logged in successfully
      */
     public function login(): bool
     {
