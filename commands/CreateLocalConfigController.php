@@ -89,5 +89,6 @@ class CreateLocalConfigController extends Controller
         if (file_exists($envFile)) {
             return parse_ini_file($envFile);
         }
+        return [];
     }
 }
