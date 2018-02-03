@@ -9,20 +9,20 @@ abstract class Parser implements ParserInterface
     /**
      * @var ClientInterface
      */
-    protected $client;
+    protected $provider;
     /**
      * @var array
      */
-    protected $profile;
+    protected $attributes;
     /**
      * @var array
      */
-    protected $token;
+    protected $tokens;
 
-    public function __construct(ClientInterface $client)
+    public function __construct(ClientInterface $provider)
     {
-        $this->client = $client;
-        $this->profile = $client->getUserAttributes();
-        $this->token = $client->getAccessToken()->getParams();
+        $this->provider = $provider;
+        $this->attributes = $provider->getUserAttributes();
+        $this->tokens = $provider->getAccessToken()->getParams();
     }
 }

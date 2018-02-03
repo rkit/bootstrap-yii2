@@ -22,7 +22,7 @@ $this->title = Yii::t('app', 'Signup');
           <div class="pull-left">
             <?= Html::submitButton(Yii::t('app', 'Signup'), ['class' => 'btn btn-info', 'name' => 'signup-button']) ?>
           </div>
-          <div class="pull-right">
+          <div class="pull-left">
             <?= yii\authclient\widgets\AuthChoice::widget([
                 'baseAuthUrl' => ['social/index'],
             ]) ?>

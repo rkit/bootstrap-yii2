@@ -3,6 +3,7 @@
 namespace app\modules\auth\services;
 
 use yii\authclient\ClientInterface;
+use app\modules\auth\oauth\ParserInterface;
 use app\models\entity\{User, UserProvider};
 
 /**
@@ -11,59 +12,73 @@ use app\models\entity\{User, UserProvider};
 class SocialAuth
 {
     /**
-     * @var int
+     * @var ParserInterface
+     */
+    private $parser;
+    /**
+     * @var ClientInterface
      */
     private $provider;
     /**
      * @var int
      */
-    private $providerId;
-    /**
-     * @var ClientInterface
-     */
-    private $client;
-    /**
-     * @var array
-     */
-    public $parsers;
+    private $providerType;
 
-    public function __construct(ClientInterface $client)
+    /**
+     * @param ParserInterface $parser
+     * @param ClientInterface $provider
+     * @return User
+     */
+    public function __construct(ParserInterface $parser, ClientInterface $provider)
     {
-        $this->client = $client;
-        $this->provider = UserProvider::getTypeByName($client->id);
-        $this->providerId = $client->getUserAttributes()['id'];
+        $this->parser = $parser;
+        $this->provider = $provider;
+        $this->providerType = UserProvider::getTypeByName($provider->id);
     }
 
-    public function prepareUser(): User
+    public function getUser(): User
     {
         $user = null;
-        $parser = $this->parser();
 
-        $profileData = $parser->profileData();
-        $tokenData = ['type' => $this->provider] + $parser->tokenData();
+        $existUserProvider = UserProvider::find()
+            ->provider($this->providerType, $this->parser->profileId())
+            ->one();
 
-        if ($provider = UserProvider::find()->provider($this->provider, $this->providerId)->one()) {
-            $user = $provider->user;
+        if ($existUserProvider) {
+            $user = $existUserProvider->user;
 
             // if exist then update access tokens
-            $provider->setAttributes($tokenData);
-            $provider->save();
+            $existUserProvider->setAttributes($this->providerAttributes(), false);
+            $existUserProvider->save();
         }
 
         if (!is_object($user)) {
             $user = new User();
 
-            $user->email = $parser->email();
-            $user->setProfile($profileData);
-            $user->setProviders($tokenData);
+            $user->email = $this->parser->email();
+            $user->setProfile($this->profileAttributes());
+            $user->setProviders($this->providerAttributes());
         }
 
         return $user;
     }
 
-    private function parser()
+    private function profileAttributes()
     {
-        $parserClass = $this->parsers[$this->client->id];
-        return new $parserClass($this->client);
+        return [
+            'full_name' => $this->parser->fullName(),
+            'photo' => $this->parser->photo(),
+        ];
+    }
+
+    private function providerAttributes()
+    {
+        return [
+            'type' => $this->providerType,
+            'profile_id' => $this->parser->profileId(),
+            'profile_url' => $this->parser->profileUrl(),
+            'access_token' => $this->parser->accessToken(),
+            'access_token_secret' => $this->parser->accessTokenSecret(),
+        ];
     }
 }

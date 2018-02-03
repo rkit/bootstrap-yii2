@@ -26,6 +26,10 @@ body {
 /* Auth
 -------------------------------------------------- */
 
+.auth-clients {
+  margin-left: -25px;
+}
+
 .auth-client .auth-link .auth-icon {
   display: none
 }

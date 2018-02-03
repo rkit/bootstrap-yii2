@@ -55,14 +55,26 @@ class SocialController extends \yii\web\Controller
         return parent::redirect($url, $statusCode);
     }
 
+    private function parsers()
+    {
+        return [
+            'facebook' => '\app\modules\auth\oauth\parsers\Facebook',
+        ];
+    }
+
     public function actionSignup()
     {
         if (Yii::$app->session['authClient'] === null) {
             return $this->redirect(['/']);
         }
 
-        $socialAuth = Yii::$container->get(SocialAuth::class, [Yii::$app->session['authClient']]);
-        $user = $socialAuth->prepareUser();
+        $client = Yii::$app->session['authClient'];
+
+        $parserClass = $this->parsers()[$client->id];
+        $parser = new $parserClass($client);
+
+        $socialAuth = Yii::$container->get(SocialAuth::class, [$parser, $client]);
+        $user = $socialAuth->getUser();
         $model = Yii::$container->get(SignupProviderForm::class, [$user]);
 
         if (!$user->isNewRecord) {

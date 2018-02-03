@@ -7,58 +7,50 @@ use app\modules\auth\oauth\Parser;
 
 /**
  * Parser for Facebook OAuth
- *
- * @property ClientInterface $client
- * @property array $profile
- * @property array $token
  */
 class Facebook extends Parser
 {
-    /**
-     * Get email
-     *
-     * @return string|null
-     */
     public function email(): ?string
     {
-        return ArrayHelper::getValue($this->profile, 'email');
+        return ArrayHelper::getValue($this->attributes, 'email', null);
     }
 
-    /**
-     * Get token info
-     *
-     * @return array
-     */
-    public function tokenData(): array
+    public function fullName(): string
     {
-        return [
-            'profile_id' => ArrayHelper::getValue($this->profile, 'id'),
-            'profile_url' => ArrayHelper::getValue($this->profile, 'link'),
-            'access_token' => ArrayHelper::getValue($this->token, 'access_token'),
-            'access_token_secret' => ''
-        ];
+        return trim(ArrayHelper::getValue($this->attributes, 'name', ''));
     }
 
-    /**
-     * Get profile info
-     *
-     * @return array
-     */
-    public function profileData(): array
+    public function photo(): string
     {
-        $profileId = ArrayHelper::getValue($this->profile, 'id');
-        $photoUrl = 'https://graph.facebook.com/' . $profileId . '/picture?width=500&redirect=false';
-        $photoRes = json_decode(file_get_contents($photoUrl));
+        $photo = ArrayHelper::getValue($this->attributes, 'picture.data.url', '');
+    
+        $url = 'https://graph.facebook.com/' . $this->profileId() . '/picture?width=500&redirect=false';
+        $res = @json_decode(@file_get_contents($url));
 
-        if (is_object($photoRes) && isset($photoRes->data)) {
-            $photo = $photoRes->data->url;
-        } else {
-            $photo = ArrayHelper::getValue($this->profile, 'picture.data.url', '');
+        if (is_object($res) && isset($res->data)) {
+            $photo = $res->data->url;
         }
 
-        return [
-            'full_name' => trim(ArrayHelper::getValue($this->profile, 'name')),
-            'photo' => $photo
-        ];
+        return $photo;
+    }
+
+    public function profileId(): string
+    {
+        return ArrayHelper::getValue($this->attributes, 'id', '');
+    }
+
+    public function profileUrl(): string
+    {
+        return ArrayHelper::getValue($this->attributes, 'link', '');
+    }
+
+    public function accessToken(): string
+    {
+        return ArrayHelper::getValue($this->tokens, 'access_token', '');
+    }
+
+    public function accessTokenSecret(): string
+    {
+        return '';
     }
 }

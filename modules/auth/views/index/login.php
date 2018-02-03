@@ -26,7 +26,7 @@ $this->title = Yii::t('app', 'Login');
           <div class="pull-left">
             <?= Html::submitButton(Yii::t('app', 'Login'), ['class' => 'btn btn-info', 'name' => 'login-button']) ?>
           </div>
-          <div class="pull-right">
+          <div class="pull-left">
             <?= yii\authclient\widgets\AuthChoice::widget([
                 'baseAuthUrl' => ['social/index']
             ]) ?>

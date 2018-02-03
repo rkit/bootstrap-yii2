@@ -72,13 +72,6 @@ $config['container'] = [
             'firstPageLabel' => '&lArr;',
             'lastPageLabel'  => '&rArr;',
         ],
-        'app\modules\auth\services\SocialAuth' => [
-            'parsers' => [
-                'vkontakte' => '\app\modules\auth\oauth\parsers\Vkontakte',
-                'twitter' => '\app\modules\auth\oauth\parsers\Twitter',
-                'facebook' => '\app\modules\auth\oauth\parsers\Facebook',
-            ]
-        ],
     ],
     'singletons' => [
         'yii\swiftmailer\Message' => function () {
