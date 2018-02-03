@@ -23,7 +23,7 @@ class AppAsset extends AssetBundle
     ];
     public $js = [
         'js/vendor/nprogress/nprogress.js',
-        'js/admin/binding.js',
+        'js/admin/index.js',
         'js/admin/forms.js',
     ];
 }
