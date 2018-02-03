@@ -27,7 +27,6 @@ class SocialAuth
     /**
      * @param ParserInterface $parser
      * @param ClientInterface $provider
-     * @return User
      */
     public function __construct(ParserInterface $parser, ClientInterface $provider)
     {
