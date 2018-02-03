@@ -65,9 +65,6 @@ return [
                  ],
              ],
          ],
-         'cache' => [
-             'class' => 'yii\caching\FileCache',
-         ],
          'settings' => [
              'class' => 'rkit\settings\Settings',
          ],
@@ -76,7 +73,6 @@ return [
          ],
          'authManager' => [
              'class' => 'yii\rbac\DbManager',
-             'cache' => 'cache',
          ],
          'authClientCollection' => [
              'class' => 'yii\authclient\Collection',
