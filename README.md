@@ -17,8 +17,6 @@
 
 ## Installation
 
-> For to setup development environment, you could use [Docker](./README.md#docker-for-development-environment)
-
 1. Cloning a repository
    ```sh
    git clone https://github.com/rkit/bootstrap-yii2.git
@@ -30,6 +28,11 @@
 3. Creating a project
    ```sh
    composer create-project
+   
+   # or if using Docker:
+   docker-compose up -d
+   docker-compose exec php composer create-project
+   ```
    ```
 
 Access to the Control Panel
@@ -57,19 +60,3 @@ fastcgi_param APPLICATION_ENV development;
 
 - PHP Code Sniffer ([phpcs.xml](./phpcs.xml))
 - ESLint ([.eslintrc](./.eslintrc))
-
-## Docker for development environment
-
-1. Cloning a repository
-   ```sh
-   git clone https://github.com/rkit/bootstrap-yii2.git
-   cd bootstrap-yii2
-   ```
-
-2. Copy [.env.dist](./.env.dist) to `.env` and specify settings
-
-3. Creating a project
-   ```sh
-   docker-compose up -d
-   docker-compose exec php composer create-project
-   ```
