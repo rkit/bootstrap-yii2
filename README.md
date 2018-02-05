@@ -28,11 +28,10 @@
 3. Creating a project
    ```sh
    composer create-project
-   
+
    # or if using Docker:
    docker-compose up -d
    docker-compose exec php composer create-project
-   ```
    ```
 
 Access to the Control Panel
