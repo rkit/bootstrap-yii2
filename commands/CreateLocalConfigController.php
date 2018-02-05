@@ -74,7 +74,11 @@ class CreateLocalConfigController extends Controller
     private function fill(string $file)
     {
         $contents = file_get_contents($file);
-        $settings = array_merge($this->envVars(), $this->getOptionValues(''));
+
+        $settings = $this->envVars();
+        if ($settings === false) {
+            $settings = $this->getOptionValues('');
+        }
 
         foreach ($settings as $var => $value) {
             $contents = str_replace('%' . $var  . '%', $value, $contents);
@@ -89,6 +93,6 @@ class CreateLocalConfigController extends Controller
         if (file_exists($envFile)) {
             return parse_ini_file($envFile);
         }
-        return [];
+        return false;
     }
 }
