@@ -20,7 +20,7 @@
 > For to setup development environment, you could use [Docker](./README.md#docker-for-development-environment)
 
 1. Cloning a repository
-   ```
+   ```sh
    git clone https://github.com/rkit/bootstrap-yii2.git
    cd bootstrap-yii2
    ```
@@ -33,8 +33,9 @@
    ```
 
 Access to the Control Panel
-```
-email: editor@example.com  
+
+```sh
+email: editor@example.com
 password: fghfgh
 ```
 
@@ -59,24 +60,16 @@ fastcgi_param APPLICATION_ENV development;
 
 ## Docker for development environment
 
-1. Install [Docker](https://www.docker.com/)
-
-2. Cloning a repository
-   ```
+1. Cloning a repository
+   ```sh
    git clone https://github.com/rkit/bootstrap-yii2.git
    cd bootstrap-yii2
    ```
 
-3. Copy [.env.dist](./.env.dist) to `.env` and specify settings
-   > MYSQL_ROOT_PASSWORD  
-   > MYSQL_PASSWORD
+2. Copy [.env.dist](./.env.dist) to `.env` and specify settings
 
-4. Create and start containers
+3. Creating a project
    ```sh
    docker-compose up -d
-   ```
-
-5. Creating a project
-   ```sh
    docker-compose exec php composer create-project
    ```
