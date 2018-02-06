@@ -23,7 +23,7 @@ services:
     links:
       - php
     volumes:
-      - ./config/docker/nginx/conf.d/bootstrap-yii2.conf:/etc/nginx/conf.d/bootstrap-yii2.conf
+      - ./config/docker/nginx/conf.d/dev:/etc/nginx/conf.d/dev.conf
       - ./:/var/www/html
 
   mysql:
