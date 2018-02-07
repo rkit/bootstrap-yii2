@@ -12,8 +12,7 @@ use yii\helpers\Url;
 
 <?php $this->title = Yii::t('app', 'Index'); ?>
 <div class="page-header">
-  <h1>Bootstrap for Yii2</h1>
+  <h1><?= Yii::$app->name?></h1>
 </div>
 
-<a href="https://github.com/rkit/bootstrap-yii2" class="btn btn-info">GitHub</a>
-<?= Html::a(Yii::t('app', 'Control Panel'), ['/admin'], ['class' => 'btn btn-default']) ?>
+<?= Html::a(Yii::t('app', 'Control Panel'), ['/admin'], ['class' => 'btn btn-info']) ?>
