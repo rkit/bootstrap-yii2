@@ -20,7 +20,7 @@ $config = [
             ]
         ]
     ],
-    'name'           => 'Bootstrap',
+    'name'           => 'Bootstrap-Yii2',
     'defaultRoute'   => 'index/index',
     'sourceLanguage' => 'en',
     'language'       => 'ru',
