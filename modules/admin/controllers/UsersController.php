@@ -92,7 +92,7 @@ class UsersController extends \yii\web\Controller
             if ($model->load(Yii::$app->request->post()) && $model->validate()) {
                 $model->save();
 
-                Yii::$app->session->setFlash('success', Yii::t('app.msg', 'Saved successfully'));
+                Yii::$app->session->setFlash('success', Yii::t('app', 'Saved successfully'));
                 return $this->redirect(['edit', 'id' => $model->id]);
             }
             return $this->asJsonModelErrors($model);
@@ -114,7 +114,7 @@ class UsersController extends \yii\web\Controller
             if ($model->load(Yii::$app->request->post()) && $model->validate()) {
                 $model->save();
 
-                Yii::$app->session->setFlash('success', Yii::t('app.msg', 'Saved successfully'));
+                Yii::$app->session->setFlash('success', Yii::t('app', 'Saved successfully'));
                 return $this->redirect(['profile', 'id' => $model->user_id]);
             }
             return $this->asJsonModelErrors($model);

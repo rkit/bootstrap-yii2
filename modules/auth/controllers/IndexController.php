@@ -80,7 +80,7 @@ class IndexController extends \yii\web\Controller
             Yii::$app->session->setFlash(
                 'success',
                 Yii::t(
-                    'app.msg',
+                    'app',
                     'Please activate your account. A letter for activation was sent to {email}',
                     ['email' => $model->email]
                 )
@@ -97,14 +97,14 @@ class IndexController extends \yii\web\Controller
     {
         $user = Yii::$app->user->identity;
         if ($user->isConfirmed()) {
-            throw new ForbiddenHttpException(Yii::t('app.msg', 'Access Denied'));
+            throw new ForbiddenHttpException(Yii::t('app', 'Access Denied'));
         }
 
         $this->confirmEmail->sendEmail($user);
 
         Yii::$app->session->setFlash(
             'success',
-            Yii::t('app.msg', 'A letter for activation was sent to {email}', ['email' => $user->email])
+            Yii::t('app', 'A letter for activation was sent to {email}', ['email' => $user->email])
         );
         return $this->redirect(['/']);
     }
@@ -113,7 +113,7 @@ class IndexController extends \yii\web\Controller
     {
         $this->confirmEmail->setConfirmed($token);
 
-        Yii::$app->session->setFlash('success', Yii::t('app.msg', 'Your account is successfully activated'));
+        Yii::$app->session->setFlash('success', Yii::t('app', 'Your account is successfully activated'));
         return $this->redirect(['/']);
     }
 
@@ -127,7 +127,7 @@ class IndexController extends \yii\web\Controller
 
                 Yii::$app->session->setFlash(
                     'success',
-                    Yii::t('app.msg', 'We\'ve sent you an email with instructions to reset your password')
+                    Yii::t('app', 'We\'ve sent you an email with instructions to reset your password')
                 );
                 return $this->redirect(['/']);
             }
@@ -145,7 +145,7 @@ class IndexController extends \yii\web\Controller
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $model->resetPassword();
 
-            Yii::$app->session->setFlash('success', Yii::t('app.msg', 'New password was saved'));
+            Yii::$app->session->setFlash('success', Yii::t('app', 'New password was saved'));
             return $this->redirect(['/']);
         }
 

@@ -55,7 +55,7 @@ class SignupForm extends \yii\base\Model
             ['email', 'email'],
             ['email', 'unique',
                 'targetClass' => '\app\models\entity\User',
-                'message' => Yii::t('app.msg', 'This email address has already been taken')
+                'message' => Yii::t('app', 'This email address has already been taken')
             ],
         ];
     }
@@ -89,7 +89,7 @@ class SignupForm extends \yii\base\Model
         $user->status = User::STATUS_ACTIVE;
 
         if (!$user->save()) {
-            throw new Exception(Yii::t('app.msg', 'An error occurred while saving user'));
+            throw new Exception(Yii::t('app', 'An error occurred while saving user'));
         }
 
         $this->user = $user;
@@ -124,7 +124,7 @@ class SignupForm extends \yii\base\Model
             ->send();
 
         if (!$sent) {
-            throw new UserException(Yii::t('app.msg', 'An error occurred while sending a message to activate account'));
+            throw new UserException(Yii::t('app', 'An error occurred while sending a message to activate account'));
         }
     }
 }

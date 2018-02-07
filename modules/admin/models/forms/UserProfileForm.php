@@ -92,7 +92,7 @@ class UserProfileForm extends \yii\base\Model
         $model->photo = $this->photo;
 
         if (!$model->save()) {
-            throw new Exception(Yii::t('app.msg', 'An error occurred while saving profile'));
+            throw new Exception(Yii::t('app', 'An error occurred while saving profile'));
         }
 
         return $model;

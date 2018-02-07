@@ -92,8 +92,8 @@ class SocialController extends \yii\web\Controller
 
             Yii::$app->session->setFlash(
                 'success',
-                Yii::t('app.msg', 'Please activate your account') . '. ' .
-                Yii::t('app.msg', 'A letter for activation was sent to {email}', ['email' => $model->email])
+                Yii::t('app', 'Please activate your account') . '. ' .
+                Yii::t('app', 'A letter for activation was sent to {email}', ['email' => $model->email])
             );
             return $this->redirect(['/']);
         }

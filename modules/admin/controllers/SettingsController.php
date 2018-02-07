@@ -20,7 +20,7 @@ class SettingsController extends \yii\web\Controller
             if ($model->load(Yii::$app->request->post()) && $model->validate()) {
                 Yii::$app->settings->load($model->getAttributes());
 
-                Yii::$app->session->setFlash('success', Yii::t('app.msg', 'Saved successfully'));
+                Yii::$app->session->setFlash('success', Yii::t('app', 'Saved successfully'));
                 return $this->refresh();
             }
             return $this->asJsonModelErrors($model);

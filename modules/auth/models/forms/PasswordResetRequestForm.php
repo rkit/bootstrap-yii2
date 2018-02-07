@@ -37,7 +37,7 @@ class PasswordResetRequestForm extends \yii\base\Model
             ['email', 'exist',
                 'targetClass' => '\app\models\entity\User',
                 'filter' => ['status' => User::STATUS_ACTIVE],
-                'message' => Yii::t('app.msg', 'There is no user with such email')
+                'message' => Yii::t('app', 'There is no user with such email')
             ],
         ];
     }
@@ -63,13 +63,13 @@ class PasswordResetRequestForm extends \yii\base\Model
         /* @var $user User */
         $user = User::find()->email($this->email)->one();
         if (!$user) {
-            throw new UserException(Yii::t('app.msg', 'User not found'));
+            throw new UserException(Yii::t('app', 'User not found'));
         }
 
         if (!$this->tokenizer->validate($user->password_reset_token)) {
             $user->setPasswordResetToken($this->tokenizer->generate());
             if (!$user->save()) {
-                throw new Exception(Yii::t('app.msg', 'An error occurred while saving user'));
+                throw new Exception(Yii::t('app', 'An error occurred while saving user'));
             }
         }
 
@@ -80,7 +80,7 @@ class PasswordResetRequestForm extends \yii\base\Model
             ->send();
 
         if (!$sent) {
-            throw new UserException(Yii::t('app.msg', 'An error occurred while sending a message to reset password'));
+            throw new UserException(Yii::t('app', 'An error occurred while sending a message to reset password'));
         }
     }
 }

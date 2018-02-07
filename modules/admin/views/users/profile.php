@@ -29,7 +29,7 @@ $this->title = Yii::t('app', 'Users') . ' / ' . $model->user_id;
             'callbacks' => [
                 'select' => new JsExpression('function (evt, ui) {
                 if (ui && ui.other.length && ui.other[0].errors) {
-                    alert("' . Yii::t('app.msg', 'Incorrect file format') . '");
+                    alert("' . Yii::t('app', 'Incorrect file format') . '");
                 }
                 }'),
                 'filecomplete' => new JsExpression('function (evt, ui) {

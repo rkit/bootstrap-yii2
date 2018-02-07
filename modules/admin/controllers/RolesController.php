@@ -67,7 +67,7 @@ class RolesController extends \yii\web\Controller
             if ($model->load(Yii::$app->request->post()) && $model->validate()) {
                 $model->save();
 
-                Yii::$app->session->setFlash('success', Yii::t('app.msg', 'Saved successfully'));
+                Yii::$app->session->setFlash('success', Yii::t('app', 'Saved successfully'));
                 return $this->redirect(['edit', 'name' => $model->name]);
             }
             return $this->asJsonModelErrors($model);

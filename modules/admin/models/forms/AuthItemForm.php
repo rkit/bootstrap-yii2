@@ -76,7 +76,7 @@ class AuthItemForm extends \yii\base\Model
     public function attributeHints()
     {
         return [
-            'name' => Yii::t('app.msg', 'Only latin letters'),
+            'name' => Yii::t('app', 'Only latin letters'),
             'roles' => Yii::t('app', 'The role will receive all the privileges of the selected role'),
             'permissions' => Yii::t('app', 'Selected sections will be available for editing'),
         ];
@@ -134,7 +134,7 @@ class AuthItemForm extends \yii\base\Model
         $model->type = \yii\rbac\Item::TYPE_ROLE;
 
         if (!$model->save()) {
-            throw new Exception(Yii::t('app.msg', 'An error occurred while saving authItem'));
+            throw new Exception(Yii::t('app', 'An error occurred while saving authItem'));
         }
 
         if (!$model->isSuperUser()) {

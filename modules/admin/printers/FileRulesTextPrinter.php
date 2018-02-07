@@ -66,7 +66,7 @@ class FileRulesTextPrinter
             return null;
         }
 
-        return Yii::t('app.msg', 'Max. file size') . ': ' . Yii::$app->formatter->asShortSize($rules) . ' ';
+        return Yii::t('app', 'Max. file size') . ': ' . Yii::$app->formatter->asShortSize($rules) . ' ';
     }
 
     /**
@@ -81,7 +81,7 @@ class FileRulesTextPrinter
             return null;
         }
 
-        return Yii::t('app.msg', 'Max. file number') . ': ' . $rules . ' ';
+        return Yii::t('app', 'Max. file number') . ': ' . $rules . ' ';
     }
 
     /**
@@ -96,7 +96,7 @@ class FileRulesTextPrinter
             return null;
         }
 
-        return Yii::t('app.msg', 'File types') . ': ' . strtoupper(implode(', ', $rules)) . ' ';
+        return Yii::t('app', 'File types') . ': ' . strtoupper(implode(', ', $rules)) . ' ';
     }
 
     /**
@@ -158,7 +158,7 @@ class FileRulesTextPrinter
     public function imageStrictSizeDescription(): string
     {
         return
-            Yii::t('app.msg', 'Image size') . ': ' . 
+            Yii::t('app', 'Image size') . ': ' . 
             ArrayHelper::getValue($this->imageSize, 'maxWidth') . 'x' . 
             ArrayHelper::getValue($this->imageSize, 'maxHeight') . 'px';
     }
@@ -194,7 +194,7 @@ class FileRulesTextPrinter
     public function imageMinSizeDescription(): string
     {
         return
-            Yii::t('app.msg', 'Min. size of image') . ': ' . 
+            Yii::t('app', 'Min. size of image') . ': ' . 
             ArrayHelper::getValue($this->imageSize, 'minWidth') . 'x' . 
             ArrayHelper::getValue($this->imageSize, 'minHeight') . 'px';
     }
@@ -220,7 +220,7 @@ class FileRulesTextPrinter
     public function imageMaxSizeDescription(): string
     {
         return
-            Yii::t('app.msg', 'Max. size of image') . ': ' . 
+            Yii::t('app', 'Max. size of image') . ': ' . 
             ArrayHelper::getValue($this->imageSize, 'maxWidth') . 'x' . 
             ArrayHelper::getValue($this->imageSize, 'maxHeight') . 'px';
     }
@@ -236,16 +236,16 @@ class FileRulesTextPrinter
         foreach ($rules as $rule => $value) {
             switch ($rule) {
                 case 'minWidth':
-                    $text[] = Yii::t('app.msg', 'Min. width') . ' ' . $value . 'px';
+                    $text[] = Yii::t('app', 'Min. width') . ' ' . $value . 'px';
                     break;
                 case 'minHeight':
-                    $text[] = Yii::t('app.msg', 'Min. height') . ' ' . $value . 'px';
+                    $text[] = Yii::t('app', 'Min. height') . ' ' . $value . 'px';
                     break;
                 case 'maxWidth':
-                    $text[] = Yii::t('app.msg', 'Max. width') . ' ' . $value . 'px';
+                    $text[] = Yii::t('app', 'Max. width') . ' ' . $value . 'px';
                     break;
                 case 'maxHeight':
-                    $text[] = Yii::t('app.msg', 'Max. height') . ' ' . $value . 'px';
+                    $text[] = Yii::t('app', 'Max. height') . ' ' . $value . 'px';
                     break;
             }
         }

@@ -170,7 +170,7 @@ class UserForm extends \yii\base\Model
         }
 
         if (!$model->save()) {
-            throw new Exception(Yii::t('app.msg', 'An error occurred while saving user'));
+            throw new Exception(Yii::t('app', 'An error occurred while saving user'));
         }
 
         $this->id = $model->id;

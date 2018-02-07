@@ -35,13 +35,13 @@ class ResetPasswordForm extends \yii\base\Model
         $this->tokenizer = $tokenizer;
 
         if (empty($token) || !is_string($token) || !$this->tokenizer->validate($token)) {
-            throw new BadRequestHttpException(Yii::t('app.msg', 'Invalid link for reset password'));
+            throw new BadRequestHttpException(Yii::t('app', 'Invalid link for reset password'));
         }
 
         $this->user = User::find()->passwordResetToken($token)->one();
 
         if (!$this->user) {
-            throw new BadRequestHttpException(Yii::t('app.msg', 'Invalid link for reset password'));
+            throw new BadRequestHttpException(Yii::t('app', 'Invalid link for reset password'));
         }
 
         parent::__construct($config);
@@ -80,7 +80,7 @@ class ResetPasswordForm extends \yii\base\Model
         $this->user->updateDateLogin();
 
         if (!$this->user->save()) {
-            throw new Exception(Yii::t('app.msg', 'An error occurred while saving user'));
+            throw new Exception(Yii::t('app', 'An error occurred while saving user'));
         }
 
         Yii::$app->user->login($this->user, 3600 * 24 * 30);

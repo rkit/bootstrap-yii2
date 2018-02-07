@@ -30,13 +30,13 @@ class ConfirmEmail
             if ($user) {
                 $user->setConfirmed();
                 if (!$user->save()) {
-                    throw new Exception(Yii::t('app.msg', 'An error occurred while confirming'));
+                    throw new Exception(Yii::t('app', 'An error occurred while confirming'));
                 }
                 return;
             }
         }
 
-        throw new BadRequestHttpException(Yii::t('app.msg', 'Invalid token for activate account'));
+        throw new BadRequestHttpException(Yii::t('app', 'Invalid token for activate account'));
     }
 
     /**
@@ -62,7 +62,7 @@ class ConfirmEmail
 
         if (!$sent) {
             throw new UserException(
-                Yii::t('app.msg', 'An error occurred while sending a message to activate account')
+                Yii::t('app', 'An error occurred while sending a message to activate account')
             );
         }
     }

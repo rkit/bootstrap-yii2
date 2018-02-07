@@ -32,7 +32,7 @@ class AdminFilter extends ActionFilter
         if (!\Yii::$app->user->can('AdminModule') ||
             !\Yii::$app->user->can($this->getCurrentPermissionName($action))
         ) {
-            throw new ForbiddenHttpException(Yii::t('app.msg', 'Access Denied'));
+            throw new ForbiddenHttpException(Yii::t('app', 'Access Denied'));
         }
 
         return true;

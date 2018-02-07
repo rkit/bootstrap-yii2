@@ -28,7 +28,7 @@ class IndexController extends \yii\web\Controller
     public function actionMaintenance()
     {
         if (!Yii::$app->catchAll) {
-            throw new NotFoundHttpException(Yii::t('app.msg', 'Page not found'));
+            throw new NotFoundHttpException(Yii::t('app', 'Page not found'));
         }
 
         $this->layout = 'maintenance';
