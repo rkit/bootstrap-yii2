@@ -41,7 +41,7 @@ email: editor@example.com
 password: fghfgh
 ```
 
-## Server configuration
+## Development
 
 For enable **debug mode**, add to nginx config:
 
@@ -55,5 +55,7 @@ fastcgi_param APPLICATION_ENV development;
 
 ## Coding Standard
 
-- PHP Code Sniffer ([phpcs.xml](./phpcs.xml))
-- ESLint ([.eslintrc](./.eslintrc))
+- Use PHP Code Sniffer
+- Use ESLint
+
+All config files included.
