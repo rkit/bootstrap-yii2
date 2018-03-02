@@ -41,9 +41,7 @@ email: editor@example.com
 password: fghfgh
 ```
 
-## Configuration
-
-### Server
+## Server configuration
 
 For enable **debug mode**, add to nginx config:
 
