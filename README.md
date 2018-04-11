@@ -57,5 +57,3 @@ fastcgi_param APPLICATION_ENV development;
 
 - Use PHP Code Sniffer
 - Use ESLint
-
-All config files included.
