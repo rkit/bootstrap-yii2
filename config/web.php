@@ -1,5 +1,7 @@
 <?php
 
+use yii\web\User;
+
 /**
  * Config for Web Application
  */
@@ -17,6 +19,11 @@ $config = [
         'bootstrap' => [
             'class' => 'app\components\Bootstrap',
             'events' => [
+                User::class => [
+                    User::EVENT_BEFORE_LOGIN => [
+                        'app\events\user\LoginHandler',
+                    ]
+                ]
             ]
         ]
     ],
@@ -107,6 +114,12 @@ $config = [
                         'yii\web\HttpException:404',
                         'yii\web\HttpException:422',
                     ],
+                ],
+                [
+                    'class' => 'yii\log\DbTarget',
+                    'levels' => ['info'],
+                    'categories' => ['app'],
+                    'logVars' => [],
                 ],
             ],
         ],
