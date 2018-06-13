@@ -13,6 +13,6 @@ class LoginHandler
 {
     public function __invoke(\yii\base\Event $event) 
     {
-        Yii::info('Login: ' . $event->identity->id, 'app'); 
+        Yii::info(['userId' => $event->identity->id], 'app.login'); 
     }
 }

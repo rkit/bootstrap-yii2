@@ -118,7 +118,7 @@ $config = [
                 [
                     'class' => 'yii\log\DbTarget',
                     'levels' => ['info'],
-                    'categories' => ['app'],
+                    'categories' => ['app.*'],
                     'logVars' => [],
                 ],
             ],
