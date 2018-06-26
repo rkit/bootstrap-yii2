@@ -51,6 +51,10 @@ return [
             ],
             */
         ],
+        'cache' => [
+            'class' => 'yii\caching\FileCache',
+            'cacheFileSuffix' => '.test.bin',
+        ],
         'i18n' => [
              'translations' => [
                  'app*' => [
