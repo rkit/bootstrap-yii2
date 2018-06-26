@@ -5,14 +5,14 @@ use yii\grid\GridView;
 
 $this->title = Yii::t('app', 'Roles');
 ?>
-<?= Html::a(Yii::t('app', 'Add'), ['edit'], ['class' => 'btn btn-default']) ?>
+<?= Html::a(Yii::t('app', 'Create'), ['edit'], ['class' => 'btn btn-default']) ?>
 
 <?= Html::beginForm(['batch'], 'post') ?>
   <?php \yii\widgets\Pjax::begin(); ?>
 
   <?= GridView::widget([
-      'dataProvider' => $dataProvider,
-      'filterModel'  => $authItemSearch,
+      'dataProvider' => $provider,
+      'filterModel'  => $search,
       'options' => ['class' => 'gridview'],
       'layout' =>
       '<div class="panel panel-default">
@@ -32,7 +32,7 @@ $this->title = Yii::t('app', 'Roles');
        </div>
       {pager}
       ',
-      'tableOptions' => ['class' => 'table ' . ($dataProvider->count ? 'table-hover' : '')],
+      'tableOptions' => ['class' => 'table ' . ($provider->count ? 'table-hover' : '')],
       'columns' => [
          /**
           * @var id

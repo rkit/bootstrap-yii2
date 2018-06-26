@@ -4,12 +4,12 @@ use yii\helpers\Html;
 use kartik\date\DatePicker;
 use yii\web\JsExpression;
 use rkit\fileapi\Widget as FileApi;
-use app\modules\admin\printers\FileRulesTextPrinter;
+use app\modules\admin\helpers\FileRulesTextHelper;
 
-$this->title = Yii::t('app', 'Users') . ' / ' . $model->user_id;
+$this->title = Yii::t('app', 'Users') . ' / ' . Yii::t('app', 'Edit');
 ?>
 <?= Html::a(Yii::t('app', 'List'), ['index'], ['class' => 'btn btn-default']) ?>&nbsp;
-<?= Html::a(Yii::t('app', 'Add'), ['edit'], ['class' => 'btn btn-default']) ?><hr>
+<?= Html::a(Yii::t('app', 'Create'), ['edit'], ['class' => 'btn btn-default']) ?><hr>
 <?= $this->render('/shared/flash') ?>
 
 <ul class="nav nav-tabs">
@@ -50,7 +50,7 @@ $this->title = Yii::t('app', 'Users') . ' / ' . $model->user_id;
                 'duplicate' => true
             ]
         ])
-        ->hint(new FileRulesTextPrinter($model->model()->fileRules('photo')), [
+        ->hint(new FileRulesTextHelper($model->model()->fileRules('photo')), [
             'class' => 'fileapi-rules'
         ]);
     ?>

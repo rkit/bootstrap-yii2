@@ -2,10 +2,14 @@
 use yii\widgets\ActiveForm;
 use yii\helpers\Html;
 
-$this->title = Yii::t('app', 'Users') . ' / ' . ($model->id ?? Yii::t('app', 'Create'));
+$this->title = Yii::t('app', 'Users') . ' / ';
+$this->title .= $model->id ? Yii::t('app', 'Edit') : Yii::t('app', 'Create');
 ?>
 <?= Html::a(Yii::t('app', 'List'), ['index'], ['class' => 'btn btn-default']) ?>&nbsp;
-<?= Html::a(Yii::t('app', 'Add'), ['edit'], ['class' => 'btn btn-default']) ?>&nbsp;
+<?php if ($model->id):?>
+<?= Html::a(Yii::t('app', 'Create'), ['edit'], ['class' => 'btn btn-default']) ?>&nbsp;
+<?php endif?>
+
 <?php if ($model->id):?>
 <!-- <?= Html::a(
     Yii::t('app', 'View on site'),

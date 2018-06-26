@@ -7,14 +7,14 @@ use kartik\date\DatePicker;
 
 $this->title = Yii::t('app', 'Users');
 ?>
-<?= Html::a(Yii::t('app', 'Add'), ['edit'], ['class' => 'btn btn-default']) ?>
+<?= Html::a(Yii::t('app', 'Create'), ['edit'], ['class' => 'btn btn-default']) ?>
 
 <?= Html::beginForm(['batch'], 'post') ?>
   <?php \yii\widgets\Pjax::begin(); ?>
 
   <?= GridView::widget([
-      'dataProvider' => $dataProvider,
-      'filterModel'  => $userSearch,
+      'dataProvider' => $provider,
+      'filterModel'  => $search,
       'options' => ['class' => 'gridview'],
       'layout' =>
       '<div class="panel panel-default">
@@ -48,7 +48,7 @@ $this->title = Yii::t('app', 'Users');
        </div>
       {pager}
       ',
-      'tableOptions' => ['class' => 'table ' . ($dataProvider->count ? 'table-hover' : '')],
+      'tableOptions' => ['class' => 'table ' . ($provider->count ? 'table-hover' : '')],
       'columns' => [
           /**
            * @var id
@@ -93,7 +93,7 @@ $this->title = Yii::t('app', 'Users');
               'headerOptions' => ['style' => 'width: 180px'],
               'filter' => DatePicker::widget(
                   [
-                      'model' => $userSearch,
+                      'model' => $search,
                       'attribute' => 'date_create',
                       'type' => DatePicker::TYPE_RANGE,
                       'attribute' => 'date_create_start',
@@ -117,7 +117,7 @@ $this->title = Yii::t('app', 'Users');
               'headerOptions' => ['style' => 'width: 180px'],
               'filter' => DatePicker::widget(
                   [
-                      'model' => $userSearch,
+                      'model' => $search,
                       'type' => DatePicker::TYPE_RANGE,
                       'attribute' => 'date_login_start',
                       'attribute2' => 'date_login_end',
@@ -138,7 +138,7 @@ $this->title = Yii::t('app', 'Users');
               'attribute' => 'role_name',
               'format' => 'raw',
               'filter' => Html::activeDropDownList(
-                  $userSearch,
+                  $search,
                   'role_name',
                   ArrayHelper::map($roles, 'name', 'description'),
                   ['class' => 'form-control', 'prompt' => Yii::t('app', 'All roles')]
@@ -165,7 +165,7 @@ $this->title = Yii::t('app', 'Users');
                   '</span>';
               },
               'filter' => Html::activeDropDownList(
-                  $userSearch,
+                  $search,
                   'status',
                   $statuses,
                   ['class' => 'form-control', 'prompt' => Yii::t('app', 'All statuses')]

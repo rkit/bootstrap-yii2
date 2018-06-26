@@ -11,7 +11,7 @@
 
 ## Soft
 
-- PHP 7.1
+- PHP 7.1.10
 - Node 8 + NPM 5
 - Composer
 
@@ -41,7 +41,7 @@ email: editor@example.com
 password: fghfgh
 ```
 
-## Development
+## Development configuration
 
 For enable **debug mode**, add to nginx config:
 
@@ -55,5 +55,5 @@ fastcgi_param APPLICATION_ENV development;
 
 ## Coding Standard
 
-- Use PHP Code Sniffer
-- Use ESLint
+- PHP Code Sniffer ([phpcs.xml](./phpcs.xml))
+- ESLint ([.eslintrc](./.eslintrc))

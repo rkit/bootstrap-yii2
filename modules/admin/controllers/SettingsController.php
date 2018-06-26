@@ -3,7 +3,7 @@
 namespace app\modules\admin\controllers;
 
 use Yii;
-use app\traits\ControllerTrait;
+use app\controllers\ControllerTrait;
 use app\modules\admin\models\forms\SettingsForm;
 
 class SettingsController extends \yii\web\Controller

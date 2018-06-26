@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\admin\printers;
+namespace app\modules\admin\helpers;
 
 use Yii;
 use yii\helpers\ArrayHelper;
@@ -8,7 +8,7 @@ use yii\helpers\ArrayHelper;
 /**
  * Converting file validation rules to text
  */
-class FileRulesTextPrinter
+class FileRulesTextHelper
 {
     /**
      * @var array Validation rules

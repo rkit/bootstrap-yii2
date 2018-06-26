@@ -3,7 +3,8 @@
 namespace app\modules\admin\controllers;
 
 use Yii;
-use app\traits\ControllerTrait;
+use yii\web\NotFoundHttpException;
+use app\controllers\ControllerTrait;
 use app\models\entity\{User, UserProfile};
 use app\modules\admin\models\forms\{UserForm, UserProfileForm};
 use app\modules\admin\models\search\UserSearch;
@@ -66,13 +67,13 @@ class UsersController extends \yii\web\Controller
 
     public function actionIndex()
     {
-        $userSearch = new UserSearch();
-        $dataProvider = $userSearch->search(Yii::$app->request->get());
+        $search = new UserSearch();
+        $provider = $search->search(Yii::$app->request->get());
         $statuses = User::getStatuses();
 
         return $this->render('index', [
-            'userSearch' => $userSearch,
-            'dataProvider' => $dataProvider,
+            'search' => $search,
+            'provider' => $provider,
             'statuses' => $statuses,
             'roles' => Yii::$app->authManager->getRoles()
         ]);
@@ -83,7 +84,7 @@ class UsersController extends \yii\web\Controller
         $model = new UserForm();
 
         if ($id) {
-            $model->setModel($this->findModel(User::class, $id));
+            $model->setModel($this->findUser($id));
         }
 
         if (Yii::$app->request->isPost) {
@@ -105,8 +106,7 @@ class UsersController extends \yii\web\Controller
 
     public function actionProfile($id)
     {
-        $profile = $this->findModel(UserProfile::class, $id);
-        $model = new UserProfileForm($profile);
+        $model = new UserProfileForm($this->findProfile($id));
 
         if (Yii::$app->request->isPost) {
             Yii::$app->response->format = 'json';
@@ -123,5 +123,43 @@ class UsersController extends \yii\web\Controller
         return $this->render('profile', [
             'model' => $model
         ]);
+    }
+
+    /**
+     * Find the model.
+     * If the model is not found, then 404 HTTP exception will be thrown.
+     *
+     * @param int $id
+     * @return Model
+     * @throws NotFoundHttpException
+     */
+    private function findUser($id): yii\base\Model
+    {
+        $model = User::findOne($id);
+
+        if ($model === null) {
+            throw new NotFoundHttpException(Yii::t('app', 'Page not found'));
+        }
+
+        return $model;
+    }
+
+    /**
+     * Find the model.
+     * If the model is not found, then 404 HTTP exception will be thrown.
+     *
+     * @param int $id
+     * @return Model
+     * @throws NotFoundHttpException
+     */
+    private function findProfile($id): yii\base\Model
+    {
+        $model = UserProfile::findOne($id);
+
+        if ($model === null) {
+            throw new NotFoundHttpException(Yii::t('app', 'Page not found'));
+        }
+
+        return $model;
     }
 }

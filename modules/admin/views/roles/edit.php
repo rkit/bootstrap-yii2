@@ -2,10 +2,14 @@
 use yii\widgets\ActiveForm;
 use yii\helpers\Html;
 
-$this->title = Yii::t('app', 'Roles') . ' / ' . ($model->name ?? Yii::t('app', 'Create'));
+$this->title = Yii::t('app', 'Roles') . ' / ';
+$this->title .= $model->name ? Yii::t('app', 'Edit') : Yii::t('app', 'Create');
 ?>
 <?= Html::a(Yii::t('app', 'List'), ['index'], ['class' => 'btn btn-default']) ?>&nbsp;
-<?= Html::a(Yii::t('app', 'Add'), ['edit'], ['class' => 'btn btn-default']) ?><hr>
+<?php if ($model->name):?>
+<?= Html::a(Yii::t('app', 'Create'), ['edit'], ['class' => 'btn btn-default']) ?>&nbsp;
+<?php endif?>
+<hr>
 <?= $this->render('/shared/flash') ?>
 
 <?php $form = ActiveForm::begin(['options' => ['class' => 'ajax-form']]); ?>
